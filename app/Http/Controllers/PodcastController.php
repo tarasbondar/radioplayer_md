@@ -1,0 +1,98 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\Podcast;
+use App\Models\PodcastCategory;
+use App\Models\Podcast2Category;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
+class PodcastController extends Controller
+{
+
+    public function index(Request $request) {
+        $page_size = ($request->has('page-size') ? $request->get('page-size') : 10);
+        $page = ($request->has('page') ? $request->get('page') : 1);
+        $podcasts = Podcast::select("podcasts.*", "users.name AS username")->join('users', 'users.id', '=', 'podcasts.owner_id');
+
+        $pagination = $podcasts->paginate($page_size)->links();
+
+        $podcasts = $podcasts->offset(($page - 1) * $page_size)->limit($page_size)
+            ->get()->toArray();
+
+        return view('pages.admin.podcasts', ['podcasts' => $podcasts, 'pagination' => $pagination]);
+    }
+
+    public function add() {
+        $categories = PodcastCategory::where('status', '=', PodcastCategory::STATUS_ACTIVE)->get(['id', 'key']);
+        return view('pages.admin.podcasts-edit', ['action' => 'add', 'categories' => $categories]);
+    }
+
+    public function edit($id) {
+        $podcast = Podcast::find($id)->toArray();
+        //categories that belong to podcast
+        $categories = PodcastCategory::where('status', '=', PodcastCategory::STATUS_ACTIVE)->get(['id', 'key']);
+        return view('pages.admin.podcasts-edit', ['action' => 'edit', 'podcast' => $podcast, 'categories' => $categories]);
+    }
+
+    public function save(Request $request) {
+        if (empty($request['id'])) {
+            $podcast = new Podcast();
+            $podcast->owner_id = Auth::id();
+            $categories_current = [];
+        } else {
+            $podcast = Podcast::find($request['id']);
+            $podcast->owner_id = $request->get('owner_id');
+            $categories_current = $this->getCategoriesByPodcast($podcast->id);
+        }
+        $podcast->name = $request->get('name');
+        $podcast->description = $request->get('description');
+        $podcast->status = $request->get('status');
+        $podcast->save();
+
+        //categories
+        $categories_new = $request->get('categories', []);
+        if (array_diff($categories_new, $categories_current)) {
+            $to_add = array_filter(array_diff($categories_new, $categories_current));
+            if (count($to_add)) {
+                foreach ($to_add as $category_id) {
+                    Podcast2Category::create(['podcast_id' => $podcast->id, 'category_id' => $category_id, 'created_at' => now()]);
+                }
+            }
+        }
+
+        if (array_diff($categories_current, $categories_new)) {
+            $to_delete = array_filter(array_diff($categories_current, $categories_new));
+            if (count($to_delete)) {
+                $ids = implode(', ', $to_delete);
+                Podcast2Category::whereRaw("podcast_id = {$podcast->id} AND category_id IN ($ids)")->delete();
+            }
+        }
+
+        return redirect()->action([PodcastController::class, 'index']);
+    }
+
+    public function delete($id) {
+        $podcast = Podcast::find($id);
+        Podcast2Category::whereRaw('podcast_id = ' . $id)->delete();
+        //delete episodes
+        $podcast->delete();
+        return '';
+    }
+
+    public function getCategoriesByPodcast($podcast_id) {
+        $query = DB::table('podcasts_categories AS pc')
+            ->leftJoin('podcasts_2_categories AS p2c','pc.id', '=', 'p2c.category_id')
+            ->where('p2c.podcast_id', '=', $podcast_id)
+            ->where('pc.status', '=', PodcastCategory::STATUS_ACTIVE)
+            ->orderBy('pc.id', 'ASC')
+            ->get('pc.id')
+            ->toArray();
+        $result = [];
+        foreach ($query as $q) {array_push($result, $q->id);}
+        return $result;
+    }
+
+}

@@ -1,0 +1,105 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\IndexController;
+use App\Http\Controllers\PodcastController;
+use App\Http\Controllers\RadioStationController;
+use App\Http\Controllers\PodcastCategoryController;
+use App\Http\Controllers\PodcastEpisodeController;
+use App\Http\Controllers\RadioStationCategoryController;
+use App\Http\Controllers\RadioStationTagController;
+use App\Http\Controllers\UsersController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Middleware\isAdmin;
+use \Illuminate\Support\Facades\Auth;
+
+Auth::routes();
+
+Route::get('/', [IndexController::class, 'index'])->name('home');
+Route::get('/podcasts', [IndexController::class, 'podcasts']);
+Route::get('/favorite-station/{id}', [ProfileController::class, 'favStation']);
+Route::post('/update-stations', [IndexController::class, 'updateStations']);
+
+Route::get('/apply', [ProfileController::class, 'apply']);
+Route::post('/send-application', [ProfileController::class, 'sendApplication']);
+
+Route::get('/my-podcasts', [ProfileController::class, 'myPodcasts']);
+Route::get('/podcasts', [IndexController::class, 'podcasts']);
+Route::post('/update-podcasts', [IndexController::class, 'updatePodcasts']);
+Route::get('/podcasts/{id}/view', [IndexController::class, 'viewPodcast']);
+Route::get('/create-podcast', [ProfileController::class, 'createPodcast']);
+Route::get('/edit-podcast/{id}', [ProfileController::class, 'editPodcast']);
+Route::post('/save-podcast', [ProfileController::class, 'savePodcast']);
+Route::delete('/delete-podcast', [ProfileController::class, 'deletePodcast']);
+
+Route::get('/episodes/{id}/view', [IndexController::class, 'viewEpisode']);
+Route::get('/create-episode/{id}', [ProfileController::class, 'createEpisode']);
+Route::get('/edit-episode/{id}', [ProfileController::class, 'editEpisode']);
+Route::post('/save-episode', [ProfileController::class, 'saveEpisode']);
+Route::delete('/delete-episode', [ProfileController::class, 'deleteEpisode']);
+
+Route::get('/subscriptions', [ProfileController::class, 'subscriptions']);
+Route::post('/subscribe-to', [ProfileController::class, 'subscribeTo']);
+Route::get('/listen-later', [ProfileController::class, 'listenLater']);
+Route::post('/queue-episode', [ProfileController::class, 'queueToListenLater']);
+Route::get('/history', [ProfileController::class, 'history']);
+Route::post('/record-history', [ProfileController::class, 'recordListeningHistory']);
+Route::post('/clear-history', [ProfileController::class, 'clearHistory']);
+Route::get('/downloads', [ProfileController::class, 'downloads']);
+Route::post('/download-episode', [ProfileController::class, 'downloadEpisode']);
+
+Route::get('/privacy-policy', [IndexController::class, 'privacy']);
+
+Route::name('admin.')->prefix('admin')/*->middleware(/*IsAdmin::class'is.admin')*/->group(function () {
+    Route::get('/', [AdminController::class, 'dashboard']);
+    Route::get('/dashboard', [AdminController::class, 'dashboard']);
+
+    Route::get('/users', [UsersController::class, 'index']);
+    Route::post('/users/status', [UsersController::class, 'changeStatus']);
+    Route::get('/users/view/{id}', [UsersController::class, 'view']);
+    Route::delete('/users/{id}', [UsersController::class, 'delete']);
+
+    Route::get('/author-apps/{status?}', [UsersController::class, 'authorApps']);
+    Route::get('/author-apps-review/{id}', [UsersController::class, 'authorAppsEdit']);
+    Route::post('/author-apps-review', [UsersController::class, 'reviewApp']);
+
+    Route::get('/podcasts', [PodcastController::class, 'index']);
+    Route::get('/podcasts/add', [PodcastController::class, 'add']);
+    Route::get('/podcasts/edit/{id}', [PodcastController::class, 'edit']);
+    Route::post('/podcasts/save', [PodcastController::class, 'save']);
+    Route::delete('/podcasts/{id}', [PodcastController::class, 'delete']);
+
+    Route::get('/podcast-categories', [PodcastCategoryController::class, 'index']);
+    Route::get('/podcast-categories/add', [PodcastCategoryController::class, 'add']);
+    Route::get('/podcast-categories/edit/{id}', [PodcastCategoryController::class, 'edit']);
+    Route::post('/podcast-categories/save', [PodcastCategoryController::class, 'save']);
+    Route::delete('/podcast-categories/{id}', [PodcastCategoryController::class, 'delete']);
+
+    Route::get('/podcasts-episodes', [PodcastEpisodeController::class, 'index']);
+    Route::get('/podcasts-episodes/add', [PodcastEpisodeController::class, 'add']);
+    Route::get('/podcasts-episodes/edit/{id}', [PodcastEpisodeController::class, 'edit']);
+    Route::post('/podcasts-episodes/save', [PodcastEpisodeController::class, 'save']);
+    Route::delete('/podcasts-episodes/{id}', [PodcastEpisodeController::class, 'delete']);
+
+    Route::get('/stations', [RadioStationController::class, 'index']);
+    Route::get('/stations/add', [RadioStationController::class, 'add']);
+    Route::get('/stations/edit/{id}', [RadioStationController::class, 'edit']);
+    Route::post('/stations/save', [RadioStationController::class, 'save']);
+    Route::delete('/stations/{id}', [RadioStationController::class, 'delete']);
+    Route::post('/stations/download', [RadioStationController::class, 'download']);
+
+    Route::get('/station-categories', [RadioStationCategoryController::class, 'index']);
+    Route::get('/station-categories/add', [RadioStationCategoryController::class, 'add']);
+    Route::get('/station-categories/edit/{id}', [RadioStationCategoryController::class, 'edit']);
+    Route::post('/station-categories/save', [RadioStationCategoryController::class, 'save']);
+    Route::delete('/station-categories/{id}', [RadioStationCategoryController::class, 'delete']);
+
+    Route::get('/station-tags', [RadioStationTagController::class, 'index']);
+    Route::get('/station-tags/add', [RadioStationTagController::class, 'add']);
+    Route::get('/station-tags/edit/{id}', [RadioStationTagController::class, 'edit']);
+    Route::post('/station-tags/save', [RadioStationTagController::class, 'save']);
+    Route::delete('/station-tags/{id}', [RadioStationTagController::class, 'delete']);
+
+});

@@ -1,0 +1,40 @@
+.tab-filters {
+    margin: 0 rem(-20px) rem(16px);
+    display: grid;
+    grid-template-columns: 100%;
+    gap: rem(8px);
+}
+
+.tab-filters__list {
+    list-style: none;
+    padding: 0 rem(20px);
+    margin: 0;
+    display: flex;
+    gap: rem(8px);
+    overflow: auto;
+    scroll-snap-type: x proximity;
+    scroll-padding-left: rem(20px);
+    scroll-padding-right: rem(20px);
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.tab-filters__item {
+    flex-shrink: 0;
+    white-space: nowrap;
+    scroll-snap-align: center;
+}
+
+@media (min-width: 992px) {
+    .tab-filters {
+        margin: 0 0 rem(24px);
+    }
+
+    .tab-filters__list {
+        padding: 0;
+        overflow: visible;
+    }
+}

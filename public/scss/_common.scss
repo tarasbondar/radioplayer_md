@@ -1,0 +1,55 @@
+html,
+body {
+    height: 100%;
+    background: var(--body-bg);
+    color: var(--body-color);
+}
+
+.icon {
+    display: inline-block;
+    width: rem(24px);
+    height: rem(24px);
+    flex-shrink: 0;
+}
+
+.icon_right {
+    margin-left: rem(8px);
+}
+
+.icon_left {
+    margin-right: rem(8px);
+}
+
+.hidden {
+    display: none !important;
+}
+
+img {
+    max-width: 100%;
+}
+
+img:not([src]):not([srcset]) {
+    visibility: hidden;
+}
+
+.modal-open {
+    overflow: hidden;
+}
+
+.scrollbar {
+    &::-webkit-scrollbar {
+        width: rem(8px);
+    }
+
+    &::-webkit-scrollbar-track {
+        background: var(--scrollbar-track-color);
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: var(--scrollbar-thumb-color);
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background: var(--scrollbar-thumb-color-hover);
+    }
+}

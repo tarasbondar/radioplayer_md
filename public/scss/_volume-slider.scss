@@ -1,0 +1,44 @@
+:root {
+    --volume-slider-track-bg: var(--grey-200);
+    --volume-slider-progress-bg: var(--green-300);
+}
+
+.volume-slider__track {
+    position: relative;
+    width: rem(2px);
+    height: rem(128px);
+    background: var(--volume-slider-track-bg);
+    margin: 0 auto;
+}
+
+.volume-slider__progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: var(--volume-slider-progress-bg);
+}
+
+.volume-slider__btn {
+    position: absolute;
+    top: rem(-24px);
+    left: 50%;
+    margin-left: rem(-24px);
+    width: rem(48px);
+    height: rem(48px);
+    background: transparent;
+    padding: 0;
+    border: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &::after {
+        content: "";
+        display: block;
+        width: rem(8px);
+        height: rem(8px);
+        border-radius: 50%;
+        background: var(--volume-slider-progress-bg);
+    }
+}

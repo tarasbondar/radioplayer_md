@@ -1,0 +1,44 @@
+
+
+.scrolling-text {
+    white-space: nowrap;
+    overflow: hidden;
+    width: 100%;
+
+    &.scroll-anim {
+        .scrolling-text__inner {
+            animation: scrolling-text 10s infinite linear;
+        }
+
+        .scrolling-text__data {
+            padding-right: rem(8px);
+        }
+    }
+
+}
+
+.scrolling-text__inner {
+    display: table;
+    transform: translateX(0);
+    will-change: transform;
+}
+
+.scrolling-text__data {
+    display: table-cell;
+}
+
+@keyframes scrolling-text {
+    0% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(0);
+    }
+
+    80% {
+        transform: translateX(-50%);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}

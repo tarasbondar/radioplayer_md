@@ -1,0 +1,43 @@
+{
+  "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff": {
+    "file": "public/main.woff",
+    "src": "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff"
+  },
+  "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff2": {
+    "file": "public/main.woff2",
+    "src": "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff2"
+  },
+  "public/js/main.css": {
+    "file": "public/main.css",
+    "src": "public/js/main.css"
+  },
+  "public/js/main.js": {
+    "css": [
+      "public/main.css"
+    ],
+    "file": "public/main2.js",
+    "isEntry": true,
+    "src": "public/js/main.js"
+  },
+  "public/scss/main.scss": {
+    "file": "public/main2.css",
+    "isEntry": true,
+    "src": "public/scss/main.scss"
+  },
+  "resources/js/app.css": {
+    "file": "public/main3.css",
+    "src": "resources/js/app.css"
+  },
+  "resources/js/app.js": {
+    "assets": [
+      "public/main.woff2",
+      "public/main.woff"
+    ],
+    "css": [
+      "public/main3.css"
+    ],
+    "file": "public/app.js",
+    "isEntry": true,
+    "src": "resources/js/app.js"
+  }
+}

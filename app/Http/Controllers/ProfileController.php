@@ -1,0 +1,340 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\AuthorApplication;
+use App\Models\DownloadRecord;
+use App\Models\HistoryRecord;
+use App\Models\Podcast;
+use App\Models\Podcast2Category;
+use App\Models\PodcastCategory;
+use App\Models\PodcastEpisode;
+use App\Models\PodcastSub;
+use App\Models\QueuedEpisode;
+use App\Models\RadioStation;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+//use Illuminate\Support\Facades\Redirect;
+//use function Symfony\Component\ErrorHandler\reRegister;
+
+class ProfileController extends Controller
+{
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    public function index()
+    {
+        //return view('home');
+    }
+
+    public function apply() {
+        $role = (Auth::user())->role;
+        if ($role == User::STATUS_NORMAL) {
+            $app = AuthorApplication::where('user_id', '=', Auth::id())->orderBy('updated_at', 'desc')->first();
+
+            if (!empty($app)) {
+                if ($app->status == AuthorApplication::STATUS_PENDING) {
+                    return view('pages.client.author-application', ['status' => 'pending',]);
+                }
+                if ($app->status == AuthorApplication::STATUS_DECLINED) {
+                    /*$day_ago = date('Y-m-d H:i:s', strtotime("-1 day"));
+                    if ($app->updated_at > $day_ago) {
+                        //display form
+                    } else {
+                        //display wait
+                    }*/
+                    return view('pages.client.author-application', ['status' => 'declined', 'feedback' => $app->feedback_message]);
+                }
+            }
+        } else { //already author
+            return redirect()->route('my-podcasts');
+        }
+        $categories = PodcastCategory::where('status', '=', PodcastCategory::STATUS_ACTIVE)->get()->toArray();
+        return view('pages.client.author-application', ['status' => 'new', 'user_role' => $role,'categories' => $categories]);
+    }
+
+    public function sendApplication(Request $request) {
+        $validator = $request->validate([
+            'title' => ['required'],
+            'description' => ['required'],
+            'categories' => ['required'],
+            'tags' => ['max:255'],
+            //'image' => ['required'],
+            //'example' => ['required']
+        ]);
+
+        if (!$validator) {
+            return ''; //$validator->errors();
+        }
+
+        $app = new AuthorApplication();
+        $app->user_id = Auth::id();
+        $app->title = $request->get('title');
+        $app->description = $request->get('description');
+        $app->categories = $request->get('categories');
+        $app->tags = $request->get('tags');
+        $app->image = ' ';
+        $app->example = ' ';
+        $app->status = AuthorApplication::STATUS_PENDING;
+        $app->save();
+
+        return 'ok';
+    }
+
+    public function myPodcasts() {
+        $podcasts = Podcast::where('owner_id', '=', Auth::id())->get()->toArray();
+        $categories = PodcastCategory::where('status', '=', PodcastCategory::STATUS_ACTIVE)->get()->toArray();
+        return view('pages.client.my-podcasts', ['podcasts' => $podcasts, 'categories' => $categories]);
+    }
+
+
+    public function createPodcast() {
+        $categories = PodcastCategory::where('status', '=', PodcastCategory::STATUS_ACTIVE)->get(['id', 'key']);
+        return view('pages.client.create-podcast', ['categories' => $categories, 'action' => 'add', 'p2c' => []]);
+    }
+
+    public function editPodcast($id) {
+        $podcast = Podcast::find($id)->toArray();
+        $categories = PodcastCategory::where('status', '=', PodcastCategory::STATUS_ACTIVE)->get(['id', 'key']);
+        $podcast2category = $this->getCategoriesByPodcast($id);
+        return view('pages.client.create-podcast', ['action' => 'edit', 'podcast' => $podcast, 'categories' => $categories, 'p2c' => $podcast2category]);
+    }
+
+    public function savePodcast(Request $request) {
+
+        if (empty($request->get('id'))) {
+            $podcast = new Podcast();
+            $podcast->owner_id = Auth::id();
+            $categories_current = [];
+        } else {
+            $podcast = Podcast::find($request->get('id'));
+
+            if (Auth::id() != $podcast->owner_id) {
+                return abort(403);
+            }
+            $categories_current = array_keys($this->getCategoriesByPodcast($podcast->id));
+        }
+        $podcast->name = $request->get('name');
+        $podcast->description = $request->get('description');
+        //file
+        $podcast->tags = $request->get('tags');
+        $podcast->status = ($request->get('status') != null ? Podcast::STATUS_ACTIVE : Podcast::STATUS_INACTIVE);
+        $podcast->save();
+
+        //categories
+        $categories_new = explode(',', $request->get('categories-ids', []));
+        if (array_diff($categories_new, $categories_current)) {
+            $to_add = array_filter(array_diff($categories_new, $categories_current));
+            if (count($to_add)) {
+                foreach ($to_add as $category_id) {
+                    Podcast2Category::create(['podcast_id' => $podcast->id, 'category_id' => $category_id, 'created_at' => now()]);
+                }
+            }
+        }
+
+        if (array_diff($categories_current, $categories_new)) {
+            $to_delete = array_filter(array_diff($categories_current, $categories_new));
+            if (count($to_delete)) {
+                $ids = implode(', ', $to_delete);
+                Podcast2Category::whereRaw("podcast_id = {$podcast->id} AND category_id IN ($ids)")->delete();
+            }
+        }
+
+        return $this->myPodcasts();
+    }
+
+    public function deletePodcast() {
+
+    }
+
+    public function getCategoriesByPodcast($id) {
+        $query = DB::table('podcasts_categories AS pc')
+            ->leftJoin('podcasts_2_categories AS p2c','pc.id', '=', 'p2c.category_id')
+            ->where('p2c.podcast_id', '=', $id)
+            ->where('pc.status', '=', PodcastCategory::STATUS_ACTIVE)
+            ->orderBy('pc.id', 'ASC')
+            ->get(['pc.id', 'pc.key'])
+            ->toArray();
+        $result = [];
+        foreach ($query as $q) {
+            //array_push($result, $q->id);
+            $result[$q->id] = $q->key;
+        }
+        return $result;
+    }
+
+    public function favStation($id) {
+        if (!Auth::check()) {
+            return 'no auth';
+        }
+
+        $exists = DB::table('radiostations_favorites')->select('*')
+            ->where('station_id', '=', $id)
+            ->where('user_id', '=', Auth::id())
+            ->get()->count();
+
+        if ($exists) {
+            DB::table('radiostations_favorites')->where(['station_id' => $id, 'user_id' => Auth::id()])->delete();
+            return ['action' => 'deleted', 'id' => $id];
+        } else {
+            DB::table('radiostations_favorites')->insert(['station_id' => $id, 'user_id' => Auth::id()]);
+            $station = RadioStation::find($id)->toArray();
+            $station['favorited'] = 1;
+            $output = view('partials.station-card', ['station' => $station])->render();
+            return ['action' => 'added', 'output' => $output, 'id' => $id];
+        }
+
+    }
+
+    public function createEpisode($podcast_id) {
+        $podcast = Podcast::find($podcast_id);
+        if (Auth::user()->role < User::ROLE_AUTHOR || Auth::id() != $podcast->owner_id) {
+            return abort(403);
+        }
+        return view('pages.client.create-episode', ['action' => 'add', 'podcast_id' => $podcast_id]);
+    }
+
+    public function editEpisode($id) {
+        $episode = PodcastEpisode::find($id)->toArray();
+        if (Auth::id() != Podcast::find($episode['podcast_id'])->owner_id) {
+            return abort(403);
+        }
+        return view('pages.client.create-episode', ['action' => 'edit', 'episode' => $episode]);
+    }
+
+    public function saveEpisode(Request $request) {
+        if (empty($request->get('id'))) {
+            $episode = new PodcastEpisode();
+            $episode->podcast_id = $request->get('podcast-id');
+        } else {
+            $episode = PodcastEpisode::find($request->get('id'));
+            if (Auth::id() != Podcast::find($episode['podcast_id'])->owner_id) {
+                return abort(403);
+            }
+        }
+        $episode->name = $request->get('name');
+        $episode->description = $request->get('description');
+        $episode->source = '';//file
+        $episode->tags = $request->get('tags');
+        $episode->status = ($request->get('status') == 1 ? PodcastEpisode::STATUS_PUBLISHED : PodcastEpisode::STATUS_DRAFT);
+        $episode->save();
+
+        return \redirect('podcasts/' . $episode->podcast_id . '/view');
+    }
+
+    public function deleteEpisode($id) {
+        $episode = PodcastEpisode::where('id', '=', $id)->get();
+        $podcast = Podcast::where('id', '=', $episode['id'])->get()->toArray()[0];
+        if (Auth::id() == $podcast['owner_id']) {
+            //file
+            $episode->delete();
+            return '';
+        }
+
+        return abort(405);
+    }
+
+    public function subscriptions() {
+        /*$subs = DB::table('podcasts_subscriptions')
+            ->where('user_id', '=', Auth::id())
+            ->orderBy('created_at', 'ASC')
+            ->get()->toArray();*/
+        $podcasts = Podcast::where('status', '=', Podcast::STATUS_ACTIVE)
+            ->where('ps.user_id', '=', Auth::id())
+            ->join('podcasts_subscriptions AS ps', 'ps.podcast_id', '=', 'podcasts.id')
+            ->get()->toArray();
+        return view('pages.client.subscriptions', ['podcasts' => $podcasts]);
+    }
+
+    public function subscribeTo(Request $request) { //podcast_id
+        $id = $request->get('id');
+        $sub = PodcastSub::where('user_id', '=', Auth::id())->where('podcast_id', '=', $id)->get();
+        $podcast = Podcast::where('id', '=', $id)->get()->toArray()[0];
+        if (count($sub)) {
+            PodcastSub::where('user_id', '=', Auth::id())->where('podcast_id', '=', $id)->delete();
+            return view('partials.sub-button', ['podcast' => $podcast])->render();
+        } else {
+            $sub = new PodcastSub();
+            $sub->user_id = Auth::id();
+            $sub->podcast_id = $id;
+            $sub->save();
+            return view('partials.unsub-button', ['podcast' => $podcast])->render();
+        }
+    }
+
+    public function listenLater() {
+        $episodes = PodcastEpisode::where('status', '=', PodcastEpisode::STATUS_PUBLISHED)
+            ->where('users_queues.user_id', '=', Auth::id())
+            ->join('users_queues', 'users_queues.podcast_id', '=', 'podcasts.id')
+            ->orderBy('created_at', 'ASC')
+            ->get()->toArray();
+        return view('pages.client.listen-later', ['episodes' => $episodes]);
+    }
+
+    public function queueToListenLater(Request $request) { //episode
+        $id = $request->get('id');
+        $mark = QueuedEpisode::where('user_id', '=', Auth::id())->where('podcast_id', '=', $id)->get();
+        if (count($mark)) {
+            QueuedEpisode::where('user_id', '=', Auth::id())->where('podcast_id', '=', $id)->delete();
+            return 'removed';
+        } else {
+            $mark = new QueuedEpisode();
+            $mark->user_id = Auth::id();
+            $mark->podcast_id = $id;
+            $mark->save();
+            return 'queued';
+        }
+    }
+
+    public function history() { //episodes only
+        $history = HistoryRecord::where('user_id', '=', Auth::id())
+            ->get()->toArray();
+        return view('pages.client.history', ['history' => $history]);
+    }
+
+    public function recordListeningHistory(Request $request) {
+        $episode_id = $request->get('id');
+        HistoryRecord::upsert(['episode_id' => $episode_id, 'user_id' => Auth::id()], ['created_at' => date('Y-m-d H:i:s')]);
+        return '';
+    }
+
+    public function clearHistory() {
+        HistoryRecord::where('user_id', '=', Auth::id())->delete();
+        return '';
+    }
+
+    public function downloads(Request $request) { //episodes users_downloads
+        $downloads = DownloadRecord::where(['user_id' => Auth::id()])->get()->toArray();
+        return $downloads;
+    }
+
+    public function downloadEpisode(Request $request) {
+        $id = $request->get('id');
+        $episode = PodcastEpisode::where('id', '=', $id)->get()->toArray()[0];
+        if ($episode['status'] == PodcastEpisode::STATUS_PUBLISHED) {
+            //download file
+            //if ok
+            $record = new DownloadRecord();
+            $record->user_id = Auth::id();
+            $record->episode_id = $episode['id'];
+            $record->save();
+            return '';
+        }
+
+        return 'error';
+    }
+
+    public function settings() {
+        return view('');
+    }
+
+    public function logout() {
+        Auth::logout();
+    }
+
+}
