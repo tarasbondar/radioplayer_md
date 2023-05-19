@@ -13,7 +13,7 @@
                     <svg class="icon">
                         <use href="/img/sprite.svg#radio"></use>
                     </svg>
-                    <span class="btn__text">Радио</span>
+                    <span class="btn__text">{{ __('app.radio') }}</span>
                 </a>
             </li>
             <li class="header__nav__list-item">
@@ -21,7 +21,7 @@
                     <svg class="icon">
                         <use href="/img/sprite.svg#mic"></use>
                     </svg>
-                    <span class="btn__text">Подкасты</span>
+                    <span class="btn__text">{{ __('app.podcasts') }}</span>
                 </a>
             </li>
         </ul>

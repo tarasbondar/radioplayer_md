@@ -8,24 +8,24 @@
     "src": "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff2"
   },
   "public/js/main.css": {
-    "file": "public/main.css",
+    "file": "public/main3.css",
     "src": "public/js/main.css"
   },
   "public/js/main.js": {
     "css": [
-      "public/main.css"
+      "public/main3.css"
     ],
     "file": "public/main2.js",
     "isEntry": true,
     "src": "public/js/main.js"
   },
   "public/scss/main.scss": {
-    "file": "public/main2.css",
+    "file": "public/main.css",
     "isEntry": true,
     "src": "public/scss/main.scss"
   },
   "resources/js/app.css": {
-    "file": "public/main3.css",
+    "file": "public/main2.css",
     "src": "resources/js/app.css"
   },
   "resources/js/app.js": {
@@ -34,7 +34,7 @@
       "public/main.woff"
     ],
     "css": [
-      "public/main3.css"
+      "public/main2.css"
     ],
     "file": "public/app.js",
     "isEntry": true,

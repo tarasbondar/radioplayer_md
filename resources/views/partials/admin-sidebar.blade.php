@@ -28,7 +28,7 @@
             <a class="nav-link" href="{{ '/admin/podcasts-episodes' }}">Podcast Episodes</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">Translations</a>
+            <a class="nav-link" target="_blank" href="{{ '/translations' }}">Translations</a>
         </li>
     </ul>
 </div>

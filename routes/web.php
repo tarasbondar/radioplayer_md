@@ -101,5 +101,6 @@ Route::name('admin.')->prefix('admin')/*->middleware(/*IsAdmin::class'is.admin')
     Route::get('/station-tags/edit/{id}', [RadioStationTagController::class, 'edit']);
     Route::post('/station-tags/save', [RadioStationTagController::class, 'save']);
     Route::delete('/station-tags/{id}', [RadioStationTagController::class, 'delete']);
+    Route::delete('/translations', [Translations::class, 'delete']);
 
 });
