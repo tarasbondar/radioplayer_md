@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') . ' Admin Panel' }}</title>
-    @vite(['resources/js/admin.js'])
+    @vite(['resources/js/admin/app.js'])
 {{--    @vite(['resources/css/app.css'])--}}
     <!-- Scripts -->
     {{--<script src="{{ asset('js/app.js') }}"></script>--}}
