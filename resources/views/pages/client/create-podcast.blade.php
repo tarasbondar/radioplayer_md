@@ -30,6 +30,10 @@
                             <div class="messages"></div>
                         </div>
 
+                        <div class="input">
+                            <div class="input__editor" data-editor></div>
+                        </div>
+
                         <div class="form-group row" hidden>
                             <input id="categories-ids" name='categories-ids' type="text" class="form-control" value="{{ implode(',', array_keys($p2c)) }}" readonly>
                         </div>

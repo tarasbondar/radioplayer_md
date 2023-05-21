@@ -5,6 +5,7 @@ import { categorySlider } from './category-slider.js';
 import { scrollingText } from './scrolling-text.js';
 import { nowPlaying } from './now-playing.js';
 import { debounce } from './debounce.js';
+import { editor } from './editor.js';
 
 header();
 forms();
@@ -13,5 +14,6 @@ categorySlider();
 scrollingText();
 nowPlaying();
 debounce();
+editor();
 
 import '../scss/app.scss';

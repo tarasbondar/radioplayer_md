@@ -32,7 +32,7 @@
             border-color: var(--red);
         }
     }
-	
+
 	.btn-modal-toggle {
 		position: absolute;
 		top: 0;
@@ -85,7 +85,7 @@
         cursor: pointer;
 	    box-sizing: border-box;
     }
-	
+
 	&.light {
 		@media (min-width: 576px) {
 			color: var(--grey-500);
@@ -106,7 +106,7 @@
 	    width: rem(16px);
 	    height: rem(16px);
     }
-	
+
 	.link {
 		display: inline-block;
 		vertical-align: top;
@@ -474,7 +474,7 @@ textarea.form-control {
 	}
 	&__files-list-item {
 		margin-bottom: rem(8px);
-		
+
 		.control-panel {
 			border: 0;
 			padding: rem(8px);
@@ -543,4 +543,12 @@ textarea.form-control {
 	margin-left: 5px;
 	position: relative;
 	top: 2px;
+}
+
+.input__editor {
+	padding: rem(12px);
+	border-radius: rem(8px);
+	background: var(--editor-bg);
+	color: var(--editor-color);
+	border: var(--editor-border);
 }

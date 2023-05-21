@@ -141,6 +141,10 @@ $base-font-size: 16px;
 	--btn-primary-disabled-color: var(--grey-300);
 	--red: var(--red-300);
 	--podcast-icon: var(--dark-500);
+
+    --editor-bg: var(--white);
+    --editor-color: var(--dark-500);
+    --editor-border: 1px solid var(--grey-200);
 }
 
 @mixin darkTheme() {
@@ -250,6 +254,10 @@ $base-font-size: 16px;
 	--btn-primary-disabled-color: var(--dark-100);
 	--red: var(--red-200);
 	--podcast-icon: var(--accent-500);
+
+    --editor-bg: var(--dark-300);
+    --editor-color: var(--white);
+    --editor-border: 0;
 }
 
 :root {
