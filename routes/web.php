@@ -52,7 +52,7 @@ Route::post('/download-episode', [ProfileController::class, 'downloadEpisode']);
 
 Route::get('/privacy-policy', [IndexController::class, 'privacy']);
 
-Route::name('admin.')->prefix('admin')/*->middleware(/*IsAdmin::class'is.admin')*/->group(function () {
+Route::name('admin.')->prefix('admin')->middleware([IsAdmin::class])->group(function () {
     Route::get('/', [AdminController::class, 'dashboard']);
     Route::get('/dashboard', [AdminController::class, 'dashboard']);
 
