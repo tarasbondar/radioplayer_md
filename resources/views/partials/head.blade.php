@@ -17,14 +17,14 @@
 {{--<link rel="stylesheet" href="/scss/main.scss">--}}
 {{--@vite(['resources/scss/main.css'])--}}
 @vite(['resources/js/app.js'])
-@vite(['public/js/main.js'])
-@vite(['resources/css/app.css'])
+{{--@vite(['public/js/main.js'])--}}
+{{--@vite(['resources/css/app.css'])--}}
 {{--@vite(['public/scss/main.scss'])--}}
 
-@vite(['public/dist/public/main.css'])
-@vite(['public/dist/public/main2.css'])
-@vite(['public/dist/public/main3.css'])
-@vite(['public/dist/public/main2.js'])
+{{--@vite(['public/dist/public/main.css'])--}}
+{{--@vite(['public/dist/public/main2.css'])--}}
+{{--@vite(['public/dist/public/main3.css'])--}}
+{{--@vite(['public/dist/public/main2.js'])--}}
 
 
 </head>

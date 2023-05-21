@@ -1,0 +1,158 @@
+.btn {
+    border: 0;
+    background: transparent;
+    padding: 0;
+    user-select: none;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn_default {
+	min-height: rem(48px);
+	padding: rem(4px) rem(16px);
+	border-radius: rem(24px);
+}
+
+.btn_ico {
+    width: rem(48px);
+    height: rem(48px);
+    border-radius: 50%;
+}
+
+.btn_ico-primary {
+    color: var(--primary-text-color);
+    transition: background .2s ease-in-out;
+	&:hover,
+	&:focus {
+		color: var(--primary-text-color);
+	}
+}
+
+.btn_rows {
+    color: var(--btn-rows-text-color);
+    min-height: rem(48px);
+    padding: rem(2px) rem(16px);
+    border-radius: rem(24px);
+    flex-direction: column;
+
+    &:hover,
+    &:focus {
+        text-decoration: none;
+        color: var(--btn-rows-text-color);
+    }
+
+    .icon {
+        color: var(--btn-rows-ico-color);
+        opacity: var(--btn-rows-ico-opacity);
+    }
+
+    &.active {
+        background: var(--btn-rows-active-bg);
+        color: var(--btn-rows-text-color-active);
+
+        .icon {
+            color: var(--btn-rows-ico-color-active);
+            opacity: var(--btn-rows-ico-opacity-active);
+        }
+    }
+
+}
+
+.btn_large {
+    min-height: rem(48px);
+    padding: rem(8px) rem(16px);
+}
+
+.btn_switcher {
+    border-radius: rem(24px);
+    color: var(--btn-switcher-color);
+    transition: color .2s ease-in-out, background .2s ease-in-out;
+
+    &.active {
+        color: var(--btn-switcher-color-active);
+        background: var(--btn-switcher-bg-active);
+    }
+
+    &:hover,
+    &:focus {
+        text-decoration: none;
+        color: var(--btn-switcher-color);
+
+        &.active {
+            color: var(--btn-switcher-color-active);
+        }
+    }
+}
+
+.btn_list-item {
+    padding: rem(12px);
+    justify-content: flex-start;
+    text-align: left;
+    color: var(--btn-list-item-color);
+    min-height: rem(48px);
+    transition: color .2s ease-in-out;
+
+    .icon {
+        margin-right: rem(16px);
+        color: var(--btn-list-item-ico-color);
+    }
+
+    &:hover,
+    &:focus {
+        color: var(--btn-list-item-color);
+        text-decoration: none;
+    }
+}
+
+.btn_ico-accent {
+    background: var(--accent-500);
+    color: var(--dark-500);
+	&:hover,
+	&:focus {
+		background: var(--accent-500);
+		color: var(--dark-500);
+	}
+}
+
+.btn_primary {
+    background: var(--accent-500);
+    color: var(--dark-500);
+    border-radius: rem(24px);
+	&:hover,
+	&:focus {
+		background: var(--accent-500);
+		color: var(--dark-500);
+	}
+	&:disabled {
+		background: var(--btn-primary-disabled-bg);
+		color: var(--btn-primary-disabled-color);
+	}
+}
+
+.btn_secondary {
+    border-radius: rem(24px);
+    background: var(--btn-secondary-bg);
+    color: var(--btn-secondary-color);
+	&:hover,
+	&:focus {
+		background: var(--btn-secondary-bg);
+		color: var(--btn-secondary-color);
+	}
+}
+
+/* mouse, touch pad */
+@media (hover: hover) and (pointer: fine) {
+    .btn_ico-primary:hover {
+        background: var(--primary-hover-bg);
+    }
+
+    .btn_switcher:hover {
+        background: var(--btn-switcher-bg-active);
+    }
+
+    .btn_list-item:hover {
+        color: var(--btn-list-item-color-hover);
+    }
+}

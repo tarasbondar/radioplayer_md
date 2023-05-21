@@ -1,3 +1,5 @@
+import { Dropdown, Modal } from './bootstrap.js';
+
 import { header } from './header.js';
 import { forms } from './forms.js';
 import { theme } from './theme.js';
@@ -13,5 +15,3 @@ categorySlider();
 scrollingText();
 nowPlaying();
 debounce();
-
-import '../scss/app.scss';
