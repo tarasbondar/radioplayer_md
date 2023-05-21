@@ -3,6 +3,7 @@ export function header() {
     const menuBackdrop = document.querySelector('[data-menu-backdrop]');
     const menuTrigger = document.querySelector('[data-menu-open]');
     const menu = document.querySelector('[data-menu]');
+    const menuClose = document.querySelector('[data-menu-close]');
 
     const closeMenu = function () {
         menu.classList.remove('active');
@@ -17,7 +18,8 @@ export function header() {
         menuBackdrop.classList.add('active');
         menuBackdrop.addEventListener('click', closeMenu);
     }
-
-    menuTrigger.addEventListener('click', openMenu);
-    document.querySelector('[data-menu-close]').addEventListener('click', closeMenu);
+    if (menuTrigger !== null)
+        menuTrigger.addEventListener('click', openMenu);
+    if (menuClose !== null)
+        menuClose.addEventListener('click', closeMenu);
 }
