@@ -9,7 +9,7 @@
 
     <title>{{ config('app.name', 'Laravel') . ' Admin Panel' }}</title>
     @vite(['resources/js/app.js'])
-    @vite(['resources/css/app.css'])
+{{--    @vite(['resources/css/app.css'])--}}
     <!-- Scripts -->
     {{--<script src="{{ asset('js/app.js') }}"></script>--}}
     <script src="{{ asset('js/jquery-3.6.4.min.js') }}" type="text/javascript"></script>

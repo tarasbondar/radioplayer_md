@@ -12,6 +12,7 @@ return [
     */
     'route'          => [
         'prefix'     => 'translations',
+        //'middleware' => '\App\Http\Middleware\isAdmin'
         //'middleware' => 'auth',
     ],
 
