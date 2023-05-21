@@ -1,5 +1,5 @@
 // Functions first
-@import "bootstrap/scss/functions";
+@import "~bootstrap/scss/functions";
 
 
 // Variable overrides second
@@ -65,19 +65,19 @@ $modal-content-border-radius: 0;
 
 
 // Required Bootstrap imports
-@import "bootstrap/scss/variables";
-@import "bootstrap/scss/maps";
-@import "bootstrap/scss/mixins";
-@import "bootstrap/scss/root";
-@import "bootstrap/scss/helpers";
-@import "bootstrap/scss/bootstrap-grid";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/maps";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/root";
+@import "~bootstrap/scss/helpers";
+@import "~bootstrap/scss/bootstrap-grid";
 
 
 // Optional components
-@import "bootstrap/scss/utilities";
-@import "bootstrap/scss/reboot";
-@import "bootstrap/scss/transitions";
-@import "bootstrap/scss/dropdown";
-@import "bootstrap/scss/forms";
-@import "bootstrap/scss/modal";
-@import "bootstrap/scss/spinners";
+@import "~bootstrap/scss/utilities";
+@import "~bootstrap/scss/reboot";
+@import "~bootstrap/scss/transitions";
+@import "~bootstrap/scss/dropdown";
+@import "~bootstrap/scss/forms";
+@import "~bootstrap/scss/modal";
+@import "~bootstrap/scss/spinners";
