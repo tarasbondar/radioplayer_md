@@ -30,10 +30,16 @@
                         <label for="source-hd" class="col-md-4 col-form-label text-md-right">Source HD</label>
                         <div class="col-md-6"> <input id="source-hd" type="text" class="form-control" name="source-hd" value="{{ @$station['source_hd'] }}"> </div>
                     </div>
+
                     <div class="mb-3 form-group row">
-                        <label for="image" class="col-md-4 col-form-label text-md-right">Image</label>
-                        <div class="col-md-6"> image upload tba </div>
+                        <label class="col-md-4 col-form-label text-md-right">Current Image</label>
+                        <div class="col-md-6"> <div class="form-control">{{ $station['image_logo'] ?? 'none' }} </div></div>
                     </div>
+                    <div class="mb-3 form-group row">
+                        <label for="image" class="col-md-4 col-form-label text-md-right">Upload Image</label>
+                        <div class="col-md-6"><input id="image" type="file" name="image"></div>
+                    </div>
+
                     <div class="mb-3 form-group row">
                         <label for="status" class="col-md-4 col-form-label text-md-right">Status</label>
                         <div class="col-md-6 py-2">

@@ -62,7 +62,7 @@
                 <div class="np-modal__player-body__header">
                     <div class="logo">
                         <img class="logo__bg" srcset="/img/radio-logo.png 1x, img/radio-logo@2x.png 2x" src="/img/radio-logo.png" width="100%" alt="" loading="lazy">
-                        <img class="logo__img" srcset="/img/radio-logo.png 1x, img/radio-logo@2x.png 2x" src="/img/radio-logo.png" width="100%" alt="" loading="lazy">
+                        <img class="logo__img" srcset="{{ !empty($current['image_logo']) ? 'uploads/stations_images/' . $current['image_logo'] : "/img/station-placeholder.png"}} 1x, img/radio-logo@2x.png 2x" src="/img/radio-logo.png" width="100%" alt="" loading="lazy">
                     </div>
                     <div class="np-modal__player-body__header__inner">
                         <div class="np-modal__player-body__header__pretitle x-small">Song title</div>
@@ -106,7 +106,8 @@
                         <svg class="icon"><use href="/img/sprite.svg#q"></use></svg>
                     </button>
 
-                    <button class="btn btn_ico btn_ico-primary np-modal__btn-favourites active" type="button" aria-label="Добавить в избранное">
+                    <button class="btn btn_ico btn_ico-primary np-modal__btn-favourites fav-station {{$favorited ? 'active' : ''}}" type="button" value="{{ $current['id'] }}"
+                            aria-label="{{$favorited ? "Убрать из избранного" : "Добавить в избранное"}}">
                         <svg class="icon" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"></path>
                         </svg>

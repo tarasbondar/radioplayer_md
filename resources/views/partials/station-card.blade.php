@@ -2,7 +2,7 @@
     <div class="item">
         <div class="logo">
             <img class="logo__bg" srcset="/img/radio-logo.png 1x, /img/radio-logo@2x.png 2x" src="/img/radio-logo.png" width="100%" alt="" loading="lazy">
-            <img class="logo__img" srcset="/img/radio-logo.png 1x, /img/radio-logo@2x.png 2x" src="/img/radio-logo.png" width="100%" alt="" loading="lazy">
+            <img class="logo__img" srcset="{{ !empty($station['image_logo']) ? 'uploads/stations_images/' . $station['image_logo'] : "/img/station-placeholder.png"}}, /img/radio-logo@2x.png 2x" src="/img/radio-logo.png" width="100%" alt="" loading="lazy">
         </div>
         <h3 class="x-small item__title">{{ $station['name'] }}</h3>
         <button class="item__link" type="button" aria-label="Проиграть станцию"></button>

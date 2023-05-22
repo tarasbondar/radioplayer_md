@@ -80,9 +80,15 @@ class IndexController
             return '';
         }
 
+        if (Auth::check()) {
+            $favorited = DB::table('radiostations_favorites')->where('user_id', '=', Auth::id())->where('station_id', '=', $current['id'])->count();
+        } else {
+            $favorited = 0;
+        }
+
         $all = $this->searchStations();
 
-        return view('partials.player-radio', ['current' => $current, 'all' => $all])->render();
+        return view('partials.player-radio', ['current' => $current, 'all' => $all, 'favorited' => $favorited ])->render();
     }
 
     public function podcasts(Request $request) {

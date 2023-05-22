@@ -9,6 +9,7 @@ use App\Models\RadioStation2Category;
 use App\Models\RadioStation2Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Maatwebsite\Excel\Excel;
 use App\Exports\RadioStationsExport;
 
@@ -54,15 +55,23 @@ class RadioStationController extends Controller
         $station->description = $request['description'];
         $station->source = $request['source'];
         $station->source_hd = $request['source-hd'];
-        $station->image_logo = ''; //tba
+
+        if ($request->has('image')) {
+            if (isset($station->image_logo)) {
+                File::delete(RadioStation::UPLOADS_IMAGES . '/' . $station->image_logo);
+            }
+            $filename = time() . '_' . $request->image->getClientOriginalName();
+            $request->image->move(RadioStation::UPLOADS_IMAGES, $filename);
+            $station->image_logo = $filename;
+        }
+
         $station->status = $request['status'];
         $station->save();
 
-        //categories
         $categories_new = explode(',', $request['categories']);
 
         if (array_diff($categories_new, $categories_current)) {
-            $to_add = array_filter(array_diff($categories_new, $categories_current)); //\Log::info('to add: ' . implode(', ', $to_add));
+            $to_add = array_filter(array_diff($categories_new, $categories_current));
             if (count($to_add)) {
                 foreach ($to_add as $category_id) {
                     RadioStation2Category::create(['station_id' => $station->id, 'category_id' => $category_id, 'created_at' => now()]);
@@ -73,7 +82,7 @@ class RadioStationController extends Controller
         if (array_diff($categories_current, $categories_new)) {
             $to_delete = array_filter(array_diff($categories_current, $categories_new));
             if (count($to_delete)) {
-                $ids = implode(', ', $to_delete); //\Log::info('to delete: ' . $ids);
+                $ids = implode(', ', $to_delete);
                 RadioStation2Category::whereRaw("station_id = {$station->id} AND category_id IN ($ids)")->delete();
             }
         }
