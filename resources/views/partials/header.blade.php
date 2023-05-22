@@ -77,11 +77,11 @@
                     <a class="btn header__menu__link-panel" href="/apply">
                         <svg class="icon"><use href="/img/sprite.svg#mic"></use></svg>
                         <span>Стать автором</span>
-                        {{--<picture>
+                        <picture>
                             <source srcset="img/become-author-dark.png 1x, img/become-author-dark@2x.png 2x" media="(prefers-color-scheme: dark)">
                             <source srcset="img/become-author-light.png 1x, img/become-author-light@2x.png 2x" media="(prefers-color-scheme: light) or (prefers-color-scheme: no-preference)">
                             <img class="header__menu__link-panel__img" src="img/become-author-light.png" alt="" width="115" height="100" loading="lazy">
-                        </picture>--}}
+                        </picture>
                     </a>
                 @endif
 
@@ -89,7 +89,7 @@
                 <a class="btn header__menu__link-panel header__menu__link-panel_highlighted" href="/my-podcasts">
                     <svg class="icon"><use href="/img/sprite.svg#mic"></use></svg>
                     <span>Мои подкасты</span>
-                    {{--<img class="header__menu__link-panel__img" srcset="img/become-author-highlighted.png 1x, img/become-author-highlighted@2x.png 2x" src="img/become-author-highlighted.png" alt="" width="115" height="100" loading="lazy">--}}
+                    <img class="header__menu__link-panel__img" srcset="img/become-author-highlighted.png 1x, img/become-author-highlighted@2x.png 2x" src="img/become-author-highlighted.png" alt="" width="115" height="100" loading="lazy">
                 </a>
                 @endif
 
@@ -130,7 +130,33 @@
                         {{ csrf_field() }}
                     </form>
                 @endauth
+
+                <hr class="header__menu__sep">
+
+                <a class="btn btn_list-item" href="#" rel="nofollow noopener" target="_blank">
+                    <svg class="icon">
+                        <use href="img/sprite.svg#facebook"></use>
+                    </svg>
+                    <span>Facebook</span>
+                </a>
+
+                <a class="btn btn_list-item" href="#" rel="nofollow noopener" target="_blank">
+                    <svg class="icon">
+                        <use href="img/sprite.svg#instagram"></use>
+                    </svg>
+                    <span>Instagram</span>
+                </a>
             </nav>
+
+            <div class="header__menu__app-links">
+                <a class="header__menu__app-links__link" href="!#" rel="nofollow noopener" target="_blank" aria-label="Загрузите в App Store">
+                    <img class="header__menu__app-links__img header__menu__app-links__img_app-store" src="img/app_store-ru.svg" width="120" height="40" alt="App Store" loading="lazy">
+                </a>
+
+                <a class="header__menu__app-links__link" href="!#" rel="nofollow noopener" target="_blank" aria-label="Скачать из Google Play">
+                    <img class="header__menu__app-links__img header__menu__app-links__img_google-play" src="img/google_play-ru.svg" width="135" height="40" alt="Google Play" loading="lazy">
+                </a>
+            </div>
 
             <div class="header__menu__footer x-small">
                 Контакты для связи<br>

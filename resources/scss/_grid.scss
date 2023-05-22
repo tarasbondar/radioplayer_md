@@ -4,6 +4,8 @@
 }
 
 .main {
+    position: relative;
+    z-index: 1;
     flex-shrink: 0;
     margin-bottom: auto;
 }
@@ -46,7 +48,6 @@
 
 @media (min-width: 992px) {
     .page-grid {
-        padding-left: rem(400px);
 	    flex: 1 1 auto;
     }
 
@@ -58,5 +59,11 @@
         padding-bottom: rem(48px);
         margin-bottom: 0;
 	    height: 100%;
+    }
+
+    .player-open {
+        .page-grid {
+            padding-left: rem(400px);
+        }
     }
 }

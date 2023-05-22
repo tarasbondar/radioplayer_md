@@ -1,4 +1,6 @@
 .header {
+    position: relative;
+    z-index: 1000;
     padding: rem(16px) rem(20px);
     margin-bottom: rem(24px);
     display: flex;
@@ -280,6 +282,29 @@
     .header__menu__footer__link {
         color: var(--menu-footer-color);
     }
+}
+
+.header__menu__app-links {
+    margin-top: rem(24px);
+    display: flex;
+    gap: rem(16px);
+}
+
+.header__menu__app-links__link {
+    display: block;
+}
+
+.header__menu__app-links__img {
+    display: block;
+    height: rem(40px);
+}
+
+.header__menu__app-links__img_app-store {
+    width: rem(120px);
+}
+
+.header__menu__app-links__img_google-play {
+    width: rem(135px);
 }
 
 @media (min-width: 992px) {

@@ -109,6 +109,8 @@
 .btn_ico-accent {
     background: var(--accent-500);
     color: var(--dark-500);
+    transition: background .2s ease-in-out;
+
 	&:hover,
 	&:focus {
 		background: var(--accent-500);
@@ -120,6 +122,8 @@
     background: var(--accent-500);
     color: var(--dark-500);
     border-radius: rem(24px);
+    transition: background .2s ease-in-out;
+
 	&:hover,
 	&:focus {
 		background: var(--accent-500);
@@ -150,9 +154,18 @@
 
     .btn_switcher:hover {
         background: var(--btn-switcher-bg-active);
+        color: var(--btn-switcher-color-active);
     }
 
     .btn_list-item:hover {
         color: var(--btn-list-item-color-hover);
+    }
+
+    .btn_ico-accent:hover {
+        background: var(--green-300);
+    }
+
+    .btn_primary:hover {
+        background: var(--green-300);
     }
 }

@@ -13,6 +13,10 @@ export default defineConfig({
         }),
     ],
 
+    css: {
+        devSourcemap: true
+    },
+
     resolve: {
         alias: {
             '~bootstrap': path.resolve(__dirname, 'node_modules/bootstrap'),

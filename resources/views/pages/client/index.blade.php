@@ -11,30 +11,30 @@
                         <h2 class="h2">Избранные</h2>
                     </div>
 
-                    <div class="category-slider__wrapper">
-                        <div class="swiper" data-category-slider>
-                            <div class="swiper-wrapper favorites-container">
-                                @if (count($fav_stations) == 0)
-                                    {{ 'You have no favorite radiostations' }}
-                                @else
+                    @if (count($fav_stations) == 0)
+                        {{ 'You have no favorite radiostations' }}
+                    @else
+                        <div class="category-slider__wrapper">
+                            <div class="swiper" data-category-slider>
+                                <div class="swiper-wrapper favorites-container">
                                     @foreach ($fav_stations as $station)
                                         @include('partials.station-card')
                                     @endforeach
-                                @endif
+                                </div>
+                            </div>
+
+                            <div class="swiper-button swiper-button-prev" data-category-slider-prev>
+                                <svg class="icon">
+                                    <use href="/img/sprite.svg#chevron-left"></use>
+                                </svg>
+                            </div>
+                            <div class="swiper-button swiper-button-next" data-category-slider-next>
+                                <svg class="icon">
+                                    <use href="/img/sprite.svg#chevron-right"></use>
+                                </svg>
                             </div>
                         </div>
-
-                        <div class="swiper-button swiper-button-prev" data-category-slider-prev>
-                            <svg class="icon">
-                                <use href="/img/sprite.svg#chevron-left"></use>
-                            </svg>
-                        </div>
-                        <div class="swiper-button swiper-button-next" data-category-slider-next>
-                            <svg class="icon">
-                                <use href="/img/sprite.svg#chevron-right"></use>
-                            </svg>
-                        </div>
-                    </div>
+                    @endif
                 </div>
             </section>
         @endauth
@@ -132,7 +132,7 @@
                 })
             });
 
-            $(document).on('click', '.play-station', function () {
+            $(document).on('click', '[data-play-station-btn]', function () {
                 let station_id = $(this).attr('id').split('-')[1];
 
                 $.ajax({
@@ -146,7 +146,7 @@
                         if (player !== null) {
                             player.remove();
                         }
-                        $('.body').append(response);
+                        $('.body').append(response).addClass('player-open');
                         //if isset then stop
                         window.audio = document.createElement("audio");
                         let source = $('#audio-source').val();
