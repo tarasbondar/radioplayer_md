@@ -30,7 +30,6 @@ export let playerRadio = {
         if (this.timer.intervalMinutes)
             this.timer.minutes = this.timer.intervalMinutes + 1;
         this.timerRenderTimes();
-        console.log(this.timer)
     },
     timerClose(){
         $('[data-np-modal-player]').removeClass('hidden');
