@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ChangeNameRequest;
+use App\Http\Requests\ChangePasswordRequest;
 use App\Models\AuthorApplication;
 use App\Models\DownloadRecord;
 use App\Models\HistoryRecord;
@@ -13,18 +15,25 @@ use App\Models\PodcastSub;
 use App\Models\QueuedEpisode;
 use App\Models\RadioStation;
 use App\Models\User;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
+use Throwable;
+
 //use Illuminate\Support\Facades\Redirect;
 //use function Symfony\Component\ErrorHandler\reRegister;
 
 class ProfileController extends Controller
 {
 
-    public function __construct()
+    private UserService $userService;
+
+    public function __construct(UserService $userService)
     {
         $this->middleware('auth');
+        $this->userService = $userService;
     }
 
     public function index()
@@ -330,7 +339,41 @@ class ProfileController extends Controller
     }
 
     public function settings() {
-        return view('');
+        return view('profile.settings');
+    }
+
+    public function changeName(ChangeNameRequest $request)
+    {
+        $data = $request->validated();
+        try {
+            $this->userService->changeName($request->user(), $data['name']);
+        } catch (Throwable $e) {
+            return response()->json(
+                ['status' => 'error', 'message' => 'Серверная ошибка. Обратитесь к администратору.'],
+                500);
+        }
+        return response()->json([
+            'status' => 'success',
+            'message' => '',
+            'redirectUrl' => route('profile.settings')
+        ]);
+    }
+
+    public function changePassword(ChangePasswordRequest $request)
+    {
+        $data = $request->validated();
+        try {
+            $this->userService->changePassword($request->user(), $data['password_new']);
+        } catch (Throwable $e) {
+            return response()->json(
+                ['status' => 'error', 'message' => 'Серверная ошибка. Обратитесь к администратору.'],
+                500);
+        }
+        return response()->json([
+            'status' => 'success',
+            'message' => '',
+            'redirectUrl' => route('profile.settings')
+        ]);
     }
 
     public function logout() {

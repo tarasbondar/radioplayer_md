@@ -51,6 +51,11 @@ Route::post('/clear-history', [ProfileController::class, 'clearHistory']);
 Route::get('/downloads', [ProfileController::class, 'downloads']);
 Route::post('/download-episode', [ProfileController::class, 'downloadEpisode']);
 
+
+Route::get('/settings', [ProfileController::class, 'settings'])->name('profile.settings');
+Route::post('/settings/change-name', [ProfileController::class, 'changeName'])->name('profile.changeName');
+Route::post('/settings/change-password', [ProfileController::class, 'changePassword'])->name('profile.changePassword');
+
 Route::get('/privacy-policy', [IndexController::class, 'privacy']);
 
 Route::name('admin.')->prefix('admin')->middleware([IsAdmin::class])->group(function () {
