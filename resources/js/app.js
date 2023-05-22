@@ -1,6 +1,6 @@
 import { Dropdown, Modal } from 'bootstrap';
 
-import {player} from "./player";
+import {playerRadio} from "./player-radio";
 import { header } from './header.js';
 import { forms } from './forms.js';
 import { theme } from './theme.js';
@@ -9,7 +9,7 @@ import { scrollingText } from './scrolling-text.js';
 import { nowPlaying } from './now-playing.js';
 import { debounce } from './debounce.js';
 
-player.init();
+playerRadio.init();
 
 header();
 forms();

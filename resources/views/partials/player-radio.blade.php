@@ -198,8 +198,8 @@
                     </div>
                 </div>
                 <div class="np-modal__timer__actions">
-                    <button class="btn btn_secondary btn_large" type="button">Сбросить</button>
-                    <button class="btn btn_primary btn_large" type="button">Применить</button>
+                    <button class="btn btn_secondary btn_large" data-timer-reset type="button">Сбросить</button>
+                    <button class="btn btn_primary btn_large" data-timer-apply type="button">Применить</button>
                 </div>
             </div>
 

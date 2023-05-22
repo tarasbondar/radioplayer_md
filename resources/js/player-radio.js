@@ -1,4 +1,4 @@
-export let player = {
+export let playerRadio = {
     volume: 0.5,
     init(){
         this.initVolumeSlider();
@@ -38,6 +38,36 @@ export let player = {
         $(document).on('click', '[data-play-button]', function(){
             self.play();
         })
+        $(document).on('click', '[data-np-modal-timer-trigger]', function(){
+            self.timerShow();
+        });
+        $(document).on('click', '[data-np-modal-timer-close]', function(){
+            self.timerClose();
+        });
+        $(document).on('click', '[data-timer-reset]', function(){
+            self.timerReset();
+        });
+        $(document).on('click', '[data-timer-apply]', function(){
+            self.timerApply();
+        });
+    },
+    timerShow(){
+        $('[data-np-modal-player]').addClass('hidden');
+        $('[data-np-modal-timer]').removeClass('hidden');
+        $('[data-np-modal-timer]').addClass('open');
+    },
+    timerClose(){
+        $('[data-np-modal-player]').removeClass('hidden');
+        $('[data-np-modal-timer]').addClass('hidden');
+        $('[data-np-modal-timer]').removeClass('open');
+    },
+    timerReset(){
+        // implementation
+        this.timerClose();
+    },
+    timerApply(){
+        // implementation
+        this.timerClose();
     },
     changeStation(id){
         let self = this;
