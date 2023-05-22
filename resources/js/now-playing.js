@@ -17,10 +17,12 @@ export function nowPlaying() {
 	    npModalPlayingList = document.querySelector('[data-np-modal-playing-list]'),
 	    npModalPlayingListClose = document.querySelector('[data-np-modal-playing-list-close]');
 
-    npModalTrigger.addEventListener('click', function(){
-        player.classList.add('open');
-        body.classList.add('modal-open');
-    });
+    if (npModalTrigger) {
+        npModalTrigger.addEventListener('click', function(){
+            player.classList.add('open');
+            body.classList.add('modal-open');
+        });
+    }
 
     npModalClose.forEach(function(e){
         e.addEventListener('click', function(){
@@ -31,23 +33,27 @@ export function nowPlaying() {
         })
     });
 
-    npModalTimerTrigger.addEventListener('click', function(){
-    	if (npModalPlayer) {
-		    npModalPlayer.classList.add('hidden');
-	    } else if (npModalPlaying) {
-		    npModalPlaying.classList.add('hidden');
-	    }
-        npModalTimer.classList.add('open');
-    });
+    if (npModalTimerTrigger) {
+        npModalTimerTrigger.addEventListener('click', function(){
+            if (npModalPlayer) {
+                npModalPlayer.classList.add('hidden');
+            } else if (npModalPlaying) {
+                npModalPlaying.classList.add('hidden');
+            }
+            npModalTimer.classList.add('open');
+        });
+    }
 
-    npModalTimerClose.addEventListener('click', function(){
-        npModalTimer.classList.remove('open');
-	    if (npModalPlayer) {
-		    npModalPlayer.classList.remove('hidden');
-	    } else if (npModalPlaying) {
-		    npModalPlaying.classList.remove('hidden');
-	    }
-    });
+    if (npModalTimerClose) {
+        npModalTimerClose.addEventListener('click', function(){
+            npModalTimer.classList.remove('open');
+            if (npModalPlayer) {
+                npModalPlayer.classList.remove('hidden');
+            } else if (npModalPlaying) {
+                npModalPlaying.classList.remove('hidden');
+            }
+        });
+    }
 
     if (npModalPlayingListTrigger !== null)
         npModalPlayingListTrigger.addEventListener('click', function(){

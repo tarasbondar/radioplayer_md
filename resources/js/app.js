@@ -1,3 +1,5 @@
+import { Dropdown, Modal } from 'bootstrap';
+
 import { header } from './header.js';
 import { forms } from './forms.js';
 import { theme } from './theme.js';
