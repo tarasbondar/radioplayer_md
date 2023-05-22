@@ -25,12 +25,12 @@ export let playerRadio = {
         $('[data-np-modal-timer]').removeClass('hidden');
         $('[data-np-modal-timer]').addClass('open');
 
-        if (this.timer.intervalHours)
-            this.timer.hours = this.timer.intervalHours;
+
+        this.timer.hours = this.timer.intervalHours;
         if (this.timer.intervalMinutes)
             this.timer.minutes = this.timer.intervalMinutes + 1;
         this.timerRenderTimes();
-
+        console.log(this.timer)
     },
     timerClose(){
         $('[data-np-modal-player]').removeClass('hidden');
@@ -65,8 +65,8 @@ export let playerRadio = {
                 $('.player-pause').hide();
             } else {
                 this.timer.seconds--;
-                this.timer.intervalHours = Math.floor(this.timer.seconds / 60 / 60);
-                this.timer.intervalMinutes = Math.floor(this.timer.seconds / 60) - this.timer.hours * 60;
+                this.timer.intervalHours = Math.floor((this.timer.seconds + 60) / 60 / 60);
+                this.timer.intervalMinutes = Math.floor(this.timer.seconds / 60) - this.timer.intervalHours * 60;
                 $('[data-timer-active-time]').text(String(this.timer.intervalHours).padStart(2, '0') + ':' + String(this.timer.intervalMinutes + 1).padStart(2, '0'));
             }
         }, 1000);
