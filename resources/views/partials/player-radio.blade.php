@@ -84,7 +84,7 @@
                     </svg>
 
                     <div class="np-modal__player-body__main-actions__inner">
-                        <button class="btn btn_ico btn_ico-accent now-playing__play-btn active" id="play-button" type="button" aria-label="Пауза">
+                        <button class="btn btn_ico btn_ico-accent now-playing__play-btn active" data-play-button id="play-button" type="button" aria-label="Пауза">
                             <svg class="icon now-playing__play-btn__pause player-pause" hidden>
                                 <use href="/img/sprite.svg#pause-bk"></use>
                             </svg>
@@ -115,7 +115,7 @@
 
                     <button class="btn btn_ico btn_ico-primary np-modal__btn-timer" type="button" aria-label="Таймер выключения" data-np-modal-timer-trigger>
                         <svg class="icon"><use href="/img/sprite.svg#timer-3"></use></svg>
-                        {{--<span class="np-modal__btn-timer__time x-small">00:15</span>--}}
+                        <span class="np-modal__btn-timer__time x-small">00:15</span>
                     </button>
 
                     <div class="dropup-center dropup np-modal__btn-volume">

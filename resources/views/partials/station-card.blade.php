@@ -5,7 +5,7 @@
             <img class="logo__img" srcset="{{ !empty($station['image_logo']) ? 'uploads/stations_images/' . $station['image_logo'] : "/img/station-placeholder.png"}}, /img/radio-logo@2x.png 2x" src="/img/radio-logo.png" width="100%" alt="" loading="lazy">
         </div>
         <h3 class="x-small item__title">{{ $station['name'] }}</h3>
-        <button class="item__link" id="station-{{ $station['id'] }}" type="button" aria-label="Проиграть станцию" data-play-station-btn></button>
+        <button class="item__link" id="station-{{ $station['id'] }}" type="button" aria-label="Проиграть станцию" data-play-station="{{ $station['id']  }}"></button>
         <button class="item__favourites-btn fav-station {{$station['favorited'] ? 'active' : ''}}" value="{{ $station['id'] }}" type="button"
                 aria-label="{{$station['favorited'] ? "Убрать из избранного" : "Добавить в избранное"}}">
             <span class="item__favourites-btn__inner">
