@@ -115,7 +115,7 @@
 
                     <button class="btn btn_ico btn_ico-primary np-modal__btn-timer" type="button" aria-label="Таймер выключения" data-np-modal-timer-trigger>
                         <svg class="icon"><use href="/img/sprite.svg#timer-3"></use></svg>
-                        <span class="np-modal__btn-timer__time x-small">00:15</span>
+                        <span class="np-modal__btn-timer__time x-small hidden" data-timer-active-time>00:15</span>
                     </button>
 
                     <div class="dropup-center dropup np-modal__btn-volume">
@@ -152,7 +152,7 @@
                         <use href="/img/sprite.svg#chevron-down"></use>
                     </svg>
                 </button>
-                <div class="np-modal__header__title h2">Таймер</div>
+                <div class="np-modal__header__title h2">{{ __('timer.timer') }}</div>
                 <button class="btn btn_ico btn_ico-primary" type="button" aria-label="Закрыть таймер" data-np-modal-timer-close>
                     <svg class="icon">
                         <use href="/img/sprite.svg#x"></use>
@@ -161,19 +161,19 @@
             </div>
 
             <div class="np-modal__timer__inner">
-                <div class="np-modal__timer__title">Остановить через</div>
+                <div class="np-modal__timer__title">{{ __('timer.stop_after') }}</div>
                 <div class="np-modal__timer__form">
                     <div class="np-modal__timer__time-input">
-                        <button class="btn btn_ico btn_ico-primary" type="button" aria-label="Увеличить время">
+                        <button class="btn btn_ico btn_ico-primary" data-timer-change-hours="up" type="button" aria-label="{{ __('timer.increase_timer') }}">
                             <svg class="icon">
                                 <use href="/img/sprite.svg#chevron-up"></use>
                             </svg>
                         </button>
                         <div class="np-modal__timer__values">
-                            <div class="np-modal__timer__value h1">00</div>
-                            <div class="np-modal__timer__label x-small">часов</div>
+                            <div class="np-modal__timer__value h1" data-timer-hours>00</div>
+                            <div class="np-modal__timer__label x-small">{{ __('timer.hours') }}</div>
                         </div>
-                        <button class="btn btn_ico btn_ico-primary" type="button" aria-label="Уменьшить время">
+                        <button class="btn btn_ico btn_ico-primary" data-timer-change-hours="down" type="button" aria-label="{{ __('timer.decrease_timer') }}">
                             <svg class="icon">
                                 <use href="/img/sprite.svg#chevron-down"></use>
                             </svg>
@@ -181,16 +181,16 @@
                     </div>
 
                     <div class="np-modal__timer__time-input">
-                        <button class="btn btn_ico btn_ico-primary" type="button" aria-label="Увеличить время">
+                        <button class="btn btn_ico btn_ico-primary" data-timer-change-minutes="up" type="button" aria-label="{{ __('timer.increase_timer') }}">
                             <svg class="icon">
                                 <use href="/img/sprite.svg#chevron-up"></use>
                             </svg>
                         </button>
                         <div class="np-modal__timer__values">
-                            <div class="np-modal__timer__value h1">15</div>
-                            <div class="np-modal__timer__label x-small">минут</div>
+                            <div class="np-modal__timer__value h1" data-timer-minutes>15</div>
+                            <div class="np-modal__timer__label x-small">{{ __('timer.minutes') }}</div>
                         </div>
-                        <button class="btn btn_ico btn_ico-primary" type="button" aria-label="Уменьшить время">
+                        <button class="btn btn_ico btn_ico-primary" data-timer-change-minutes="down" type="button" aria-label="{{ __('timer.decrease_timer') }}">
                             <svg class="icon">
                                 <use href="/img/sprite.svg#chevron-down"></use>
                             </svg>
@@ -198,8 +198,8 @@
                     </div>
                 </div>
                 <div class="np-modal__timer__actions">
-                    <button class="btn btn_secondary btn_large" data-timer-reset type="button">Сбросить</button>
-                    <button class="btn btn_primary btn_large" data-timer-apply type="button">Применить</button>
+                    <button class="btn btn_secondary btn_large" data-timer-reset type="button">{{ __('timer.reset') }}</button>
+                    <button class="btn btn_primary btn_large" data-timer-apply type="button">{{ __('timer.apply') }}</button>
                 </div>
             </div>
 
