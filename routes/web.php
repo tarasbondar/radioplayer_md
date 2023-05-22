@@ -12,7 +12,7 @@ use App\Http\Controllers\RadioStationCategoryController;
 use App\Http\Controllers\RadioStationTagController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Middleware\isAdmin;
+use App\Http\Middleware\IsAdmin;
 use \Illuminate\Support\Facades\Auth;
 
 Auth::routes();
@@ -21,6 +21,7 @@ Route::get('/', [IndexController::class, 'index'])->name('home');
 Route::get('/podcasts', [IndexController::class, 'podcasts']);
 Route::get('/favorite-station/{id}', [ProfileController::class, 'favStation']);
 Route::post('/update-stations', [IndexController::class, 'updateStations']);
+Route::get('/play-station/{id}', [IndexController::class, 'playStation']);
 
 Route::get('/apply', [ProfileController::class, 'apply']);
 Route::post('/send-application', [ProfileController::class, 'sendApplication']);
@@ -81,6 +82,7 @@ Route::name('admin.')->prefix('admin')->middleware([IsAdmin::class])->group(func
     Route::get('/podcasts-episodes/add', [PodcastEpisodeController::class, 'add']);
     Route::get('/podcasts-episodes/edit/{id}', [PodcastEpisodeController::class, 'edit']);
     Route::post('/podcasts-episodes/save', [PodcastEpisodeController::class, 'save']);
+    Route::post('/podcasts-episodes/upload-audio', [PodcastEpisodeController::class, 'uploadAudio']);
     Route::delete('/podcasts-episodes/{id}', [PodcastEpisodeController::class, 'delete']);
 
     Route::get('/stations', [RadioStationController::class, 'index']);

@@ -44,9 +44,20 @@
                         <label for="tags" class="col-md-4 col-form-label text-md-right">Tags</label>
                         <div class="col-md-6"> <input id="tags" type="text" class="form-control " name="tags" value="{{ @$episode['tags'] }}" required>  </div>
                     </div>
-                    <div class="mb-3 form-group row">
+                    {{--<div class="mb-3 form-group row">
                         <label for="source" class="col-md-4 col-form-label text-md-right">Source</label>
                         <div class="col-md-6"> <input id="source" type="text" class="form-control " name="source" value="{{ @$episode['source'] }}" required>  </div>
+                    </div>--}}
+                    <div class="mb-3 form-group row">
+                        <label for="tags" class="col-md-4 col-form-label text-md-right">Audio</label>
+                        <div class="col-md-6">
+                            <div id="audio-upload">
+                                <button id="browse" class="btn btn-primary">Browse</button>
+                            </div>
+                            <div  style="display: none; height: 25px" class="progress mt-3">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%; height: 100%">0</div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="mb-3 form-group row">
@@ -71,6 +82,45 @@
             </div>
         </div>
     </div>
+
+    <script type="text/javascript">
+        (function() {
+            let resumable = new Resumable({
+                target: '{{ '/admin/podcasts-episodes/upload-audio' }}',
+                query: {_token: '{{ csrf_token() }}'},
+                chunkSize: 10 * 1024 * 1024,
+                testChunks: false,
+                throttleProgressCallbacks: 1,
+            });
+
+            let browse = $('#browse');
+            resumable.assignBrowse(browse[0]);
+
+            let progress = $('.progress');
+
+            resumable.on('fileAdded', function (file) {
+                progress.find('.progress-bar').css('width', '0%');
+                progress.find('.progress-bar').html('0%');
+                progress.find('.progress-bar').removeClass('bg-success');
+                progress.show();
+                resumable.upload();
+            });
+
+            resumable.on('fileProgress', function (file) {
+                let update_progress = Math.floor(file.progress() * 100);
+                progress.find('.progress-bar').css('width', `${update_progress}%`);
+                progress.find('.progress-bar').html(`${update_progress}%`)
+            });
+
+            resumable.on('fileSuccess', function (file) {
+                window.alert(file.fileName + ' was successfully uploaded');
+            });
+
+            resumable.on('fileError', function (file, response) {
+                window.alert(response);
+            });
+        })(jQuery)
+    </script>
 
 @endsection
 

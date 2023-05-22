@@ -122,14 +122,56 @@
                             } else {
                                 $('.favorites-container .swiper-slide:last').append(response.output);
                             }
-                            $('.stations-container > #station-'+response.id + ' .fav-station').addClass('active');
+                            $('#station-'+response.id + ' .fav-station').addClass('active');
                         }
                         if (response.action === 'deleted') {
-                            $('.favorites-container > #station-'+response.id).remove();
-                            $('.stations-container > #station-'+response.id + ' .fav-station').removeClass('active');
+                            $('#station-'+response.id).remove();
+                            $('#station-'+response.id + ' .fav-station').removeClass('active');
                         }
                     }
                 })
+            });
+
+            $(document).on('click', '.play-station', function () {
+                let station_id = $(this).attr('id').split('-')[1];
+
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    method: 'GET',
+                    url: '/play-station/' + station_id,
+                    success: function (response) {
+                        let player = $('.player');
+                        if (player !== null) {
+                            player.remove();
+                        }
+                        $('.body').append(response);
+                        //if isset then stop
+                        window.audio = document.createElement("audio");
+                        let source = $('#audio-source').val();
+
+                        //if (audio.canPlayType("audio/mpeg")) {
+                            window.audio.setAttribute("src", source);
+                        //}
+                    }
+                })
+            });
+
+            $(document).on('click', '#play-button', function () {
+                if (window.audio.paused) {
+                    window.audio.play();
+                    $('.player-play').hide();
+                    $('.player-pause').removeAttr('hidden').show();
+                    /*window.audio.addEventListener("loadedmetadata", (e) => {
+                       console.log(e);
+                    });*/
+                } else {
+                    window.audio.pause();
+                    $('.player-play').show();
+                    $('.player-pause').hide();
+                }
+                //window.audio.volume = 0.2;
             })
 
         })(jQuery)

@@ -6,6 +6,8 @@ use App\Models\Podcast;
 use Illuminate\Http\Request;
 use App\Models\PodcastEpisode;
 use Illuminate\Support\Facades\Auth;
+use Pion\Laravel\ChunkUpload\Handler\HandlerFactory;
+use Pion\Laravel\ChunkUpload\Receiver\FileReceiver;
 
 class PodcastEpisodeController extends Controller
 {
@@ -48,11 +50,41 @@ class PodcastEpisodeController extends Controller
         $episode->podcast_id = $request->get('podcast');
         $episode->name = $request->get('name');
         $episode->description = $request->get('description');
-        $episode->status = $request->get('tags');
+        $episode->tags = $request->get('tags');
         $episode->status = $request->get('status');
         $episode->save();
 
         return redirect()->action([PodcastEpisodeController::class, 'index']);
+    }
+
+    public function uploadAudio(Request $request) {
+        $receiver = new FileReceiver('file', $request, HandlerFactory::classFromRequest($request));
+
+        if (!$receiver->isUploaded()) {
+            return [
+                'status' => false
+            ];
+        }
+
+        $upload = $receiver->receive();
+        if ($upload->isFinished()) {
+            $file = $upload->getFile();
+            $extension = $file->getClientOriginalExtension();
+            $filename = time() . '_' . str_replace('.' . $extension, '', $file->getClientOriginalName()) . '.' . $extension;
+            $path = public_path(PodcastEpisode::UPLOADS_AUDIO);
+            $file->move($path, $filename);
+
+            return [
+                'path' => $path,
+                'filename' => $filename
+            ];
+        }
+
+        $handler = $upload->handler();
+        return [
+            'done' => $handler->getPercentageDone(),
+            'status' => true
+        ];
     }
 
     public function delete($id) {

@@ -17,6 +17,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <script src="{{ asset('js/resumable.min.js') }}" type="text/javascript"></script>
 
     <!-- Styles -->
     {{--<link href="{{ asset('css/style.css') }}" rel="stylesheet">--}}

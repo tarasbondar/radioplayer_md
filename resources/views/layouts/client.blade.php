@@ -5,7 +5,6 @@
 
 <body class="body">
 <div class="page-grid">
-    @include('partials.player-radio')
 
     <div class="page-main">
         <picture>

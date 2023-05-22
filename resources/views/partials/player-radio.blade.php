@@ -1,23 +1,30 @@
 <aside class="player" data-player>
     <div class="now-playing" data-now-playing>
+        {{--<audio id="audio-stream">
+            <source src="{{ $current['source'] }}" type="audio/mpeg">
+        </audio>--}}
+
+        <input id="audio-source" type="text" value="{{ @$current['source'] }}" readonly hidden>
+        {{--<input id="audio-source-hd" type="text" value="{{ @$current['source_hd'] }}" readonly hidden>--}}
+
         <button class="now-playing__btn" type="button" aria-label="Подробнее" data-np-trigger></button>
         <div class="now-playing__track">
             <div class="logo">
-                <img class="logo__bg" srcset="/img/radio-logo.png 1x, img/radio-logo@2x.png 2x" src="/img/radio-logo.png" width="100%" alt="" loading="lazy">
-                <img class="logo__img" srcset="/img/radio-logo.png 1x, img/radio-logo@2x.png 2x" src="/img/radio-logo.png" width="100%" alt="" loading="lazy">
+                <img class="logo__bg" srcset="/img/radio-logo.png 1x, /img/radio-logo@2x.png 2x" src="/img/radio-logo.png" width="100%" alt="" loading="lazy">
+                <img class="logo__img" srcset="/img/radio-logo.png 1x, /img/radio-logo@2x.png 2x" src="/img/radio-logo.png" width="100%" alt="" loading="lazy">
             </div>
             <div class="now-playing__track__body">
                 <div class="now-playing__track__author x-small">
                     <div class="scrolling-text" data-scrolling-text-container>
                         <div class="scrolling-text__inner" data-scrolling-text>
-                            <span class="scrolling-text__data" data-scrolling-text-data>Artist name</span>
+                            <span class="scrolling-text__data artist-name" data-scrolling-text-data>Artist name</span>
                         </div>
                     </div>
                 </div>
                 <div class="now-playing__track__title x-small">
                     <div class="scrolling-text" data-scrolling-text-container>
                         <div class="scrolling-text__inner" data-scrolling-text>
-                            <span class="scrolling-text__data" data-scrolling-text-data>Song title Sint amet adipisicing velit ad deserunt enim sunt</span>
+                            <span class="scrolling-text__data song-title" data-scrolling-text-data>Song title</span>
                         </div>
                     </div>
                 </div>
@@ -40,7 +47,6 @@
         </div>
     </div>
 
-
     <div class="np-modal scrollbar" data-np-modal>
         <div class="np-modal__player" data-np-modal-player>
             <div class="np-modal__header">
@@ -49,7 +55,7 @@
                         <use href="/img/sprite.svg#chevron-down"></use>
                     </svg>
                 </button>
-                <div class="np-modal__header__title h2">Авторадио</div>
+                <div class="np-modal__header__title h2">{{ $current['name'] }}</div>
             </div>
 
             <div class="np-modal__player-body">
@@ -61,7 +67,7 @@
                     <div class="np-modal__player-body__header__inner">
                         <div class="np-modal__player-body__header__pretitle x-small">Song title</div>
                         <div class="np-modal__player-body__header__pretitle x-small">Artist name</div>
-                        <div class="np-modal__player-body__header__title h2">Авторадио</div>
+                        <div class="np-modal__player-body__header__title h2">{{ $current['name'] }}</div>
                     </div>
                 </div>
 
@@ -78,11 +84,11 @@
                     </svg>
 
                     <div class="np-modal__player-body__main-actions__inner">
-                        <button class="btn btn_ico btn_ico-accent now-playing__play-btn active" type="button" aria-label="Пауза">
-                            <svg class="icon now-playing__play-btn__pause">
+                        <button class="btn btn_ico btn_ico-accent now-playing__play-btn active" id="play-button" type="button" aria-label="Пауза">
+                            <svg class="icon now-playing__play-btn__pause player-pause" hidden>
                                 <use href="/img/sprite.svg#pause-bk"></use>
                             </svg>
-                            <svg class="icon now-playing__play-btn__play">
+                            <svg class="icon now-playing__play-btn__play player-play">
                                 <use href="/img/sprite.svg#play-bk"></use>
                             </svg>
                         </button>
@@ -96,10 +102,8 @@
                         </svg>
                     </button>
 
-                    <button class="btn btn_ico btn_ico-primary np-modal__btn-quality active" type="button" aria-label="Качество">
-                        <svg class="icon">
-                            <use href="/img/sprite.svg#q"></use>
-                        </svg>
+                    <button class="btn btn_ico btn_ico-primary np-modal__btn-quality {{'active'}}" type="button" aria-label="Качество">
+                        <svg class="icon"><use href="/img/sprite.svg#q"></use></svg>
                     </button>
 
                     <button class="btn btn_ico btn_ico-primary np-modal__btn-favourites active" type="button" aria-label="Добавить в избранное">
@@ -109,11 +113,8 @@
                     </button>
 
                     <button class="btn btn_ico btn_ico-primary np-modal__btn-timer" type="button" aria-label="Таймер выключения" data-np-modal-timer-trigger>
-                        <svg class="icon">
-                            <use href="/img/sprite.svg#timer-3"></use>
-                        </svg>
-
-                        <span class="np-modal__btn-timer__time x-small">00:15</span>
+                        <svg class="icon"><use href="/img/sprite.svg#timer-3"></use></svg>
+                        {{--<span class="np-modal__btn-timer__time x-small">00:15</span>--}}
                     </button>
 
                     <div class="dropup-center dropup np-modal__btn-volume">
@@ -137,23 +138,9 @@
             </div>
 
             <div class="np-modal__player-more-list">
-                {{--{{#times 24}}--}}
-                    <div class="item">
-                        <div class="logo">
-                            <img class="logo__bg" srcset="/img/radio-logo.png 1x, img/radio-logo@2x.png 2x" src="/img/radio-logo.png" width="100%" alt="" loading="lazy">
-                            <img class="logo__img" srcset="/img/radio-logo.png 1x, img/radio-logo@2x.png 2x" src="/img/radio-logo.png" width="100%" alt="" loading="lazy">
-                        </div>
-                        <h3 class="x-small item__title">Radio Relax Instrumental</h3>
-                        <button class="item__link" type="button" aria-label="Проиграть станцию"></button>
-                        <button class="item__favourites-btn" type="button" aria-label="Добавить в избранное">
-                            <span class="item__favourites-btn__inner">
-                                <svg class="icon" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"></path>
-                                </svg>
-                            </span>
-                        </button>
-                    </div>
-                {{--{{/times}}--}}
+                @foreach($all as $station)
+                    @include('partials.station-card-small', ['station' => $station])
+                @endforeach
             </div>
         </div>
 
@@ -171,6 +158,7 @@
                     </svg>
                 </button>
             </div>
+
             <div class="np-modal__timer__inner">
                 <div class="np-modal__timer__title">Остановить через</div>
                 <div class="np-modal__timer__form">
@@ -213,6 +201,8 @@
                     <button class="btn btn_primary btn_large" type="button">Применить</button>
                 </div>
             </div>
+
         </div>
+
     </div>
 </aside>

@@ -74,6 +74,17 @@ class IndexController
         return $stations;
     }
 
+    public function playStation($id) {
+        $current = RadioStation::where('id', '=', $id)->first()->toArray();
+        if ($current['status'] == RadioStation::STATUS_INACTIVE) {
+            return '';
+        }
+
+        $all = $this->searchStations();
+
+        return view('partials.player-radio', ['current' => $current, 'all' => $all])->render();
+    }
+
     public function podcasts(Request $request) {
         $podcasts = $this->searchPodcasts($request->get('name', ''), $request->get('categories', ''));
         $categories = PodcastCategory::where('status', '=', PodcastCategory::STATUS_ACTIVE)->get()->toArray();

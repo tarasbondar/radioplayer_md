@@ -31,11 +31,11 @@
                         @if (count($podcasts) == 0)
                             <h2 class="body-empty-page__title">У вас ещё нет ни одного подкаста</h2>
                             <p class="body-empty-page__descr">Создайте подкаст и загрузите выпуски</p>
+                            <a href="/create-podcast" class="btn btn_default btn_primary">
+                                <svg class="icon"><use href="/img/sprite.svg#plus-circle"></use></svg>
+                                Создать подкаст
+                            </a>
                         @endif
-                        <a href="/create-podcast" class="btn btn_default btn_primary">
-                            <svg class="icon"><use href="/img/sprite.svg#plus-circle"></use></svg>
-                            Создать подкаст
-                        </a>
                     </div>
 
                 </div>

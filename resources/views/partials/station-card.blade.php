@@ -1,4 +1,4 @@
-<div class="swiper-slide" id="station-{{ $station['id'] }}">
+<div class="swiper-slide play-station" id="station-{{ $station['id'] }}">
     <div class="item">
         <div class="logo">
             <img class="logo__bg" srcset="/img/radio-logo.png 1x, /img/radio-logo@2x.png 2x" src="/img/radio-logo.png" width="100%" alt="" loading="lazy">
