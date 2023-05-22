@@ -36,6 +36,7 @@
     padding: rem(2px) rem(16px);
     border-radius: rem(24px);
     flex-direction: column;
+    transition: background .2s ease-in-out, color .2s ease-in-out, opacity .2s ease-in-out;
 
     &:hover,
     &:focus {
@@ -46,6 +47,7 @@
     .icon {
         color: var(--btn-rows-ico-color);
         opacity: var(--btn-rows-ico-opacity);
+        transition: background .2s ease-in-out, color .2s ease-in-out, opacity .2s ease-in-out;
     }
 
     &.active {
@@ -162,10 +164,20 @@
     }
 
     .btn_ico-accent:hover {
-        background: var(--green-300);
+        background: var(--btn-primary-bg-hover);
     }
 
     .btn_primary:hover {
-        background: var(--green-300);
+        background: var(--btn-primary-bg-hover);
+    }
+
+    .btn_rows:hover {
+        background: var(--btn-rows-active-bg);
+        color: var(--btn-rows-text-color-active);
+
+        .icon {
+            color: var(--btn-rows-ico-color-active);
+            opacity: var(--btn-rows-ico-opacity-active);
+        }
     }
 }

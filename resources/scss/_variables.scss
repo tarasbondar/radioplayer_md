@@ -18,7 +18,9 @@ $base-font-size: 16px;
     --dark-300: #212325;
     --dark-500:#0F0F0F;
     --dark-500-075: rgba(15, 15, 15, .75);
+    --accent-300: #BCF113;
     --accent-500: #B5E51D;
+    --accent-900: #99C60C;
 
     --grey-100: #F7F7F8;
     --grey-200: #DEE0E3;
@@ -68,6 +70,8 @@ $base-font-size: 16px;
     --link-panel-ico-color: var(--dark-500);
     --link-panel-bg: var(--white);
     --link-panel-color-hover: var(--dark-500);
+    --link-panel-shadow-hover: 0 0 0 2px var(--grey-200);
+    --link-panel-shadow-highlighted-hover: 0 0 0 2px var(--grey-500);
 
     --btn-list-item-color: var(--grey-500);
     --btn-list-item-ico-color: var(--dark-500);
@@ -141,6 +145,8 @@ $base-font-size: 16px;
 	--btn-primary-disabled-color: var(--grey-300);
 	--red: var(--red-300);
 	--podcast-icon: var(--dark-500);
+
+    --btn-primary-bg-hover: var(--accent-900);
 }
 
 @mixin darkTheme() {
@@ -177,6 +183,8 @@ $base-font-size: 16px;
     --link-panel-ico-color: var(--white);
     --link-panel-bg: var(--dark-500);
     --link-panel-color-hover: var(--white);
+    --link-panel-shadow-hover: 0 0 0 2px var(--dark-200);
+    --link-panel-shadow-highlighted-hover: 0 0 0 2px var(--white);
 
 
     --btn-list-item-color: var(--white-75);
@@ -250,6 +258,8 @@ $base-font-size: 16px;
 	--btn-primary-disabled-color: var(--dark-100);
 	--red: var(--red-200);
 	--podcast-icon: var(--accent-500);
+
+    --btn-primary-bg-hover: var(--accent-900);
 }
 
 :root {

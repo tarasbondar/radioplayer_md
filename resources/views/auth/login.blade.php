@@ -34,7 +34,7 @@
                         </div>
 
                         <div class="input form-floating _icon">
-                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="{{ __('Password') }}" required autocomplete="current-password">
                             <label for="password">{{ __('Password') }}</label>
 
                             <i class="form-icon">
@@ -52,7 +52,7 @@
                             </div>
                         </div>
 
-                        <button class="btn btn-default btn-primary mb-24" type="submit">{{ __('Login') }}</button>
+                        <button class="btn btn_default btn_primary mb-24" type="submit">{{ __('Login') }}</button>
 
                         {{--
                         <div class="row mb-3">

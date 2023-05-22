@@ -32,7 +32,7 @@
             border-color: var(--red);
         }
     }
-	
+
 	.btn-modal-toggle {
 		position: absolute;
 		top: 0;
@@ -85,7 +85,7 @@
         cursor: pointer;
 	    box-sizing: border-box;
     }
-	
+
 	&.light {
 		@media (min-width: 576px) {
 			color: var(--grey-500);
@@ -106,7 +106,7 @@
 	    width: rem(16px);
 	    height: rem(16px);
     }
-	
+
 	.link {
 		display: inline-block;
 		vertical-align: top;
@@ -160,16 +160,16 @@
 	position: absolute;
 	top: 0;
 	left: 0;
-	width: 48px;
-	height: 48px;
+	width: rem(48px);
+	height: rem(48px);
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	color: var(--btn-rows-ico-color);
 	opacity: var(--btn-rows-ico-opacity);
 	> .icon {
-		width: 24px;
-		height: 24px;
+		width: rem(24px);
+		height: rem(24px);
 	}
 }
 textarea.form-control {
@@ -474,7 +474,7 @@ textarea.form-control {
 	}
 	&__files-list-item {
 		margin-bottom: rem(8px);
-		
+
 		.control-panel {
 			border: 0;
 			padding: rem(8px);
