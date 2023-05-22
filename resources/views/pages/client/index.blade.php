@@ -158,9 +158,10 @@
                 })
             });
 
+            window.audioVolume = 0.5;
             $(document).on('click', '#play-button', function () {
                 if (window.audio.paused) {
-                    setVolume(0.5); //slider value
+                    setVolume(window.audioVolume ?? 0.5); //slider value
                     window.audio.play();
                     $('.player-play').hide();
                     $('.player-pause').removeAttr('hidden').show();
@@ -178,6 +179,40 @@
             function setVolume(value) {
                 window.audio.volume = value;
             }
+
+
+            $(document).ready(function() {
+                let isMouseDown = false;
+                $(document).on('mousedown', '[data-volume-button]', function(){
+                    isMouseDown = true;
+                })
+
+                $(document).mouseup(function() {
+                    isMouseDown = false;
+                });
+                $(document).on('click', '[data-volume-track]', function(e){
+                    adjustVolume(e);
+                })
+
+                $(document).mousemove(function(e) {
+                    if (isMouseDown) {
+                        adjustVolume(e);
+                    }
+                });
+                function adjustVolume(e) {
+                    const volumeSlider = $('.volume-slider');
+                    const offset = volumeSlider.offset();
+                    const sliderHeight = volumeSlider.height();
+                    let newY = e.pageY - offset.top;
+                    newY = Math.max(newY, 0);
+                    newY = Math.min(newY, sliderHeight);
+                    const volumePercent = 100 - (newY / sliderHeight * 100);
+                    $('.volume-slider__progress').height(volumePercent + '%');
+                    window.audioVolume = volumePercent / 100;
+                    setVolume(window.audioVolume)
+                }
+            });
+
 
         })(jQuery)
 

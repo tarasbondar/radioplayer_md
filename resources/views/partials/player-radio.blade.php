@@ -126,10 +126,10 @@
                         </button>
 
                         <div class="dropdown-menu">
-                            <div class="volume-slider">
-                                <div class="volume-slider__track">
-                                    <div class="volume-slider__progress" style="height: 50%;">
-                                        <button class="volume-slider__btn" type="button" tabindex="-1" aria-label="Изменить громкость"></button>
+                            <div class="volume-slider" data-volume-widget>
+                                <div class="volume-slider__track" data-volume-track>
+                                    <div class="volume-slider__progress" data-volume-progress style="height: 50%;">
+                                        <button class="volume-slider__btn" data-volume-button type="button" tabindex="-1" aria-label="Изменить громкость"></button>
                                     </div>
                                 </div>
                             </div>
