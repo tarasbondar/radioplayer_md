@@ -157,7 +157,6 @@ export let playerRadio = {
         //console.log(`Timer is now ${this.timer.hours}:${this.timer.minutes}`);
     },
     timerRenderTimes(){
-        console.log(this.timer)
         $('[data-timer-hours]').text(String(this.timer.hours).padStart(2, '0'));
         $('[data-timer-minutes]').text(String(this.timer.minutes).padStart(2, '0'));
     },
