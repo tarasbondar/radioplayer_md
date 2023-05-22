@@ -6,6 +6,7 @@ use App\Models\Podcast;
 use Illuminate\Http\Request;
 use App\Models\PodcastEpisode;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Pion\Laravel\ChunkUpload\Handler\HandlerFactory;
 use Pion\Laravel\ChunkUpload\Receiver\FileReceiver;
 
@@ -52,6 +53,16 @@ class PodcastEpisodeController extends Controller
         $episode->description = $request->get('description');
         $episode->tags = $request->get('tags');
         $episode->status = $request->get('status');
+
+        if ($request->has('source')) {
+            if (isset($episode->source)) {
+                File::delete(Podcast::UPLOADS_IMAGES . '/' . $episode->source);
+            }
+            $filename = time() . '_' . $request->source->getClientOriginalName();
+            $request->source->move(PodcastEpisode::UPLOADS_AUDIO, $filename);
+            $episode->source = $filename;
+        }
+
         $episode->save();
 
         return redirect()->action([PodcastEpisodeController::class, 'index']);

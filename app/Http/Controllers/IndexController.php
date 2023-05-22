@@ -157,6 +157,26 @@ class IndexController
         return view('pages.client.episode-view', ['episode' => $episode, 'podcast' => $podcast]);
     }
 
+    public function playEpisode($id){
+        $current = PodcastEpisode::where('id', '=', $id)->first()->toArray();
+        if ($current['status'] != PodcastEpisode::STATUS_PUBLISHED) {
+            return '';
+        }
+        $podcast = Podcast::where('id', '=', $current['podcast_id'])->first()->toArray();
+        if ($podcast['status'] == Podcast::STATUS_INACTIVE) {
+            return '';
+        }
+        /*if (Auth::check()) {
+            $favorited = DB::table('radiostations_favorites')->where('user_id', '=', Auth::id())->where('station_id', '=', $current['id'])->count();
+        } else {
+            $favorited = 0;
+        }*/
+
+        $episodes = $this->searchPodcasts();
+
+        return view('partials.player-podcasts', ['current' => $current, 'episodes' => $episodes, 'podcast' => $podcast])->render();
+    }
+
     public function privacy() {
         return view('');
     }

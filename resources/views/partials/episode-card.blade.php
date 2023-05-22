@@ -7,7 +7,7 @@
     <p class="podcast__elem-text"> {{ $episode['description'] }} </p>
     <div class="podcast__holder">
 
-        <div class="podcast__timer active">
+        <div class="podcast__timer active play-episode id-{{ $episode['id'] }}">
             <div class="play">
                 <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g clip-path="url(#clip0_801_29988)">
@@ -20,12 +20,12 @@
                     </defs>
                 </svg>
             </div>
-            <div class="pause" >
+            {{--<div class="pause" >
                 <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M5 2H3V10H5V2Z" fill="#0F0F0F" stroke="#0F0F0F" stroke-linecap="round" stroke-linejoin="round"/>
                     <path d="M9 2H7V10H9V2Z" fill="#0F0F0F" stroke="#0F0F0F" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-            </div>
+            </div>--}}
             <span>00:37:54</span>
         </div>
 
@@ -143,6 +143,28 @@
                 }
             })
         });
+
+        $(document).on('click', '.play-episode', function () {
+
+            let classes = $(this).attr('class').split(" ");
+            let episode_id = 0;
+            $.each(classes, function (k, v) {
+                if (v.search('id-') >= 0) {
+                    episode_id = v.split("-")[1];
+                }
+            });
+
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                method: 'GET',
+                url: '/play-episode/' + episode_id,
+                success: function (response) {
+                    $('.body').append(response).addClass('player-open');
+                }
+            })
+        })
 
 
     })(jQuery)

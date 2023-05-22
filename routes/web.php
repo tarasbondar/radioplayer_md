@@ -50,7 +50,7 @@ Route::post('/record-history', [ProfileController::class, 'recordListeningHistor
 Route::post('/clear-history', [ProfileController::class, 'clearHistory']);
 Route::get('/downloads', [ProfileController::class, 'downloads']);
 Route::post('/download-episode', [ProfileController::class, 'downloadEpisode']);
-
+Route::get('/play-episode/{id}', [IndexController::class, 'playEpisode']);
 
 Route::get('/settings', [ProfileController::class, 'settings'])->name('profile.settings');
 Route::post('/settings/change-name', [ProfileController::class, 'changeName'])->name('profile.changeName');

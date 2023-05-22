@@ -89,7 +89,7 @@
                 <a class="btn header__menu__link-panel header__menu__link-panel_highlighted" href="/my-podcasts">
                     <svg class="icon"><use href="/img/sprite.svg#mic"></use></svg>
                     <span>Мои подкасты</span>
-                    <img class="header__menu__link-panel__img" srcset="img/become-author-highlighted.png 1x, img/become-author-highlighted@2x.png 2x" src="img/become-author-highlighted.png" alt="" width="115" height="100" loading="lazy">
+                    <img class="header__menu__link-panel__img" srcset="/img/become-author-highlighted.png 1x, /img/become-author-highlighted@2x.png 2x" src="/img/become-author-highlighted.png" alt="" width="115" height="100" loading="lazy">
                 </a>
                 @endif
 
@@ -135,14 +135,14 @@
 
                 <a class="btn btn_list-item" href="#" rel="nofollow noopener" target="_blank">
                     <svg class="icon">
-                        <use href="img/sprite.svg#facebook"></use>
+                        <use href="/img/sprite.svg#facebook"></use>
                     </svg>
                     <span>Facebook</span>
                 </a>
 
                 <a class="btn btn_list-item" href="#" rel="nofollow noopener" target="_blank">
                     <svg class="icon">
-                        <use href="img/sprite.svg#instagram"></use>
+                        <use href="/img/sprite.svg#instagram"></use>
                     </svg>
                     <span>Instagram</span>
                 </a>

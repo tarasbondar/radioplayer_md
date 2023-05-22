@@ -1,4 +1,4 @@
-<aside class="player" data-player>
+<aside class="player" id="player-podcasts" data-player>
     <div class="now-playing" data-now-playing>
         <button class="now-playing__btn" type="button" aria-label="Подробнее" data-np-trigger></button>
         <div class="now-playing__track">
@@ -61,11 +61,11 @@
 			    <div class="np-modal__player-body__header">
 				    <div class="logo">
 					    <img class="logo__bg" srcset="/img/radio-logo.png 1x, img/radio-logo@2x.png 2x" src="/img/radio-logo.png" width="100%" alt="" loading="lazy">
-					    <img class="logo__img" srcset="/img/radio-logo.png 1x, img/radio-logo@2x.png 2x" src="/img/radio-logo.png" width="100%" alt="" loading="lazy">
+					    <img class="logo__img" srcset="{{ !empty($podcast['image']) ? '/uploads/podcasts_images/' . $podcast['image'] : "/img/podcast-placeholder.png"}} 1x, img/radio-logo@2x.png 2x" src="/img/radio-logo.png" width="100%" alt="" loading="lazy">
 				    </div>
 				    <div class="np-modal__player-body__header__inner">
-					    <span class="np-modal__player-body__header__pretitle x-small">Название подкаста</span>
-					    <strong class="np-modal__player-body__header__title h2">Life with an elefant</strong>
+					    <span class="np-modal__player-body__header__pretitle x-small"> {{ $podcast['name'] }}</span>
+					    <strong class="np-modal__player-body__header__title h2">{{ $current['name'] }}</strong>
 				    </div>
 			    </div>
 
@@ -507,5 +507,5 @@
 		</div>
 	</div>
 </div>
-<audio loop="true" ref="audiofile" src="https://res.cloudinary.com/dmf10fesn/video/upload/v1548882863/audio/Post_Malone_-_Wow._playvk.com.mp3" preload style="display: none" controls></audio>
+{{--<audio loop="true" ref="audiofile" src="https://res.cloudinary.com/dmf10fesn/video/upload/v1548882863/audio/Post_Malone_-_Wow._playvk.com.mp3" preload style="display: none" controls></audio>--}}
 

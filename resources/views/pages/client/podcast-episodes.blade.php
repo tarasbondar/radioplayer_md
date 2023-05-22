@@ -9,7 +9,7 @@
                     <div class="podcast__info">
                         <div class="podcast__picture">
                             <img class="podcast__bg" srcset="/img/podcast-bg.png 1x, /img/podcast-bg@2x.png 2x" src="/img/podcast-bg.png" width="100%" alt="" loading="lazy">
-                            <img class="podcast__img" srcset="/img/podcast-picture.png 1x, /img/podcast-picture@2x.png 2x" src="/img/podcast-picture.png" width="100%" alt="" loading="lazy">
+                            <img class="podcast__img" srcset="{{ !empty($podcast['image']) ? '/uploads/podcasts_images/' . $podcast['image'] : "/img/podcast-placeholder.png"}} 1x, /img/podcast-picture@2x.png 2x" src="/img/podcast-picture.png" width="100%" alt="" loading="lazy">
                         </div>
                         <div class="podcast__info-text">
                             <span class="podcast__descr">{{ $podcast['description'] }}</span>

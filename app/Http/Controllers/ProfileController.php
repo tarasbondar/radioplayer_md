@@ -339,7 +339,7 @@ class ProfileController extends Controller
     }
 
     public function settings() {
-        return view('profile.settings');
+        return view('client.profile-settings');
     }
 
     public function changeName(ChangeNameRequest $request)

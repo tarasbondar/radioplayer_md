@@ -8,6 +8,7 @@ use App\Models\PodcastCategory;
 use App\Models\Podcast2Category;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 
 class PodcastController extends Controller
 {
@@ -44,12 +45,23 @@ class PodcastController extends Controller
             $categories_current = [];
         } else {
             $podcast = Podcast::find($request['id']);
-            $podcast->owner_id = $request->get('owner_id');
+            //$podcast->owner_id = $request->get('owner_id');
             $categories_current = $this->getCategoriesByPodcast($podcast->id);
         }
+
         $podcast->name = $request->get('name');
         $podcast->description = $request->get('description');
         $podcast->status = $request->get('status');
+        $podcast->tags = $request->get('tags');
+        if ($request->has('image')) {
+            if (isset($podcast->image)) {
+                File::delete(Podcast::UPLOADS_IMAGES . '/' . $podcast->image);
+            }
+            $filename = time() . '_' . $request->image->getClientOriginalName();
+            $request->image->move(Podcast::UPLOADS_IMAGES, $filename);
+            $podcast->image = $filename;
+        }
+
         $podcast->save();
 
         //categories
