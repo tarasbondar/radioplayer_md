@@ -160,19 +160,24 @@
 
             $(document).on('click', '#play-button', function () {
                 if (window.audio.paused) {
+                    setVolume(0.5); //slider value
                     window.audio.play();
                     $('.player-play').hide();
                     $('.player-pause').removeAttr('hidden').show();
-                    /*window.audio.addEventListener("loadedmetadata", (e) => {
-                       console.log(e);
-                    });*/
                 } else {
                     window.audio.pause();
                     $('.player-play').show();
                     $('.player-pause').hide();
                 }
-                //window.audio.volume = 0.2;
-            })
+            });
+
+            $(document).on('change', '#player-volume', function(){
+                setVolume($(this).css('height') / 100);
+            });
+
+            function setVolume(value) {
+                window.audio.volume = value;
+            }
 
         })(jQuery)
 

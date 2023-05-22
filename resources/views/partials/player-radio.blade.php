@@ -102,7 +102,7 @@
                         </svg>
                     </button>
 
-                    <button class="btn btn_ico btn_ico-primary np-modal__btn-quality {{'active'}}" type="button" aria-label="Качество">
+                    <button class="btn btn_ico btn_ico-primary np-modal__btn-quality {{'active'}}" type="button" aria-label="Качество" {{ empty($current['source_hd']) ? 'disabled' : '' }}>
                         <svg class="icon"><use href="/img/sprite.svg#q"></use></svg>
                     </button>
 

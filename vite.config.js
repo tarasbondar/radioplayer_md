@@ -22,4 +22,11 @@ export default defineConfig({
             '~bootstrap': path.resolve(__dirname, 'node_modules/bootstrap'),
         }
     },
+
+    //test server
+    /*server: {
+        hmr: { host: '95.217.159.232' },
+        host: "95.217.159.232",
+    },*/
+
 });
