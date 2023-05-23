@@ -3,52 +3,82 @@
 @section('content')
 
     <div class="container">
-        <h2>User info</h2>
+
+        <h2>{{ucfirst($action)}} User</h2>
 
         <div class="row justify-content-center">
             <div class="col-md-10">
-
-                <div class="mb-3 form-group row">
-                    <label class="col-md-4 col-form-label text-md-right">Name</label>
-                    <div class="col-md-6 py-2"> <span> {{$user['name']}} </span> </div>
-                </div>
-
-                <div class="mb-3 form-group row">
-                    <label class="col-md-4 col-form-label text-md-right">Email</label>
-                    <div class="col-md-6 py-2"> <span> {{$user['email']}} </span> </div>
-                </div>
-
-                <div class="mb-3 form-group row">
-                    <label class="col-md-4 col-form-label text-md-right">Role</label>
-                    <div class="col-md-6 py-2"> <span> {{ ($user['role'] == 0 ? 'User' : ($user['role'] == 1 ? 'Author' : 'Admin')) }} </span> </div>
-                </div>
-
-                <div class="mb-3 form-group row">
-                    <label class="col-md-4 col-form-label text-md-right">Status</label>
-                    <div class="col-md-6 py-2"> <span> {{$user['status'] == 0 ? 'Active' : 'Blocked'}} </span> </div>
-                </div>
-
-                <div class="mb-3 form-group row">
-                    <label class="col-md-4 col-form-label text-md-right">Language</label>
-                    <div class="col-md-6 py-2"> <span> {{$user['language']}} </span> </div>
-                </div>
-
-                <div class="mb-3 form-group row">
-                    <label class="col-md-4 col-form-label text-md-right">Registration date</label>
-                    <div class="col-md-6 py-2"> <span> {{$user['created_at']}} </span> </div>
-                </div>
-
-                <div class="mb-3 form-group row">
-                    History TBA
-                </div>
-
-                @if ($user['role'] == 1)
-                    <div class="mb-3 form-group row">
-                        Podcasts TBA
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
                     </div>
                 @endif
-                {{-- <a href="{{ request()->headers->get('referer') }}" class="btn"> Go back </a> --}}
+
+                <form method="POST" action="/admin/users/save" enctype='multipart/form-data'>
+                    @csrf
+                    <div class="form-group row" hidden>
+                        <input id="id" type="text" class="form-control" name="id" value="{{ @$model['id'] }}" readonly>
+                    </div>
+                    <div class="mb-3 form-group row">
+                        <label for="name" class="col-md-4 col-form-label text-md-right">Name</label>
+                        <div class="col-md-6"> <input id="name" type="text" class="form-control" name="name" value="{{ @$model['name'] }}" required> </div>
+                    </div>
+                    <div class="mb-3 form-group row">
+                        <label for="email" class="col-md-4 col-form-label text-md-right">Email</label>
+                        <div class="col-md-6"> <input id="name" type="text" class="form-control" name="email" value="{{ @$model['email'] }}" required> </div>
+                    </div>
+
+                    <div class="mb-3 form-group row">
+                        <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
+                        <div class="col-md-6"> <input id="password" type="text" class="form-control" name="password" value="" {{ ($action === 'add') ? 'required' : ''  }}> </div>
+                    </div>
+                    <div class="mb-3 form-group row">
+                        <label for="status" class="col-md-4 col-form-label text-md-right">Role</label>
+                        <div class="col-md-6">
+                            <select class="form-select" name="role" id="status" aria-label="Select role">
+                                @foreach($roles as $role => $roleLabel)
+                                    <option value="{{ $role }}"> {{ $roleLabel }} </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 form-group row">
+                        <label for="status" class="col-md-4 col-form-label text-md-right">Status</label>
+                        <div class="col-md-6">
+                            <select class="form-select" name="status" id="status" aria-label="Select status">
+                                @foreach($statuses as $status => $statusLabel)
+                                    <option value="{{ $status }}"> {{ $statusLabel }} </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row mb-0">
+                        <div class="col-md-6 offset-md-4">
+                            <button type="submit" class="btn btn-primary"> Save </button>
+                            <a href="{{ request()->headers->get('referer') }}" class="btn"> Discard </a>
+                        </div>
+                    </div>
+                </form>
+
             </div>
         </div>
     </div>
+
+    <script>
+        (function(){
+
+
+        })(jQuery)
+    </script>
+
 @endsection
+
+
+

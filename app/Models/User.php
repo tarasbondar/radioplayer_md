@@ -19,6 +19,17 @@ class User extends Authenticatable
     const STATUS_NORMAL = 0;
     const STATUS_BLOCKED = 1;
 
+    public static array $roles = [
+        self::ROLE_USER => 'User',
+        self::ROLE_AUTHOR => 'Author',
+        self::ROLE_ADMIN => 'Admin'
+    ];
+
+    public static array $statuses = [
+        self::STATUS_NORMAL => 'Normal',
+        self::STATUS_BLOCKED => 'Blocked'
+    ];
+
     protected $fillable = [
         'name',
         'email',

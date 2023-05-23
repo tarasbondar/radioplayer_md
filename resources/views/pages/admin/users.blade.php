@@ -7,6 +7,7 @@
         <h2>Users</h2>
         <div class="row">
             <div class="col-md-12 text-right mt-3 mb-3">
+                <a href="/admin/users/add" class="btn btn-primary" type="button">Add User</a>
             </div>
         </div>
 
@@ -30,6 +31,7 @@
                         <td>{{ $u['email'] }}</td>
                         <td>{{ $u['role'] == 2 ? 'Admin' : ($u['role'] == 1 ? 'Author' : 'User') }}</td>
                         <td>
+                            <a href="#" class="edit-user edit-{{ $u['id'] }}">Edit</a>
                             <a href="#" class="change-user-status id-{{ $u['id'] }}">{{ ($u['status'] == 1 ? 'Unblock' : 'Block') }}</a>
                             <a href="#" class="view-user view-{{ $u['id'] }}">View details</a>
                             <a href="#" class="remove-user remove-{{ $u['id'] }}">Delete</a>
@@ -53,6 +55,20 @@
 
     <script>
         (function() {
+            $(document).on('click', '.edit-user', function(){
+                let button = $(this);
+
+                let classes = button.attr('class').split(" ");
+                let id = 0;
+                $.each(classes, function (k, v) {
+                    if (v.search('edit-') >= 0) {
+                        id = v.split("-")[1];
+                    }
+                });
+
+                window.location.href = '/admin/users/edit/' + id;
+
+            });
             $(document).on('click', '.change-user-status', function () {
                 let button = $(this);
 

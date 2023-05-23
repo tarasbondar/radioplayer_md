@@ -64,7 +64,10 @@ Route::name('admin.')->prefix('admin')->middleware([IsAdmin::class])->group(func
 
     Route::get('/users', [UsersController::class, 'index']);
     Route::post('/users/status', [UsersController::class, 'changeStatus']);
+    Route::get('/users/add', [UsersController::class, 'add']);
     Route::get('/users/view/{id}', [UsersController::class, 'view']);
+    Route::get('/users/edit/{id}', [UsersController::class, 'edit']);
+    Route::post('/users/save', [UsersController::class, 'save']);
     Route::delete('/users/{id}', [UsersController::class, 'delete']);
 
     Route::get('/author-apps/{status?}', [UsersController::class, 'authorApps']);

@@ -8,6 +8,9 @@ use App\Models\PodcastCategory;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class UsersController extends Controller
 {
@@ -48,7 +51,49 @@ class UsersController extends Controller
             $users_podcasts = Podcast::where('owner_id', '=', $id)->get()->toArray();
         }
         // stats
-        return view('pages.admin.users-edit', ['user' => $user, 'users_podcast' => $users_podcasts]);
+        return view('pages.admin.users-view', ['user' => $user, 'users_podcast' => $users_podcasts]);
+    }
+
+    public function add() {
+        return view('pages.admin.users-edit', ['action' => 'add', 'model' => [], 'roles' => User::$roles, 'statuses' => User::$statuses]);
+    }
+    public function edit($id) {
+        $model = User::find($id)->toArray();
+        return view('pages.admin.users-edit', ['action' => 'edit', 'model' => $model, 'roles' => User::$roles, 'statuses' => User::$statuses]);
+    }
+
+    public function save(Request $request) {
+        $rules = [
+            'name' => 'required',
+            'email' => ['required', 'max:255', Rule::unique('users')->ignore($request['id'])],
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+        if (empty($request['id'])) {
+            $model = new User();
+            $action = 'add';
+        } else {
+            $model = User::find($request['id']);
+            $action = 'edit';
+        }
+
+        if ($validator->fails()) {
+            return redirect('/admin/users/'. $action .'/'.$request['id'])
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+
+        $model->name = $request['name'];
+        $model->email = $request['email'];
+        $model->role = $request['role'];
+        $model->status = $request['status'];
+        $model->language = 'en';
+        if ($request['password'] != '')
+            $model->password = Hash::make($request['password']);
+        $model->save();
+
+        return redirect()->action([UsersController::class, 'index']);
     }
 
     public function delete($id) {
