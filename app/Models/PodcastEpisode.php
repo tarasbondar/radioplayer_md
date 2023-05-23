@@ -5,6 +5,24 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class PodcastEpisode
+ * @package App\Models
+ *
+ * @property int $id
+ * @property int $podcast_id
+ * @property string $name
+ * @property string $description
+ * @property string $tags
+ * @property string $source
+ * @property string $filename
+ * @property int $status
+ * @property string $created_at
+ * @property string $updated_at
+ *
+ * @property Podcast $podcast
+ */
+
 class PodcastEpisode extends Model
 {
     use HasFactory;
@@ -18,5 +36,18 @@ class PodcastEpisode extends Model
     protected $table = 'podcasts_episodes';
 
     protected $fillable = ['podcast_id', 'name', 'description', 'tags', 'source', 'filename', 'status'];
+
+    public function podcast() {
+        return $this->belongsTo(Podcast::class, 'podcast_id', 'id');
+    }
+    public function getSourceUrlAttribute(): string
+    {
+        return asset(self::UPLOADS_AUDIO . '/' . $this->source);
+    }
+
+    public function getSourcePathAttribute(): string
+    {
+        return public_path(self::UPLOADS_AUDIO . '/' . $this->source);
+    }
 
 }

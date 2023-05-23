@@ -1,4 +1,4 @@
-<aside class="player" id="player-radio" data-player>
+<aside class="player" id="player-radio" data-player="radio">
     <div class="now-playing" data-now-playing>
         {{--<audio id="audio-stream">
             <source src="{{ $current['source'] }}" type="audio/mpeg">
