@@ -125,7 +125,7 @@
 
 			    <div class="np-modal__player-body__secondary-actions">
 				    <button class="btn btn_ico btn_ico-primary" type="button" aria-label="Скорость">
-					    <strong>×1.0</strong>
+					    <strong>×<span data-playback-rate>1.0</span></strong>
 				    </button>
 
                     <button class="btn btn_ico btn_ico-primary np-modal__btn-timer" type="button" aria-label="Таймер выключения" data-np-modal-timer-trigger>

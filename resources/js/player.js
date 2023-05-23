@@ -1,5 +1,8 @@
 export let player = {
     volume: 0.5,
+    playbackRate: 1,
+    playbackRateMax: 2,
+    playbackRateStep: 0.2,
     timer: {
         minutes: 15,
         hours: 0,
@@ -112,6 +115,7 @@ export let player = {
                 self.setSource($('#audio-source').val());
                 if (self.timer.isActive)
                     self.timerApply(true);
+                self.changePlaybackRate(self.playbackRate);
             }
         })
     },
@@ -136,6 +140,21 @@ export let player = {
         const seconds = Math.floor(window.audio.currentTime % 60);
 
         $('[data-audio-current-time]').text(String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0'));
+    },
+    changePlaybackRate(forceRate = null){
+        if (forceRate !== null) {
+            window.audio.playbackRate = forceRate;
+            $('[data-playback-rate]').text(Number(forceRate).toFixed(1));
+            return;
+        }
+        let currentPlaybackRate = window.audio.playbackRate;
+        let newPlaybackRate = (currentPlaybackRate + this.playbackRateStep > this.playbackRateMax)
+            ? 1
+            : currentPlaybackRate + this.playbackRateStep;
+        newPlaybackRate = Math.round(newPlaybackRate * 100) / 100;
+        this.playbackRate = newPlaybackRate;
+        window.audio.playbackRate = this.playbackRate;
+        $('[data-playback-rate]').text(Number(newPlaybackRate).toFixed(1));
     },
     rewind(direction, secondsStep = 10){
         let newTime = window.audio.currentTime + (secondsStep * (direction === 'forward' ? 1 : -1));
@@ -265,5 +284,8 @@ export let player = {
             let direction = $(this).data('rewind');
             self.rewind(direction, secondsStep);
         })
+        $(document).on('click', '[data-playback-rate]', function(){
+            self.changePlaybackRate();
+        });
     },
 }
