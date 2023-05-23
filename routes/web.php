@@ -17,7 +17,8 @@ use \Illuminate\Support\Facades\Auth;
 
 Auth::routes();
 
-Route::get('/', [IndexController::class, 'index'])->name('home');
+Route::get('/', [IndexController::class, 'index']);
+Route::get('/home', [IndexController::class, 'index']);
 Route::get('/podcasts', [IndexController::class, 'podcasts']);
 Route::get('/favorite-station/{id}', [ProfileController::class, 'favStation']);
 Route::post('/update-stations', [IndexController::class, 'updateStations']);
@@ -111,6 +112,7 @@ Route::name('admin.')->prefix('admin')->middleware([IsAdmin::class])->group(func
     Route::get('/station-tags/edit/{id}', [RadioStationTagController::class, 'edit']);
     Route::post('/station-tags/save', [RadioStationTagController::class, 'save']);
     Route::delete('/station-tags/{id}', [RadioStationTagController::class, 'delete']);
-    Route::delete('/translations', [Translations::class, 'delete']);
+
+    /*Route::delete('/translations', [Translations::class, 'delete']);*/
 
 });

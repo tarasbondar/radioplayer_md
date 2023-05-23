@@ -10,7 +10,10 @@
                 </div>
 
                 <div class="login__wrapper">
-                    <form action="#registration" id="apply-form" data-validate>
+                    <form action="{{ route('register') }}" method='POST' id="apply-form" {{--data-validate--}}>
+
+                        @csrf
+
                         <div class="input form-floating _icon">
                             <input type="text" class="form-control" placeholder="Имя" name="name" id="name" required/>
                             <label for="name">Имя</label>
@@ -20,8 +23,15 @@
                                     <path d="M12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
                             </i>
-                            <div class="messages"></div>
+                            <div class="messages">
+                                {{--@error('name')
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror--}}
+                            </div>
                         </div>
+
                         <div class="input form-floating _icon">
                             <input type="email" class="form-control" placeholder="Email" name="email" id="email" required/>
                             <label for="email">Email</label>
@@ -31,8 +41,15 @@
                                     <path d="M22 6L12 13L2 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
                             </i>
-                            <div class="messages"></div>
+                            <div class="messages">
+                                {{--@error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror--}}
+                            </div>
                         </div>
+
                         <div class="input form-floating _icon">
                             <input type="password" class="form-control" placeholder="Пароль" name="password" id="password" required/>
                             <label for="password">Пароль</label>
@@ -41,31 +58,42 @@
                                     <path d="M21.0003 2L19.0003 4M19.0003 4L22.0003 7L18.5003 10.5L15.5003 7.5M19.0003 4L15.5003 7.5M11.3903 11.61C11.9066 12.1195 12.3171 12.726 12.598 13.3948C12.879 14.0635 13.0249 14.7813 13.0273 15.5066C13.0297 16.232 12.8887 16.9507 12.6122 17.6213C12.3357 18.2919 11.9293 18.9012 11.4164 19.4141C10.9035 19.9271 10.2942 20.3334 9.62358 20.6099C8.95296 20.8864 8.23427 21.0275 7.50891 21.025C6.78354 21.0226 6.06582 20.8767 5.39707 20.5958C4.72831 20.3148 4.12174 19.9043 3.61227 19.388C2.6104 18.3507 2.05604 16.9614 2.06857 15.5193C2.0811 14.0772 2.65953 12.6977 3.67927 11.678C4.69902 10.6583 6.07849 10.0798 7.52057 10.0673C8.96265 10.0548 10.352 10.6091 11.3893 11.611L11.3903 11.61ZM11.3903 11.61L15.5003 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
                             </i>
-                            <div class="messages"></div>
+
+                            <div class="messages">
+                                {{--@error('password')
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror--}}
+                            </div>
                         </div>
+
                         <div class="input form-floating _icon">
-                            <input type="password" class="form-control" placeholder="Повторите пароль" name="password-confirm" id="password-confirm" required/>
+                            <input type="password" class="form-control" placeholder="Повторите пароль" name="password_confirmation" id="password-confirm" required/>
                             <label for="password-confirm">Повторите пароль</label>
                             <i class="form-icon">
                                 <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                     <path d="M21.0003 2L19.0003 4M19.0003 4L22.0003 7L18.5003 10.5L15.5003 7.5M19.0003 4L15.5003 7.5M11.3903 11.61C11.9066 12.1195 12.3171 12.726 12.598 13.3948C12.879 14.0635 13.0249 14.7813 13.0273 15.5066C13.0297 16.232 12.8887 16.9507 12.6122 17.6213C12.3357 18.2919 11.9293 18.9012 11.4164 19.4141C10.9035 19.9271 10.2942 20.3334 9.62358 20.6099C8.95296 20.8864 8.23427 21.0275 7.50891 21.025C6.78354 21.0226 6.06582 20.8767 5.39707 20.5958C4.72831 20.3148 4.12174 19.9043 3.61227 19.388C2.6104 18.3507 2.05604 16.9614 2.06857 15.5193C2.0811 14.0772 2.65953 12.6977 3.67927 11.678C4.69902 10.6583 6.07849 10.0798 7.52057 10.0673C8.96265 10.0548 10.352 10.6091 11.3893 11.611L11.3903 11.61ZM11.3903 11.61L15.5003 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
                             </i>
-                            <div class="messages"></div>
                         </div>
+
                         <div class="input input__inner">
-                            <input class="input__checkbox" type="checkbox" id="inlineFormCheck">
-                            <label class="input__label" for="inlineFormCheck">
-                                Я принимаю <a href="privacy-policy.html" class="link">условия</a> <a href="privacy-policy.html" class="link">пользовательского соглашения</a>
+                            <input class="input__checkbox" type="checkbox" id="agreement">
+                            <label class="input__label" for="agreement">
+                                Я принимаю <a href="/privacy" class="link">условия</a> <a href="/privacy" class="link">пользовательского соглашения</a>
                             </label>
                             <svg class="icon">
                                 <use href="/img/sprite.svg#check"></use>
                             </svg>
                             <div class="messages"></div>
                         </div>
-                        <button class="btn btn_default btn_primary mb-24" type="button">Зарегистрироваться</button>
+
+                        <button class="btn btn_default btn_primary mb-24" type="submit">Зарегистрироваться</button>
+
                     </form>
                 </div>
+
                 <div class="login__wrapper-action">
                     <div class="text-center mb-24">
                         <span class="divide-text x-small">или</span>

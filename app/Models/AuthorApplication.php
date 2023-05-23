@@ -13,9 +13,11 @@ class AuthorApplication extends Model
     const STATUS_PENDING = 1;
     const STATUS_APPROVED = 2;
 
+    const UPLOADS_AUDIO = 'uploads/applications_audio';
+    const UPLOADS_IMAGES = 'uploads/applications_images';
+
     protected $fillable = ['user_id', 'name', 'description', 'category', 'image', 'example', 'status', 'feedback_message'];
 
     protected $table = 'author_applications';
-
 
 }
