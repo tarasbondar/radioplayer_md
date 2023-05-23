@@ -1,3 +1,8 @@
+<?php
+    use App\Helpers\SiteHelper;
+    use App\Models\PodcastEpisode;
+?>
+
 <li class="podcast__elem">
     <div class="podcast__elem-wrap">
         <span class="podcast__data"> {{$episode['created_at']}} </span>
@@ -7,7 +12,7 @@
     <p class="podcast__elem-text"> {{ $episode['description'] }} </p>
     <div class="podcast__holder">
 
-        <div class="podcast__timer active play-episode id-{{ $episode['id'] }}">
+        <div class="podcast__timer active play-episode id-{{ $episode['id'] }}" data-episode="{{ $episode['id'] }}">
             <div class="play">
                 <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g clip-path="url(#clip0_801_29988)">
@@ -26,7 +31,7 @@
                     <path d="M9 2H7V10H9V2Z" fill="#0F0F0F" stroke="#0F0F0F" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             </div>--}}
-            <span>00:37:54</span>
+            <span>{{ SiteHelper::getMp3Duration(public_path(PodcastEpisode::UPLOADS_AUDIO.'/'.@$episode['source'])) }}</span>
         </div>
 
         <span class="publication"> {{ $episode['status'] == 2 ? 'Published' : 'Draft'}} </span>
@@ -97,76 +102,3 @@
     </div>
 </li>
 
-<script>
-
-    (function(){
-        $(document).on('click', '.download-episode', function(){
-
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                method: 'POST',
-                url: '/download-episode',
-                data: {'id': '{{ $episode['id'] }}'},
-                success: function(response) {
-
-                }
-            })
-        });
-
-        $(document).on('click', '.listen-later', function () {
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                method: 'POST',
-                url: '/queue-episode',
-                data: {'id': '{{ $episode['id'] }}'},
-                success: function(response) {
-
-                }
-            })
-        });
-
-        //delete-episode/$episode['id']
-        $(document).on('click', '.delete-episode', function () {
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                method: 'POST',
-                url: '/delete-episode',
-                data: {'id': '{{ $episode['id'] }}'},
-                success: function (response) {
-
-                }
-            })
-        });
-
-        $(document).on('click', '.play-episode', function () {
-
-            let classes = $(this).attr('class').split(" ");
-            let episode_id = 0;
-            $.each(classes, function (k, v) {
-                if (v.search('id-') >= 0) {
-                    episode_id = v.split("-")[1];
-                }
-            });
-
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                method: 'GET',
-                url: '/play-episode/' + episode_id,
-                success: function (response) {
-                    $('.body').append(response).addClass('player-open');
-                }
-            })
-        })
-
-
-    })(jQuery)
-
-</script>

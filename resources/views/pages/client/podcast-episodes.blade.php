@@ -59,9 +59,76 @@
         </section>
     </main>
 
+
     <script>
 
         (function(){
+            $(document).on('click', '.download-episode', function(){
+
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    method: 'POST',
+                    url: '/download-episode',
+                    data: {'id': '{{ $episode['id'] }}'},
+                    success: function(response) {
+
+                    }
+                })
+            });
+
+            $(document).on('click', '.listen-later', function () {
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    method: 'POST',
+                    url: '/queue-episode',
+                    data: {'id': '{{ $episode['id'] }}'},
+                    success: function(response) {
+
+                    }
+                })
+            });
+
+            //delete-episode/$episode['id']
+            $(document).on('click', '.delete-episode', function () {
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    method: 'POST',
+                    url: '/delete-episode',
+                    data: {'id': '{{ $episode['id'] }}'},
+                    success: function (response) {
+
+                    }
+                })
+            });
+
+            $(document).on('click', '.play-episode', function () {
+
+                let classes = $(this).attr('class').split(" ");
+                let episode_id = 0;
+                $.each(classes, function (k, v) {
+                    if (v.search('id-') >= 0) {
+                        episode_id = v.split("-")[1];
+                    }
+                });
+
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    method: 'GET',
+                    url: '/play-episode/' + episode_id,
+                    success: function (response) {
+                        $('[data-player]').remove();
+                        $('.body').append(response).addClass('player-open');
+                    }
+                })
+            })
             $(document).on('click', '.subscribe-to', function () {
                 let button = $(this);
                 let classes = button.attr('class').split(" ");

@@ -19,6 +19,7 @@ use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redirect;
 use Throwable;
 
@@ -231,6 +232,17 @@ class ProfileController extends Controller
         $episode->source = '';//file
         $episode->tags = $request->get('tags');
         $episode->status = ($request->get('status') == 1 ? PodcastEpisode::STATUS_PUBLISHED : PodcastEpisode::STATUS_DRAFT);
+
+        if ($request->has('source')) {
+            if (isset($episode->source)) {
+                File::delete(PodcastEpisode::UPLOADS_AUDIO . '/' . $episode->source);
+            }
+            $filename = time() . '_' . $request->source->getClientOriginalName();
+            $request->source->move(PodcastEpisode::UPLOADS_AUDIO, $filename);
+            $episode->source = $filename;
+            $episode->filename = $request->source->getClientOriginalName();
+        }
+
         $episode->save();
 
         return \redirect('podcasts/' . $episode->podcast_id . '/view');

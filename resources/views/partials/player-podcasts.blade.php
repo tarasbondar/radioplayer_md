@@ -1,5 +1,7 @@
 <aside class="player" id="player-podcasts" data-player>
     <div class="now-playing" data-now-playing>
+        <input id="audio-source" type="text" value="/uploads/{{ @$current['source'] }}" readonly hidden>
+
         <button class="now-playing__btn" type="button" aria-label="Подробнее" data-np-trigger></button>
         <div class="now-playing__track">
             <div class="logo">

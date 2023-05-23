@@ -56,11 +56,12 @@ class PodcastEpisodeController extends Controller
 
         if ($request->has('source')) {
             if (isset($episode->source)) {
-                File::delete(Podcast::UPLOADS_IMAGES . '/' . $episode->source);
+                File::delete(PodcastEpisode::UPLOADS_AUDIO . '/' . $episode->source);
             }
             $filename = time() . '_' . $request->source->getClientOriginalName();
             $request->source->move(PodcastEpisode::UPLOADS_AUDIO, $filename);
             $episode->source = $filename;
+            $episode->filename = $request->source->getClientOriginalName();
         }
 
         $episode->save();

@@ -17,6 +17,6 @@ class PodcastEpisode extends Model
 
     protected $table = 'podcasts_episodes';
 
-    protected $fillable = ['podcast_id', 'name', 'description', 'tags', 'source', 'status'];
+    protected $fillable = ['podcast_id', 'name', 'description', 'tags', 'source', 'filename', 'status'];
 
 }
