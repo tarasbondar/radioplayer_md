@@ -129,6 +129,8 @@ export let player = {
     },
     updateProgressBar() {
         const progress = (window.audio.currentTime / window.audio.duration) * 100;
+        if (isNaN(progress))
+            return;
         $('[data-audio-progress]').val(progress);
         const minutes = Math.floor(window.audio.currentTime / 60);
         const seconds = Math.floor(window.audio.currentTime % 60);
