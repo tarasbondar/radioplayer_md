@@ -107,28 +107,7 @@
                 })
             });
 
-            $(document).on('click', '.play-episode', function () {
 
-                let classes = $(this).attr('class').split(" ");
-                let episode_id = 0;
-                $.each(classes, function (k, v) {
-                    if (v.search('id-') >= 0) {
-                        episode_id = v.split("-")[1];
-                    }
-                });
-
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    method: 'GET',
-                    url: '/play-episode/' + episode_id,
-                    success: function (response) {
-                        $('[data-player]').remove();
-                        $('.body').append(response).addClass('player-open');
-                    }
-                })
-            })
             $(document).on('click', '.subscribe-to', function () {
                 let button = $(this);
                 let classes = button.attr('class').split(" ");

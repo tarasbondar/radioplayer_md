@@ -1,4 +1,4 @@
-export let playerRadio = {
+export let player = {
     volume: 0.5,
     timer: {
         minutes: 15,
@@ -13,11 +13,16 @@ export let playerRadio = {
     },
     init(){
         this.initVolumeSlider();
-        this.initClickEvents();
+        this.initEvents();
     },
     createPlayer(){
-        if (typeof window.audio === 'undefined')
+        if (typeof window.audio === 'undefined'){
             window.audio = document.createElement("audio");
+            window.audio.addEventListener('timeupdate', this.updateProgressBar);
+            window.audio.addEventListener('pause', this.updateProgressBar);
+            window.audio.addEventListener('ended', this.updateProgressBar);
+        }
+
     },
 
     timerShow(){
@@ -45,9 +50,9 @@ export let playerRadio = {
         $('[data-timer-active-time]').addClass('hidden');
         this.timerClose();
     },
-    timerApply(){
-        // implementation
-        this.timer.seconds = this.timer.hours * 60 * 60 + this.timer.minutes * 60;
+    timerApply(timerContinue = false){
+        if (!timerContinue)
+            this.timer.seconds = this.timer.hours * 60 * 60 + this.timer.minutes * 60;
         this.timer.isActive = true;
         $('[data-timer-active-time]').text(String(this.timer.hours).padStart(2, '0') + ':' + String(this.timer.minutes).padStart(2, '0'));
         $('[data-timer-active-time]').removeClass('hidden');
@@ -68,6 +73,7 @@ export let playerRadio = {
                 this.timer.intervalMinutes = Math.floor(this.timer.seconds / 60) - this.timer.intervalHours * 60;
                 $('[data-timer-active-time]').text(String(this.timer.intervalHours).padStart(2, '0') + ':' + String(this.timer.intervalMinutes + 1).padStart(2, '0'));
             }
+            //console.log(this.timer.seconds)
         }, 1000);
 
         this.timerClose();
@@ -85,9 +91,27 @@ export let playerRadio = {
                 $('.body').append(response).addClass('player-open');
                 //if isset then stop
                 self.createPlayer();
-                //if (audio.canPlayType("audio/mpeg")) {
                 self.setSource($('#audio-source').val());
-                //}
+                if (self.timer.isActive)
+                    self.timerApply(true);
+            }
+        })
+    },
+    changeEpisode(id){
+        let self = this;
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            method: 'GET',
+            url: '/play-episode/' + id,
+            success: function (response) {
+                $('[data-player]').remove();
+                $('.body').append(response).addClass('player-open');
+                self.createPlayer();
+                self.setSource($('#audio-source').val());
+                if (self.timer.isActive)
+                    self.timerApply(true);
             }
         })
     },
@@ -102,6 +126,25 @@ export let playerRadio = {
             $('.player-play').show();
             $('.player-pause').hide();
         }
+    },
+    updateProgressBar() {
+        const progress = (window.audio.currentTime / window.audio.duration) * 100;
+        $('[data-audio-progress]').val(progress);
+        const minutes = Math.floor(window.audio.currentTime / 60);
+        const seconds = Math.floor(window.audio.currentTime % 60);
+
+        $('[data-audio-current-time]').text(String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0'));
+    },
+    rewind(direction, secondsStep = 10){
+        let newTime = window.audio.currentTime + (secondsStep * (direction === 'forward' ? 1 : -1));
+
+        if (newTime < 0) {
+            newTime = 0; // Set the new time to 0 if rewinding before the start
+        } else if (newTime > window.audio.duration) {
+            newTime = window.audio.duration; // Set the new time to the duration if rewinding beyond the end
+        }
+
+        window.audio.currentTime = newTime;
     },
     setSource(src){
         window.audio.setAttribute("src", src);
@@ -182,10 +225,13 @@ export let playerRadio = {
             });
         });
     },
-    initClickEvents(){
+    initEvents(){
         let self = this;
         $(document).on('click', '[data-play-station]', function(){
             self.changeStation($(this).data('play-station'));
+        });
+        $(document).on('click', '[data-play-episode]', function(){
+            self.changeEpisode($(this).data('play-episode'));
         });
         $(document).on('click', '[data-play-button]', function(){
             self.play();
@@ -209,5 +255,13 @@ export let playerRadio = {
         $(document).on('click', '[data-timer-change-minutes]', function(){
             self.timerChangeTime($(this).data('timer-change-minutes'), 'minutes', self.timer.minutesStep);
         });
+        $(document).on('change', '[data-audio-progress]', function(){
+            window.audio.currentTime = window.audio.duration / 100 * $(this).val();
+        });
+        $(document).on('click', '[data-rewind]', function(){
+            let secondsStep = 10;
+            let direction = $(this).data('rewind');
+            self.rewind(direction, secondsStep);
+        })
     },
 }

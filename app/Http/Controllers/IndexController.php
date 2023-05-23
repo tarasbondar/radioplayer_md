@@ -158,12 +158,15 @@ class IndexController
     }
 
     public function playEpisode($id){
-        $current = PodcastEpisode::where('id', '=', $id)->first()->toArray();
-        if ($current['status'] != PodcastEpisode::STATUS_PUBLISHED) {
+        $current = PodcastEpisode::find($id);
+        if (!$current)
+            return '';
+
+        if ($current->status != PodcastEpisode::STATUS_PUBLISHED) {
             return '';
         }
-        $podcast = Podcast::where('id', '=', $current['podcast_id'])->first()->toArray();
-        if ($podcast['status'] == Podcast::STATUS_INACTIVE) {
+        $podcast = $current->podcast;
+        if ($podcast->status == Podcast::STATUS_INACTIVE) {
             return '';
         }
         /*if (Auth::check()) {
