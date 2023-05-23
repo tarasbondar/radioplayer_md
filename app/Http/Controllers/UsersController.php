@@ -57,6 +57,7 @@ class UsersController extends Controller
     public function add() {
         return view('pages.admin.users-edit', ['action' => 'add', 'model' => [], 'roles' => User::$roles, 'statuses' => User::$statuses]);
     }
+
     public function edit($id) {
         $model = User::find($id)->toArray();
         return view('pages.admin.users-edit', ['action' => 'edit', 'model' => $model, 'roles' => User::$roles, 'statuses' => User::$statuses]);
@@ -119,7 +120,7 @@ class UsersController extends Controller
     public function authorAppsEdit($id) {
         $app = AuthorApplication::find($id)->toArray();
         $user = User::find($app['user_id']);
-        $categories_keys = PodcastCategory::select('key')->whereIn('id', explode(', ', $app['categories']))->where('status', '=', PodcastCategory::STATUS_ACTIVE)->get()->toArray();
+        $categories_keys = PodcastCategory::select('key')->whereIn('id', explode(',', $app['categories']))->where('status', '=', PodcastCategory::STATUS_ACTIVE)->get()->toArray();
         $categories = [];
         foreach ($categories_keys as $k) {array_push($categories, $k['key']);}
         return view('pages.admin.authorapplications-review', ['app' => $app, 'user' => $user, 'categories' => implode(', ', $categories)]);

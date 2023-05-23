@@ -31,15 +31,24 @@
                     <div class="col-md-6"> <textarea id="description" type="text" class="form-control" name="description" readonly>{{ @$app['description'] }}</textarea> </div>
                 </div>
 
-                {{--category--}}
                 <div class="mb-3 form-group row">
                     <label class="col-md-4 col-form-label text-md-right" for="categories-input" >Categories</label>
-                    <div class="col-md-6 py-2"> <input id="categories-input" class="form-control" value="{{ $categories }}"></div>
+                    <div class="col-md-6 py-2"> <input id="categories-input" class="form-control" value="{{ $categories }}" readonly></div>
                 </div>
 
-                {{--image--}}
+                <div class="mb-3 form-group row">
+                    <label class="col-md-4 col-form-label text-md-right" for="image" >Image</label>
+                    <div class="col-md-6 py-2">
+                        <img id="image" alt="" src="/uploads/applications_images/{{ $app['image'] }}" width="325" height="325"/>
+                    </div>
+                </div>
 
-                {{--example--}}
+                <div class="mb-3 form-group row">
+                    <label class="col-md-4 col-form-label text-md-right" for="audio" >Audio</label>
+                    <div class="col-md-6 py-2">
+                        <audio id="audio" controls class="form-control"><source src="/uploads/applications_audio/{{ $app['example'] }}"></audio>
+                    </div>
+                </div>
 
                 <div class="mb-3 form-group row">
                     <label class="col-md-4 col-form-label text-md-right">Status</label>

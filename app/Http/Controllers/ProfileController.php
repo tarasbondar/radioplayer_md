@@ -16,6 +16,7 @@ use App\Models\QueuedEpisode;
 use App\Models\RadioStation;
 use App\Models\User;
 use App\Services\UserService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -68,36 +69,41 @@ class ProfileController extends Controller
         return view('pages.client.author-application', ['status' => 'new', 'user_role' => $role,'categories' => $categories]);
     }
 
-    public function sendApplication(Request $request) {
+    public function sendApplication(Request $request) : RedirectResponse {
         $validator = $request->validate([
-            'title' => ['required'],
+            'title' => ['required', 'max:255'],
             'description' => ['required'],
-            //'categories' => ['required'],
+            'categories-ids' => ['required'],
             'tags' => ['max:255'],
-            //'image' => ['required'],
-            //'example' => ['required']
+            'image' => ['required', 'image'],
+            'audio' => ['required', 'file'],
+            'privacy' => ['required']
         ]);
 
-        if (!$validator) {
-            return ''; //$validator->errors();
-        }
+        /*if ($validator->fails()) {
+            //\Log::info($validator);
+            return $validator->errors();
+        }*/
 
         $app = new AuthorApplication();
         $app->user_id = Auth::id();
         $app->title = $request->get('title');
         $app->description = $request->get('description');
-        $app->categories = $request->get('categories');
+        $app->categories = $request->get('categories-ids');
         $app->tags = $request->get('tags');
 
-        $app->image = ' ';
+        $filename = time() . '_' . $request->image->getClientOriginalName();
+        $request->image->move(AuthorApplication::UPLOADS_IMAGES, $filename);
+        $app->image = $filename;
 
-        $app->example = ' ';
-
+        $filename = time() . '_' . $request->audio->getClientOriginalName();
+        $request->audio->move(AuthorApplication::UPLOADS_AUDIO, $filename);
+        $app->example = $filename;
 
         $app->status = AuthorApplication::STATUS_PENDING;
         $app->save();
 
-        return 'ok';
+        return redirect()->action([ProfileController::class, 'apply']);
     }
 
     public function myPodcasts() {

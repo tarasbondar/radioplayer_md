@@ -47,7 +47,9 @@
 
                     <div class="mb-3 form-group row">
                         <label class="col-md-4 col-form-label text-md-right">Current Source</label>
-                        <div class="col-md-6"> <div class="form-control">{{ $episode['source'] ?? 'none' }} </div></div>
+                        <div class="col-md-6">
+                            <audio id="audio" controls class="form-control"><source src="/uploads/podcasts_episodes/{{ $episode['source'] }}">
+                        </div>
                     </div>
                     <div class="mb-3 form-group row">
                         <label for="source" class="col-md-4 col-form-label text-md-right">Upload</label>

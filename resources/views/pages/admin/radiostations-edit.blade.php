@@ -33,8 +33,15 @@
 
                     <div class="mb-3 form-group row">
                         <label class="col-md-4 col-form-label text-md-right">Current Image</label>
-                        <div class="col-md-6"> <div class="form-control">{{ $station['image_logo'] ?? 'none' }} </div></div>
+                        <div class="col-md-6">
+                            @if (!empty($station['image_logo']))
+                                <img id="image" alt="" src="/uploads/stations_images/{{ $station['image_logo'] }}" width="325" height="325"/>
+                            @else
+                                -
+                            @endif
+                        </div>
                     </div>
+
                     <div class="mb-3 form-group row">
                         <label for="image" class="col-md-4 col-form-label text-md-right">Upload Image</label>
                         <div class="col-md-6"><input id="image" type="file" name="image"></div>

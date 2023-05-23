@@ -1,36 +1,42 @@
 <div class="author__wrapper">
-    <form action="/send-application" method='POST' id="apply-form" data-validate="apply-form" enctype = 'multipart/form-data'>
+    <form action="/send-application" method='POST' id="apply-form" data-validate="apply-form" enctype='multipart/form-data'>
+        @csrf
 
         <div class="input form-floating">
-            <input type="text" class="form-control" placeholder="Название подкаста" id="title" name="title">
+            <input type="text" class="form-control" placeholder="Название подкаста" id="title" name="title" value="{{ old('name') }}">
             <label for="title">Название подкаста</label>
-            <div class="messages"></div>
+            <div class="messages">
+                @error('title') {{ $message }} @enderror
+            </div>
         </div>
 
         <div class="input form-floating">
-            <textarea class="form-control" placeholder="Описание подкаста" id="description" name="description"></textarea>
+            <textarea class="form-control" placeholder="Описание подкаста" id="description" name="description"> {{ old('description') }}</textarea>
             <label for="description">Описание подкаста</label>
-            <div class="messages"></div>
+            <div class="messages">@error('description') {{ $message }} @enderror</div>
         </div>
 
         <div class="input form-floating">
+            <input class="form-control" id="categories-ids" name="categories-ids" value="" hidden>
             <input class="form-control" placeholder="Категория" id="categories" name="categories" value="">
             <label for="categories">Категория</label>
-            <div class="messages"></div>
+            <div class="messages">@error('categories-ids') {{ $message }} @enderror</div>
             <button class="btn btn-modal-toggle" type="button" aria-expanded="false" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 <svg class="icon">
                     <use href="/img/sprite.svg#chevron-right"></use>
                 </svg>
             </button>
         </div>
+
         <div class="input form-floating">
-            <input type="text" class="form-control" placeholder="Теги через запятую" id="tags" name="tags">
+            <input type="text" class="form-control" placeholder="Теги через запятую" id="tags" name="tags" value="{{ old('tags') }}">
             <label for="tags">Теги через запятую</label>
-            <div class="messages"></div>
+            <div class="messages">@error('tags') {{ $message }} @enderror</div>
         </div>
+
         <div class="input file">
             <label for="image" class="control-panel">
-                <input id="image" class="form__file" type="file" data-file_input="file-image" size="1048576" accept="image/png, image/jpeg, image/*">
+                <input id="image" class="form__file" type="file" data-file_input="image" size="1048576" name="image" accept="image/png, image/jpeg, image/*">
                 <span class="control-panel-wrap">
                     <span class="control-panel-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
@@ -52,9 +58,10 @@
                 </span>
             </label>
         </div>
+
         <div class="input file">
             <label for="file-audio" class="control-panel">
-                <input id="file-audio" class="form__file" type="file" data-file_input="file-audio" size="52428800" accept=".MP3, .WAV">
+                <input id="file-audio" class="form__file" type="file" data-file_input="audio" name="audio" size="52428800" accept=".MP3, .WAV">
                 <span class="control-panel-wrap">
                     <span class="control-panel-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
@@ -136,62 +143,18 @@
         </div>
 
         <div class="input input__inner">
-            <input class="input__checkbox" type="checkbox" id="inlineFormCheck" data-agree>
-            <label class="input__label" for="inlineFormCheck">
+            <input class="input__checkbox" type="checkbox" id="privacy" name="privacy" data-agree>
+            <label class="input__label" for="privacy">
                 Я принимаю условия <a href="/privacy-policy" class="link" target="_blank">пользовательского соглашения</a>
             </label>
             <svg class="icon">
                 <use href="/img/sprite.svg#check"></use>
             </svg>
-            <div class="messages"></div>
+            <div class="messages">@error('policy') {{ $message }} @enderror</div>
         </div>
-        <button class="btn btn-default btn-primary" type="submit" id="form-submit"{{--disabled--}}>Отправить заявку</button>
+        <button class="btn btn_default btn_primary" type="submit" id="form-submit"{{--disabled--}}>Отправить заявку</button>
 
-        {{--<label class="toggle">
-            <input class="toggle-checkbox" type="checkbox">
-            <span class="toggle-switch"></span>
-            <span class="toggle-label">Опубликовано</span>
-        </label>
-        <div class="input__actions mb-24">
-            <button class="btn btn_secondary btn_large" type="button">Удалить</button>
-            <button class="btn btn_primary btn_large" type="button">Сохранить</button>
-        </div>
-        <button class="btn btn_default btn_primary" type="button">Сохранить</button>--}}
     </form>
-
-    <div class="modal modal-filter fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="h3 modal-title text-center" id="exampleModalLabel">Категории</h3>
-                    <button type="button" class="btn-close btn btn_ico close-categories" data-bs-dismiss="modal" aria-label="Close">
-                        <svg class="icon">
-                            <use href="/img/sprite.svg#x"></use>
-                        </svg>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div>
-                        <div class="list categories-list">
-                            @foreach($categories as $c)
-                                <div class="input input__inner">
-                                    <input class="input__checkbox" type="checkbox" id="category-{{$c['id']}}" name="{{ $c['key'] }}" value="{{$c['id']}}" {{--checked--}}>
-                                    <label class="input__label light" for="category-{{$c['id']}}"> {{ $c['key'] }} </label>
-                                    <svg class="icon">
-                                        <use href="/img/sprite.svg#check"></use>
-                                    </svg>
-                                    <div class="messages"></div>
-                                </div>
-                            @endforeach
-                        </div>
-                        <div class="form-actions">
-                            <button class="btn btn_default btn_primary close-categories" data-bs-dismiss="modal">Сохранить</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
 </div>
 
@@ -201,41 +164,14 @@
 
     $(document).on('click', '.close-categories', function() {
         let selected_names = [];
-        $('.categories-list input:checked').each(function() {
-            selected_names.push($(this).attr('name'));
-        });
-
-        $('#categories').val(selected_names.join(', '));
-    });
-
-    $(document).on('click', '#form-submit', function(){
         let selected_ids = [];
         $('.categories-list input:checked').each(function() {
+            selected_names.push($(this).attr('name'));
             selected_ids.push($(this).val());
         });
 
-        let data = {
-            'title': $('#title').val(),
-            'description': $('#description').val(),
-            'categories': selected_ids.join(', '),
-            'tags': $('#tags').val()
-        };
-
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            method: 'POST',
-            data: data,
-            url: '/send-application',
-            success: function(response) {
-                if (response === 'ok') {
-                    location.reload();
-                } else {
-                    //errors
-                }
-            }
-        })
-    })
+        $('#categories').val(selected_names.join(', '));
+        $('#categories-ids').val(selected_ids.join(','));
+    });
 
 </script>
