@@ -158,41 +158,44 @@
         </div>
         <button class="btn btn_default btn_primary" type="button">Сохранить</button>--}}
     </form>
-</div>
 
-<div class="modal modal-filter fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="h3 modal-title text-center" id="exampleModalLabel">Категории</h3>
-                <button type="button" class="btn-close btn btn_ico close-categories" data-bs-dismiss="modal" aria-label="Close">
-                    <svg class="icon">
-                        <use href="/img/sprite.svg#x"></use>
-                    </svg>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div>
-                    <div class="list categories-list">
-                        @foreach($categories as $c)
-                            <div class="input input__inner">
-                                <input class="input__checkbox" type="checkbox" id="category-{{$c['id']}}" name="{{ $c['key'] }}" value="{{$c['id']}}" {{--checked--}}>
-                                <label class="input__label light" for="category-{{$c['id']}}"> {{ $c['key'] }} </label>
-                                <svg class="icon">
-                                    <use href="/img/sprite.svg#check"></use>
-                                </svg>
-                                <div class="messages"></div>
-                            </div>
-                        @endforeach
-                    </div>
-                    <div class="form-actions">
-                        <button class="btn btn_default btn_primary close-categories" data-bs-dismiss="modal">Сохранить</button>
+    <div class="modal modal-filter fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="h3 modal-title text-center" id="exampleModalLabel">Категории</h3>
+                    <button type="button" class="btn-close btn btn_ico close-categories" data-bs-dismiss="modal" aria-label="Close">
+                        <svg class="icon">
+                            <use href="/img/sprite.svg#x"></use>
+                        </svg>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="list categories-list">
+                            @foreach($categories as $c)
+                                <div class="input input__inner">
+                                    <input class="input__checkbox" type="checkbox" id="category-{{$c['id']}}" name="{{ $c['key'] }}" value="{{$c['id']}}" {{--checked--}}>
+                                    <label class="input__label light" for="category-{{$c['id']}}"> {{ $c['key'] }} </label>
+                                    <svg class="icon">
+                                        <use href="/img/sprite.svg#check"></use>
+                                    </svg>
+                                    <div class="messages"></div>
+                                </div>
+                            @endforeach
+                        </div>
+                        <div class="form-actions">
+                            <button class="btn btn_default btn_primary close-categories" data-bs-dismiss="modal">Сохранить</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
 </div>
+
+
 
 <script>
 
@@ -202,7 +205,6 @@
             selected_names.push($(this).attr('name'));
         });
 
-        //console.log(selected_names.join(', '));
         $('#categories').val(selected_names.join(', '));
     });
 
@@ -218,8 +220,6 @@
             'categories': selected_ids.join(', '),
             'tags': $('#tags').val()
         };
-
-        //console.log(data);
 
         $.ajax({
             headers: {

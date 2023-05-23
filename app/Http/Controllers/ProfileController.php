@@ -62,7 +62,7 @@ class ProfileController extends Controller
                 }
             }
         } else { //already author
-            return redirect()->route('my-podcasts');
+            return redirect()->action([ProfileController::class, 'myPodcasts']);
         }
         $categories = PodcastCategory::where('status', '=', PodcastCategory::STATUS_ACTIVE)->get()->toArray();
         return view('pages.client.author-application', ['status' => 'new', 'user_role' => $role,'categories' => $categories]);
@@ -72,7 +72,7 @@ class ProfileController extends Controller
         $validator = $request->validate([
             'title' => ['required'],
             'description' => ['required'],
-            'categories' => ['required'],
+            //'categories' => ['required'],
             'tags' => ['max:255'],
             //'image' => ['required'],
             //'example' => ['required']
@@ -88,8 +88,12 @@ class ProfileController extends Controller
         $app->description = $request->get('description');
         $app->categories = $request->get('categories');
         $app->tags = $request->get('tags');
+
         $app->image = ' ';
+
         $app->example = ' ';
+
+
         $app->status = AuthorApplication::STATUS_PENDING;
         $app->save();
 

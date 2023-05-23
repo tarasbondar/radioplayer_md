@@ -1,6 +1,6 @@
 @extends('layouts/client')
 
-@section('content')  {{--{{> player-type-2 }} in header--}}
+@section('content')
 
     <main class="main">
         <section class="author">
