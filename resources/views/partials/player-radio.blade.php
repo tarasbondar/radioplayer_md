@@ -1,11 +1,8 @@
 <aside class="player" id="player-radio" data-player="radio">
     <div class="now-playing" data-now-playing>
-        {{--<audio id="audio-stream">
-            <source src="{{ $current['source'] }}" type="audio/mpeg">
-        </audio>--}}
 
         <input id="audio-source" type="text" value="{{ @$current['source'] }}" readonly hidden>
-        {{--<input id="audio-source-hd" type="text" value="{{ @$current['source_hd'] }}" readonly hidden>--}}
+        <input id="audio-source-hd" type="text" value="{{ @$current['source_hd'] }}" readonly hidden>
 
         <button class="now-playing__btn" type="button" aria-label="Подробнее" data-np-trigger></button>
         <div class="now-playing__track">
@@ -102,7 +99,7 @@
                         </svg>
                     </button>
 
-                    <button class="btn btn_ico btn_ico-primary np-modal__btn-quality {{'active'}}" type="button" aria-label="Качество" {{ empty($current['source_hd']) ? 'disabled' : '' }}>
+                    <button class="btn btn_ico btn_ico-primary np-modal__btn-quality" type="button" aria-label="Качество" {{ empty($current['source_hd']) ? 'disabled' : '' }} data-change-source>
                         <svg class="icon"><use href="/img/sprite.svg#q"></use></svg>
                     </button>
 

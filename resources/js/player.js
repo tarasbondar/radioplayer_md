@@ -3,6 +3,7 @@ export let player = {
     playbackRate: 1,
     playbackRateMax: 2,
     playbackRateStep: 0.2,
+    sourceType: 'sd',
     timer: {
         minutes: 15,
         hours: 0,
@@ -168,7 +169,17 @@ export let player = {
         window.audio.currentTime = newTime;
     },
     setSource(src){
+        let paused = false;
+        if (window.audio.paused) {
+            paused = true;
+        }
+        if (!paused) {
+            window.audio.pause();
+        }
         window.audio.setAttribute("src", src);
+        if (!paused) {
+            window.audio.play();
+        }
     },
     adjustVolume(e) {
         const volumeSlider = $('[data-volume-widget]');
@@ -268,6 +279,25 @@ export let player = {
         });
         $(document).on('click', '[data-timer-apply]', function(){
             self.timerApply();
+        });
+        $(document).on('click', '[data-change-source]', function(){
+            let src = '';
+            if (self.sourceType === 'sd') {
+                src = $('#audio-source-hd').val();
+                if (src.length > 7) {
+                    self.sourceType = 'hd';
+                    $(this).addClass('active');
+                    self.setSource(src);
+                }
+            } else if (self.sourceType === 'hd') {
+                src = $('#audio-source').val();
+                if (src.length > 7) {
+                    self.sourceType = 'sd';
+                    $(this).removeClass('active');
+                    self.setSource(src);
+                }
+            }
+
         });
 
         $(document).on('click', '[data-timer-change-hours]', function(){
