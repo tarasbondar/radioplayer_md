@@ -18,6 +18,11 @@ use Illuminate\Support\Facades\DB;
 class IndexController
 {
 
+    public function __construct() {
+        $lang = Auth::check() ? Auth::user()->language : 'en';
+        view()->share(['lang' => $lang]);
+    }
+
     public function index(Request $request) { //alias stations
         $category_id = $request->get('category_id', 0);
         $tag_id = $request->get('tag_id', 0);

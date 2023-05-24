@@ -398,6 +398,19 @@ class ProfileController extends Controller
         ]);
     }
 
+    public function changeLanguage(Request $request) {
+        $lang = strtolower($request->get('lang'));
+        if (in_array($lang, ['en', 'ro', 'ru']) ) {
+            $user = Auth::user();
+            $user->language = $lang;
+            $user->save();
+            //view()->share(['lang' => $lang]);
+            return $lang;
+        } else {
+            return '';
+        }
+    }
+
     public function logout() {
         Auth::logout();
     }

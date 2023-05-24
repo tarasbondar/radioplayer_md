@@ -56,6 +56,8 @@ Route::get('/play-episode/{id}', [IndexController::class, 'playEpisode']);
 Route::get('/settings', [ProfileController::class, 'settings'])->name('profile.settings');
 Route::post('/settings/change-name', [ProfileController::class, 'changeName'])->name('profile.changeName');
 Route::post('/settings/change-password', [ProfileController::class, 'changePassword'])->name('profile.changePassword');
+Route::post('/settings/change-language', [ProfileController::class, 'changeLanguage'])->name('profile.changeLanguage');
+
 
 Route::get('/privacy-policy', [IndexController::class, 'privacy']);
 

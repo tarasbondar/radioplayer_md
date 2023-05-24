@@ -2,6 +2,7 @@
 
 @section('content')
 
+
     <main class="main">
         <section class="login">
             <div class="container">
@@ -24,11 +25,7 @@
                                 </svg>
                             </i>
                             <div class="messages">
-                                @error('name')
-                                <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                {{ $errors->has('name') ? $errors->first('name') : '' }}
                             </div>
                         </div>
 
@@ -42,11 +39,7 @@
                                 </svg>
                             </i>
                             <div class="messages">
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                {{ $errors->has('email') ? $errors->first('email') : '' }}
                             </div>
                         </div>
 
@@ -59,11 +52,7 @@
                                 </svg>
                             </i>
                             <div class="messages">
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                {{ $errors->has('password') ? $errors->first('password') : '' }}
                             </div>
                         </div>
 
@@ -78,8 +67,8 @@
                         </div>
 
                         <div class="input input__inner">
-                            <input class="input__checkbox" type="checkbox" id="privacy">
-                            <label class="input__label" for="agreement">
+                            <input class="input__checkbox" type="checkbox" id="agree" required>
+                            <label class="input__label" for="agree">
                                 Я принимаю <a href="/privacy" class="link">условия</a> <a href="/privacy" class="link">пользовательского соглашения</a>
                             </label>
                             <svg class="icon">

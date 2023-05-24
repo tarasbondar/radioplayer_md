@@ -42,9 +42,9 @@
         <div class="header__menu__inner">
             <div class="header__menu__options">
                 <div class="header__menu__lang">
-                    <a class="btn btn_large btn_switcher active" href="#">RU</a>
-                    <a class="btn btn_large btn_switcher" href="#">RO</a>
-                    <a class="btn btn_large btn_switcher" href="#">EN</a>
+                    <a id='lang-ru' class="btn btn_large btn_switcher" href="#">RU</a>
+                    <a id='lang-ro' class="btn btn_large btn_switcher" href="#">RO</a>
+                    <a id='lang-en' class="btn btn_large btn_switcher" href="#">EN</a>
                 </div>
 
                 <button class="btn btn_large header__menu__theme-btn" type="button" aria-label="Switch Theme" data-theme-toggle>
@@ -168,4 +168,32 @@
         </div>
     </div>
     <div class="header__menu-backdrop" data-menu-backdrop></div>
+
+    <script>
+
+        (function(){
+            let language = '{{ @$lang }}'; //or by cookie
+            $('#lang-'+language).addClass('active');
+
+            $(document).on('click', '.header__menu__lang > a:not(.active)', function(){
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    method: 'POST',
+                    url: '/settings/change-language',
+                    data: {'lang': $(this).html()},
+                    success: function (response) {
+                        if (response.length > 0) {
+                            $('.header__menu__lang > a.active').removeClass('active');
+                            $('#lang-'+response).addClass('active');
+                            //cookie
+                        }
+                    }
+                })
+            })
+        })(jQuery)
+
+    </script>
+
 </header>

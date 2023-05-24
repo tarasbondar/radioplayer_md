@@ -1,26 +1,30 @@
 <div class="author__wrapper">
-    <form action="/send-application" method='POST' id="apply-form" data-validate="apply-form" enctype='multipart/form-data'>
+    <form action="/send-application" method='POST' id="apply-form" {{--data-validate="apply-form"--}} enctype='multipart/form-data'>
         @csrf
 
         <div class="input form-floating">
-            <input type="text" class="form-control" placeholder="Название подкаста" id="title" name="title" value="{{ old('name') }}">
+            <input type="text" class="form-control" placeholder="Название подкаста" id="title" name="title" value="{{ old('title') }}">
             <label for="title">Название подкаста</label>
             <div class="messages">
-                @error('title') {{ $message }} @enderror
+                {{ $errors->has('title') ? $errors->first('title') : '' }}
             </div>
         </div>
 
         <div class="input form-floating">
             <textarea class="form-control" placeholder="Описание подкаста" id="description" name="description"> {{ old('description') }}</textarea>
             <label for="description">Описание подкаста</label>
-            <div class="messages">@error('description') {{ $message }} @enderror</div>
+            <div class="messages">
+                {{ $errors->has('description') ? $errors->first('description') : '' }}
+            </div>
         </div>
 
         <div class="input form-floating">
             <input class="form-control" id="categories-ids" name="categories-ids" value="" hidden>
             <input class="form-control" placeholder="Категория" id="categories" name="categories" value="">
             <label for="categories">Категория</label>
-            <div class="messages">@error('categories-ids') {{ $message }} @enderror</div>
+            <div class="messages">
+                {{ $errors->has('categories-ids') ? $errors->first('categories-ids') : '' }}
+            </div>
             <button class="btn btn-modal-toggle" type="button" aria-expanded="false" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 <svg class="icon">
                     <use href="/img/sprite.svg#chevron-right"></use>
@@ -31,7 +35,9 @@
         <div class="input form-floating">
             <input type="text" class="form-control" placeholder="Теги через запятую" id="tags" name="tags" value="{{ old('tags') }}">
             <label for="tags">Теги через запятую</label>
-            <div class="messages">@error('tags') {{ $message }} @enderror</div>
+            <div class="messages">
+                {{ $errors->has('tags') ? $errors->first('tags') : '' }}
+            </div>
         </div>
 
         <div class="input file">
@@ -57,6 +63,7 @@
                     </span>
                 </span>
             </label>
+            {{ $errors->has('image') ? $errors->first('image') : '' }}
         </div>
 
         <div class="input file">
@@ -140,6 +147,7 @@
                 </div>
             </li>
         </ul>--}}
+            <div class="messages"> {{ $errors->has('audio') ? $errors->first('audio') : '' }} </div>
         </div>
 
         <div class="input input__inner">
@@ -150,9 +158,11 @@
             <svg class="icon">
                 <use href="/img/sprite.svg#check"></use>
             </svg>
-            <div class="messages">@error('policy') {{ $message }} @enderror</div>
+            <div class="messages">
+                {{ $errors->has('privacy') ? $errors->first('privacy') : '' }}
+            </div>
         </div>
-        <button class="btn btn_default btn_primary" type="submit" id="form-submit"{{--disabled--}}>Отправить заявку</button>
+        <button class="btn btn_default btn_primary" type="submit" id="form-submit">Отправить заявку</button>
 
     </form>
 
