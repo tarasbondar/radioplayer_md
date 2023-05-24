@@ -20,7 +20,18 @@
                     </div>
                     <div class="mb-3 form-group row">
                         <label for="description" class="col-md-4 col-form-label text-md-right">Description</label>
-                        <div class="col-md-6"> <textarea id="description" type="text" class="form-control " name="description" rows="6" required> {{ @$station['description'] }} </textarea> </div>
+                        <div class="col-md-6"> <textarea id="description" type="text" class="form-control " name="description" rows="6"> {{ @$station['description'] }} </textarea> </div>
+                    </div>
+                    <div class="mb-3 form-group row">
+                        <label for="group-id" class="col-md-4 col-form-label text-md-right">Group</label>
+                        <div class="col-md-6">
+                            <select class="form-select" aria-label="" name="group-id">
+                                <option value="0">No group</option>
+                                @foreach($groups as $g)
+                                    <option value="{{ $g['id'] }}">{{$g['key']}}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                     <div class="mb-3 form-group row">
                         <label for="source" class="col-md-4 col-form-label text-md-right">Source</label>
@@ -29,6 +40,10 @@
                     <div class="mb-3 form-group row">
                         <label for="source-hd" class="col-md-4 col-form-label text-md-right">Source HD</label>
                         <div class="col-md-6"> <input id="source-hd" type="text" class="form-control" name="source-hd" value="{{ @$station['source_hd'] }}"> </div>
+                    </div>
+                    <div class="mb-3 form-group row">
+                        <label for="source-meta" class="col-md-4 col-form-label text-md-right">Metadata</label>
+                        <div class="col-md-6"> <input id="source-meta" type="text" class="form-control" name="source-meta" value="{{ @$station['source_meta'] }}"> </div>
                     </div>
 
                     <div class="mb-3 form-group row">

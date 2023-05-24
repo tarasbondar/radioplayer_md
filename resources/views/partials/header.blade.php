@@ -73,7 +73,7 @@
                     </div>
                 @endguest
 
-                @if(!auth()->check() || auth()->user()->role < 1)
+                @if(auth()->check() && auth()->user()->role < 1)
                     <a class="btn header__menu__link-panel" href="/apply">
                         <svg class="icon"><use href="/img/sprite.svg#mic"></use></svg>
                         <span>Стать автором</span>
@@ -86,11 +86,11 @@
                 @endif
 
                 @if(auth()->check() && auth()->user()->role > 0)
-                <a class="btn header__menu__link-panel header__menu__link-panel_highlighted" href="/my-podcasts">
-                    <svg class="icon"><use href="/img/sprite.svg#mic"></use></svg>
-                    <span>Мои подкасты</span>
-                    <img class="header__menu__link-panel__img" srcset="/img/become-author-highlighted.png 1x, /img/become-author-highlighted@2x.png 2x" src="/img/become-author-highlighted.png" alt="" width="115" height="100" loading="lazy">
-                </a>
+                    <a class="btn header__menu__link-panel header__menu__link-panel_highlighted" href="/my-podcasts">
+                        <svg class="icon"><use href="/img/sprite.svg#mic"></use></svg>
+                        <span>Мои подкасты</span>
+                        <img class="header__menu__link-panel__img" srcset="/img/become-author-highlighted.png 1x, /img/become-author-highlighted@2x.png 2x" src="/img/become-author-highlighted.png" alt="" width="115" height="100" loading="lazy">
+                    </a>
                 @endif
 
                 <a class="btn btn_list-item" href="/subscriptions">

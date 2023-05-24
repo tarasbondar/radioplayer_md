@@ -8,7 +8,11 @@
         <div class="now-playing__track">
             <div class="logo">
                 <img class="logo__bg" srcset="/img/radio-logo.png 1x, /img/radio-logo@2x.png 2x" src="/img/radio-logo.png" width="100%" alt="" loading="lazy">
-                <img class="logo__img" srcset="/img/radio-logo.png 1x, /img/radio-logo@2x.png 2x" src="/img/radio-logo.png" width="100%" alt="" loading="lazy">
+                <img class="logo__img"
+                     srcset="{{ !empty($current['image_logo']) ? 'uploads/stations_images/' . $current['image_logo'] : "/img/station-placeholder.png"}} 1x,
+                     {{ !empty($current['image_logo']) ? 'uploads/stations_images/' . $current['image_logo'] : "/img/station-placeholder.png"}} 2x"
+                     src="{{ !empty($current['image_logo']) ? 'uploads/stations_images/' . $current['image_logo'] : "/img/station-placeholder.png"}}"
+                     width="100%" alt="" loading="lazy">
             </div>
             <div class="now-playing__track__body">
                 <div class="now-playing__track__author x-small">
@@ -59,7 +63,11 @@
                 <div class="np-modal__player-body__header">
                     <div class="logo">
                         <img class="logo__bg" srcset="/img/radio-logo.png 1x, img/radio-logo@2x.png 2x" src="/img/radio-logo.png" width="100%" alt="" loading="lazy">
-                        <img class="logo__img" srcset="{{ !empty($current['image_logo']) ? 'uploads/stations_images/' . $current['image_logo'] : "/img/station-placeholder.png"}} 1x, img/radio-logo@2x.png 2x" src="/img/radio-logo.png" width="100%" alt="" loading="lazy">
+                        <img class="logo__img"
+                             srcset="{{ !empty($current['image_logo']) ? 'uploads/stations_images/' . $current['image_logo'] : "/img/station-placeholder.png"}} 1x,
+                             {{ !empty($current['image_logo']) ? 'uploads/stations_images/' . $current['image_logo'] : "/img/station-placeholder.png"}} 2x"
+                             src="{{ !empty($current['image_logo']) ? 'uploads/stations_images/' . $current['image_logo'] : "/img/station-placeholder.png"}}"
+                             width="100%" alt="" loading="lazy">
                     </div>
                     <div class="np-modal__player-body__header__inner">
                         <div class="np-modal__player-body__header__pretitle x-small">Song title</div>

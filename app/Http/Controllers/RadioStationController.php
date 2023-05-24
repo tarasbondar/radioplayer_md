@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\RadioStation;
 use App\Models\RadioStationCategory;
+use App\Models\RadioStationGroup;
 use App\Models\RadioStationTag;
 use App\Models\RadioStation2Category;
 use App\Models\RadioStation2Tag;
@@ -29,7 +30,8 @@ class RadioStationController extends Controller
     public function add() {
         $categories = RadioStationCategory::where('status', '=', RadioStationCategory::STATUS_ACTIVE)->get(['id', 'key']);
         $tags = RadioStationTag::where('status', '=', RadioStationTag::STATUS_ACTIVE)->get(['id', 'key']);
-        return view('pages.admin.radiostations-edit', ['action' => 'add', 'categories' => $categories, 's2c' => [], 'tags' => $tags, 's2t' => []]);
+        $groups = RadioStationGroup::all()->toArray();
+        return view('pages.admin.radiostations-edit', ['action' => 'add', 'categories' => $categories, 's2c' => [], 'tags' => $tags, 's2t' => [], 'groups' => $groups]);
     }
 
     public function edit($id) {
@@ -38,7 +40,8 @@ class RadioStationController extends Controller
         $s2c = $this->getCategoriesByStation($id);
         $tags = RadioStationTag::where('status', '=', RadioStationTag::STATUS_ACTIVE)->get(['id', 'key']);
         $s2t = $this->getTagsByStation($id);
-        return view('pages.admin.radiostations-edit', ['action' => 'edit', 'station' => $station, 'categories' => $categories, 's2c' => $s2c, 'tags' => $tags, 's2t' => $s2t]);
+        $groups = RadioStationGroup::all()->toArray();
+        return view('pages.admin.radiostations-edit', ['action' => 'edit', 'station' => $station, 'categories' => $categories, 's2c' => $s2c, 'tags' => $tags, 's2t' => $s2t, 'groups' => $groups]);
     }
 
     public function save(Request $request) {
@@ -53,8 +56,10 @@ class RadioStationController extends Controller
         }
         $station->name = $request['name'];
         $station->description = $request['description'];
+        $station->group_id = $request['group-id'];
         $station->source = $request['source'];
         $station->source_hd = $request['source-hd'];
+        $station->source_meta = $request['source-meta'];
 
         if ($request->has('image')) {
             if (isset($station->image_logo)) {

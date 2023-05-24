@@ -12,6 +12,7 @@ use App\Http\Controllers\RadioStationCategoryController;
 use App\Http\Controllers\RadioStationTagController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RadioStationGroupController;
 use App\Http\Middleware\IsAdmin;
 use \Illuminate\Support\Facades\Auth;
 
@@ -114,6 +115,12 @@ Route::name('admin.')->prefix('admin')->middleware([IsAdmin::class])->group(func
     Route::get('/station-tags/edit/{id}', [RadioStationTagController::class, 'edit']);
     Route::post('/station-tags/save', [RadioStationTagController::class, 'save']);
     Route::delete('/station-tags/{id}', [RadioStationTagController::class, 'delete']);
+
+    Route::get('/station-groups', [RadioStationGroupController::class, 'index']);
+    Route::get('/station-groups/add', [RadioStationGroupController::class, 'add']);
+    Route::get('/station-groups/edit/{id}', [RadioStationGroupController::class, 'edit']);
+    Route::post('/station-groups/save', [RadioStationGroupController::class, 'save']);
+    Route::delete('/station-groups/{id}', [RadioStationGroupController::class, 'delete']);
 
     /*Route::delete('/translations', [Translations::class, 'delete']);*/
 

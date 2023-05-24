@@ -19,6 +19,9 @@
             <a class="nav-link" href="{{ '/admin/station-tags' }}">Radio Stations Tags</a>
         </li>
         <li class="nav-item">
+            <a class="nav-link" href="{{ '/admin/station-groups' }}">Radio Stations Groups</a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" href="{{ '/admin/podcasts' }}">Podcasts</a>
         </li>
         <li class="nav-item">

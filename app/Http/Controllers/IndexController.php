@@ -57,7 +57,7 @@ class IndexController
         return $output;
     }
 
-    public function searchStations($category_id = 0, $tag_id = 0) {
+    public function searchStations($category_id = 0, $tag_id = 0, $group_id = 0) {
         $user_id = (Auth::check() ? Auth::id() : 0);
         $stations = RadioStation::select(DB::raw("rs.*, if ((SELECT user_id FROM radiostations_favorites WHERE user_id = {$user_id} AND station_id = rs.id), 1, 0 ) as `favorited`"))
             ->from('radiostations AS rs')
@@ -72,6 +72,10 @@ class IndexController
 
         if ($tag_id > 0) {
             $stations = $stations->where('r2t.tag_id', '=', $tag_id);
+        }
+
+        if ($group_id > 0) {
+            $stations = $stations->where('rs.group_id', '=', $group_id);
         }
 
         $stations = $stations->distinct()->get()->toArray();
@@ -91,7 +95,7 @@ class IndexController
             $favorited = 0;
         }
 
-        $all = $this->searchStations();
+        $all = $this->searchStations(0,0, $current['group_id']);
 
         return view('partials.player-radio', ['current' => $current, 'all' => $all, 'favorited' => $favorited ])->render();
     }
