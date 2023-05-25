@@ -7,7 +7,11 @@
         <button class="now-playing__btn" type="button" aria-label="Подробнее" data-np-trigger></button>
         <div class="now-playing__track">
             <div class="logo">
-                <img class="logo__bg" srcset="/img/radio-logo.png 1x, /img/radio-logo@2x.png 2x" src="/img/radio-logo.png" width="100%" alt="" loading="lazy">
+                <img class="logo__bg"
+                     srcset="{{ !empty($current['image_logo']) ? 'uploads/stations_images/' . $current['image_logo'] : "/img/station-placeholder.png"}} 1x,
+                     {{ !empty($current['image_logo']) ? 'uploads/stations_images/' . $current['image_logo'] : "/img/station-placeholder.png"}} 2x"
+                     src="{{ !empty($current['image_logo']) ? 'uploads/stations_images/' . $current['image_logo'] : "/img/station-placeholder.png"}}"
+                     width="100%" alt="" loading="lazy">
                 <img class="logo__img"
                      srcset="{{ !empty($current['image_logo']) ? 'uploads/stations_images/' . $current['image_logo'] : "/img/station-placeholder.png"}} 1x,
                      {{ !empty($current['image_logo']) ? 'uploads/stations_images/' . $current['image_logo'] : "/img/station-placeholder.png"}} 2x"
@@ -62,7 +66,11 @@
             <div class="np-modal__player-body">
                 <div class="np-modal__player-body__header">
                     <div class="logo">
-                        <img class="logo__bg" srcset="/img/radio-logo.png 1x, img/radio-logo@2x.png 2x" src="/img/radio-logo.png" width="100%" alt="" loading="lazy">
+                        <img class="logo__bg"
+                             srcset="{{ !empty($current['image_logo']) ? 'uploads/stations_images/' . $current['image_logo'] : "/img/station-placeholder.png"}} 1x,
+                             {{ !empty($current['image_logo']) ? 'uploads/stations_images/' . $current['image_logo'] : "/img/station-placeholder.png"}} 2x"
+                             src="{{ !empty($current['image_logo']) ? 'uploads/stations_images/' . $current['image_logo'] : "/img/station-placeholder.png"}}"
+                             width="100%" alt="" loading="lazy">
                         <img class="logo__img"
                              srcset="{{ !empty($current['image_logo']) ? 'uploads/stations_images/' . $current['image_logo'] : "/img/station-placeholder.png"}} 1x,
                              {{ !empty($current['image_logo']) ? 'uploads/stations_images/' . $current['image_logo'] : "/img/station-placeholder.png"}} 2x"

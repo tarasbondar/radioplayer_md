@@ -48,7 +48,11 @@
                     <div class="mb-3 form-group row">
                         <label class="col-md-4 col-form-label text-md-right">Current Source</label>
                         <div class="col-md-6">
-                            <audio id="audio" controls class="form-control"><source src="/uploads/podcasts_episodes/{{ $episode['source'] }}">
+                            @if(!empty($episode['source']))
+                                <audio id="audio" controls class="form-control"><source src="/uploads/podcasts_episodes/{{ $episode['source'] }}">
+                            @else
+                                -
+                            @endif
                         </div>
                     </div>
                     <div class="mb-3 form-group row">
