@@ -55,15 +55,26 @@ export function nowPlaying() {
         });
     }
 
-    if (npModalPlayingListTrigger !== null)
-        npModalPlayingListTrigger.addEventListener('click', function(){
-            npModalPlaying.classList.add('hidden');
-            npModalPlayingList.classList.add('open');
-        });
-    if (npModalPlayingListClose !== null)
-        npModalPlayingListClose.addEventListener('click', function(){
-            npModalPlayingList.classList.remove('open');
-            npModalPlaying.classList.remove('hidden');
-        });
+    $(document).on('click', '[data-np-modal-playing-list-trigger]', function(){
+        $('[data-np-modal-player]').addClass('hidden')
+        $('[data-np-modal-playing-list]').addClass('open');
+    })
+
+    // if (npModalPlayingListTrigger !== null)
+    //     npModalPlayingListTrigger.addEventListener('click', function(){
+    //         npModalPlaying.classList.add('hidden');
+    //         npModalPlayingList.classList.add('open');
+    //     });
+
+    $(document).on('click', '[data-np-modal-playing-list-close]', function(){
+        $('[data-np-modal-player]').removeClass('hidden')
+        $('[data-np-modal-playing-list]').removeClass('open');
+    })
+
+    // if (npModalPlayingListClose !== null)
+    //     npModalPlayingListClose.addEventListener('click', function(){
+    //         npModalPlayingList.classList.remove('open');
+    //         npModalPlaying.classList.remove('hidden');
+    //     });
 
 }

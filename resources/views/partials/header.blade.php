@@ -17,7 +17,7 @@
                 </a>
             </li>
             <li class="header__nav__list-item">
-                <a class="btn btn_rows x-small {{ str_contains($_SERVER['REQUEST_URI'], 'podcast') ? 'active' : ''}}" href="/all-podcasts">
+                <a class="btn btn_rows x-small {{ str_contains($_SERVER['REQUEST_URI'], 'podcast') ? 'active' : ''}}" href="{{ route('index.allPodcasts') }}">
                     <svg class="icon">
                         <use href="/img/sprite.svg#mic"></use>
                     </svg>
@@ -42,9 +42,12 @@
         <div class="header__menu__inner">
             <div class="header__menu__options">
                 <div class="header__menu__lang">
-                    <a id='lang-ru' class="btn btn_large btn_switcher" href="#">RU</a>
-                    <a id='lang-ro' class="btn btn_large btn_switcher" href="#">RO</a>
-                    <a id='lang-en' class="btn btn_large btn_switcher" href="#">EN</a>
+                    @foreach($available_locales as $locale_name => $available_locale)
+                        <a class="btn btn_large btn_switcher {{ $available_locale === $current_locale ? 'active' : '' }}" href="/language/{{ $available_locale }}">{{ strtoupper($available_locale) }}</a>
+                    @endforeach
+{{--                    <a id='lang-ru' data-selector-lang class="btn btn_large btn_switcher" href="#">RU</a>--}}
+{{--                    <a id='lang-ro' data-selector-lang class="btn btn_large btn_switcher" href="#">RO</a>--}}
+{{--                    <a id='lang-en' data-selector-lang class="btn btn_large btn_switcher" href="#">EN</a>--}}
                 </div>
 
                 <button class="btn btn_large header__menu__theme-btn" type="button" aria-label="Switch Theme" data-theme-toggle>
@@ -175,7 +178,7 @@
             let language = '{{ @$lang }}'; //or by cookie
             $('#lang-'+language).addClass('active');
 
-            $(document).on('click', '.header__menu__lang > a:not(.active)', function(){
+            $(document).on('click', '[data-selector-lang]:not(.active)', function(){
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

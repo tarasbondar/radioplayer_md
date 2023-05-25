@@ -15,6 +15,7 @@ export let player = {
         intervalHours: 0,
         intervalMinutes: 0,
     },
+    playlist: [],
     init(){
         this.initVolumeSlider();
         this.initEvents();
@@ -181,6 +182,21 @@ export let player = {
             window.audio.play();
         }
     },
+    addToPlaylist(id) {
+        let self = this;
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            method: 'POST',
+            url: '/add-to-playlist/' + id,
+            success: function (response) {
+                if (response.status === 'success') {
+                    $('[data-player-playlist]').html(response.html);
+                }
+            }
+        })
+    },
     adjustVolume(e) {
         const volumeSlider = $('[data-volume-widget]');
         const offset = volumeSlider.offset();
@@ -317,5 +333,10 @@ export let player = {
         $(document).on('click', '[data-playback-rate]', function(){
             self.changePlaybackRate();
         });
+        $(document).on('click', '[data-add-to-playlist]', function(){
+            let id = $(this).data('add-to-playlist');
+            self.addToPlaylist(id);
+            return false;
+        })
     },
 }

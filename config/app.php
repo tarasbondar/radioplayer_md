@@ -82,8 +82,13 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'ru',
 
+    'available_locales' => [
+        'Russian' => 'ru',
+        'English' => 'en',
+        'Romanian' => 'ro',
+    ],
     /*
     |--------------------------------------------------------------------------
     | Application Fallback Locale
@@ -95,7 +100,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
+    'fallback_locale' => 'ru',
 
     /*
     |--------------------------------------------------------------------------
@@ -108,7 +113,7 @@ return [
     |
     */
 
-    'faker_locale' => 'en_US',
+    'faker_locale' => 'ru_RU',
 
     /*
     |--------------------------------------------------------------------------

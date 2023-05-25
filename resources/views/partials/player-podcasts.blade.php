@@ -52,11 +52,13 @@
 				    </svg>
 			    </button>
 			    <div></div>
-			    <button class="btn btn_ico btn_ico-primary" type="button" aria-label="Список" data-np-modal-playing-list-trigger>
-				    <svg class="icon">
-					    <use href="/img/sprite.svg#list"></use>
-				    </svg>
-			    </button>
+                @if (auth()->check())
+                    <button class="btn btn_ico btn_ico-primary" type="button" aria-label="Список" data-np-modal-playing-list-trigger>
+                        <svg class="icon">
+                            <use href="/img/sprite.svg#list"></use>
+                        </svg>
+                    </button>
+                @endif
 		    </div>
 
 		    <div class="np-modal__player-body">
@@ -133,7 +135,7 @@
                         <span class="np-modal__btn-timer__time x-small hidden" data-timer-active-time>00:15</span>
                     </button>
 
-				    <button class="btn btn_ico btn_ico-primary np-modal__btn-add-list active" type="button" aria-label="Добавить в список">
+				    <button class="btn btn_ico btn_ico-primary np-modal__btn-add-list" data-add-to-playlist="{{ $current['id'] }}" type="button" aria-label="Добавить в список">
 					    <svg class="icon">
 						    <use href="/img/sprite.svg#add-to-list"></use>
 					    </svg>
@@ -220,215 +222,10 @@
 		    </div>
 
 		    <div class="np-modal__player-body">
-			    <div class="np-modal__playing-list__body">
-				    <div class="np-modal__playing-list__item">
-					    <div class="btn btn_ico btn_sort">
-						    <svg class="icon">
-							    <use href="/img/sprite.svg#sort"></use>
-						    </svg>
-					    </div>
-					    <div class="info">
-						    <div class="avatar">
-							    <div class="avatar__action">
-								    <svg class="icon">
-									    <use href="/img/sprite.svg#play-bk"></use>
-								    </svg>
-							    </div>
-							    <img src="img/img.png" srcset="img/img.png 1x, img/img@2.png 2x" alt="img">
-						    </div>
-						    <div class="content">
-							    <span class="np-modal__player-body__header__pretitle">{{ __('client.podcastTitle') }}</span>
-							    <strong class="np-modal__player-body__header__title x-small">Arcu nulla pellentesque</strong>
-						    </div>
-					    </div>
-					    <button class="btn btn_ico btn_ico-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-						    <svg class="icon">
-							    <use href="/img/sprite.svg#more-vertical"></use>
-						    </svg>
-					    </button>
-					    <ul class="dropdown-menu dropdown-menu-end">
-						    <li>
-							    <span class="dropdown-item">
-								    <svg class="icon ms-0">
-									    <use href="/img/sprite.svg#chevron-up"></use>
-								    </svg>
-								    В начало
-							    </span>
-						    </li>
-						    <li>
-							    <span class="dropdown-item">
-								    <svg class="icon ms-0">
-									    <use href="/img/sprite.svg#chevron-down"></use>
-								    </svg>
-								    В конец
-							    </span>
-						    </li>
-						    <li>
-							    <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal">
-								    <svg class="icon ms-0">
-									    <use href="/img/sprite.svg#x"></use>
-								    </svg>
-								    Убрать
-							    </button>
-						    </li>
-					    </ul>
-				    </div>
-				    <div class="np-modal__playing-list__item">
-					    <div class="btn btn_ico btn_sort">
-						    <svg class="icon">
-							    <use href="/img/sprite.svg#sort"></use>
-						    </svg>
-					    </div>
-					    <div class="info">
-						    <div class="avatar">
-							    <div class="avatar__action">
-								    <svg class="icon">
-									    <use href="/img/sprite.svg#play-bk"></use>
-								    </svg>
-							    </div>
-							    <img src="img/img.png" srcset="img/img.png 1x, img/img@2.png 2x" alt="img">
-						    </div>
-						    <div class="content">
-							    <span class="np-modal__player-body__header__pretitle">{{ __('client.podcastTitle') }}</span>
-							    <strong class="np-modal__player-body__header__title x-small">Arcu nulla pellentesque</strong>
-						    </div>
-					    </div>
-					    <button class="btn btn_ico btn_ico-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-						    <svg class="icon">
-							    <use href="/img/sprite.svg#more-vertical"></use>
-						    </svg>
-					    </button>
-					    <ul class="dropdown-menu dropdown-menu-end">
-						    <li>
-							    <span class="dropdown-item">
-								    <svg class="icon ms-0">
-									    <use href="/img/sprite.svg#chevron-up"></use>
-								    </svg>
-								    В начало
-							    </span>
-						    </li>
-						    <li>
-							    <span class="dropdown-item">
-								    <svg class="icon ms-0">
-									    <use href="/img/sprite.svg#chevron-down"></use>
-								    </svg>
-								    В конец
-							    </span>
-						    </li>
-						    <li>
-							    <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal">
-								    <svg class="icon ms-0">
-									    <use href="/img/sprite.svg#x"></use>
-								    </svg>
-								    Убрать
-							    </button>
-						    </li>
-					    </ul>
-				    </div>
-				    <div class="np-modal__playing-list__item active">
-					    <div class="btn btn_ico btn_sort">
-						    <svg class="icon">
-							    <use href="/img/sprite.svg#sort"></use>
-						    </svg>
-					    </div>
-					    <div class="info">
-						    <div class="avatar">
-							    <div class="avatar__action">
-								    <svg class="icon">
-									    <use href="/img/sprite.svg#play-bk"></use>
-								    </svg>
-							    </div>
-							    <img src="img/img.png" srcset="img/img.png 1x, img/img@2.png 2x" alt="img">
-						    </div>
-						    <div class="content">
-							    <span class="np-modal__player-body__header__pretitle">{{ __('client.podcastTitle') }}</span>
-							    <strong class="np-modal__player-body__header__title x-small">Arcu nulla pellentesque Arcu nulla pellentesque</strong>
-						    </div>
-					    </div>
-					    <button class="btn btn_ico btn_ico-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-						    <svg class="icon">
-							    <use href="/img/sprite.svg#more-vertical"></use>
-						    </svg>
-					    </button>
-					    <ul class="dropdown-menu dropdown-menu-end">
-						    <li>
-							    <span class="dropdown-item">
-								    <svg class="icon ms-0">
-									    <use href="/img/sprite.svg#chevron-up"></use>
-								    </svg>
-								    В начало
-							    </span>
-						    </li>
-						    <li>
-							    <span class="dropdown-item">
-								    <svg class="icon ms-0">
-									    <use href="/img/sprite.svg#chevron-down"></use>
-								    </svg>
-								    В конец
-							    </span>
-						    </li>
-						    <li>
-							    <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal">
-								    <svg class="icon ms-0">
-									    <use href="/img/sprite.svg#x"></use>
-								    </svg>
-								    Убрать
-							    </button>
-						    </li>
-					    </ul>
-				    </div>
-				    <div class="np-modal__playing-list__item">
-					    <div class="btn btn_ico btn_sort">
-						    <svg class="icon">
-							    <use href="/img/sprite.svg#sort"></use>
-						    </svg>
-					    </div>
-					    <div class="info">
-						    <div class="avatar">
-							    <div class="avatar__action">
-								    <svg class="icon">
-									    <use href="/img/sprite.svg#play-bk"></use>
-								    </svg>
-							    </div>
-							    <img src="img/img.png" srcset="img/img.png 1x, img/img@2.png 2x" alt="img">
-						    </div>
-						    <div class="content">
-							    <span class="np-modal__player-body__header__pretitle">Название подкаста</span>
-							    <strong class="np-modal__player-body__header__title x-small">Arcu nulla pellentesque</strong>
-						    </div>
-					    </div>
-					    <button class="btn btn_ico btn_ico-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-						    <svg class="icon">
-							    <use href="/img/sprite.svg#more-vertical"></use>
-						    </svg>
-					    </button>
-					    <ul class="dropdown-menu dropdown-menu-end">
-						    <li>
-							    <span class="dropdown-item">
-								    <svg class="icon ms-0">
-									    <use href="/img/sprite.svg#chevron-up"></use>
-								    </svg>
-								    В начало
-							    </span>
-						    </li>
-						    <li>
-							    <span class="dropdown-item">
-								    <svg class="icon ms-0">
-									    <use href="/img/sprite.svg#chevron-down"></use>
-								    </svg>
-								    В конец
-							    </span>
-						    </li>
-						    <li>
-							    <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal">
-								    <svg class="icon ms-0">
-									    <use href="/img/sprite.svg#x"></use>
-								    </svg>
-								    Убрать
-							    </button>
-						    </li>
-					    </ul>
-				    </div>
+			    <div class="np-modal__playing-list__body" data-player-playlist>
+                    @if (auth()->check())
+                        @include('partials.player-playlist', ['list' => auth()->user()->playlist])
+                    @endif
 			    </div>
 		    </div>
 	    </div>

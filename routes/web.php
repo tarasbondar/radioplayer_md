@@ -18,6 +18,19 @@ use \Illuminate\Support\Facades\Auth;
 
 Auth::routes();
 
+Route::get('language/{locale}', function ($locale) {
+    app()->setLocale($locale);
+    session()->put('locale', $locale);
+
+    if (Auth::check()){
+        $user = Auth::user();
+        $user->language = $locale;
+        $user->save();
+    }
+
+    return redirect()->back();
+});
+
 Route::get('/', [IndexController::class, 'index']);
 Route::get('/home', [IndexController::class, 'index']);
 Route::get('/podcasts', [IndexController::class, 'podcasts']);
@@ -27,9 +40,10 @@ Route::get('/play-station/{id}', [IndexController::class, 'playStation']);
 
 Route::get('/apply', [ProfileController::class, 'apply']);
 Route::post('/send-application', [ProfileController::class, 'sendApplication']);
+Route::post('/add-to-playlist/{id}', [ProfileController::class, 'addToPlaylist'])->name('profile.addToPlaylist');
 
 Route::get('/my-podcasts', [ProfileController::class, 'myPodcasts']);
-Route::get('/all-podcasts', [IndexController::class, 'allPodcasts']);
+Route::get('/all-podcasts', [IndexController::class, 'allPodcasts'])->name('index.allPodcasts');
 Route::get('/podcasts', [IndexController::class, 'podcasts']);
 Route::post('/update-podcasts', [IndexController::class, 'updatePodcasts']);
 Route::get('/podcasts/{id}/view', [IndexController::class, 'viewPodcast']);
