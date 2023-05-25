@@ -29,6 +29,7 @@ Route::get('/apply', [ProfileController::class, 'apply']);
 Route::post('/send-application', [ProfileController::class, 'sendApplication']);
 
 Route::get('/my-podcasts', [ProfileController::class, 'myPodcasts']);
+Route::get('/all-podcasts', [IndexController::class, 'allPodcasts']);
 Route::get('/podcasts', [IndexController::class, 'podcasts']);
 Route::post('/update-podcasts', [IndexController::class, 'updatePodcasts']);
 Route::get('/podcasts/{id}/view', [IndexController::class, 'viewPodcast']);
