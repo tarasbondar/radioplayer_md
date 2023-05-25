@@ -46,7 +46,7 @@
 
         <div class="input file">
             <label for="image" class="control-panel">
-                <input id="image" class="form__file" type="file" data-file_input="image" size="1048576" name="image" accept="image/png, image/jpeg, image/*">
+                <input id="image" class="form__file" type="file" data-file_input="file-image" size="1048576" name="image" accept="image/png, image/jpeg, image/*">
                 <span class="control-panel-wrap">
                     <span class="control-panel-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
