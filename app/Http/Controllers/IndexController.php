@@ -36,7 +36,7 @@ class IndexController
         if (Auth::check()) { //favorited if user logged
             $fav_stations = RadioStation::select(DB::raw('rs.*, 1 as `favorited`'))->from('radiostations AS rs')
                 ->join('radiostations_favorites AS rf', 'rf.station_id', '=', 'rs.id')
-                ->where('rf.user_id', '=', Auth::id())->get()->toArray();
+                ->where('rf.user_id', '=', Auth::id())->orderBy('order', 'DESC')->get()->toArray();
         }
         return view('pages.client.index', ['stations' => $stations, 'tags' => $tags, 'categories' => $categories, 'fav_stations' => $fav_stations]);
     }
@@ -78,7 +78,7 @@ class IndexController
             $stations = $stations->where('rs.group_id', '=', $group_id);
         }
 
-        $stations = $stations->distinct()->get()->toArray();
+        $stations = $stations->orderBy('order', 'DESC')->distinct()->get()->toArray();
 
         return $stations;
     }

@@ -16,7 +16,7 @@ class RadioStation extends Model
 
     const UPLOADS_IMAGES = 'uploads/stations_images';
 
-    protected $fillable = ['name', 'description', 'group_id', 'source', 'source_hd', 'source_meta', 'status', 'image_logo'];
+    protected $fillable = ['name', 'description', 'group_id', 'source', 'source_hd', 'source_meta', 'status', 'image_logo', 'order'];
 
     public function categories() {
         $this->belongsToMany(RadioStationCategory::class, 'radiostations_2_categories');
