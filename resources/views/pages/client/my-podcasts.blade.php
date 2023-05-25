@@ -66,7 +66,7 @@
 
             </div>
 
-            <a href="#" class="btn btn_ico btn_ico-accent page-btn _playing" aria-label="Добавить">
+            <a href="/create-podcast" class="btn btn_ico btn_ico-accent page-btn _playing" aria-label="Добавить">
                 <svg class="icon">
                     <use href="/img/sprite.svg#plus"></use>
                 </svg>

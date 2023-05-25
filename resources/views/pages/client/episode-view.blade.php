@@ -9,11 +9,12 @@
                     <div class="podcast__inner">
                         <div class="podcast__descr-block">
                             <div class="podcast-img podcast-img_big">
-                                <img src="{{ !empty($p['image']) ? 'uploads/podcasts_images/' . $p['image'] : "/img/podcast-placeholder.png"}}"
-                                     srcset="{{ !empty($p['image']) ? 'uploads/podcasts_images/' . $p['image'] : "/img/podcast-placeholder.png"}} 1x,
-                                     {{ !empty($p['image']) ? 'uploads/podcasts_images/' . $p['image'] : "/img/podcast-placeholder.png"}} 2x" alt="img">
+                                <img src="{{ !empty($podcast['image']) ? '/uploads/podcasts_images/' . $podcast['image'] : "/img/podcast-placeholder.png"}}"
+                                     srcset="{{ !empty($podcast['image']) ? '/uploads/podcasts_images/' . $podcast['image'] : "/img/podcast-placeholder.png"}} 1x,
+                                     {{ !empty($podcast['image']) ? '/uploads/podcasts_images/' . $podcast['image'] : "/img/podcast-placeholder.png"}} 2x" alt="img">
                             </div>
                             <div class="text">
+                                <span class="podcast__descr">{{ $podcast['username'] }}</span>
                                 <span class="podcast__descr"> {{ $podcast['name'] }} </span>
                                 <strong class="podcast__title mb-3">{{ $episode['name'] }}</strong>
                                 @if (!auth()->check() || $podcast['subbed'] == 0)
@@ -25,6 +26,8 @@
                         </div>
                         <span class="podcast__data">{{ $episode['created_diff'] }}</span>
                         <strong class="podcast__title"> {{ $episode['name'] }} </strong>
+                        <p class="podcast__text">{{ $podcast['description'] }}</p>
+
                         <div class="podcast__holder mb-24">
                             <div class="podcast__timer mb-0">
                                 <div class="play">

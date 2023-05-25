@@ -102,6 +102,11 @@
                         @endforeach
                     </div>
 
+                    <div class="mb-3 form-group row">
+                        <label for="order" class="col-md-4 col-form-label text-md-right">Order</label>
+                        <div class="col-md-6"> <input id="order" type="number" class="form-control" name="order" value="{{ @$station['order'] }}"> </div>
+                    </div>
+
                     <div class="form-group row mb-0">
                         <div class="col-md-6 offset-md-4">
                             <button type="submit" class="btn btn-primary"> Save </button>

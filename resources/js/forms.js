@@ -6,7 +6,7 @@ export function forms() {
     if (fileInput) {
         fileInput.forEach(function (e) {
             const outputId = e.getAttribute('data-file_input');
-            const output = document.getElementById(outputId);
+            // const output = document.getElementById(outputId);
 
             e.addEventListener('change', function (event) {
             	if (outputId === 'file-image') {
@@ -15,12 +15,13 @@ export function forms() {
 			            e.closest('.control-panel').classList.add('control-panel_preview');
 			            e.closest('.file').querySelector('.authorization-list-card__preview').src = URL.createObjectURL(file);
 		            }
-	            } else {
-		            const files = event.target.files;
-		            for (const file of files) {
-			            output.value = file.name;
-		            }
 	            }
+                // else {
+		        //     const files = event.target.files;
+		        //     for (const file of files) {
+			    //         output.value = file.name;
+		        //     }
+	            // }
             });
         });
     }

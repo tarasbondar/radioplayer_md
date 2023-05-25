@@ -71,6 +71,7 @@ class RadioStationController extends Controller
         }
 
         $station->status = $request['status'];
+        $station->order = $request->get('order', 1);
         $station->save();
 
         $categories_new = explode(',', $request['categories']);

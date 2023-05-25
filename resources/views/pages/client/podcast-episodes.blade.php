@@ -16,6 +16,7 @@
                                  width="100%" alt="" loading="lazy">
                         </div>
                         <div class="podcast__info-text">
+                            <span class="podcast__descr">{{ $podcast['username'] }}</span>
                             <span class="podcast__descr">{{ $podcast['description'] }}</span>
                             <strong class="podcast__title">{{ $podcast['name'] }}</strong>
                             <div class="button-container">
