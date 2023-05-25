@@ -95,7 +95,10 @@ class IndexController
             $favorited = 0;
         }
 
-        $all = $this->searchStations(0,0, $current['group_id']);
+        $all = [];
+        if ($current['group_id'] != 0) {
+            $all = $this->searchStations(0, 0, $current['group_id']);
+        }
 
         return view('partials.player-radio', ['current' => $current, 'all' => $all, 'favorited' => $favorited ])->render();
     }

@@ -12,7 +12,7 @@
              width="100%" alt="" loading="lazy">
     </div>
     <h3 class="x-small item__title">{{ $station['name'] }}</h3>
-    <button class="item__link" type="button" aria-label="Проиграть станцию"></button>
+    <button class="item__link" type="button" id="station-{{ $station['id'] }}" aria-label="Проиграть станцию" data-play-station="{{ $station['id']  }}" ></button>
     <button class="item__favourites-btn fav-station {{$station['favorited'] ? 'active' : ''}}" value="{{ $station['id'] }}"
             type="button" aria-label="{{$station['favorited'] ? "Убрать из избранного" : "Добавить в избранное"}}">
         <span class="item__favourites-btn__inner">

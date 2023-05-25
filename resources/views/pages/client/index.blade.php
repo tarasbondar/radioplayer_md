@@ -124,11 +124,11 @@
                     method: 'GET',
                     url: '/favorite-station/' + station_id,
                     success: function(response) {
-                        if (response.action === 'added') { //refresh entire list?
+                        if (response.action === 'added') {
                             if ($('.favorites-container .swiper-slide').length === 0) {
                                 $('.favorites-container').html(response.output);
                             } else {
-                                $('.favorites-container .swiper-slide:last').append(response.output);
+                                $('.swiper-wrapper').append(response.output);
                             }
                             $('#station-'+response.id + ' .fav-station').addClass('active');
                         }
