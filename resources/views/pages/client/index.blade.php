@@ -44,7 +44,7 @@
                 <div class="tab-filters">
                     <ul class="tab-filters__list">
                         <li class="tab-filters__item">
-                            <button class="btn btn_switcher btn_large {{ !isset($_GET['category_id']) ? 'active' : '' }} button-category" type="button" value="0"> All </button>
+                            <button id="search-all" class="btn btn_switcher btn_large {{ !isset($_GET['category_id']) ? 'active' : '' }}" type="button" value="0"> All </button>
                         </li>
                         @foreach($categories as $c)
                             <li class="tab-filters__item">
@@ -75,8 +75,16 @@
 
         (function(){
 
+            $(document).on('click', '#search-all', function () {
+                $('.button-category.active').removeClass('active');
+                $('.button-tag.active').removeClass('active');
+                $(this).add('active');
+                stations_filters();
+            });
+
             $(document).on('click', '.button-category:not(.active)', function() {
                 $('.button-category').removeClass('active');
+                $('#search-all').removeClass('active');
                 $(this).addClass('active');
                 stations_filters();
             });

@@ -100,6 +100,13 @@ class IndexController
         return view('partials.player-radio', ['current' => $current, 'all' => $all, 'favorited' => $favorited ])->render();
     }
 
+    public function allPodcasts(Request $request) {
+        $podcasts = $this->searchPodcasts($request->get('name', ''), $request->get('categories', '')); //5 recent
+        //5 recent episodes
+        $categories = PodcastCategory::where('status', '=', PodcastCategory::STATUS_ACTIVE)->get()->toArray();
+        return view('pages.client.all-podcasts', ['podcasts' => $podcasts, 'categories' => $categories]);
+    }
+
     public function podcasts(Request $request) {
         $podcasts = $this->searchPodcasts($request->get('name', ''), $request->get('categories', ''));
         $categories = PodcastCategory::where('status', '=', PodcastCategory::STATUS_ACTIVE)->get()->toArray();
