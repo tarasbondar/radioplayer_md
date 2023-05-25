@@ -18,18 +18,22 @@
             </div>
         </div>
 
-        <div class="input form-floating">
-            <input class="form-control" id="categories-ids" name="categories-ids" value="" hidden>
-            <input class="form-control" placeholder="Категория" id="categories" name="categories" value="">
-            <label for="categories">Категория</label>
+        <div class="input">
+            <div class="form-floating">
+                <input type="hidden" id="categories-ids" name="categories-ids">
+                <input class="form-control" type="text" placeholder="Категория" id="categories" name="categories" readonly>
+                <label for="categories">Категория</label>
+                <button class="btn-modal-toggle-wrapper" type="button" aria-label="Категории" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <span class="btn btn-modal-toggle">
+                        <svg class="icon">
+                            <use href="/img/sprite.svg#chevron-right"></use>
+                        </svg>
+                    </span>
+                </button>
+            </div>
             <div class="messages">
                 {{ $errors->has('categories-ids') ? $errors->first('categories-ids') : '' }}
             </div>
-            <button class="btn btn-modal-toggle" type="button" aria-expanded="false" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                <svg class="icon">
-                    <use href="/img/sprite.svg#chevron-right"></use>
-                </svg>
-            </button>
         </div>
 
         <div class="input form-floating">
