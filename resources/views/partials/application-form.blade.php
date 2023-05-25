@@ -1,5 +1,5 @@
 <div class="author__wrapper">
-    <form action="/send-application" method='POST' id="apply-form" {{--data-validate="apply-form"--}} enctype='multipart/form-data'>
+    <form action="/send-application" method='POST' id="apply-form" {{--data-validate="apply-form"--}} enctype='multipart/form-data' data-episode-form>
         @csrf
 
         <div class="input form-floating">
@@ -93,8 +93,8 @@
                 </span>
             </label>
 
-            {{--<ul class="podcast__files-list">
-                <li class="podcast__files-list-item">
+            <ul class="podcast__files-list" data-file-list>
+                <li class="podcast__files-list-item hidden" data-file-item>
                     <div class="file">
                         <div class="control-panel control-panel_loaded">
                             <div class="control-panel-wrap">
@@ -106,13 +106,13 @@
                                     </svg>
                                 </div>
                                 <div class="control-panel-info">
-                                    <span class="h4 authorization-list-card__title">example.wav</span>
-                                    <span class="authorization-list-card__desc"><span>125 kb</span> / 1 MB</span>
+                                    <span class="h4 authorization-list-card__title" data-item-filename></span>
+                                    <span class="authorization-list-card__desc"><span data-item-uploaded></span> / <span data-item-size></span></span>
                                     <div class="progress__bar">
                                         <div class="progress__line" style="width:100%"></div>
                                     </div>
                                     <span class="control-panel-percent"><span>0</span>%</span>
-                                    <i class="control-panel-delete icon-close">
+                                    <i class="control-panel-delete icon-close" data-file-remove>
                                         <svg class="icon">
                                             <use href="/img/sprite.svg#x"></use>
                                         </svg>
@@ -121,36 +121,8 @@
                             </div>
                         </div>
                     </div>
-                </li>--}}
-            {{--<li class="podcast__files-list-item">
-                <div class="file">
-                    <div class="control-panel control-panel_load">
-                        <div class="control-panel-wrap">
-                            <div class="control-panel-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
-                                    <path d="M9.5 18V5L21.5 3V16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <path d="M6.5 21C8.15685 21 9.5 19.6569 9.5 18C9.5 16.3431 8.15685 15 6.5 15C4.84315 15 3.5 16.3431 3.5 18C3.5 19.6569 4.84315 21 6.5 21Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <path d="M18.5 19C20.1569 19 21.5 17.6569 21.5 16C21.5 14.3431 20.1569 13 18.5 13C16.8431 13 15.5 14.3431 15.5 16C15.5 17.6569 16.8431 19 18.5 19Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </div>
-                            <div class="control-panel-info">
-                                <span class="h4 authorization-list-card__title">example.wav</span>
-                                <span class="authorization-list-card__desc"><span>125 kb</span> / 1 MB</span>
-                                <div class="progress__bar">
-                                    <div class="progress__line" style="width:88%"></div>
-                                </div>
-                                <span class="control-panel-percent"><span>88</span>%</span>
-                                <i class="control-panel-delete icon-close">
-                                    <svg class="icon">
-                                        <use href="/img/sprite.svg#x"></use>
-                                    </svg>
-                                </i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-        </ul>--}}
+                </li>
+            </ul>
             <div class="messages"> {{ $errors->has('audio') ? $errors->first('audio') : '' }} </div>
         </div>
 
@@ -169,7 +141,6 @@
         <button class="btn btn_default btn_primary" type="submit" id="form-submit">Отправить заявку</button>
 
     </form>
-
 </div>
 
 
@@ -188,4 +159,22 @@
         $('#categories-ids').val(selected_ids.join(','));
     });
 
+    (function(){
+        let $form = $('[data-episode-form]');
+        $(document).on('change', '[data-episode-form] input[name="audio"]', function(){
+            let selectedFile = this.files[0];
+            let fileName = selectedFile.name;
+            let fileSizeBytes = selectedFile.size;
+            let sizeFormatted = core.formatBytes(fileSizeBytes, 2);
+            $form.find('[data-item-filename]').html(fileName);
+            $form.find('[data-item-uploaded]').html(sizeFormatted);
+            $form.find('[data-item-size]').html(sizeFormatted);
+            $form.find('[data-file-item]').removeClass('hidden');
+        });
+        $(document).on('click', '[data-file-remove]', function(){
+            $('[data-file-list] [data-file-item]').addClass('hidden');
+            $form.find('input[name="audio"]').val('');
+        });
+
+    })(jQuery)
 </script>
