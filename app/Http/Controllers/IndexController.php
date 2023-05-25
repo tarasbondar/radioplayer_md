@@ -104,10 +104,17 @@ class IndexController
     }
 
     public function allPodcasts(Request $request) {
-        $podcasts = $this->searchPodcasts($request->get('name', ''), $request->get('categories', '')); //5 recent
-        //5 recent episodes
+        $podcasts = Podcast::where('status', '=', Podcast::STATUS_ACTIVE)->limit(5)->get()->toArray(); //$this->searchPodcasts($request->get('name', ''), $request->get('categories', ''));
+        $episodes =
+            PodcastEpisode::select('podcasts_episodes.*', 'p.name AS podcast_name', 'p.owner_id AS user_id')
+                ->where('podcasts_episodes.status', '=', PodcastEpisode::STATUS_PUBLISHED)
+                ->where('p.status', '=', Podcast::STATUS_ACTIVE)
+                ->join('podcasts AS p', 'podcasts_episodes.podcast_id', '=', 'p.id')
+                ->orderBy('updated_at', 'DESC')
+                ->limit(5)
+                ->get()->toArray();
         $categories = PodcastCategory::where('status', '=', PodcastCategory::STATUS_ACTIVE)->get()->toArray();
-        return view('pages.client.all-podcasts', ['podcasts' => $podcasts, 'categories' => $categories]);
+        return view('pages.client.all-podcasts', ['podcasts' => $podcasts, 'categories' => $categories, 'episodes' => $episodes]);
     }
 
     public function podcasts(Request $request) {
@@ -145,7 +152,7 @@ class IndexController
     }
 
     public function viewPodcast($id) {
-        $podcast = Podcast::where('id', '=', $id)->get()->toArray()[0];
+        $podcast = Podcast::where('id', '=', $id)->first()->toArray();
 
         if (Auth::id() == $podcast['owner_id'] || $podcast['status'] == Podcast::STATUS_ACTIVE) {
             if(!Auth::check() ) {
@@ -163,7 +170,17 @@ class IndexController
                 }
             }
 
-            $episodes = PodcastEpisode::where('podcast_id', '=', $id)->where('status', '=', PodcastEpisode::STATUS_PUBLISHED)->get()->toArray();
+            $episodes = PodcastEpisode::
+                /*where('podcast_id', '=', $id)
+                ->where('status', '=', PodcastEpisode::STATUS_PUBLISHED)
+                ->get()->toArray();*/
+                select('podcasts_episodes.*', 'p.name AS podcast_name', 'p.owner_id AS user_id')
+                ->where('podcasts_episodes.status', '=', PodcastEpisode::STATUS_PUBLISHED)
+                ->where('p.status', '=', Podcast::STATUS_ACTIVE)
+                ->where('p.id', '=', $id)
+                ->join('podcasts AS p', 'podcasts_episodes.podcast_id', '=', 'p.id')
+                ->orderBy('updated_at', 'DESC')
+                ->get()->toArray();
             return view('pages.client.podcast-episodes', ['podcast' => $podcast, 'episodes' => $episodes, 'action' => $action]);
         }
 

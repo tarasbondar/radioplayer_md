@@ -208,7 +208,6 @@ class ProfileController extends Controller
             $output = view('partials.station-card', ['station' => $station])->render();
             return ['action' => 'added', 'output' => $output, 'id' => $id];
         }
-
     }
 
     public function createEpisode($podcast_id) {
@@ -299,15 +298,18 @@ class ProfileController extends Controller
     }
 
     public function listenLater() {
-        $episodes = PodcastEpisode::where('status', '=', PodcastEpisode::STATUS_PUBLISHED)
+        $episodes= PodcastEpisode::select('podcasts_episodes.*', 'p.name AS podcast_name', 'p.owner_id AS user_id')
+            ->where('podcasts_episodes.status', '=', PodcastEpisode::STATUS_PUBLISHED)
+            ->where('p.status', '=', Podcast::STATUS_ACTIVE)
             ->where('users_queues.user_id', '=', Auth::id())
-            ->join('users_queues', 'users_queues.podcast_id', '=', 'podcasts.id')
-            ->orderBy('created_at', 'ASC')
-            ->get()->toArray();
+            ->join('podcasts AS p', 'podcasts_episodes.podcast_id', '=', 'p.id')
+            ->join('users_queues', 'users_queues.episode_id', '=', 'podcasts_episodes.id')
+            ->orderBy('users_queues.created_at', 'ASC')
+            ->distinct()->get()->toArray();
         return view('pages.client.listen-later', ['episodes' => $episodes]);
     }
 
-    public function queueToListenLater(Request $request) { //episode
+    public function queueToListenLater(Request $request) {
         $id = $request->get('id');
         $mark = QueuedEpisode::where('user_id', '=', Auth::id())->where('podcast_id', '=', $id)->get();
         if (count($mark)) {

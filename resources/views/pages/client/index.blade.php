@@ -130,11 +130,12 @@
                             } else {
                                 $('.swiper-wrapper').append(response.output);
                             }
-                            $('#station-'+response.id + ' .fav-station').addClass('active');
+                            $('.fav-station[value="'+response.id+'"]').addClass('active');
                         }
                         if (response.action === 'deleted') {
-                            $('#station-'+response.id).remove();
-                            $('#station-'+response.id + ' .fav-station').removeClass('active');
+                            $('.fav-station[value="'+response.id+'"]').removeClass('active');
+                            $('.favorites-container > .station-' + response.id).remove();
+
                         }
                     }
                 })

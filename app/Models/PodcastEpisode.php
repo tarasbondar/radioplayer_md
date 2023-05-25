@@ -37,6 +37,8 @@ class PodcastEpisode extends Model
 
     protected $fillable = ['podcast_id', 'name', 'description', 'tags', 'source', 'filename', 'status'];
 
+    protected $appends = ['created_diff'];
+
     public function podcast() {
         return $this->belongsTo(Podcast::class, 'podcast_id', 'id');
     }
@@ -48,6 +50,11 @@ class PodcastEpisode extends Model
     public function getSourcePathAttribute(): string
     {
         return public_path(self::UPLOADS_AUDIO . '/' . $this->source);
+    }
+
+    public function getCreatedDiffAttribute()
+    {
+        return $this->created_at->diffForHumans();
     }
 
 }

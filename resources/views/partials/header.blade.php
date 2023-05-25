@@ -17,7 +17,7 @@
                 </a>
             </li>
             <li class="header__nav__list-item">
-                <a class="btn btn_rows x-small {{ str_contains($_SERVER['REQUEST_URI'], 'podcast') ? 'active' : ''}}" href="/podcasts">
+                <a class="btn btn_rows x-small {{ str_contains($_SERVER['REQUEST_URI'], 'podcast') ? 'active' : ''}}" href="/all-podcasts">
                     <svg class="icon">
                         <use href="/img/sprite.svg#mic"></use>
                     </svg>

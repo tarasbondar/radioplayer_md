@@ -5,8 +5,8 @@
 
 <li class="podcast__elem">
     <div class="podcast__elem-wrap">
-        <span class="podcast__data"> {{$episode['created_at']}} </span>
-        <span class="podcast__elem-name"> {{$podcast['name']}} </span>
+        <span class="podcast__data"> {{ $episode['created_diff'] }} </span>
+        <span class="podcast__elem-name"> {{$episode['podcast_name']}} </span>
     </div>
     <strong class="podcast__elem-title">{{ $episode['name'] }}</strong>
     <p class="podcast__elem-text"> {{ $episode['description'] }} </p>
@@ -34,7 +34,9 @@
             <span>{{ SiteHelper::getMp3Duration(public_path(PodcastEpisode::UPLOADS_AUDIO.'/'.@$episode['source'])) }}</span>
         </div>
 
-        <span class="publication"> {{ $episode['status'] == 2 ? 'Published' : 'Draft'}} </span>
+        @if(auth()->id() == $episode['user_id'])
+            <span class="publication"> {{ $episode['status'] == 2 ? 'Published' : 'Draft'}} </span>
+        @endif
 
         <ul class="list">
 
