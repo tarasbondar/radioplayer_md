@@ -42,6 +42,24 @@
 		color: var(--btn-rows-text-color-active);
 		opacity: 0.4;
 	}
+
+	.btn-modal-toggle-wrapper {
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 1;
+		width: 100%;
+		height: 100%;
+		background: transparent;
+		border: 0;
+		padding: 0;
+		display: flex;
+		justify-content: flex-end;
+
+		.btn-modal-toggle {
+			position: static;
+		}
+	}
 }
 
 .input__actions {

@@ -34,15 +34,20 @@
                             <input id="categories-ids" name='categories-ids' type="text" class="form-control" value="{{ implode(',', array_keys($p2c)) }}" readonly>
                         </div>
 
-                        <div class="input form-floating">
-                            <input class="form-control" placeholder="Категория" id="categories-keys" name="categories" value="{{ implode(',', $p2c) }}" readonly> {{--categories keys here--}}
-                            <label for="categories">Категория</label>
+                        <div class="input ">
+                            <div class="form-floating">
+                                <input class="form-control" type="text" placeholder="Категория" id="categories-keys" name="categories" value="{{ implode(',', $p2c) }}" readonly> {{--categories keys here--}}
+                                <label for="categories">Категория</label>
+
+                                <button class="btn-modal-toggle-wrapper" type="button" aria-label="Категории" data-bs-toggle="modal" data-bs-target="#categoriesModal">
+                                    <span class="btn btn-modal-toggle">
+                                        <svg class="icon">
+                                            <use href="/img/sprite.svg#chevron-right"></use>
+                                        </svg>
+                                    </span>
+                                </button>
+                            </div>
                             <div class="messages"></div>
-                            <button class="btn btn-modal-toggle" type="button" aria-expanded="false" data-bs-toggle="modal" data-bs-target="#categoriesModal">
-                                <svg class="icon">
-                                    <use href="/img/sprite.svg#chevron-right"></use>
-                                </svg>
-                            </button>
                         </div>
 
                         <div class="input form-floating">
@@ -96,41 +101,43 @@
                     </form>
                 </div>
 
-                <div class="modal modal-filter fade" id="categoriesModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h3 class="h3 modal-title text-center" id="exampleModalLabel">Категории</h3>
-                                <button type="button" class="btn-close btn btn_ico" data-bs-dismiss="modal" aria-label="Close">
-                                    <svg class="icon">
-                                        <use href="/img/sprite.svg#x"></use>
-                                    </svg>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="list">
-                                    @foreach($categories as $c)
-                                        <div class="input input__inner categories-checkbox">
-                                            <input class="input__checkbox categories-check" type="checkbox" id="category-{{ $c['id'] }}" value="{{$c->id . '-' . $c->key}}" {{in_array($c->id, array_keys($p2c)) ? 'checked' : ''}}>
-                                            <label class="input__label light" for="category-{{ $c['id'] }}">
-                                                {{ $c['key'] }}
-                                            </label>
-                                            <svg class="icon"><use href="/img/sprite.svg#check"></use></svg>
-                                            <div class="messages"></div>
-                                        </div>
-                                    @endforeach
-                                </div>
-                                <div class="form-actions">
-                                    <button class="btn btn_default btn_primary" data-bs-dismiss="modal">Сохранить</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
 
             </div>
         </section>
     </main>
+
+    <div class="modal modal-filter fade" id="categoriesModal" tabindex="-1" aria-labelledby="categoriesModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="h3 modal-title text-center" id="categoriesModalLabel">Категории</h3>
+                    <button type="button" class="btn-close btn btn_ico" data-bs-dismiss="modal" aria-label="Close">
+                        <svg class="icon">
+                            <use href="/img/sprite.svg#x"></use>
+                        </svg>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="list">
+                        @foreach($categories as $c)
+                            <div class="input input__inner categories-checkbox">
+                                <input class="input__checkbox categories-check" type="checkbox" id="category-{{ $c['id'] }}" value="{{$c->id . '-' . $c->key}}" {{in_array($c->id, array_keys($p2c)) ? 'checked' : ''}}>
+                                <label class="input__label light" for="category-{{ $c['id'] }}">
+                                    {{ $c['key'] }}
+                                </label>
+                                <svg class="icon"><use href="/img/sprite.svg#check"></use></svg>
+                                <div class="messages"></div>
+                            </div>
+                        @endforeach
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn btn_default btn_primary" data-bs-dismiss="modal">Сохранить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
         (function() {

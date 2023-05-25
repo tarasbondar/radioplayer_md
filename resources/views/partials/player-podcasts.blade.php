@@ -493,11 +493,11 @@
         </div>
     </div>
 </aside>
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h3 class="h3 modal-title text-center" id="exampleModalLabel">Убрать из списка проигрывания?</h3>
+				<h3 class="h3 modal-title text-center" id="deleteModalLabel">Убрать из списка проигрывания?</h3>
 			</div>
 			<div class="modal-body">
 				<div class="input__actions mt-0">
@@ -509,4 +509,3 @@
 	</div>
 </div>
 {{--<audio loop="true" ref="audiofile" src="https://res.cloudinary.com/dmf10fesn/video/upload/v1548882863/audio/Post_Malone_-_Wow._playvk.com.mp3" preload style="display: none" controls></audio>--}}
-
