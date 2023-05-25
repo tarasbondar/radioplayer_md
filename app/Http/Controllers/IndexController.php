@@ -170,11 +170,7 @@ class IndexController
                 }
             }
 
-            $episodes = PodcastEpisode::
-                /*where('podcast_id', '=', $id)
-                ->where('status', '=', PodcastEpisode::STATUS_PUBLISHED)
-                ->get()->toArray();*/
-                select('podcasts_episodes.*', 'p.name AS podcast_name', 'p.owner_id AS user_id')
+            $episodes = PodcastEpisode::select('podcasts_episodes.*', 'p.name AS podcast_name', 'p.owner_id AS user_id')
                 ->where('podcasts_episodes.status', '=', PodcastEpisode::STATUS_PUBLISHED)
                 ->where('p.status', '=', Podcast::STATUS_ACTIVE)
                 ->where('p.id', '=', $id)
@@ -188,8 +184,17 @@ class IndexController
     }
 
     public function viewEpisode($id) {
-        $episode = PodcastEpisode::find($id)->toArray();
+        $episode = PodcastEpisode::select('podcasts_episodes.*', 'p.name AS podcast_name', 'p.owner_id AS user_id')
+                ->where('podcasts_episodes.id', '=', $id)
+                ->join('podcasts AS p', 'podcasts_episodes.podcast_id', '=', 'p.id')
+                ->orderBy('updated_at', 'DESC')
+                ->first()->toArray();
         $podcast = Podcast::find($episode['podcast_id'])->toArray();
+        if ($podcast['owner_id'] != Auth::id() && ($episode['status'] != PodcastEpisode::STATUS_PUBLISHED || $podcast['status'] != Podcast::STATUS_ACTIVE)) {
+            return abort(403);
+        }
+        $sub = PodcastSub::where('user_id', '=', Auth::id())->where('podcast_id', '=', $podcast['id'])->count();
+        $podcast['subbed'] = $sub;
         return view('pages.client.episode-view', ['episode' => $episode, 'podcast' => $podcast]);
     }
 

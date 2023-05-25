@@ -6,7 +6,7 @@
 <li class="podcast__elem">
     <div class="podcast__elem-wrap">
         <span class="podcast__data"> {{ $episode['created_diff'] }} </span>
-        <span class="podcast__elem-name"> {{$episode['podcast_name']}} </span>
+        <span class="podcast__elem-name"> <a href="/podcasts/{{$episode['podcast_id']}}/view">{{$episode['podcast_name']}}</a> </span>
     </div>
     <strong class="podcast__elem-title">{{ $episode['name'] }}</strong>
     <p class="podcast__elem-text"> {{ $episode['description'] }} </p>

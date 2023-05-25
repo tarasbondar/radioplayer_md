@@ -9,19 +9,22 @@
                     <div class="podcast__inner">
                         <div class="podcast__descr-block">
                             <div class="podcast-img podcast-img_big">
-                                <img src="/img/img.png" srcset="/img/img.png 1x, /img/img@2.png 2x" alt="img">
+                                <img src="{{ !empty($p['image']) ? 'uploads/podcasts_images/' . $p['image'] : "/img/podcast-placeholder.png"}}"
+                                     srcset="{{ !empty($p['image']) ? 'uploads/podcasts_images/' . $p['image'] : "/img/podcast-placeholder.png"}} 1x,
+                                     {{ !empty($p['image']) ? 'uploads/podcasts_images/' . $p['image'] : "/img/podcast-placeholder.png"}} 2x" alt="img">
                             </div>
                             <div class="text">
                                 <span class="podcast__descr"> {{ $podcast['name'] }} </span>
                                 <strong class="podcast__title mb-3">{{ $episode['name'] }}</strong>
-                                <a href="#" class="btn btn_default btn_secondary podcast__btn">
-                                    <svg class="podcasts__icon icon"><use href="/img/sprite.svg#check"></use></svg>
-                                    Подписаться
-                                </a>
+                                @if (!auth()->check() || $podcast['subbed'] == 0)
+                                    @include('partials.sub-button')
+                                @else
+                                    @include('partials.unsub-button')
+                                @endif
                             </div>
                         </div>
-                        <span class="podcast__data">17 февр.</span>
-                        <strong class="podcast__title">Orci nulla adipiscing cursus eu quis</strong>
+                        <span class="podcast__data">{{ $episode['created_diff'] }}</span>
+                        <strong class="podcast__title"> {{ $episode['name'] }} </strong>
                         <div class="podcast__holder mb-24">
                             <div class="podcast__timer mb-0">
                                 <div class="play">
