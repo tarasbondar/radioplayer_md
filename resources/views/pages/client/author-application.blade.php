@@ -8,7 +8,7 @@
             <div class="container">
 
                 <div class="author__header">
-                    <h2 class="h2 text-center">Стать автором</h2>
+                    <h2 class="h2 text-center">{{ __('client.becomeAuthor') }}</h2>
                 </div>
 
                 @if ($status == 'new')
@@ -29,7 +29,7 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h3 class="h3 modal-title text-center" id="exampleModalLabel">Категории</h3>
+                        <h3 class="h3 modal-title text-center" id="exampleModalLabel">{{ __('client.categories') }}</h3>
                         <button type="button" class="btn-close btn btn_ico close-categories" data-bs-dismiss="modal" aria-label="Close">
                             <svg class="icon">
                                 <use href="/img/sprite.svg#x"></use>
@@ -51,7 +51,7 @@
                                 @endforeach
                             </div>
                             <div class="form-actions">
-                                <button class="btn btn_default btn_primary close-categories" data-bs-dismiss="modal">Сохранить</button>
+                                <button class="btn btn_default btn_primary close-categories" data-bs-dismiss="modal">{{ __('client.save') }}</button>
                             </div>
                         </div>
                     </div>

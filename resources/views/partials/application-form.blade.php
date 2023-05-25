@@ -3,16 +3,16 @@
         @csrf
 
         <div class="input form-floating">
-            <input type="text" class="form-control" placeholder="Название подкаста" id="title" name="title" value="{{ old('title') }}">
-            <label for="title">Название подкаста</label>
+            <input type="text" class="form-control" placeholder="{{ __('client.podcastTitle') }}" id="title" name="title" value="{{ old('title') }}">
+            <label for="title">{{ __('client.podcastTitle') }}</label>
             <div class="messages">
                 {{ $errors->has('title') ? $errors->first('title') : '' }}
             </div>
         </div>
 
         <div class="input form-floating">
-            <textarea class="form-control" placeholder="Описание подкаста" id="description" name="description"> {{ old('description') }}</textarea>
-            <label for="description">Описание подкаста</label>
+            <textarea class="form-control" placeholder="{{ __('client.podcastDescription') }}" id="description" name="description"> {{ old('description') }}</textarea>
+            <label for="description">{{ __('client.podcastDescription') }}</label>
             <div class="messages">
                 {{ $errors->has('description') ? $errors->first('description') : '' }}
             </div>
@@ -21,9 +21,9 @@
         <div class="input">
             <div class="form-floating">
                 <input type="hidden" id="categories-ids" name="categories-ids">
-                <input class="form-control" type="text" placeholder="Категория" id="categories" name="categories" readonly>
-                <label for="categories">Категория</label>
-                <button class="btn-modal-toggle-wrapper" type="button" aria-label="Категории" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <input class="form-control" type="text" placeholder="{{ __('client.category') }}" id="categories" name="categories" readonly>
+                <label for="categories">{{ __('client.category') }}</label>
+                <button class="btn-modal-toggle-wrapper" type="button" aria-label="{{ __('client.categories') }}" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     <span class="btn btn-modal-toggle">
                         <svg class="icon">
                             <use href="/img/sprite.svg#chevron-right"></use>
@@ -37,8 +37,8 @@
         </div>
 
         <div class="input form-floating">
-            <input type="text" class="form-control" placeholder="Теги через запятую" id="tags" name="tags" value="{{ old('tags') }}">
-            <label for="tags">Теги через запятую</label>
+            <input type="text" class="form-control" placeholder="{{ __('client.tagsComma') }}" id="tags" name="tags" value="{{ old('tags') }}">
+            <label for="tags">{{ __('client.tagsComma') }}</label>
             <div class="messages">
                 {{ $errors->has('tags') ? $errors->first('tags') : '' }}
             </div>
@@ -56,8 +56,8 @@
                         </svg>
                     </span>
                     <span class="control-panel-info">
-                        <span class="h4 authorization-list-card__title">Изображение подкаста</span>
-                        <span class="authorization-list-card__desc">1080x1080 px, 1 MB максимум</span>
+                        <span class="h4 authorization-list-card__title">{{ __('client.podcastImage') }}</span>
+                        <span class="authorization-list-card__desc">{{ __('client.podcastImageRequirements') }}</span>
                         <img class="authorization-list-card__preview" src="" alt="preview">
                         <i class="control-panel-delete icon-close">
                             <svg class="icon">
@@ -83,7 +83,7 @@
                     </span>
                     <span class="control-panel-info">
                         <span class="h4 authorization-list-card__title">Пример эпизода подкаста</span>
-                        <span class="authorization-list-card__desc">MP3, WAV, 50 MB максимум</span>
+                        <span class="authorization-list-card__desc">{{ __('client.fileRequirements') }}</span>
                         <i class="control-panel-delete icon-close">
                             <svg class="icon">
                                 <use href="/img/sprite.svg#x"></use>

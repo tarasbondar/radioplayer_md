@@ -32,20 +32,20 @@ use App\Helpers\SiteHelper;
                             </div>
 
                             <div class="input form-floating">
-                                <input type="text" class="form-control" placeholder="Название эпизода" id="name" name="name" value="{{ @$episode['name'] }}" required>
-                                <label for="name">Название эпизода</label>
+                                <input type="text" class="form-control" placeholder="{{ __('client.episodeTitle') }}" id="name" name="name" value="{{ @$episode['name'] }}" required>
+                                <label for="name">{{ __('client.episodeTitle') }}</label>
                                 <div class="messages"></div>
                             </div>
 
                             <div class="input form-floating">
-                                <textarea class="form-control" placeholder="Описание подкаста" id="description" name="description">{{ @$episode['description'] }}</textarea>
-                                <label for="description">Описание эпизода</label>
+                                <textarea class="form-control" placeholder="{{ __('client.episodeDescription') }}" id="description" name="description">{{ @$episode['description'] }}</textarea>
+                                <label for="description">{{ __('client.episodeDescription') }}</label>
                                 <div class="messages"></div>
                             </div>
 
                             <div class="input form-floating">
-                                <input type="text" class="form-control" placeholder="Теги через запятую" id="tags" name="tags" value="{{ @$episode['tags'] }}">
-                                <label for="tags">Теги через запятую</label>
+                                <input type="text" class="form-control" placeholder="{{ __('client.tagsComma') }}" id="tags" name="tags" value="{{ @$episode['tags'] }}">
+                                <label for="tags">{{ __('client.tagsComma') }}</label>
                                 <div class="messages"></div>
                             </div>
 
@@ -62,8 +62,8 @@ use App\Helpers\SiteHelper;
                                             </svg>
                                         </span>
                                         <span class="control-panel-info">
-                                            <span class="h4 authorization-list-card__title">Пример подкаста</span>
-                                            <span class="authorization-list-card__desc">MP3, WAV, 50 MB максимум</span>
+                                            <span class="h4 authorization-list-card__title">{{ __('client.podcastExample') }}</span>
+                                            <span class="authorization-list-card__desc">{{ __('client.fileRequirements') }}</span>
                                             <i class="control-panel-delete icon-close">
                                                 <svg class="icon">
                                                     <use href="/img/sprite.svg#x"></use>
@@ -115,8 +115,8 @@ use App\Helpers\SiteHelper;
 												</svg>
 								            </span>
 								            <span class="control-panel-info">
-									            <span class="h4 authorization-list-card__title">Пример подкаста</span>
-									            <span class="authorization-list-card__desc">MP3, WAV, 50 MB максимум</span>
+									            <span class="h4 authorization-list-card__title">{{ __('client.podcastExample') }}</span>
+									            <span class="authorization-list-card__desc">{{ __('client.fileRequirements') }}</span>
 									            <i class="control-panel-delete icon-close">
 										            <svg class="icon">
 							                            <use href="/img/sprite.svg#x"></use>
@@ -191,17 +191,17 @@ use App\Helpers\SiteHelper;
                             <label class="toggle mb-24">
                                 <input class="toggle-checkbox" id="status" name="status" type="checkbox" value="1" {{ @$episode['status'] == 2 ? 'checked' : 0}}>
                                 <span class="toggle-switch"></span>
-                                <span class="toggle-label">Опубликовано</span>
+                                <span class="toggle-label">{{ __('client.published') }}</span>
                             </label>
 
                             @if ($action == 'edit')
                                 <div class="input__actions mt-0">
-                                    <button class="btn btn_secondary btn_large" type="button">Удалить</button>
-                                    <button class="btn btn_primary btn_large" type="submit">Сохранить</button>
+                                    <button class="btn btn_secondary btn_large" type="button">{{ __('client.delete') }}</button>
+                                    <button class="btn btn_primary btn_large" type="submit">{{ __('client.save') }}</button>
                                 </div>
                             @endif
                             @if ($action == 'add')
-                                <button class="btn btn_default btn_primary" type="submit">Сохранить</button>
+                                <button class="btn btn_default btn_primary" type="submit">{{ __('client.save') }}</button>
                             @endif
                         </form>
                     </div>
@@ -233,4 +233,3 @@ use App\Helpers\SiteHelper;
 
     </script>
 @endsection
-

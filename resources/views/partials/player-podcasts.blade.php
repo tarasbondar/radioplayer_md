@@ -237,7 +237,7 @@
 							    <img src="img/img.png" srcset="img/img.png 1x, img/img@2.png 2x" alt="img">
 						    </div>
 						    <div class="content">
-							    <span class="np-modal__player-body__header__pretitle">Название подкаста</span>
+							    <span class="np-modal__player-body__header__pretitle">{{ __('client.podcastTitle') }}</span>
 							    <strong class="np-modal__player-body__header__title x-small">Arcu nulla pellentesque</strong>
 						    </div>
 					    </div>
@@ -289,7 +289,7 @@
 							    <img src="img/img.png" srcset="img/img.png 1x, img/img@2.png 2x" alt="img">
 						    </div>
 						    <div class="content">
-							    <span class="np-modal__player-body__header__pretitle">Название подкаста</span>
+							    <span class="np-modal__player-body__header__pretitle">{{ __('client.podcastTitle') }}</span>
 							    <strong class="np-modal__player-body__header__title x-small">Arcu nulla pellentesque</strong>
 						    </div>
 					    </div>
@@ -341,7 +341,7 @@
 							    <img src="img/img.png" srcset="img/img.png 1x, img/img@2.png 2x" alt="img">
 						    </div>
 						    <div class="content">
-							    <span class="np-modal__player-body__header__pretitle">Название подкаста</span>
+							    <span class="np-modal__player-body__header__pretitle">{{ __('client.podcastTitle') }}</span>
 							    <strong class="np-modal__player-body__header__title x-small">Arcu nulla pellentesque Arcu nulla pellentesque</strong>
 						    </div>
 					    </div>

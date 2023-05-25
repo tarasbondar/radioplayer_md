@@ -19,7 +19,7 @@
                                 <div class="wrap">
                                     <div class="podcast__elem-wrap">
                                         <span class="podcast__data">17 февр.</span>
-                                        <span class="podcast__elem-name">Название подкаста</span>
+                                        <span class="podcast__elem-name">{{ __('client.podcastTitle') }}</span>
                                     </div>
                                     <strong class="podcast__elem-title mb-0">Orci nulla adipiscing cursus eu quis</strong>
                                 </div>
@@ -174,7 +174,7 @@
                                             <path d="M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                             <path d="M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                         </svg>
-                                        Удалить</a>
+                                        {{ __('client.delete') }}</a>
                                     </li>
                                 </ul>
 
@@ -189,7 +189,7 @@
                                 <div class="wrap">
                                     <div class="podcast__elem-wrap">
                                         <span class="podcast__data">17 февр.</span>
-                                        <span class="podcast__elem-name">Название подкаста</span>
+                                        <span class="podcast__elem-name">{{ __('client.podcastTitle') }}</span>
                                     </div>
                                     <strong class="podcast__elem-title mb-0">Orci nulla adipiscing cursus eu quis</strong>
                                 </div>
@@ -303,7 +303,7 @@
                                             <path d="M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                             <path d="M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                         </svg>
-                                        Удалить</a>
+                                        {{ __('client.delete') }}</a>
                                     </li>
                                 </ul>
 
@@ -429,7 +429,7 @@
                                             <path d="M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                             <path d="M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                         </svg>
-                                        Удалить</a>
+                                        {{ __('client.delete') }}</a>
                                     </li>
                                 </ul>
                             </div>

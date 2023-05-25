@@ -7,7 +7,7 @@
         <section class="login">
             <div class="container">
                 <div class="login__header">
-                    <h2 class="h2 text-center">Регистрация</h2>
+                    <h2 class="h2 text-center">{{ __('auth.registration') }}</h2>
                 </div>
 
                 <div class="login__wrapper">
@@ -16,8 +16,8 @@
                         @csrf
 
                         <div class="input form-floating _icon">
-                            <input type="text" class="form-control" placeholder="Имя" name="name" id="name" required/>
-                            <label for="name">Имя</label>
+                            <input type="text" class="form-control" placeholder="{{ __('auth.name') }}" name="name" id="name" required/>
+                            <label for="name">{{ __('auth.name') }}</label>
                             <i class="form-icon">
                                 <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                     <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -44,8 +44,8 @@
                         </div>
 
                         <div class="input form-floating _icon">
-                            <input type="password" class="form-control" placeholder="Пароль" name="password" id="password" required/>
-                            <label for="password">Пароль</label>
+                            <input type="password" class="form-control" placeholder="{{ __('auth.password') }}" name="password" id="password" required/>
+                            <label for="password">{{ __('auth.password') }}</label>
                             <i class="form-icon">
                                 <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                     <path d="M21.0003 2L19.0003 4M19.0003 4L22.0003 7L18.5003 10.5L15.5003 7.5M19.0003 4L15.5003 7.5M11.3903 11.61C11.9066 12.1195 12.3171 12.726 12.598 13.3948C12.879 14.0635 13.0249 14.7813 13.0273 15.5066C13.0297 16.232 12.8887 16.9507 12.6122 17.6213C12.3357 18.2919 11.9293 18.9012 11.4164 19.4141C10.9035 19.9271 10.2942 20.3334 9.62358 20.6099C8.95296 20.8864 8.23427 21.0275 7.50891 21.025C6.78354 21.0226 6.06582 20.8767 5.39707 20.5958C4.72831 20.3148 4.12174 19.9043 3.61227 19.388C2.6104 18.3507 2.05604 16.9614 2.06857 15.5193C2.0811 14.0772 2.65953 12.6977 3.67927 11.678C4.69902 10.6583 6.07849 10.0798 7.52057 10.0673C8.96265 10.0548 10.352 10.6091 11.3893 11.611L11.3903 11.61ZM11.3903 11.61L15.5003 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -57,8 +57,8 @@
                         </div>
 
                         <div class="input form-floating _icon">
-                            <input type="password" class="form-control" placeholder="Повторите пароль" name="password_confirmation" id="password-confirm" required/>
-                            <label for="password-confirm">Повторите пароль</label>
+                            <input type="password" class="form-control" placeholder="{{ __('auth.repeatPassword') }}" name="password_confirmation" id="password-confirm" required/>
+                            <label for="password-confirm">{{ __('auth.repeatPassword') }}</label>
                             <i class="form-icon">
                                 <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                     <path d="M21.0003 2L19.0003 4M19.0003 4L22.0003 7L18.5003 10.5L15.5003 7.5M19.0003 4L15.5003 7.5M11.3903 11.61C11.9066 12.1195 12.3171 12.726 12.598 13.3948C12.879 14.0635 13.0249 14.7813 13.0273 15.5066C13.0297 16.232 12.8887 16.9507 12.6122 17.6213C12.3357 18.2919 11.9293 18.9012 11.4164 19.4141C10.9035 19.9271 10.2942 20.3334 9.62358 20.6099C8.95296 20.8864 8.23427 21.0275 7.50891 21.025C6.78354 21.0226 6.06582 20.8767 5.39707 20.5958C4.72831 20.3148 4.12174 19.9043 3.61227 19.388C2.6104 18.3507 2.05604 16.9614 2.06857 15.5193C2.0811 14.0772 2.65953 12.6977 3.67927 11.678C4.69902 10.6583 6.07849 10.0798 7.52057 10.0673C8.96265 10.0548 10.352 10.6091 11.3893 11.611L11.3903 11.61ZM11.3903 11.61L15.5003 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -77,14 +77,14 @@
                             <div class="messages"></div>
                         </div>
 
-                        <button class="btn btn_default btn_primary mb-24" type="submit">Зарегистрироваться</button>
+                        <button class="btn btn_default btn_primary mb-24" type="submit">{{ __('auth.register') }}</button>
 
                     </form>
                 </div>
 
                 <div class="login__wrapper-action">
                     <div class="text-center mb-24">
-                        <span class="divide-text x-small">или</span>
+                        <span class="divide-text x-small">{{ __('auth.or') }}</span>
                     </div>
                     <a href="#" class="btn btn_google-sign-in">
                         <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="33" height="33" viewBox="0 0 33 33" fill="none">
@@ -94,13 +94,13 @@
                             <path d="M16.8239 6.53209C19.1519 6.49365 21.4014 7.38267 23.0862 9.00699L27.7455 4.2978C24.791 1.49308 20.8769 -0.0467635 16.8239 0.00108251C13.7979 0.0012219 10.8316 0.851384 8.25603 2.45665C5.68046 4.06192 3.597 6.35912 2.23828 9.09178L7.65941 13.3427C8.95178 9.43323 12.5659 6.53209 16.8239 6.53209Z" fill="#EA4335"/>
                         </svg>
                         <span>
-                            Зарегистрироваться<br/> через Google
+                            {{ __('auth.registerWithGoogle') }}
                         </span>
                     </a>
 
                     <div class="holder-action">
-                        <h3 class="h3 text-center">У меня есть аккаунт</h3>
-                        <a href="/login" class="btn btn_default btn_primary">Войти</a>
+                        <h3 class="h3 text-center">{{ __('auth.gotAccount') }}</h3>
+                        <a href="/login" class="btn btn_default btn_primary">{{ __('auth.login') }}</a>
                     </div>
                 </div>
             </div>

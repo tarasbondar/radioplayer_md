@@ -68,7 +68,7 @@
 
                         <a class="btn header__menu__link-panel" href="{{ route('register') }}">
                             <svg class="icon"><use href="/img/sprite.svg#key"></use></svg>
-                            <span>Регистрация</span>
+                            <span>{{ __('auth.registration') }}</span>
                         </a>
                     </div>
                 @endguest
@@ -76,7 +76,7 @@
                 @if(auth()->check() && auth()->user()->role < 1)
                     <a class="btn header__menu__link-panel" href="/apply">
                         <svg class="icon"><use href="/img/sprite.svg#mic"></use></svg>
-                        <span>Стать автором</span>
+                        <span>{{ __('client.becomeAuthor') }}</span>
                         <picture>
                             <source srcset="img/become-author-dark.png 1x, img/become-author-dark@2x.png 2x" media="(prefers-color-scheme: dark)">
                             <source srcset="img/become-author-light.png 1x, img/become-author-light@2x.png 2x" media="(prefers-color-scheme: light) or (prefers-color-scheme: no-preference)">

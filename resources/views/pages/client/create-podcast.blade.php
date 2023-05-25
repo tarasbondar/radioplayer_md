@@ -19,14 +19,14 @@
                         </div>--}}
 
                         <div class="input form-floating">
-                            <input type="text" class="form-control" placeholder="Название подкаста" id="name" name="name" value="{{ @$podcast['name'] }}" required>
-                            <label for="name">Название подкаста</label>
+                            <input type="text" class="form-control" placeholder="{{ __('client.podcastTitle') }}" id="name" name="name" value="{{ @$podcast['name'] }}" required>
+                            <label for="name">{{ __('client.podcastTitle') }}</label>
                             <div class="messages"></div>
                         </div>
 
                         <div class="input form-floating">
-                            <textarea class="form-control" placeholder="Описание подкаста" id="description" name="description" required> {{ @$podcast['description'] }} </textarea>
-                            <label for="description">Описание подкаста</label>
+                            <textarea class="form-control" placeholder="{{ __('client.podcastDescription') }}" id="description" name="description" required> {{ @$podcast['description'] }} </textarea>
+                            <label for="description">{{ __('client.podcastDescription') }}</label>
                             <div class="messages"></div>
                         </div>
 
@@ -36,10 +36,10 @@
 
                         <div class="input ">
                             <div class="form-floating">
-                                <input class="form-control" type="text" placeholder="Категория" id="categories-keys" name="categories" value="{{ implode(',', $p2c) }}" readonly> {{--categories keys here--}}
-                                <label for="categories">Категория</label>
+                                <input class="form-control" type="text" placeholder="{{ __('client.category') }}" id="categories-keys" name="categories" value="{{ implode(',', $p2c) }}" readonly> {{--categories keys here--}}
+                                <label for="categories">{{ __('client.category') }}</label>
 
-                                <button class="btn-modal-toggle-wrapper" type="button" aria-label="Категории" data-bs-toggle="modal" data-bs-target="#categoriesModal">
+                                <button class="btn-modal-toggle-wrapper" type="button" aria-label="{{ __('client.categories') }}" data-bs-toggle="modal" data-bs-target="#categoriesModal">
                                     <span class="btn btn-modal-toggle">
                                         <svg class="icon">
                                             <use href="/img/sprite.svg#chevron-right"></use>
@@ -51,8 +51,8 @@
                         </div>
 
                         <div class="input form-floating">
-                            <input type="text" class="form-control" placeholder="Теги через запятую" id="tags" name="tags" value="{{ @$podcast['tags'] }}">
-                            <label for="tags">Теги через запятую</label>
+                            <input type="text" class="form-control" placeholder="{{ __('client.tagsComma') }}" id="tags" name="tags" value="{{ @$podcast['tags'] }}">
+                            <label for="tags">{{ __('client.tagsComma') }}</label>
                             <div class="messages"></div>
                         </div>
 
@@ -68,8 +68,8 @@
                                             </svg>
                                         </span>
                                         <span class="control-panel-info">
-                                            <span class="h4 authorization-list-card__title">Изображение подкаста</span>
-                                            <span class="authorization-list-card__desc">1080x1080 px, 1 MB максимум</span>
+                                            <span class="h4 authorization-list-card__title">{{ __('client.podcastImage') }}</span>
+                                            <span class="authorization-list-card__desc">{{ __('client.podcastImageRequirements') }}</span>
                                             <img class="authorization-list-card__preview" src="" alt="preview">
                                             <i class="control-panel-delete icon-close">
                                                 <svg class="icon">
@@ -85,17 +85,17 @@
                         <label class="toggle mb-24">
                             <input class="toggle-checkbox" type="checkbox" id="status" name="status" value="0" {{ @$podcast['status'] == 0 ? 'checked' : ''}} {{--checked--}}>
                             <span class="toggle-switch"></span>
-                            <span class="toggle-label">Опубликовано</span>
+                            <span class="toggle-label">{{ __('client.published') }}</span>
                         </label>
 
                         @if ($action == 'edit')
                             <div class="input__actions mt-0">
-                                <button class="btn btn_secondary btn_large" type="button">Удалить</button>
-                                <button class="btn btn_primary btn_large" type="submit">Сохранить</button>
+                                <button class="btn btn_secondary btn_large" type="button">{{ __('client.delete') }}</button>
+                                <button class="btn btn_primary btn_large" type="submit">{{ __('client.save') }}</button>
                             </div>
                         @endif
                         @if ($action == 'add')
-                            <button class="btn btn_default btn_primary" type="submit">Сохранить</button>
+                            <button class="btn btn_default btn_primary" type="submit">{{ __('client.save') }}</button>
                         @endif
 
                     </form>
@@ -111,7 +111,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="h3 modal-title text-center" id="categoriesModalLabel">Категории</h3>
+                    <h3 class="h3 modal-title text-center" id="categoriesModalLabel">{{ __('client.categories') }}</h3>
                     <button type="button" class="btn-close btn btn_ico" data-bs-dismiss="modal" aria-label="Close">
                         <svg class="icon">
                             <use href="/img/sprite.svg#x"></use>
@@ -132,7 +132,7 @@
                         @endforeach
                     </div>
                     <div class="form-actions">
-                        <button class="btn btn_default btn_primary" data-bs-dismiss="modal">Сохранить</button>
+                        <button class="btn btn_default btn_primary" data-bs-dismiss="modal">{{ __('client.save') }}</button>
                     </div>
                 </div>
             </div>

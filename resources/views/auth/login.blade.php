@@ -6,7 +6,7 @@
         <section class="login">
             <div class="container">
                 <div class="login__header">
-                    <h2 class="h2 text-center">Авторизация</h2>
+                    <h2 class="h2 text-center">{{ __('auth.authorization') }}</h2>
                 </div>
 
                 <div class="login__wrapper">
@@ -14,9 +14,9 @@
                         @csrf
 
                         <div class="input form-floating _icon">
-                            <input type="email" class="form-control @error('email') is-invalid @enderror" placeholder="Email" name="email" id="email" value="{{ old('email') }}" autocomplete="email" autofocus/>
+                            <input type="email" class="form-control @error('email') is-invalid @enderror" placeholder="{{ __('auth.emailAddress') }}" name="email" id="email" value="{{ old('email') }}" autocomplete="email" autofocus/>
 
-                            <label for="email">{{ __('Email Address') }}</label>
+                            <label for="email">{{ __('auth.emailAddress') }}</label>
                             <i class="form-icon">
                                 <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                     <path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -34,8 +34,8 @@
                         </div>
 
                         <div class="input form-floating _icon">
-                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="{{ __('Password') }}" required autocomplete="current-password">
-                            <label for="password">{{ __('Password') }}</label>
+                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="{{ __('auth.password') }}" required autocomplete="current-password">
+                            <label for="password">{{ __('auth.password') }}</label>
 
                             <i class="form-icon">
                                 <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -52,7 +52,7 @@
                             </div>
                         </div>
 
-                        <button class="btn btn_default btn_primary mb-24" type="submit">{{ __('Login') }}</button>
+                        <button class="btn btn_default btn_primary mb-24" type="submit">{{ __('auth.login') }}</button>
 
                         {{--
                         <div class="row mb-3">
@@ -61,7 +61,7 @@
                                     <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 
                                     <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
+                                        {{ __('auth.rememberMe') }}
                                     </label>
                                 </div>
                             </div>
@@ -76,13 +76,13 @@
                     <div class="text-center mb-24">
                         @if (Route::has('password.request'))
                             <a class="btn btn-link" href="{{ route('password.request') }}">
-                                {{ __('Forgot Your Password?') }}
+                                {{ __('auth.forgotPassword') }}
                             </a>
                         @endif
                     </div>
 
                     <div class="text-center mb-24">
-                        <span class="divide-text x-small">или</span>
+                        <span class="divide-text x-small">{{ __('auth.or') }}</span>
                     </div>
                     <a href="#" class="btn btn_google-sign-in">
                         <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="33" height="33" viewBox="0 0 33 33" fill="none">
@@ -91,12 +91,12 @@
                             <path d="M7.65941 19.6583C6.97618 17.6097 6.97618 15.3913 7.65941 13.3427V9.0918H2.23828C1.09528 11.3906 0.5 13.9277 0.5 16.5005C0.5 19.0732 1.09528 21.6104 2.23828 23.9092L7.65941 19.6583Z" fill="#FBBC04"/>
                             <path d="M16.8239 6.53209C19.1519 6.49365 21.4014 7.38267 23.0862 9.00699L27.7455 4.2978C24.791 1.49308 20.8769 -0.0467635 16.8239 0.00108251C13.7979 0.0012219 10.8316 0.851384 8.25603 2.45665C5.68046 4.06192 3.597 6.35912 2.23828 9.09178L7.65941 13.3427C8.95178 9.43323 12.5659 6.53209 16.8239 6.53209Z" fill="#EA4335"/>
                         </svg>
-                        Войти через Google
+                        {{ __('auth.loginWithGoogle') }}
                     </a>
 
                     <div class="holder-action">
-                        <h3 class="h3 text-center">У меня нет аккаунта</h3>
-                        <a href="{{ route('register') }}" class="btn btn_default btn_primary">{{ __('Register') }}</a>
+                        <h3 class="h3 text-center">{{ __('auth.noAccount') }}</h3>
+                        <a href="{{ route('register') }}" class="btn btn_default btn_primary">{{ __('auth.register') }}</a>
                     </div>
                 </div>
             </div>
