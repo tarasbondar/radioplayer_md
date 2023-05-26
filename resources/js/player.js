@@ -20,6 +20,7 @@ export let player = {
     playlist: [],
     autoplay: true,
     episodeId: null,
+    playerOpenedMob: false,
     init(){
         this.initVolumeSlider();
         this.initEvents();
@@ -130,6 +131,9 @@ export let player = {
                 if (self.autoplay)
                     self.play(true);
                 self.initSortable();
+                if (self.playerOpenedMob){
+                    $('[data-player]').addClass('open');
+                }
             }
         })
     },
@@ -470,10 +474,12 @@ export let player = {
             self.playlistSort(episodeId, direction);
         })
         $(document).on('click', '[data-np-trigger]', function(){
-            $('[data-player]').addClass('open')
+            $('[data-player]').addClass('open');
+            self.playerOpenedMob = true;
         })
         $(document).on('click', '[data-np-modal-close]', function(){
             $('[data-player]').removeClass('open')
+            self.playerOpenedMob = false;
         })
     },
 }
