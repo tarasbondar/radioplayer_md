@@ -1,5 +1,10 @@
 @extends('layouts/client')
 
+<?php
+use App\Helpers\SiteHelper;
+use App\Models\PodcastEpisode;
+?>
+
 @section('content')
 
     <main class="main">
@@ -20,26 +25,22 @@
                         </div>
                         <span class="podcast__data">{{ $episode['created_diff'] }}</span>
                         <strong class="podcast__title">{{ $episode['name'] }}</strong>
-                        <div class="podcast__timer">
-                            <div class="play">
-                                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <g clip-path="url(#clip0_801_29988)">
-                                        <path d="M2.5 1.5L9.5 6L2.5 10.5V1.5Z" fill="currentColor" stroke="currentColor" stroke-width="0.666667" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </g>
-                                    <defs>
-                                        <clipPath id="clip0_801_29988">
-                                            <rect width="12" height="12" fill="white"/>
-                                        </clipPath>
-                                    </defs>
-                                </svg>
+                        <div class="podcast__holder">
+                            <div class="podcast__timer active play-episode id-{{ $episode['id'] }}" data-play-episode="{{ $episode['id'] }}" data-episode="{{ $episode['id'] }}">
+                                <div class="play">
+                                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g clip-path="url(#clip0_801_29988)">
+                                            <path d="M2.5 1.5L9.5 6L2.5 10.5V1.5Z" fill="currentColor" stroke="currentColor" stroke-width="0.666667" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </g>
+                                        <defs>
+                                            <clipPath id="clip0_801_29988">
+                                                <rect width="12" height="12" fill="white"/>
+                                            </clipPath>
+                                        </defs>
+                                    </svg>
+                                </div>
+                                <span>{{ SiteHelper::getMp3Duration(public_path(PodcastEpisode::UPLOADS_AUDIO.'/'.@$episode['source'])) }}</span>
                             </div>
-                            <div class="pause">
-                                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M5 2H3V10H5V2Z" fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <path d="M9 2H7V10H9V2Z" fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </div>
-                            <span>00:37:54</span>
                         </div>
                         <p class="podcast__text">{{ $episode['description'] }}</p>
                     </div>
