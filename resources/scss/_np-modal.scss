@@ -217,7 +217,7 @@
 	&.open {
 		display: block;
 	}
-	
+
 	.np-modal__player-body {
 		margin: 0 0 rem(80px);
 	}
@@ -228,7 +228,7 @@
 	flex-flow: row nowrap;
 	transition: background .2s ease-in-out;
 	border-bottom: 1px solid var(--btn-rows-bg);
-	
+
 	&.active {
 		background-color: var(--btn-rows-bg);
 		.avatar__action {
@@ -236,11 +236,11 @@
 			visibility: visible;
 		}
 	}
-	
+
 	&:last-child {
 		border-bottom: 0;
 	}
-	
+
 	.info {
 		display: flex;
 		flex-flow: row nowrap;
@@ -333,7 +333,7 @@
 	flex-flow: row wrap;
 	justify-content: space-between;
 	padding: 0 rem(20px);
-	
+
 	.custom-range {
 		width: 100%;
 		margin-bottom: rem(8px);
@@ -474,7 +474,7 @@ input[type="range"].custom-range {
 	-webkit-appearance: none;
 	width: 100%;
 	position: relative;
-	
+
 	&:focus {
 		outline: none;
 	}
@@ -504,4 +504,11 @@ input[type="range"]::-webkit-slider-thumb {
 	position: relative;
 	transition: 0.5s all ease;
 	cursor: pointer;
+}
+
+.np-modal__btn-clock,
+.np-modal__btn-add-list {
+    &.active {
+        color: var(--np-modal-btn-active-color);
+    }
 }

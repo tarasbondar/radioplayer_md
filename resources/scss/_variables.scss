@@ -54,6 +54,9 @@ $base-font-size: 16px;
     --btn-rows-text-color-active: var(--dark-500);
     --btn-rows-ico-color-active: var(--dark-500);
     --btn-rows-ico-opacity-active: 1;
+    --btn-rows-text-color-activated: var(--green-300);
+
+    --np-modal-btn-active-color: var(--green-300);
 
     --menu-bg: var(--grey-100);
     --menu-border-bg: linear-gradient(180deg, var(--grey-100) 0%, var(--white) 50%, var(--grey-100) 100%);
@@ -170,6 +173,9 @@ $base-font-size: 16px;
     --btn-rows-text-color-active: var(--white);
     --btn-rows-ico-color-active: var(--white);
     --btn-rows-ico-opacity-active: 1;
+    --btn-rows-text-color-activated: var(--accent-500);
+
+    --np-modal-btn-active-color: var(--accent-500);
 
     --menu-bg: rgba(33, 35, 37, .75);
     --menu-border-bg: linear-gradient(180deg, rgba(33, 35, 37, 0) 0%, #35383B 50%, rgba(33, 35, 37, 0) 100%);

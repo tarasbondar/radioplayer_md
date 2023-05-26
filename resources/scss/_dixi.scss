@@ -200,8 +200,12 @@
 		}
 		.link{
 			color:var(--btn-rows-text-color-active);
+
+			&.active {
+				color: var(--btn-rows-text-color-activated);
+			}
 		}
-		
+
 	}
 	&__elem-option{
 		display: block;
