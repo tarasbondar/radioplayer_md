@@ -142,7 +142,14 @@ class ProfileController extends Controller
         }
         $podcast->name = $request->get('name');
         $podcast->description = $request->get('description');
-        //file
+        if ($request->has('image')) {
+            if (isset($podcast->image)) {
+                File::delete(Podcast::UPLOADS_IMAGES . '/' . $podcast->image);
+            }
+            $filename = time() . '_' . $request->image->getClientOriginalName();
+            $request->image->move(Podcast::UPLOADS_IMAGES, $filename);
+            $podcast->image = $filename;
+        }
         $podcast->tags = $request->get('tags');
         $podcast->status = ($request->get('status') != null ? Podcast::STATUS_ACTIVE : Podcast::STATUS_INACTIVE);
         $podcast->save();
@@ -166,7 +173,7 @@ class ProfileController extends Controller
             }
         }
 
-        return $this->myPodcasts();
+        return redirect()->action([ProfileController::class, 'myPodcasts']);
     }
 
     public function deletePodcast() {

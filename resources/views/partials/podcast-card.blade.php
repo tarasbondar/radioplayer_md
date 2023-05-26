@@ -10,7 +10,7 @@
              srcset="{{ !empty($p['image']) ? '/uploads/podcasts_images/' . $p['image'] : "/img/podcast-placeholder.png"}},
             {{ !empty($p['image']) ? '/uploads/podcasts_images/' . $p['image'] : "/img/podcast-placeholder.png"}} 2x"
              src="{{ !empty($p['image']) ? '/uploads/podcasts_images/' . $p['image'] : "/img/podcast-placeholder.png"}}"
-             idth="100%" alt="" loading="lazy">
+             width="100%" alt="" loading="lazy">
     </div>
     <h3 class="x-small item__title">{{ $p['name'] }}</h3>
     {{--<button class="item__link" type="button" aria-label="Select podcast"></button>--}}

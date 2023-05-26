@@ -211,12 +211,15 @@ class IndexController
                 }
             }
 
-            $episodes = PodcastEpisode::select('podcasts_episodes.*', 'p.name AS podcast_name', 'p.owner_id AS user_id')
-                ->where('podcasts_episodes.status', '=', PodcastEpisode::STATUS_PUBLISHED)
-                ->where('p.status', '=', Podcast::STATUS_ACTIVE)
-                ->where('p.id', '=', $id)
-                ->join('podcasts AS p', 'podcasts_episodes.podcast_id', '=', 'p.id')
 
+            $episodes = PodcastEpisode::select('podcasts_episodes.*', 'p.name AS podcast_name', 'p.owner_id AS user_id');
+            if ($action != 'edit') {
+                $episodes = $episodes
+                    ->where('podcasts_episodes.status', '=', PodcastEpisode::STATUS_PUBLISHED)
+                    ->where('p.status', '=', Podcast::STATUS_ACTIVE);
+            }
+            $episodes = $episodes->where('p.id', '=', $id)
+                ->join('podcasts AS p', 'podcasts_episodes.podcast_id', '=', 'p.id')
                 ->orderBy('updated_at', 'DESC')
                 ->get()->toArray();
             return view('pages.client.podcast-episodes', ['podcast' => $podcast, 'episodes' => $episodes, 'action' => $action]);
