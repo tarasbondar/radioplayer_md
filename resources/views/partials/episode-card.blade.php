@@ -25,12 +25,6 @@
                     </defs>
                 </svg>
             </div>
-            {{--<div class="pause" >
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5 2H3V10H5V2Z" fill="#0F0F0F" stroke="#0F0F0F" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M9 2H7V10H9V2Z" fill="#0F0F0F" stroke="#0F0F0F" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </div>--}}
             <span>{{ SiteHelper::getMp3Duration(public_path(PodcastEpisode::UPLOADS_AUDIO.'/'.@$episode['source'])) }}</span>
         </div>
 

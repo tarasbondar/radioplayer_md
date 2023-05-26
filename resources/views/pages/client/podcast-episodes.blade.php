@@ -18,7 +18,14 @@
                         <div class="podcast__info-text">
                             <span class="podcast__descr">{{ $podcast['username'] }}</span>
                             <strong class="podcast__title">{{ $podcast['name'] }}</strong>
-                            <span class="podcast__descr">{{ $podcast['description'] }}</span>
+
+                            @if(strlen($podcast['description']) < 100)
+                                <p class="podcast__descr">{{ $podcast['description'] }}</p>
+                            @else
+                                <p id="descr-full" class="podcast__descr" hidden="true">{{ $podcast['description'] }} <span id="less">Свернуть</span></p>
+                                <p id="descr-short" class="podcast__descr">{{ substr($podcast['description'], 0, 95) }} <span id="more">Ещё</span></p>
+                            @endif
+
                             <div class="button-container">
                                 @if ($action == 'edit')
                                     <a href="/edit-podcast/{{$podcast['id']}}" class="btn btn_default btn_secondary podcast__btn">
@@ -75,7 +82,8 @@
         (function(){
             $(document).on('click', '.download-episode', function(){
                 let id = $(this).attr('data-id');
-                $.ajax({
+                console.log(id);
+                /*$.ajax({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
@@ -85,7 +93,7 @@
                     success: function(response) {
 
                     }
-                })
+                })*/
             });
 
             $(document).on('click', '.listen-later', function () {
@@ -141,7 +149,18 @@
                         $('.button-container').html(response);
                     }
                 })
-            })
+            });
+
+            $(document).on('click', '#more', function(){
+                $('#descr-full').removeAttr('hidden').show();
+                $('#descr-short').hide();
+            });
+
+            $(document).on('click', '#less', function(){
+                $('#descr-short').removeAttr('hidden').show();
+                $('#descr-full').hide();
+            });
+
         })(jQuery)
 
     </script>

@@ -111,7 +111,7 @@
                     <span>{{ __('client.playbackHistory') }}</span>
                 </a>
 
-                <a class="btn btn_list-item" href="/downloaded">
+                <a class="btn btn_list-item" href="/downloads">
                     <svg class="icon"><use href="/img/sprite.svg#download-cloud"></use></svg>
                     <span>{{ __('client.downloaded') }}</span>
                 </a>
