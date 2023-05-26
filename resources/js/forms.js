@@ -68,81 +68,26 @@ export function forms() {
             var constraints = {};
 
             switch (formId) {
-                case 'apply-form':
+                case 'register-form':
                     constraints = {
                         name: {
-                            presence: true,
+                            presence: {message: 'обязательное поле'},
                         },
                         email: {
                             presence: true,
                             email: true
                         },
-                        agree: {
-                            checked: true
-                        },
-                        phone: {
+                        password: {
                             presence: true,
+                            length: {minimum: 8}
                         },
-                        position: {
+                        password_confirmation: {
                             presence: true,
-                            exclusion: {
-                                within: {default: "Choose one"},
-                                message: ' is required'
-                            }
-                        },
-                        letter: {
-                            // presence: false,
-                        },
-                        cv: {
-                            // presence: false,
-                        }
-                    };
-                    break;
-
-                case 'contact-form':
-                    constraints = {
-                        name: {
-                            presence: true,
-                        },
-                        email: {
-                            presence: true,
-                            email: true
+                            length: {minimum: 8}
                         },
                         agree: {
                             checked: true
-                        },
-                        message: {
-                            presence: true,
-                        },
-                        subject: {
-                            presence: true,
                         }
-                    };
-                    break;
-
-                case 'request-form':
-                    constraints = {
-                        name: {
-                            presence: true,
-                        },
-                        email: {
-                            presence: true,
-                            email: true
-                        },
-                        agree: {
-                            checked: true
-                        },
-                        message: {
-                            presence: true,
-                        }
-                    };
-                    break;
-
-                case 'search-form':
-                    constraints = {
-                        search: {
-                            presence: true,
-                        },
                     };
                     break;
 
@@ -173,7 +118,17 @@ export function forms() {
                 var errors = validate(form, constraints);
                 showErrors(form, errors || {});
                 if (!errors) {
-                    showSuccess(form);
+                    // showSuccess(form);
+
+                    switch (formId) {
+                        case 'register-form':
+                            form.submit();
+                            break;
+
+                        default:
+                            form.submit();
+                            break;
+                    }
                 }
             }
 
