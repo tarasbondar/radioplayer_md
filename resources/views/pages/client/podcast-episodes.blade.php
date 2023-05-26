@@ -9,7 +9,7 @@
                     <div class="podcast__info">
                         <div class="podcast__picture">
                             <img class="podcast__bg" srcset="/img/podcast-bg.png 1x, /img/podcast-bg@2x.png 2x" src="/img/podcast-bg.png" width="100%" alt="" loading="lazy">
-                            <img class="podcast__img podcast-img"
+                            <img class="podcast__img podcast___img"
                                  srcset="{{ !empty($podcast['image']) ? '/uploads/podcasts_images/' . $podcast['image'] : "/img/podcast-placeholder.png"}} 1x,
                                  {{ !empty($podcast['image']) ? '/uploads/podcasts_images/' . $podcast['image'] : "/img/podcast-placeholder.png"}} 2x"
                                  src="{{ !empty($podcast['image']) ? '/uploads/podcasts_images/' . $podcast['image'] : "/img/podcast-placeholder.png"}}"
