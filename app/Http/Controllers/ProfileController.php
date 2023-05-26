@@ -309,7 +309,7 @@ class ProfileController extends Controller
     }
 
     public function listenLater() {
-        $episodes= PodcastEpisode::select('podcasts_episodes.*', 'p.name AS podcast_name', 'p.owner_id AS user_id')
+        $episodes= PodcastEpisode::select('podcasts_episodes.*', 'p.name AS podcast_name', 'p.owner_id AS user_id', 'users_queues.created_at')
             ->where('podcasts_episodes.status', '=', PodcastEpisode::STATUS_PUBLISHED)
             ->where('p.status', '=', Podcast::STATUS_ACTIVE)
             ->where('users_queues.user_id', '=', Auth::id())
