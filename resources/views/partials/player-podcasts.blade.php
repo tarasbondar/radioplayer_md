@@ -145,7 +145,7 @@
 					    </svg>
 				    </button>
 
-				    <button class="btn btn_ico btn_ico-primary np-modal__btn-clock active" type="button" aria-label="{{ __('client.time') }}">
+				    <button class="btn btn_ico btn_ico-primary np-modal__btn-clock active listen-later" data-id="{{ $current['id'] }}" type="button" aria-label="{{ __('client.time') }}">
 					    <svg class="icon">
 						    <use href="/img/sprite.svg#clock"></use>
 					    </svg>
