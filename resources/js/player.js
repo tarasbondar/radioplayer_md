@@ -152,11 +152,11 @@ export let player = {
     },
     changePlayIcon(){
         if (window.audio.paused) {
-            $('.player-play').show();
-            $('.player-pause').hide();
+            $('[data-icon-play]').show();
+            $('[data-icon-pause]').hide();
         } else {
-            $('.player-play').hide();
-            $('.player-pause').removeAttr('hidden').show();
+            $('[data-icon-play]').hide();
+            $('[data-icon-pause]').removeAttr('hidden').show();
 
         }
     },
@@ -468,6 +468,12 @@ export let player = {
             let episodeId = $(this).parents('[data-player-playlist-item]').data('player-playlist-item');
             let direction = $(this).data('playlist-sort');
             self.playlistSort(episodeId, direction);
+        })
+        $(document).on('click', '[data-np-trigger]', function(){
+            $('[data-player]').addClass('open')
+        })
+        $(document).on('click', '[data-np-modal-close]', function(){
+            $('[data-player]').removeClass('open')
         })
     },
 }

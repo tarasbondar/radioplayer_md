@@ -9,21 +9,21 @@
         <button class="now-playing__btn" type="button" aria-label="{{ __('client.readmore') }}" data-np-trigger></button>
         <div class="now-playing__track">
             <div class="logo">
-                <img class="logo__bg" srcset="/img/radio-logo.png 1x, img/radio-logo@2x.png 2x" src="/img/radio-logo.png" width="100%" alt="" loading="lazy">
-                <img class="logo__img" srcset="/img/radio-logo.png 1x, img/radio-logo@2x.png 2x" src="/img/radio-logo.png" width="100%" alt="" loading="lazy">
+                <img class="logo__bg" srcset="{{ $image }} 1x, {{ $image }} 2x" src="{{ $image }}" width="100%" alt="" loading="lazy">
+                <img class="logo__img" srcset="{{ $image }} 1x, {{ $image }} 2x" src="{{ $image }}" width="100%" alt="" loading="lazy">
             </div>
             <div class="now-playing__track__body">
                 <div class="now-playing__track__author x-small">
                     <div class="scrolling-text" data-scrolling-text-container>
                         <div class="scrolling-text__inner" data-scrolling-text>
-                            <span class="scrolling-text__data" data-scrolling-text-data>Artist name</span>
+                            <span class="scrolling-text__data" data-scrolling-text-data>{{ @$podcast['name'] }}</span>
                         </div>
                     </div>
                 </div>
                 <div class="now-playing__track__title x-small">
                     <div class="scrolling-text" data-scrolling-text-container>
                         <div class="scrolling-text__inner" data-scrolling-text>
-                            <span class="scrolling-text__data" data-scrolling-text-data>Song title Sint amet adipisicing velit ad deserunt enim sunt</span>
+                            <span class="scrolling-text__data" data-scrolling-text-data>{{ @$current['name'] }}</span>
                         </div>
                     </div>
                 </div>
@@ -35,11 +35,11 @@
                     <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"></path>
                 </svg>
             </button>
-            <button class="btn btn_ico btn_ico-accent now-playing__play-btn active" type="button" aria-label="{{ __('client.pause') }}">
-                <svg class="icon now-playing__play-btn__pause">
+            <button class="btn btn_ico btn_ico-accent now-playing__play-btn active" data-play-button type="button" aria-label="{{ __('client.pause') }}">
+                <svg class="icon now-playing__play-btn__pause" data-icon-pause hidden>
                     <use href="/img/sprite.svg#pause-bk"></use>
                 </svg>
-                <svg class="icon now-playing__play-btn__play">
+                <svg class="icon now-playing__play-btn__play" data-icon-play>
                     <use href="/img/sprite.svg#play-bk"></use>
                 </svg>
             </button>
@@ -108,10 +108,10 @@
 					    </button>
 
                         <button class="btn btn_ico btn_ico-accent now-playing__play-btn active" data-play-button id="play-button" type="button" aria-label="{{ __('client.pause') }}">
-                            <svg class="icon now-playing__play-btn__pause player-pause" hidden>
+                            <svg class="icon now-playing__play-btn__pause player-pause" data-icon-pause hidden>
                                 <use href="/img/sprite.svg#pause-bk"></use>
                             </svg>
-                            <svg class="icon now-playing__play-btn__play player-play">
+                            <svg class="icon now-playing__play-btn__play player-play" data-icon-play>
                                 <use href="/img/sprite.svg#play-bk"></use>
                             </svg>
                         </button>

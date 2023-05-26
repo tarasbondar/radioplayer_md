@@ -41,11 +41,11 @@
                     <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"></path>
                 </svg>
             </button>
-            <button class="btn btn_ico btn_ico-accent now-playing__play-btn active" type="button" aria-label="{{ __('client.pause') }}">
-                <svg class="icon now-playing__play-btn__pause">
+            <button class="btn btn_ico btn_ico-accent now-playing__play-btn active" data-play-button type="button" aria-label="{{ __('client.pause') }}">
+                <svg class="icon now-playing__play-btn__pause" data-icon-pause hidden>
                     <use href="/img/sprite.svg#pause-bk"></use>
                 </svg>
-                <svg class="icon now-playing__play-btn__play">
+                <svg class="icon now-playing__play-btn__play" data-icon-play>
                     <use href="/img/sprite.svg#play-bk"></use>
                 </svg>
             </button>
@@ -98,10 +98,10 @@
 
                     <div class="np-modal__player-body__main-actions__inner">
                         <button class="btn btn_ico btn_ico-accent now-playing__play-btn active" data-play-button id="play-button" type="button" aria-label="{{ __('client.pause') }}">
-                            <svg class="icon now-playing__play-btn__pause player-pause" hidden>
+                            <svg class="icon now-playing__play-btn__pause player-pause" data-icon-pause hidden>
                                 <use href="/img/sprite.svg#pause-bk"></use>
                             </svg>
-                            <svg class="icon now-playing__play-btn__play player-play">
+                            <svg class="icon now-playing__play-btn__play player-play" data-icon-play>
                                 <use href="/img/sprite.svg#play-bk"></use>
                             </svg>
                         </button>
