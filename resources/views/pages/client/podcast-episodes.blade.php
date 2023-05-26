@@ -13,12 +13,12 @@
                                  srcset="{{ !empty($podcast['image']) ? '/uploads/podcasts_images/' . $podcast['image'] : "/img/podcast-placeholder.png"}} 1x,
                                  {{ !empty($podcast['image']) ? '/uploads/podcasts_images/' . $podcast['image'] : "/img/podcast-placeholder.png"}} 2x"
                                  src="{{ !empty($podcast['image']) ? '/uploads/podcasts_images/' . $podcast['image'] : "/img/podcast-placeholder.png"}}"
-                                 width="100%" alt="" loading="lazy">
+                                 width="100%" height="100%" alt="" loading="lazy">
                         </div>
                         <div class="podcast__info-text">
                             <span class="podcast__descr">{{ $podcast['username'] }}</span>
-                            <span class="podcast__descr">{{ $podcast['description'] }}</span>
                             <strong class="podcast__title">{{ $podcast['name'] }}</strong>
+                            <span class="podcast__descr">{{ $podcast['description'] }}</span>
                             <div class="button-container">
                                 @if ($action == 'edit')
                                     <a href="/edit-podcast/{{$podcast['id']}}" class="btn btn_default btn_secondary podcast__btn">
@@ -42,16 +42,20 @@
                                 @include('partials.episode-card')
                             @endforeach
                         @else
-                            <strong class="podcast__title">{{ __('client.noEpisodesNotice') }}</strong>
-                            <p class="podcast__text">{{ __('client.noEpisodesDecription') }}</p>
-                            <a href="/create-episode/{{$podcast['id']}}" class="btn btn_default btn_primary podcast__add">
-                                <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M12.5 22C18.0228 22 22.5 17.5228 22.5 12C22.5 6.47715 18.0228 2 12.5 2C6.97715 2 2.5 6.47715 2.5 12C2.5 17.5228 6.97715 22 12.5 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <path d="M12.5 8V16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <path d="M8.5 12H16.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                                {{ __('client.addEpisode') }}
-                            </a>
+                            @if($action == 'edit')
+                                <strong class="podcast__title">{{ __('client.noEpisodesNotice') }}</strong>
+                                <p class="podcast__text">{{ __('client.noEpisodesDecription') }}</p>
+                                <a href="/create-episode/{{$podcast['id']}}" class="btn btn_default btn_primary podcast__add">
+                                    <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12.5 22C18.0228 22 22.5 17.5228 22.5 12C22.5 6.47715 18.0228 2 12.5 2C6.97715 2 2.5 6.47715 2.5 12C2.5 17.5228 6.97715 22 12.5 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M12.5 8V16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M8.5 12H16.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    {{ __('client.addEpisode') }}
+                                </a>
+                            @else
+                                <strong class="podcast__title">{{ __('client.noAvailablePodcasts') }}</strong>
+                            @endif
                         @endif
                     </ul>
                 </div>

@@ -6,7 +6,7 @@
         <section class="author">
             <div class="container">
                 <div class="author__wrapper">
-                    <form action="/save-podcast" method="POST" id="podcast-form" {{--data-validate="apply-form"--}}>
+                    <form action="/save-podcast" method="POST" id="podcast-form" {{--data-validate="apply-form"--}} enctype="multipart/form-data">
 
                         @csrf
 
@@ -58,7 +58,7 @@
 
                         <div class="input file">
                             <label for="file-image" class="control-panel">
-                                <input id="file-image" class="form__file" type="file" data-file_input="file-image" size="1048576" accept="image/png, image/jpeg, image/*">
+                                <input id="file-image" class="form__file" type="file" data-file_input="file-image" size="1048576" name="image" accept="image/png, image/jpeg, image/*">
                                 <span class="control-panel-wrap">
                                         <span class="control-panel-icon">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">

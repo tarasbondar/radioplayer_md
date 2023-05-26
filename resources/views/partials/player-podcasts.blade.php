@@ -1,3 +1,7 @@
+@php
+    /** @var \App\Models\Podcast $podcast */
+    $image = $podcast->image ? '/uploads/podcasts_images/' . $podcast->image : '/img/podcast-placeholder.png';
+@endphp
 <aside class="player" id="player-podcasts" data-player="podcast">
     <div class="now-playing" data-now-playing>
         <input id="audio-source" type="text" value="{{ @$current['source_url']  }}" readonly hidden>
@@ -65,7 +69,7 @@
 			    <div class="np-modal__player-body__header">
 				    <div class="logo">
 					    <img class="logo__bg" srcset="/img/radio-logo.png 1x, img/radio-logo@2x.png 2x" src="/img/radio-logo.png" width="100%" alt="" loading="lazy">
-					    <img class="logo__img" srcset="{{ !empty($podcast['image']) ? '/uploads/podcasts_images/' . $podcast['image'] : "/img/podcast-placeholder.png"}} 1x, img/radio-logo@2x.png 2x" src="/img/radio-logo.png" width="100%" alt="" loading="lazy">
+					    <img class="logo__img" srcset="{{ $image }} 1x, {{ $image }} 2x" src="{{ $image }}" width="100%" alt="" loading="lazy">
 				    </div>
 				    <div class="np-modal__player-body__header__inner">
 					    <span class="np-modal__player-body__header__pretitle x-small"> {{ $podcast['name'] }}</span>
@@ -92,7 +96,7 @@
 				    </svg>
 
 				    <div class="np-modal__player-body__main-actions__inner">
-					    <button class="btn btn_ico btn_ico-primary" type="button" aria-label="Предыдущий">
+					    <button class="btn btn_ico btn_ico-primary" data-change-track="prev" type="button" aria-label="Предыдущий">
 						    <svg class="icon">
 							    <use href="/img/sprite.svg#chevrons-left"></use>
 						    </svg>
@@ -117,7 +121,7 @@
 							    <use href="/img/sprite.svg#rewind-cw"></use>
 						    </svg>
 					    </button>
-					    <button class="btn btn_ico btn_ico-primary" type="button" aria-label="{{ __('client.next') }}">
+					    <button class="btn btn_ico btn_ico-primary" data-change-track="next" type="button" aria-label="{{ __('client.next') }}">
 						    <svg class="icon">
 							    <use href="/img/sprite.svg#chevrons-right"></use>
 						    </svg>
@@ -210,9 +214,9 @@
 				    </svg>
 			    </button>
 			    <label class="toggle">
-				    <input class="toggle-checkbox" type="checkbox" checked>
+				    <input class="toggle-checkbox" type="checkbox" data-player-autoplay value="1" checked>
 				    <span class="toggle-switch"></span>
-				    <span class="toggle-label">{{ __('client.autoplay') }}</span>
+				    <span class="toggle-label">{{ __('player.autoplay') }}</span>
 			    </label>
 			    <button class="btn btn_ico btn_ico-primary" type="button" aria-label="{{ __('client.closeTimer') }}" data-np-modal-playing-list-close>
 				    <svg class="icon">

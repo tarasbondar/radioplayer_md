@@ -1,3 +1,5 @@
+import Sortable from 'sortablejs';
+
 export let player = {
     volume: 0.5,
     playbackRate: 1,
@@ -16,6 +18,8 @@ export let player = {
         intervalMinutes: 0,
     },
     playlist: [],
+    autoplay: true,
+    episodeId: null,
     init(){
         this.initVolumeSlider();
         this.initEvents();
@@ -115,25 +119,48 @@ export let player = {
                 $('.body').append(response).addClass('player-open');
                 self.createPlayer();
                 self.setSource($('#audio-source').val());
+                self.episodeId = id;
+                $('[data-player-playlist-item]').removeClass('active');
+                $('[data-player-playlist-item="'+ self.episodeId +'"]').addClass('active');
+
                 if (self.timer.isActive)
                     self.timerApply(true);
                 self.changePlaybackRate(self.playbackRate);
+                self.changePlayIcon();
+                if (self.autoplay)
+                    self.play(true);
+                self.initSortable();
             }
         })
     },
-    play(){
-        if (window.audio.paused) {
-            this.setVolume(this.volume);
+    initSortable(){
+        let self = this;
+        Sortable.create($('[data-player-playlist]').get(0), {
+            onEnd: function (e) {
+                self.savePlaylistSorting();
+            }
+        });
+    },
+    play(forcePlay = false){
+        if (window.audio.paused || forcePlay) {
             window.audio.play();
-            $('.player-play').hide();
-            $('.player-pause').removeAttr('hidden').show();
         } else {
             window.audio.pause();
+        }
+        this.setVolume(this.volume);
+        this.changePlayIcon();
+    },
+    changePlayIcon(){
+        if (window.audio.paused) {
             $('.player-play').show();
             $('.player-pause').hide();
+        } else {
+            $('.player-play').hide();
+            $('.player-pause').removeAttr('hidden').show();
+
         }
     },
-    updateProgressBar() {
+    updateProgressBar(e) {
         const progress = (window.audio.currentTime / window.audio.duration) * 100;
         if (isNaN(progress))
             return;
@@ -142,6 +169,12 @@ export let player = {
         const seconds = Math.floor(window.audio.currentTime % 60);
 
         $('[data-audio-current-time]').text(String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0'));
+
+        if (e.type === 'ended' && $('[data-player-autoplay]').prop('checked')){
+            $('[data-change-track="next"]').click();
+            //this.changeTrack('next')
+        }
+
     },
     changePlaybackRate(forceRate = null){
         if (forceRate !== null) {
@@ -168,6 +201,53 @@ export let player = {
         }
 
         window.audio.currentTime = newTime;
+    },
+    changeTrack(direction){
+        let self = this;
+        let parentContainer = $('[data-player-playlist]');
+        let currentElement = parentContainer.find('[data-player-playlist-item="'+ self.episodeId +'"]');
+        let nextElement = null;
+        if (direction === 'next'){
+            if (currentElement.next('[data-player-playlist-item]').length){
+                nextElement = currentElement.next('[data-player-playlist-item]');
+            }
+            else if (parentContainer.find('[data-player-playlist-item]:first').length){
+                nextElement = parentContainer.find('[data-player-playlist-item]:first');
+            }
+        }
+        else if (direction === 'prev') {
+            if (currentElement.prev('[data-player-playlist-item]').length){
+                nextElement = currentElement.prev('[data-player-playlist-item]');
+            }
+            else if (parentContainer.find('[data-player-playlist-item]:last').length){
+                nextElement = parentContainer.find('[data-player-playlist-item]:last');
+            }
+        }
+        if (nextElement)
+            self.changeEpisode(nextElement.data('player-playlist-item'));
+
+    },
+    savePlaylistSorting(){
+        let self = this;
+        let playlist = [];
+        $('[data-player-playlist-item]').each(function () {
+            playlist.push($(this).data('player-playlist-item'));
+        });
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            method: 'POST',
+            url: '/save-playlist-sorting',
+            data: {
+                playlist: playlist
+            },
+            success: function (response) {
+                if (response.status === 'success') {
+                    //$('[data-player-playlist]').html(response.html);
+                }
+            }
+        })
     },
     setSource(src){
         let paused = false;
@@ -196,6 +276,45 @@ export let player = {
                 }
             }
         })
+    },
+    playlistSort(episodeId, direction) {
+        let parentContainer = $('[data-player-playlist]');
+        let currentElement = $('[data-player-playlist-item="'+ episodeId +'"]');
+        let currentIndex = parentContainer.children('[data-player-playlist-item]').index(currentElement);
+        let playlistItemsCount = parentContainer.children('[data-player-playlist-item]').length;
+
+        let targetIndex;
+        if (direction === 'up') {
+            targetIndex = currentIndex - 1;
+            if (targetIndex < 0) {
+                targetIndex = playlistItemsCount - 1;
+            }
+        } else if (direction === 'down') {
+            targetIndex = currentIndex + 1;
+            if (targetIndex >= playlistItemsCount) {
+                targetIndex = 0;
+            }
+        }
+        let targetElement = parentContainer.children('[data-player-playlist-item]').eq(targetIndex);
+
+        if (direction === 'up') {
+            if (targetIndex === 0) {
+                targetElement.before(currentElement);
+            } else {
+                if (targetIndex === playlistItemsCount - 1) {
+                    currentElement.insertAfter(targetElement);
+                }
+                else
+                    currentElement.insertBefore(targetElement);
+            }
+        } else {
+            if (targetIndex === 0) {
+                currentElement.insertBefore(targetElement);
+            }
+            else
+                currentElement.insertAfter(targetElement);
+        }
+        this.savePlaylistSorting();
     },
     adjustVolume(e) {
         const volumeSlider = $('[data-volume-widget]');
@@ -329,6 +448,10 @@ export let player = {
             let secondsStep = 10;
             let direction = $(this).data('rewind');
             self.rewind(direction, secondsStep);
+        });
+        $(document).on('click', '[data-change-track]', function(){
+            let direction = $(this).data('change-track');
+            self.changeTrack(direction);
         })
         $(document).on('click', '[data-playback-rate]', function(){
             self.changePlaybackRate();
@@ -337,6 +460,14 @@ export let player = {
             let id = $(this).data('add-to-playlist');
             self.addToPlaylist(id);
             return false;
+        });
+        $(document).on('change', '[data-player-autoplay]', function(){
+            self.autoplay = $(this).prop('checked');
+        });
+        $(document).on('click', '[data-playlist-sort]', function(){
+            let episodeId = $(this).parents('[data-player-playlist-item]').data('player-playlist-item');
+            let direction = $(this).data('playlist-sort');
+            self.playlistSort(episodeId, direction);
         })
     },
 }

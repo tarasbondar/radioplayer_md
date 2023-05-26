@@ -33,20 +33,20 @@
             </svg>
         </button>
         <ul class="dropdown-menu dropdown-menu-end">
-            <li>
+            <li data-playlist-sort="up">
                 <span class="dropdown-item">
                     <svg class="icon ms-0">
                         <use href="/img/sprite.svg#chevron-up"></use>
                     </svg>
-                    {{ __('client.toTheBeginning') }}
+                    {{ __('player.move_up') }}
                 </span>
             </li>
-            <li>
+            <li data-playlist-sort="down">
                 <span class="dropdown-item">
                     <svg class="icon ms-0">
                         <use href="/img/sprite.svg#chevron-down"></use>
                     </svg>
-                    {{ __('client.toTheEnd') }}
+                    {{ __('player.move_down') }}
                 </span>
             </li>
             <li>
@@ -54,7 +54,7 @@
                     <svg class="icon ms-0">
                         <use href="/img/sprite.svg#x"></use>
                     </svg>
-                    {{ __('app.remove') }}
+                    {{ __('player.playlist_remove') }}
                 </button>
             </li>
         </ul>

@@ -142,7 +142,14 @@ class ProfileController extends Controller
         }
         $podcast->name = $request->get('name');
         $podcast->description = $request->get('description');
-        //file
+        if ($request->has('image')) {
+            if (isset($podcast->image)) {
+                File::delete(Podcast::UPLOADS_IMAGES . '/' . $podcast->image);
+            }
+            $filename = time() . '_' . $request->image->getClientOriginalName();
+            $request->image->move(Podcast::UPLOADS_IMAGES, $filename);
+            $podcast->image = $filename;
+        }
         $podcast->tags = $request->get('tags');
         $podcast->status = ($request->get('status') != null ? Podcast::STATUS_ACTIVE : Podcast::STATUS_INACTIVE);
         $podcast->save();
@@ -166,7 +173,7 @@ class ProfileController extends Controller
             }
         }
 
-        return $this->myPodcasts();
+        return redirect()->action([ProfileController::class, 'myPodcasts']);
     }
 
     public function deletePodcast() {
@@ -239,7 +246,7 @@ class ProfileController extends Controller
         }
         $episode->name = $request->get('name');
         $episode->description = $request->get('description');
-        $episode->source = '';//file
+
         $episode->tags = $request->get('tags');
         $episode->status = ($request->get('status') == 1 ? PodcastEpisode::STATUS_PUBLISHED : PodcastEpisode::STATUS_DRAFT);
 
@@ -251,6 +258,9 @@ class ProfileController extends Controller
             $request->source->move(PodcastEpisode::UPLOADS_AUDIO, $filename);
             $episode->source = $filename;
             $episode->filename = $request->source->getClientOriginalName();
+        }
+        elseif ($request->file_remove){
+            $episode->source = '';//file
         }
 
         $episode->save();
@@ -354,6 +364,22 @@ class ProfileController extends Controller
         return response()->json([
             'status' => 'success',
             'html' => view('partials.player-playlist', ['list' => $user->playlist])->render()
+        ]);
+
+    }
+    public function savePlaylistSorting(Request $request){
+        $user = Auth::user();
+        if (!$user)
+            return response()->json(['status' => 'error', 'message' => 'User not found'], 404);
+        foreach ($request['playlist'] as $key => $episodeId){
+            Playlist::where([
+                ['user_id', '=', $user->id],
+                ['episode_id', '=', $episodeId]
+            ])->update(['sort' => $key]);
+        }
+
+        return response()->json([
+            'status' => 'success',
         ]);
 
     }

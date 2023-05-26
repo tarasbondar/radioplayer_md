@@ -41,6 +41,7 @@ Route::get('/play-station/{id}', [IndexController::class, 'playStation']);
 Route::get('/apply', [ProfileController::class, 'apply']);
 Route::post('/send-application', [ProfileController::class, 'sendApplication']);
 Route::post('/add-to-playlist/{id}', [ProfileController::class, 'addToPlaylist'])->name('profile.addToPlaylist');
+Route::post('/save-playlist-sorting', [ProfileController::class, 'savePlaylistSorting'])->name('profile.savePlaylistSorting');
 
 Route::get('/my-podcasts', [ProfileController::class, 'myPodcasts']);
 Route::get('/all-podcasts', [IndexController::class, 'allPodcasts'])->name('index.allPodcasts');
