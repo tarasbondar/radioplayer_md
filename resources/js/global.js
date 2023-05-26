@@ -13,6 +13,8 @@ export function global() {
 
             }
         })*/
+
+        return false;
     });
 
     $(document).on('click', '.listen-later', function () {
@@ -27,7 +29,8 @@ export function global() {
             success: function(response) {
 
             }
-        })
+        });
+        return false;
     });
 
     //delete-episode/$episode['id']
@@ -43,6 +46,7 @@ export function global() {
             success: function (response) {
 
             }
-        })
+        });
+        return false;
     });
 }
