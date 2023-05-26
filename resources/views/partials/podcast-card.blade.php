@@ -6,7 +6,7 @@
              src="{{ !empty($p['image']) ? '/uploads/podcasts_images/' . $p['image'] : "/img/podcast-placeholder.png"}}"
              width="100%" alt="" loading="lazy">
 
-        <img class="logo__img podcast-img"
+        <img class="logo__img podcast___img"
              srcset="{{ !empty($p['image']) ? '/uploads/podcasts_images/' . $p['image'] : "/img/podcast-placeholder.png"}},
             {{ !empty($p['image']) ? '/uploads/podcasts_images/' . $p['image'] : "/img/podcast-placeholder.png"}} 2x"
              src="{{ !empty($p['image']) ? '/uploads/podcasts_images/' . $p['image'] : "/img/podcast-placeholder.png"}}"
