@@ -9,7 +9,7 @@ class QueuedEpisode extends Model
 {
     use HasFactory;
 
-    protected $table = 'listen_later';
+    protected $table = 'users_queues';
 
     protected $fillable = ['user_id', 'episode_id'];
 

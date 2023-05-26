@@ -322,14 +322,14 @@ class ProfileController extends Controller
 
     public function queueToListenLater(Request $request) {
         $id = $request->get('id');
-        $mark = QueuedEpisode::where('user_id', '=', Auth::id())->where('podcast_id', '=', $id)->get();
+        $mark = QueuedEpisode::where('user_id', '=', Auth::id())->where('episode_id', '=', $id)->get();
         if (count($mark)) {
-            QueuedEpisode::where('user_id', '=', Auth::id())->where('podcast_id', '=', $id)->delete();
+            QueuedEpisode::where('user_id', '=', Auth::id())->where('episode_id', '=', $id)->delete();
             return 'removed';
         } else {
             $mark = new QueuedEpisode();
             $mark->user_id = Auth::id();
-            $mark->podcast_id = $id;
+            $mark->episode_id = $id;
             $mark->save();
             return 'queued';
         }
