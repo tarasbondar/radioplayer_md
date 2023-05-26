@@ -382,6 +382,7 @@ class ProfileController extends Controller
 
     public function downloadEpisode(Request $request) {
         $id = $request->get('id');
+        var_dump($id); exit;
         $episode = PodcastEpisode::where('id', '=', $id)->get()->toArray()[0];
         if ($episode['status'] == PodcastEpisode::STATUS_PUBLISHED) {
             //download file
@@ -391,6 +392,10 @@ class ProfileController extends Controller
             $record->episode_id = $episode['id'];
             $record->save();
             return '';
+            /*
+            $myFile = storage_path("folder/dummy_pdf.pdf");
+    	    return response()->download($myFile);
+             * */
         }
 
         return 'error';
