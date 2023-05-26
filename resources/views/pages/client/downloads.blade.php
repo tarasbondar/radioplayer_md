@@ -8,7 +8,7 @@
                 <div class="podcast__wrap">
                     <div class="podcasts__header d-flex flex-row justify-content-between mb-24">
                         <h2 class="h2 mb-0">Скачанные файлы</h2>
-                        <a class="link clear-history">Очистить</a>
+                        @if(!empty($episodes)) <a class="link clear-history">Очистить</a> @endif
                     </div>
                     <ul class="podcast__list">
                         @if(!empty($episodes))
@@ -16,7 +16,7 @@
                                 @include('partials.episode-card')
                             @endforeach
                         @else
-
+                            Список пуст
                         @endif
                     </ul>
                 </div>

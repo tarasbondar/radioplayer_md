@@ -385,9 +385,18 @@ class ProfileController extends Controller
     }
 
     public function history() { //episodes only
-        $history = HistoryRecord::where('user_id', '=', Auth::id())
-            ->get()->toArray();
-        return view('pages.client.history', ['history' => $history]);
+        if (Auth::check()) {
+            $history = PodcastEpisode::select('podcasts_episodes.*', 'p.name AS podcast_name', 'p.owner_id AS user_id')
+                ->where('uh.user_id', '=', Auth::id())
+                ->where('podcasts_episodes.status', '=', PodcastEpisode::STATUS_PUBLISHED)
+                ->where('p.status', '=', Podcast::STATUS_ACTIVE)
+                ->join('podcasts AS p', 'podcasts_episodes.podcast_id', '=', 'p.id')
+                ->join('users_history AS uh', 'uh.episode_id', '=', 'podcasts_episodes.id')
+                ->distinct()->get()->toArray();
+        } else {
+            $history = [];
+        }
+        return view('pages.client.history', ['episodes' => $history]);
     }
 
     public function recordListeningHistory(Request $request) {
@@ -401,13 +410,17 @@ class ProfileController extends Controller
         return '';
     }
 
-    public function downloads(Request $request) { //episodes users_downloads
-        $downloads =
+    public function downloads(Request $request) {
+        if (Auth::check()) {
+            $downloads =
             PodcastEpisode::select('podcasts_episodes.*', 'p.name AS podcast_name', 'p.owner_id AS user_id')
                 ->where('ud.user_id', '=', Auth::id())
                 ->join('podcasts AS p', 'podcasts_episodes.podcast_id', '=', 'p.id')
                 ->join('users_downloads AS ud', 'ud.episode_id', '=', 'podcasts_episodes.id')
                 ->distinct()->get()->toArray();
+        } else {
+            $downloads = [];
+        }
         return view('pages.client.downloads', ['episodes' => $downloads]);
     }
 
