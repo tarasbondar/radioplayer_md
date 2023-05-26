@@ -1,6 +1,10 @@
 .podcast{
 	position: relative;
 	display: block;
+	&-img {
+		height: 200px;
+		object-fit: cover;
+	}
 	&__wrap{
 		max-width: 685px;
 		margin: 0 auto;
