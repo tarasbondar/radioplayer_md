@@ -37,7 +37,7 @@ class PodcastEpisode extends Model
 
     protected $fillable = ['podcast_id', 'name', 'description', 'tags', 'source', 'filename', 'status'];
 
-    protected $appends = ['created_diff'];
+    protected $appends = ['created_diff', 'is_in_playlist', 'source_path', 'source_url', 'is_in_listen_later'];
 
     public function podcast() {
         return $this->belongsTo(Podcast::class, 'podcast_id', 'id');
@@ -55,6 +55,22 @@ class PodcastEpisode extends Model
     public function getCreatedDiffAttribute()
     {
         return $this->created_at->format('d F');
+    }
+
+    public function getIsInPlaylistAttribute(): bool
+    {
+        if (!auth()->check()) {
+            return false;
+        }
+        return Playlist::where('user_id', auth()->id())->where('episode_id', $this->id)->exists();
+    }
+
+    public function getIsInListenLaterAttribute(): bool
+    {
+        if (!auth()->check()) {
+            return false;
+        }
+        return QueuedEpisode::where('user_id', auth()->id())->where('episode_id', $this->id)->exists();
     }
 
 }

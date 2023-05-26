@@ -17,8 +17,8 @@ export function global() {
         return false;
     });
 
-    $(document).on('click', '.listen-later', function () {
-        let id = $(this).attr('data-id');
+    $(document).on('click', '[data-listen-later]', function () {
+        let id = $(this).attr('data-listen-later');
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -27,7 +27,10 @@ export function global() {
             url: '/queue-episode',
             data: {id: id},
             success: function(response) {
-
+                $('[data-listen-later]').removeClass('active');
+                response.episodes.forEach(function (episodeId) {
+                    $('[data-listen-later="'+ episodeId +'"]').addClass('active');
+                })
             }
         });
         return false;

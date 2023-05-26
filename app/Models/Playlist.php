@@ -23,7 +23,7 @@ class Playlist extends Model
 
     protected $fillable = [
         'user_id',
-        'audio_id',
+        'episode_id',
         'sort',
         // Add other fillable columns here
     ];

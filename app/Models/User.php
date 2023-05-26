@@ -23,6 +23,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string|null $remember_token
  *
  * @property Playlist[] $playlist
+ * @property QueuedEpisode[] $listenLater
  * @property-read string $role_name
  * @property-read string $status_name
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
@@ -79,6 +80,11 @@ class User extends Authenticatable
     public function playlist()
     {
         return $this->hasMany(Playlist::class, 'user_id')->orderBy('sort');
+    }
+
+    public function listenLater()
+    {
+        return $this->hasMany(QueuedEpisode::class, 'user_id')->orderBy('order');
     }
 
 }

@@ -321,18 +321,29 @@ class ProfileController extends Controller
     }
 
     public function queueToListenLater(Request $request) {
+        $user = Auth::user();
+        if (!$user)
+            return response()->json(['status' => 'error', 'message' => 'User not found'], 404);
+
         $id = $request->get('id');
-        $mark = QueuedEpisode::where('user_id', '=', Auth::id())->where('episode_id', '=', $id)->get();
+        $mark = QueuedEpisode::where('user_id', '=', $user->id)->where('episode_id', '=', $id)->get();
         if (count($mark)) {
-            QueuedEpisode::where('user_id', '=', Auth::id())->where('episode_id', '=', $id)->delete();
-            return 'removed';
+            QueuedEpisode::where('user_id', '=', $user->id)->where('episode_id', '=', $id)->delete();
+
         } else {
             $mark = new QueuedEpisode();
-            $mark->user_id = Auth::id();
+            $mark->user_id = $user->id;
             $mark->episode_id = $id;
             $mark->save();
-            return 'queued';
         }
+        $user->refresh();
+
+        $listenLater = $user->listenLater;
+        $episodes = $listenLater->pluck('episode_id')->toArray();
+        return response()->json([
+            'status' => 'success',
+            'episodes' => $episodes
+        ]);
     }
 
     public function addToPlaylist($episode_id){
@@ -361,9 +372,12 @@ class ProfileController extends Controller
         }
 
         $user->refresh();
+        $playlist = $user->playlist;
+        $episodes = $playlist->pluck('episode_id')->toArray();
         return response()->json([
             'status' => 'success',
-            'html' => view('partials.player-playlist', ['list' => $user->playlist])->render()
+            'html' => view('partials.player-playlist', ['list' => $playlist])->render(),
+            'episodes' => $episodes
         ]);
 
     }

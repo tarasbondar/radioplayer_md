@@ -277,6 +277,10 @@ export let player = {
             success: function (response) {
                 if (response.status === 'success') {
                     $('[data-player-playlist]').html(response.html);
+                    $('[data-add-to-playlist]').removeClass('active');
+                    response.episodes.forEach(function (episodeId) {
+                        $('[data-add-to-playlist="'+ episodeId +'"]').addClass('active');
+                    })
                 }
             }
         })
