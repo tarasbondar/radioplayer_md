@@ -1,3 +1,5 @@
+import Sortable from 'sortablejs';
+
 export let player = {
     volume: 0.5,
     playbackRate: 1,
@@ -127,8 +129,17 @@ export let player = {
                 self.changePlayIcon();
                 if (self.autoplay)
                     self.play(true);
+                self.initSortable();
             }
         })
+    },
+    initSortable(){
+        let self = this;
+        Sortable.create($('[data-player-playlist]').get(0), {
+            onEnd: function (e) {
+                self.savePlaylistSorting();
+            }
+        });
     },
     play(forcePlay = false){
         if (window.audio.paused || forcePlay) {
@@ -216,6 +227,28 @@ export let player = {
             self.changeEpisode(nextElement.data('player-playlist-item'));
 
     },
+    savePlaylistSorting(){
+        let self = this;
+        let playlist = [];
+        $('[data-player-playlist-item]').each(function () {
+            playlist.push($(this).data('player-playlist-item'));
+        });
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            method: 'POST',
+            url: '/save-playlist-sorting',
+            data: {
+                playlist: playlist
+            },
+            success: function (response) {
+                if (response.status === 'success') {
+                    //$('[data-player-playlist]').html(response.html);
+                }
+            }
+        })
+    },
     setSource(src){
         let paused = false;
         if (window.audio.paused) {
@@ -243,6 +276,45 @@ export let player = {
                 }
             }
         })
+    },
+    playlistSort(episodeId, direction) {
+        let parentContainer = $('[data-player-playlist]');
+        let currentElement = $('[data-player-playlist-item="'+ episodeId +'"]');
+        let currentIndex = parentContainer.children('[data-player-playlist-item]').index(currentElement);
+        let playlistItemsCount = parentContainer.children('[data-player-playlist-item]').length;
+
+        let targetIndex;
+        if (direction === 'up') {
+            targetIndex = currentIndex - 1;
+            if (targetIndex < 0) {
+                targetIndex = playlistItemsCount - 1;
+            }
+        } else if (direction === 'down') {
+            targetIndex = currentIndex + 1;
+            if (targetIndex >= playlistItemsCount) {
+                targetIndex = 0;
+            }
+        }
+        let targetElement = parentContainer.children('[data-player-playlist-item]').eq(targetIndex);
+
+        if (direction === 'up') {
+            if (targetIndex === 0) {
+                targetElement.before(currentElement);
+            } else {
+                if (targetIndex === playlistItemsCount - 1) {
+                    currentElement.insertAfter(targetElement);
+                }
+                else
+                    currentElement.insertBefore(targetElement);
+            }
+        } else {
+            if (targetIndex === 0) {
+                currentElement.insertBefore(targetElement);
+            }
+            else
+                currentElement.insertAfter(targetElement);
+        }
+        this.savePlaylistSorting();
     },
     adjustVolume(e) {
         const volumeSlider = $('[data-volume-widget]');
@@ -392,5 +464,10 @@ export let player = {
         $(document).on('change', '[data-player-autoplay]', function(){
             self.autoplay = $(this).prop('checked');
         });
+        $(document).on('click', '[data-playlist-sort]', function(){
+            let episodeId = $(this).parents('[data-player-playlist-item]').data('player-playlist-item');
+            let direction = $(this).data('playlist-sort');
+            self.playlistSort(episodeId, direction);
+        })
     },
 }

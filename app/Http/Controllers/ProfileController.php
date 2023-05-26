@@ -360,6 +360,22 @@ class ProfileController extends Controller
         ]);
 
     }
+    public function savePlaylistSorting(Request $request){
+        $user = Auth::user();
+        if (!$user)
+            return response()->json(['status' => 'error', 'message' => 'User not found'], 404);
+        foreach ($request['playlist'] as $key => $episodeId){
+            Playlist::where([
+                ['user_id', '=', $user->id],
+                ['episode_id', '=', $episodeId]
+            ])->update(['sort' => $key]);
+        }
+
+        return response()->json([
+            'status' => 'success',
+        ]);
+
+    }
 
     public function history() { //episodes only
         $history = HistoryRecord::where('user_id', '=', Auth::id())
