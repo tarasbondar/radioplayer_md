@@ -111,6 +111,10 @@
     gap: rem(24px);
 }
 
+.np-modal__player-body__secondary-actions_podcasts {
+    gap: rem(16px);
+}
+
 .np-modal__player-more-list {
     margin-top: rem(24px);
     border-top: 1px solid var(--np-modal-more-list-border-color);
@@ -364,6 +368,10 @@
         background: var(--np-modal-secodary-actions-bg);
         backdrop-filter: blur(rem(12px));
         box-shadow: var(--np-modal-secodary-actions-shadow);
+    }
+
+    .np-modal__player-body__secondary-actions_podcasts {
+        padding: rem(24px) rem(16px);
     }
 
     .np-modal__player-body__header::after {

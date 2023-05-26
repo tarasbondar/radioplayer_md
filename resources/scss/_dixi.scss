@@ -2,7 +2,7 @@
 	position: relative;
 	display: block;
 	&___img {
-		height: 200px;
+		height: rem(200px);
 		object-fit: cover;
 	}
 	&__wrap{
@@ -15,7 +15,7 @@
 	&__info{
 		display: flex;
 		align-items: flex-start;
-		margin-bottom: 48px;
+		margin-bottom: rem(48px);
 		@media (max-width: 768px) {
 			flex-direction: column;
 		}
@@ -62,7 +62,7 @@
 	&__img{
 		position: relative;
 		z-index: 1;
-		width: 240px;
+		width: rem(240px);
 		@media (max-width: 768px) {
 			position: absolute;
 			top: 50%;
@@ -74,7 +74,7 @@
 		margin-top: rem(16px);
 		margin-left: rem(24px);
 		@media (max-width: 768px) {
-			margin-top: -65px;
+			margin-top: rem(-65px);
 			z-index: 1;
 		}
 	}
@@ -106,7 +106,7 @@
 			bottom: 0;
 			right: 0;
 			display: inline-block;
-			width: 60px;
+			width: rem(60px);
 			text-align: right;
 			background: var(--more-text);
 			color:var(--accent-500);
@@ -140,7 +140,7 @@
 		display: flex;
 		align-items: center;
 		color:var(--btn-rows-text-color);
-		margin-bottom: 4px;
+		margin-bottom: rem(4px);
 	}
 	&__data{
 		display: block;
@@ -148,8 +148,8 @@
 		font-weight: 400;
 		font-size: rem(13px);
 		line-height: 142%;
-		padding-right: 6px;
-		margin-right: 6px;
+		padding-right: rem(6px);
+		margin-right: rem(6px);
 		&:after{
 			content: '';
 			position: absolute;
@@ -164,23 +164,29 @@
 		font-weight: 400;
 		font-size: rem(13px);
 		line-height: 142%;
+		color: var(--btn-rows-text-color);
 	}
 	&__elem-title{
 		display: block;
 		font-weight: 400;
 		font-size: rem(16px);
 		line-height: 150%;
-		margin-bottom: 8px;
+		margin-bottom: rem(8px);
 	}
+
+	&__elem-title__link {
+		color: var(--btn-rows-text-color-active);
+	}
+
 	&__elem-text{
 		display: block;
 		font-weight: 400;
 		font-size: rem(13px);
 		line-height: 142%;
-		margin-bottom: 8px;
+		margin-bottom: rem(8px);
 	}
 	.publication{
-		margin-right: 16px;
+		margin-right: rem(16px);
 		@media (max-width: 768px) {
 			display: none;
 		}
@@ -196,13 +202,18 @@
 			margin-bottom: 0;
 		}
 		.item{
-			margin-right: 16px;
+			margin-right: rem(16px);
 		}
 		.link{
 			color:var(--btn-rows-text-color-active);
 
 			&.active {
 				color: var(--btn-rows-text-color-activated);
+			}
+
+			svg {
+				width: rem(32px);
+				height: rem(32px);
 			}
 		}
 
@@ -211,14 +222,20 @@
 		display: block;
 		margin-left: auto;
 		color:var(--btn-rows-text-color-active);
+
+		svg {
+			width: rem(32px);
+			height: rem(32px);
+		}
 	}
 	&__timer{
 		display: flex;
 		align-items: center;
 		background: var(--timer-bg);
 		border-radius: rem(32px);
-		padding: 7px 12px;
-		margin-right: 16px;
+		padding: rem(7px) rem(12px);
+		margin-right: rem(16px);
+		min-height: rem(32px);
 		cursor: pointer;
 		@media (max-width: 768px) {
 			background: var(--podcast-btn);
@@ -236,9 +253,9 @@
 		span{
 			display: block;
 			font-weight: 400;
-			font-size: 13px;
+			font-size: rem(13px);
 			line-height: 142%;
-			margin-left: 4px;
+			margin-left: rem(4px);
 		}
 		.play,
 		.pause{
@@ -255,12 +272,12 @@
 		display: block;
 		text-align: center;
 		border-top: 1px solid var(--podcast-btn);
-		padding-top: 48px;
+		padding-top: rem(48px);
 		.podcast__title{
-			margin-bottom: 2px;
+			margin-bottom: rem(2px);
 		}
 		.podcast__text{
-			margin-bottom: 24px;
+			margin-bottom: rem(24px);
 		}
 	}
 	&__add{
@@ -290,7 +307,7 @@
 		.podcast__timer{
 			background: var(--podcast-btn);
 			display: inline-flex;
-			margin-bottom: 24px;
+			margin-bottom: rem(24px);
 		}
 		@media (max-width: 768px) {
 			margin: 0 rem(20px);
@@ -299,8 +316,8 @@
 	&__descr-block{
 		display: flex;
 		align-items: center;
-		padding-bottom: 24px;
-		margin-bottom: 24px;
+		padding-bottom: rem(24px);
+		margin-bottom: rem(24px);
 		border-bottom: 1px solid var(--podcast-btn);
 		.podcast__data{
 			&:after {
@@ -313,21 +330,21 @@
 
 	}
 	.podcast-img{
-		margin-right: 16px;
-		width: 48px;
-		border-radius: 16px;
+		margin-right: rem(16px);
+		width: rem(48px);
+		border-radius: rem(16px);
 		overflow: hidden;
 		img{
 			display: block;
 			width: 100%;
 		}
 		&_big{
-			width: 104px;
+			width: rem(104px);
 		}
 	}
 	.history-block{
 		.podcast-img {
-			margin-right: 8px;
+			margin-right: rem(8px);
 		}
 	}
 }
@@ -335,6 +352,10 @@
 .dropdown-item{
 	padding: rem(12px);
 	svg{
-		margin-right: 16px;
+		margin-right: rem(16px);
 	}
+}
+
+.publication {
+	margin-right: rem(16px);
 }

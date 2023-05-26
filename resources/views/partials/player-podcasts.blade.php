@@ -129,7 +129,7 @@
 				    </div>
 			    </div>
 
-			    <div class="np-modal__player-body__secondary-actions">
+			    <div class="np-modal__player-body__secondary-actions np-modal__player-body__secondary-actions_podcasts">
 				    <button class="btn btn_ico btn_ico-primary" type="button" aria-label="{{ __('client.speed') }}">
 					    <strong>×<span data-playback-rate>1.0</span></strong>
 				    </button>

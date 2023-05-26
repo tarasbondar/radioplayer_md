@@ -6,9 +6,9 @@
 <li class="podcast__elem">
     <div class="podcast__elem-wrap">
         <span class="podcast__data"> {{ $episode['created_diff'] }} </span>
-        <span class="podcast__elem-name"> <a href="/podcasts/{{$episode['podcast_id']}}/view">{{$episode['podcast_name']}}</a> </span>
+        <a class="podcast__elem-name" href="/podcasts/{{$episode['podcast_id']}}/view">{{$episode['podcast_name']}}</a>
     </div>
-    <strong class="podcast__elem-title"><a href="/episodes/{{$episode['id']}}/view">{{ $episode['name'] }}</a></strong>
+    <div class="podcast__elem-title"><a class="podcast__elem-title__link" href="/episodes/{{$episode['id']}}/view">{{ $episode['name'] }}</a></div>
     <p class="podcast__elem-text"> {{ $episode['description'] }} </p>
     <div class="podcast__holder">
 
@@ -29,7 +29,7 @@
         </div>
 
         @if(auth()->id() == $episode['user_id'])
-            <span class="publication"> {{ $episode['status'] == 2 ? 'Published' : 'Draft'}} </span>
+            <span class="publication x-small"> {{ $episode['status'] == 2 ? 'Published' : 'Draft'}} </span>
         @endif
 
         <ul class="list">
@@ -97,4 +97,3 @@
 
     </div>
 </li>
-

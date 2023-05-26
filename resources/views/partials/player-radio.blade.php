@@ -150,12 +150,13 @@
                     </div>
                 </div>
             </div>
-
+            @if($all)
             <div class="np-modal__player-more-list">
                 @foreach($all as $station)
                     @include('partials.station-card-small', ['station' => $station])
                 @endforeach
             </div>
+            @endif
         </div>
 
         <div class="np-modal__timer" data-np-modal-timer>
