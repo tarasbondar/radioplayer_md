@@ -147,6 +147,9 @@ $base-font-size: 16px;
 	--podcast-icon: var(--dark-500);
 
     --btn-primary-bg-hover: var(--accent-900);
+
+    --btn-more-color: var(--green-300);
+    --btn-more-bg: linear-gradient(90deg, rgba(247, 247, 248, 0) 0%, var(--grey-100) 100%);
 }
 
 @mixin darkTheme() {
@@ -260,6 +263,9 @@ $base-font-size: 16px;
 	--podcast-icon: var(--accent-500);
 
     --btn-primary-bg-hover: var(--accent-900);
+
+    --btn-more-color: var(--accent-500);
+    --btn-more-bg: linear-gradient(90deg, rgba(15, 15, 15, 0) 0%, var(--dark-500) 100%);
 }
 
 :root {

@@ -22,8 +22,14 @@
                             @if(strlen($podcast['description']) < 100)
                                 <p class="podcast__descr">{{ $podcast['description'] }}</p>
                             @else
-                                <p id="descr-full" class="podcast__descr" hidden="true">{{ $podcast['description'] }} <span id="less">Свернуть</span></p>
-                                <p id="descr-short" class="podcast__descr">{{ substr($podcast['description'], 0, 95) }} <span id="more">Ещё</span></p>
+                                <p id="descr-full" class="podcast__descr" hidden="true">
+                                    {{ $podcast['description'] }}
+                                    <button class="btn btn_more" id="less" type="button"><span>{{ __('client.less') }}</span></button>
+                                </p>
+                                <p id="descr-short" class="podcast__descr">
+                                    {{ substr($podcast['description'], 0, 95) }}
+                                    <button class="btn btn_more" id="more" type="button"><span>{{ __('client.more') }}</span></button>
+                                </p>
                             @endif
 
                             <div class="button-container">

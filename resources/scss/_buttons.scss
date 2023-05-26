@@ -148,6 +148,27 @@
 	}
 }
 
+.btn_more {
+    position: relative;
+    color: var(--btn-more-color);
+
+    span {
+        position: relative;
+        z-index: 1;
+    }
+
+    &::before {
+        content: "";
+        display: block;
+        width: rem(48px);
+        height: 100%;
+        background: var(--btn-more-bg);
+        position: absolute;
+        top: 0;
+        right: 100%;
+    }
+}
+
 /* mouse, touch pad */
 @media (hover: hover) and (pointer: fine) {
     .btn_ico-primary:hover {
