@@ -4,6 +4,17 @@
     gap: rem(8px);
 }
 
+@media (max-width: 992px) {
+    .items-list__grid.podcasts-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: rem(8px);
+
+        .podcast___img {
+            height: 110px;
+        }
+    }
+}
 @media (min-width: 992px) {
     .items-list__grid {
         grid-template-columns: repeat(5, 1fr);
