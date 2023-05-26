@@ -16,6 +16,8 @@ export let player = {
         intervalMinutes: 0,
     },
     playlist: [],
+    autoplay: true,
+    episodeId: null,
     init(){
         this.initVolumeSlider();
         this.initEvents();
@@ -115,25 +117,39 @@ export let player = {
                 $('.body').append(response).addClass('player-open');
                 self.createPlayer();
                 self.setSource($('#audio-source').val());
+                self.episodeId = id;
+                $('[data-player-playlist-item]').removeClass('active');
+                $('[data-player-playlist-item="'+ self.episodeId +'"]').addClass('active');
+
                 if (self.timer.isActive)
                     self.timerApply(true);
                 self.changePlaybackRate(self.playbackRate);
+                self.changePlayIcon();
+                if (self.autoplay)
+                    self.play(true);
             }
         })
     },
-    play(){
-        if (window.audio.paused) {
-            this.setVolume(this.volume);
+    play(forcePlay = false){
+        if (window.audio.paused || forcePlay) {
             window.audio.play();
-            $('.player-play').hide();
-            $('.player-pause').removeAttr('hidden').show();
         } else {
             window.audio.pause();
+        }
+        this.setVolume(this.volume);
+        this.changePlayIcon();
+    },
+    changePlayIcon(){
+        if (window.audio.paused) {
             $('.player-play').show();
             $('.player-pause').hide();
+        } else {
+            $('.player-play').hide();
+            $('.player-pause').removeAttr('hidden').show();
+
         }
     },
-    updateProgressBar() {
+    updateProgressBar(e) {
         const progress = (window.audio.currentTime / window.audio.duration) * 100;
         if (isNaN(progress))
             return;
@@ -142,6 +158,12 @@ export let player = {
         const seconds = Math.floor(window.audio.currentTime % 60);
 
         $('[data-audio-current-time]').text(String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0'));
+
+        if (e.type === 'ended' && $('[data-player-autoplay]').prop('checked')){
+            $('[data-change-track="next"]').click();
+            //this.changeTrack('next')
+        }
+
     },
     changePlaybackRate(forceRate = null){
         if (forceRate !== null) {
@@ -168,6 +190,31 @@ export let player = {
         }
 
         window.audio.currentTime = newTime;
+    },
+    changeTrack(direction){
+        let self = this;
+        let parentContainer = $('[data-player-playlist]');
+        let currentElement = parentContainer.find('[data-player-playlist-item="'+ self.episodeId +'"]');
+        let nextElement = null;
+        if (direction === 'next'){
+            if (currentElement.next('[data-player-playlist-item]').length){
+                nextElement = currentElement.next('[data-player-playlist-item]');
+            }
+            else if (parentContainer.find('[data-player-playlist-item]:first').length){
+                nextElement = parentContainer.find('[data-player-playlist-item]:first');
+            }
+        }
+        else if (direction === 'prev') {
+            if (currentElement.prev('[data-player-playlist-item]').length){
+                nextElement = currentElement.prev('[data-player-playlist-item]');
+            }
+            else if (parentContainer.find('[data-player-playlist-item]:last').length){
+                nextElement = parentContainer.find('[data-player-playlist-item]:last');
+            }
+        }
+        if (nextElement)
+            self.changeEpisode(nextElement.data('player-playlist-item'));
+
     },
     setSource(src){
         let paused = false;
@@ -329,6 +376,10 @@ export let player = {
             let secondsStep = 10;
             let direction = $(this).data('rewind');
             self.rewind(direction, secondsStep);
+        });
+        $(document).on('click', '[data-change-track]', function(){
+            let direction = $(this).data('change-track');
+            self.changeTrack(direction);
         })
         $(document).on('click', '[data-playback-rate]', function(){
             self.changePlaybackRate();
@@ -337,6 +388,9 @@ export let player = {
             let id = $(this).data('add-to-playlist');
             self.addToPlaylist(id);
             return false;
-        })
+        });
+        $(document).on('change', '[data-player-autoplay]', function(){
+            self.autoplay = $(this).prop('checked');
+        });
     },
 }

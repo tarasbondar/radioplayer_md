@@ -239,7 +239,7 @@ class ProfileController extends Controller
         }
         $episode->name = $request->get('name');
         $episode->description = $request->get('description');
-        $episode->source = '';//file
+
         $episode->tags = $request->get('tags');
         $episode->status = ($request->get('status') == 1 ? PodcastEpisode::STATUS_PUBLISHED : PodcastEpisode::STATUS_DRAFT);
 
@@ -251,6 +251,9 @@ class ProfileController extends Controller
             $request->source->move(PodcastEpisode::UPLOADS_AUDIO, $filename);
             $episode->source = $filename;
             $episode->filename = $request->source->getClientOriginalName();
+        }
+        elseif ($request->file_remove){
+            $episode->source = '';//file
         }
 
         $episode->save();
