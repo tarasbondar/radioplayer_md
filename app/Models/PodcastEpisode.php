@@ -54,7 +54,7 @@ class PodcastEpisode extends Model
 
     public function getCreatedDiffAttribute()
     {
-        return $this->created_at->diffForHumans();
+        return $this->created_at->format('d F');
     }
 
 }

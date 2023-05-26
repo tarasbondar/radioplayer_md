@@ -117,6 +117,45 @@ class IndexController
         return view('pages.client.all-podcasts', ['podcasts' => $podcasts, 'categories' => $categories, 'episodes' => $episodes]);
     }
 
+    public function allSearch(Request $request) { //text, categories, page
+        $page_size = 5;
+        $podcasts = Podcast::where('status', '=', Podcast::STATUS_ACTIVE);
+
+        if ($request->has('categories')) {
+            $categories = $request->get('categories');
+            $podcasts = $podcasts->join('podcasts_2_categories AS p2c', 'p2c.podcast_id', '=', 'podcasts.id')->whereRaw("p2c.category_id IN ({$categories})");
+        }
+
+        if ($request->has('text')) {
+            $text = $request->get('text');
+            $podcasts = $podcasts->where('name', 'LIKE', $text)
+            ->orWhere('description', 'LIKE', $text)
+            ->orWhere('tags', 'LIKE', $text);
+        }
+
+        $podcasts = $podcasts->distinct()->limit(5)->get()->toArray();
+
+        $episodes = PodcastEpisode::where('status', '=', PodcastEpisode::STATUS_PUBLISHED)
+            ->where('p.status', '=', Podcast::STATUS_ACTIVE)
+            ->join('podcasts AS p', 'p.id', '=', 'podcasts_episodes.podcast_id')
+            ;
+
+        $episodes = $episodes->distinct()->limit($page_size)->get()->toArray();
+
+        $podcasts_render = '';
+        foreach ($podcasts as $p) {
+            $podcasts_render .= view('partials.podcast-card', ['p' => $p])->render();
+        }
+
+        $episodes_render = '';
+        foreach ($episodes as $episode) {
+            $episodes_render .= view('partials.episode-card', ['episode' => $episode])->render();
+        }
+
+        return ['podcasts' => $podcasts_render, 'episodes' => $episodes_render];
+
+    }
+
     public function podcasts(Request $request) {
         $podcasts = $this->searchPodcasts($request->get('name', ''), $request->get('categories', ''));
         $categories = PodcastCategory::where('status', '=', PodcastCategory::STATUS_ACTIVE)->get()->toArray();
@@ -142,7 +181,7 @@ class IndexController
         $search_categories = $categories;
         $podcasts = Podcast::where('status', '=', Podcast::STATUS_ACTIVE);
         if (!empty($search_categories)) {
-            $podcasts = $podcasts->join('podcasts_2_categories AS p2c', 'p2c.podcast_id', '=', 'podcasts.id')->whereRaw("p2c.category_id IN ({$search_categories})"); //test
+            $podcasts = $podcasts->join('podcasts_2_categories AS p2c', 'p2c.podcast_id', '=', 'podcasts.id')->whereRaw("p2c.category_id IN ({$search_categories})");
         }
         if (!empty($search_name)) {
             $podcasts = $podcasts->whereRaw("name LIKE '%{$search_name}%'");
@@ -198,9 +237,9 @@ class IndexController
         if ($podcast['owner_id'] != Auth::id() && ($episode['status'] != PodcastEpisode::STATUS_PUBLISHED || $podcast['status'] != Podcast::STATUS_ACTIVE)) {
             return abort(403);
         }
-        $sub = PodcastSub::where('user_id', '=', Auth::id())->where('podcast_id', '=', $podcast['id'])->count();
-        $podcast['subbed'] = $sub;
-        return view('pages.client.episode-view', ['episode' => $episode, 'podcast' => $podcast]);
+        /*$sub = PodcastSub::where('user_id', '=', Auth::id())->where('podcast_id', '=', $podcast['id'])->count();
+        $podcast['subbed'] = $sub;*/
+        return view('pages.client.episode-inner', ['episode' => $episode, 'podcast' => $podcast]);
     }
 
     public function playEpisode($id){

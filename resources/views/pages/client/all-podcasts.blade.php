@@ -23,19 +23,20 @@
                     <h2 class="h2 mb-0">Все подкасты</h2>
                     {{--@if(count($podcasts) > 5)--}} <a href="/podcasts" class="link">Больше</a> {{--@endif--}}
                 </div>
-                <div class="items-list__grid mb-24">
+                <div class="items-list__grid mb-24 podcasts-container">
                     @foreach($podcasts as $p)
                         @include('partials.podcast-card')
                     @endforeach
                 </div>
 
                 <div class="podcast__wrap">
-                    <ul class="podcast__list">
+                    <ul class="podcast__list episodes-container">
                         @foreach($episodes as $episode)
-                            @include('partials/episode-card')
+                            @include('partials.episode-card')
                         @endforeach
                     </ul>
                 </div>
+                <input id="allsearch-page" value="1" hidden>
 
             </div>
         </section>
