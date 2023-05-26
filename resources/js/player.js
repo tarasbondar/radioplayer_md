@@ -98,7 +98,11 @@ export let player = {
             url: '/play-station/' + id,
             success: function (response) {
                 $('[data-player]').remove();
-                $('.body').append(response).addClass('player-open');
+                if ($('.page-grid').length)
+                    $('.page-grid').prepend(response);
+                else
+                    $('body').append(response);
+                $('body').addClass('player-open')
                 //if isset then stop
                 self.createPlayer();
                 self.setSource($('#audio-source').val());
@@ -117,7 +121,11 @@ export let player = {
             url: '/play-episode/' + id,
             success: function (response) {
                 $('[data-player]').remove();
-                $('.body').append(response).addClass('player-open');
+                if ($('.page-grid').length)
+                    $('.page-grid').prepend(response);
+                else
+                    $('body').append(response);
+                $('body').addClass('player-open')
                 self.createPlayer();
                 self.setSource($('#audio-source').val());
                 self.episodeId = id;
