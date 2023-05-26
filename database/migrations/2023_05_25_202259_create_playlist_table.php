@@ -20,8 +20,8 @@ return new class extends Migration
 
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('episode_id')->references('id')->on('podcasts_episodes');
+            //$table->foreign('user_id')->references('id')->on('users');
+            //$table->foreign('episode_id')->references('id')->on('podcasts_episodes');
         });
     }
 
