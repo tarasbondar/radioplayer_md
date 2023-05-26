@@ -82,7 +82,7 @@
                         </svg>
                     </span>
                     <span class="control-panel-info">
-                        <span class="h4 authorization-list-card__title">Пример эпизода подкаста</span>
+                        <span class="h4 authorization-list-card__title">{{ __('client.episodeExample') }}</span>
                         <span class="authorization-list-card__desc">{{ __('client.fileRequirements') }}</span>
                         <i class="control-panel-delete icon-close">
                             <svg class="icon">
@@ -138,7 +138,7 @@
                 {{ $errors->has('privacy') ? $errors->first('privacy') : '' }}
             </div>
         </div>
-        <button class="btn btn_default btn_primary" type="submit" id="form-submit">Отправить заявку</button>
+        <button class="btn btn_default btn_primary" type="submit" id="form-submit">{{ __('app.sendApplication') }}</button>
 
     </form>
 </div>

@@ -7,7 +7,7 @@
             <div class="container">
                 <div class="podcast__wrap">
                     <div class="podcasts__header">
-                        <h2 class="h2 text-center">Прослушать позже</h2>
+                        <h2 class="h2 text-center">{{ __('client.listenLater') }}</h2>
                     </div>
                     <ul class="podcast__list">
                         @foreach($episodes as $episode)

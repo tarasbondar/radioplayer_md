@@ -7,8 +7,8 @@
             <div class="container">
                 <div class="podcast__wrap">
                     <div class="podcasts__header d-flex flex-row justify-content-between mb-24">
-                        <h2 class="h2 mb-0">История</h2>
-                        <a class="link clear-history">Очистить</a>
+                        <h2 class="h2 mb-0">{{ __('client.history') }}</h2>
+                        <a class="link clear-history">{{ __('app.clear') }}</a>
                     </div>
                     <ul class="podcast__list">
 
@@ -47,9 +47,9 @@
                                             <path d="M9 2H7V10H9V2Z" fill="#0F0F0F" stroke="#0F0F0F" stroke-linecap="round" stroke-linejoin="round"/>
                                         </svg>
                                     </div>
-                                    <span>Прослушано</span>
+                                    <span>{{ __('client.listened') }}</span>
                                 </div>
-                                <span class="publication">Опубликован</span>
+                                <span class="publication">{{ __('client.published') }}</span>
                                 <ul class="list">
                                     <li class="item">
                                         <a href="#" class="link">
@@ -107,12 +107,12 @@
                                             <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                             <path d="M12 5L19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                         </svg>
-                                        Просмотреть</a></li>
+                                        {{ __('app.view') }}</a></li>
                                     <li><a class="dropdown-item" href="#">
                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M17 2.99981C17.2626 2.73717 17.5744 2.52883 17.9176 2.38669C18.2608 2.24455 18.6286 2.17139 19 2.17139C19.3714 2.17139 19.7392 2.24455 20.0824 2.38669C20.4256 2.52883 20.7374 2.73717 21 2.99981C21.2626 3.26246 21.471 3.57426 21.6131 3.91742C21.7553 4.26058 21.8284 4.62838 21.8284 4.99981C21.8284 5.37125 21.7553 5.73905 21.6131 6.08221C21.471 6.42537 21.2626 6.73717 21 6.99981L7.5 20.4998L2 21.9998L3.5 16.4998L17 2.99981Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                         </svg>
-                                        Редактировать</a></li>
+                                        {{ __('app.edit') }}</a></li>
                                     <li><a class="dropdown-item" href="#">
                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <g clip-path="url(#clip0_820_11406)">
@@ -126,7 +126,7 @@
                                                 </clipPath>
                                             </defs>
                                         </svg>
-                                        Скачать</a></li>
+                                        {{ __('app.download') }}</a></li>
                                     <li><a class="dropdown-item" href="#">
                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>

@@ -2,7 +2,7 @@
     <a class="header__logo" href="/">
         <picture>
             <source media="(min-width: 1200px)" srcset="/img/logo-large.svg">
-            <img class="header__logo__img" src="/img/logo-small.svg" width="38" height="38" alt="Radio Player Moldova" loading="lazy">
+            <img class="header__logo__img" src="/img/logo-small.svg" width="38" height="38" alt="{{ __('app.appTitle') }}" loading="lazy">
         </picture>
     </a>
 
@@ -27,14 +27,14 @@
         </ul>
     </div>
 
-    <button class="btn btn_ico btn_ico-primary header__menu-btn" type="button" aria-label="Открыть меню" data-menu-open>
+    <button class="btn btn_ico btn_ico-primary header__menu-btn" type="button" aria-label="{{ __('client.openMenu') }}" data-menu-open>
         <svg class="icon">
             <use href="/img/sprite.svg#menu-2"></use>
         </svg>
     </button>
 
     <div class="header__menu" data-menu>
-        <button class="btn btn_ico header__menu__close-btn" type="button" aria-label="Close menu" data-menu-close>
+        <button class="btn btn_ico header__menu__close-btn" type="button" aria-label="{{ __('client.closeMenu') }}" data-menu-close>
             <svg class="icon">
                 <use href="/img/sprite.svg#x"></use>
             </svg>
@@ -66,7 +66,7 @@
                     <div class="header__menu__row">
                         <a class="btn header__menu__link-panel" href="{{ route('login') }}">
                             <svg class="icon"><use href="/img/sprite.svg#log-in"></use></svg>
-                            <span>Вход</span>
+                            <span>{{ __('auth.enter') }}</span>
                         </a>
 
                         <a class="btn header__menu__link-panel" href="{{ route('register') }}">
@@ -91,42 +91,42 @@
                 @if(auth()->check() && auth()->user()->role > 0)
                     <a class="btn header__menu__link-panel header__menu__link-panel_highlighted" href="/my-podcasts">
                         <svg class="icon"><use href="/img/sprite.svg#mic"></use></svg>
-                        <span>Мои подкасты</span>
+                        <span>{{ __('client.myPodcasts') }}</span>
                         <img class="header__menu__link-panel__img" srcset="/img/become-author-highlighted.png 1x, /img/become-author-highlighted@2x.png 2x" src="/img/become-author-highlighted.png" alt="" width="115" height="100" loading="lazy">
                     </a>
                 @endif
 
                 <a class="btn btn_list-item" href="/subscriptions">
                     <svg class="icon"><use href="/img/sprite.svg#check-circle"></use></svg>
-                    <span>Подписки</span>
+                    <span>{{ __('client.subscriptions') }}</span>
                 </a>
 
                 <a class="btn btn_list-item" href="/listen-later">
                     <svg class="icon"><use href="/img/sprite.svg#clock"></use></svg>
-                    <span>Прослушать позже</span>
+                    <span>{{ __('client.listenLater') }}</span>
                 </a>
 
                 <a class="btn btn_list-item" href="/history">
                     <svg class="icon"><use href="/img/sprite.svg#rotate-ccw"></use></svg>
-                    <span>История прослушивания</span>
+                    <span>{{ __('client.playbackHistory') }}</span>
                 </a>
 
                 <a class="btn btn_list-item" href="/downloaded">
                     <svg class="icon"><use href="/img/sprite.svg#download-cloud"></use></svg>
-                    <span>Скачанные</span>
+                    <span>{{ __('client.downloaded') }}</span>
                 </a>
 
                 <hr class="header__menu__sep">
 
                 <a class="btn btn_list-item" href="/settings">
                     <svg class="icon"><use href="/img/sprite.svg#sliders"></use></svg>
-                    <span>Настройки</span>
+                    <span>{{ __('client.settings') }}</span>
                 </a>
 
                 @auth
                     <a class="btn btn_list-item" href="{{ route('logout') }}"  onclick="event.preventDefault(); $('#logout-form').submit();">
                         <svg class="icon"><use href="/img/sprite.svg#log-out"></use></svg>
-                        <span>Выход</span>
+                        <span>{{ __('auth.logout') }}</span>
                     </a>
 
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -152,21 +152,21 @@
             </nav>
 
             <div class="header__menu__app-links">
-                <a class="header__menu__app-links__link" href="!#" rel="nofollow noopener" target="_blank" aria-label="Загрузите в App Store">
+                <a class="header__menu__app-links__link" href="!#" rel="nofollow noopener" target="_blank" aria-label="{{ __('app.downloadAtAppStore') }}">
                     <img class="header__menu__app-links__img header__menu__app-links__img_app-store" src="img/app_store-ru.svg" width="120" height="40" alt="App Store" loading="lazy">
                 </a>
 
-                <a class="header__menu__app-links__link" href="!#" rel="nofollow noopener" target="_blank" aria-label="Скачать из Google Play">
+                <a class="header__menu__app-links__link" href="!#" rel="nofollow noopener" target="_blank" aria-label="{{ __('app.downloadFromGooglePlay') }}">
                     <img class="header__menu__app-links__img header__menu__app-links__img_google-play" src="img/google_play-ru.svg" width="135" height="40" alt="Google Play" loading="lazy">
                 </a>
             </div>
 
             <div class="header__menu__footer x-small">
-                Контакты для связи<br>
+                {{ __('client.contactTitle') }}<br>
                 <a class="header__menu__footer__link" href="mailto:support@dixi.md">support@dixi.md</a>, <a class="header__menu__footer__link" href="tel:+37322546723">+373 22 54 67 23</a>
                 <hr class="header__menu__sep">
                 <div class="header__menu__footer__copyright">© 2023 Radio Player</div>
-                <div class="header__menu__footer__meta">Разработано в <a class="header__menu__footer__link" href="www.meta-sistem.md" rel="nofollow noopener" target="_blank">www.meta-sistem.md</a></div>
+                <div class="header__menu__footer__meta">{{ __('client.developedBy') }} <a class="header__menu__footer__link" href="www.meta-sistem.md" rel="nofollow noopener" target="_blank">www.meta-sistem.md</a></div>
             </div>
         </div>
     </div>

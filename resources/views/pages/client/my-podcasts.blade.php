@@ -7,7 +7,7 @@
             <div class="container">
 
                 <div class="podcasts__header">
-                    <h2 class="h2 text-center">Мои подкасты</h2>
+                    <h2 class="h2 text-center">{{ __('client.myPodcasts') }}</h2>
                 </div>
 
                 <div class="podcasts__wrapper">
@@ -29,11 +29,11 @@
 
                     <div class="body-empty-page text-center">
                         @if (count($podcasts) == 0)
-                            <h2 class="body-empty-page__title">У вас ещё нет ни одного подкаста</h2>
-                            <p class="body-empty-page__descr">Создайте подкаст и загрузите выпуски</p>
+                            <h2 class="body-empty-page__title">{{ __('client.noPodcastsNotice') }}</h2>
+                            <p class="body-empty-page__descr">{{ __('client.createPodcastNotice') }}</p>
                             <a href="/create-podcast" class="btn btn_default btn_primary">
                                 <svg class="icon"><use href="/img/sprite.svg#plus-circle"></use></svg>
-                                Создать подкаст
+                                {{ __('client.createPodcast') }}
                             </a>
                         @endif
                     </div>
@@ -47,7 +47,7 @@
                                 <use href="/img/sprite.svg#search"></use>
                             </svg>
                         </label>
-                        <input type="search" class="form-control" placeholder="Поиск подкаста" id="search-field" name="search-field" />
+                        <input type="search" class="form-control" placeholder="{{ __('client.searchPodcast') }}" id="search-field" name="search-field" />
                         <button type="button" class="btn btn_filter" data-bs-toggle="modal" data-bs-target="#exampleModal">
                             <svg class="icon">
                                 <use href="/img/sprite.svg#sliders"></use>
@@ -66,7 +66,7 @@
 
             </div>
 
-            <a href="/create-podcast" class="btn btn_ico btn_ico-accent page-btn _playing" aria-label="Добавить">
+            <a href="/create-podcast" class="btn btn_ico btn_ico-accent page-btn _playing" aria-label="{{ __('app.add') }}">
                 <svg class="icon">
                     <use href="/img/sprite.svg#plus"></use>
                 </svg>

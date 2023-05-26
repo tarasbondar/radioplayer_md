@@ -38,7 +38,7 @@
                     <svg class="icon ms-0">
                         <use href="/img/sprite.svg#chevron-up"></use>
                     </svg>
-                    В начало
+                    {{ __('client.toTheBeginning') }}
                 </span>
             </li>
             <li>
@@ -46,7 +46,7 @@
                     <svg class="icon ms-0">
                         <use href="/img/sprite.svg#chevron-down"></use>
                     </svg>
-                    В конец
+                    {{ __('client.toTheEnd') }}
                 </span>
             </li>
             <li>
@@ -54,7 +54,7 @@
                     <svg class="icon ms-0">
                         <use href="/img/sprite.svg#x"></use>
                     </svg>
-                    Убрать
+                    {{ __('app.remove') }}
                 </button>
             </li>
         </ul>

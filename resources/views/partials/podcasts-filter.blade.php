@@ -2,8 +2,8 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="h3 modal-title text-center" id="exampleModalLabel">Категории</h3>
-                <button type="button" class="btn-close btn btn_ico" data-bs-dismiss="modal" aria-label="Close">
+                <h3 class="h3 modal-title text-center" id="exampleModalLabel">{{ __('client.categories') }}</h3>
+                <button type="button" class="btn-close btn btn_ico" data-bs-dismiss="modal" aria-label="{{ __('app.close') }}">
                     <svg class="icon">
                         <use href="/img/sprite.svg#x"></use>
                     </svg>
@@ -23,7 +23,7 @@
                     @endforeach
                 </div>
                 <div class="form-actions">
-                    <button class="btn btn_default btn_primary" data-bs-dismiss="modal">Сохранить</button>
+                    <button class="btn btn_default btn_primary" data-bs-dismiss="modal">{{ __('app.save') }}</button>
                 </div>
             </div>
         </div>

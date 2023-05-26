@@ -6,7 +6,7 @@
         <section class="podcasts">
             <div class="container">
                 <div class="podcasts__header">
-                    <h2 class="h2 text-center">Подписки</h2>
+                    <h2 class="h2 text-center">{{ __('client.subscriptions') }}</h2>
                 </div>
 
                 <div class="items-list__grid">

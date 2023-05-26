@@ -2,7 +2,7 @@
     <div class="now-playing" data-now-playing>
         <input id="audio-source" type="text" value="{{ @$current['source_url']  }}" readonly hidden>
 
-        <button class="now-playing__btn" type="button" aria-label="Подробнее" data-np-trigger></button>
+        <button class="now-playing__btn" type="button" aria-label="{{ __('client.readmore') }}" data-np-trigger></button>
         <div class="now-playing__track">
             <div class="logo">
                 <img class="logo__bg" srcset="/img/radio-logo.png 1x, img/radio-logo@2x.png 2x" src="/img/radio-logo.png" width="100%" alt="" loading="lazy">
@@ -26,12 +26,12 @@
             </div>
         </div>
         <div class="now-playing__actions">
-            <button class="btn btn_ico btn_ico-primary now-playing__fav-btn active" type="button" aria-label="Добавить в избранное">
+            <button class="btn btn_ico btn_ico-primary now-playing__fav-btn active" type="button" aria-label="{{ __('client.addToFavourites') }}">
                 <svg class="icon" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"></path>
                 </svg>
             </button>
-            <button class="btn btn_ico btn_ico-accent now-playing__play-btn active" type="button" aria-label="Пауза">
+            <button class="btn btn_ico btn_ico-accent now-playing__play-btn active" type="button" aria-label="{{ __('client.pause') }}">
                 <svg class="icon now-playing__play-btn__pause">
                     <use href="/img/sprite.svg#pause-bk"></use>
                 </svg>
@@ -46,7 +46,7 @@
     <div class="np-modal scrollbar" data-np-modal>
 	    <div class="np-modal__playing" data-np-modal-player>
 		    <div class="np-modal__header">
-			    <button class="btn btn_ico btn_ico-primary np-modal__header__close-modal" type="button" aria-label="Свернуть" data-np-modal-close>
+			    <button class="btn btn_ico btn_ico-primary np-modal__header__close-modal" type="button" aria-label="{{ __('client.collapse') }}" data-np-modal-close>
 				    <svg class="icon">
 					    <use href="/img/sprite.svg#chevron-down"></use>
 				    </svg>
@@ -103,7 +103,7 @@
 						    </svg>
 					    </button>
 
-                        <button class="btn btn_ico btn_ico-accent now-playing__play-btn active" data-play-button id="play-button" type="button" aria-label="Пауза">
+                        <button class="btn btn_ico btn_ico-accent now-playing__play-btn active" data-play-button id="play-button" type="button" aria-label="{{ __('client.pause') }}">
                             <svg class="icon now-playing__play-btn__pause player-pause" hidden>
                                 <use href="/img/sprite.svg#pause-bk"></use>
                             </svg>
@@ -112,12 +112,12 @@
                             </svg>
                         </button>
 
-					    <button class="btn btn_ico btn_ico-primary" data-rewind="forward" type="button" aria-label="Перемотать вперед">
+					    <button class="btn btn_ico btn_ico-primary" data-rewind="forward" type="button" aria-label="{{ __('client.fastForward') }}">
 						    <svg class="icon">
 							    <use href="/img/sprite.svg#rewind-cw"></use>
 						    </svg>
 					    </button>
-					    <button class="btn btn_ico btn_ico-primary" type="button" aria-label="Следующий">
+					    <button class="btn btn_ico btn_ico-primary" type="button" aria-label="{{ __('client.next') }}">
 						    <svg class="icon">
 							    <use href="/img/sprite.svg#chevrons-right"></use>
 						    </svg>
@@ -126,29 +126,29 @@
 			    </div>
 
 			    <div class="np-modal__player-body__secondary-actions">
-				    <button class="btn btn_ico btn_ico-primary" type="button" aria-label="Скорость">
+				    <button class="btn btn_ico btn_ico-primary" type="button" aria-label="{{ __('client.speed') }}">
 					    <strong>×<span data-playback-rate>1.0</span></strong>
 				    </button>
 
-                    <button class="btn btn_ico btn_ico-primary np-modal__btn-timer" type="button" aria-label="Таймер выключения" data-np-modal-timer-trigger>
+                    <button class="btn btn_ico btn_ico-primary np-modal__btn-timer" type="button" aria-label="{{ __('client.sleepTimer') }}" data-np-modal-timer-trigger>
                         <svg class="icon"><use href="/img/sprite.svg#timer-3"></use></svg>
                         <span class="np-modal__btn-timer__time x-small hidden" data-timer-active-time>00:15</span>
                     </button>
 
-				    <button class="btn btn_ico btn_ico-primary np-modal__btn-add-list" data-add-to-playlist="{{ $current['id'] }}" type="button" aria-label="Добавить в список">
+				    <button class="btn btn_ico btn_ico-primary np-modal__btn-add-list" data-add-to-playlist="{{ $current['id'] }}" type="button" aria-label="{{ __('client.addToList') }}">
 					    <svg class="icon">
 						    <use href="/img/sprite.svg#add-to-list"></use>
 					    </svg>
 				    </button>
 
-				    <button class="btn btn_ico btn_ico-primary np-modal__btn-clock active" type="button" aria-label="Время">
+				    <button class="btn btn_ico btn_ico-primary np-modal__btn-clock active" type="button" aria-label="{{ __('client.time') }}">
 					    <svg class="icon">
 						    <use href="/img/sprite.svg#clock"></use>
 					    </svg>
 				    </button>
 
 				    <div class="dropup-center dropup np-modal__btn-volume">
-					    <button class="btn btn_ico btn_ico-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside" aria-label="Громкость">
+					    <button class="btn btn_ico btn_ico-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside" aria-label="{{ __('client.volume') }}">
 						    <svg class="icon">
 							    <use href="/img/sprite.svg#volume-2"></use>
 						    </svg>
@@ -158,7 +158,7 @@
                             <div class="volume-slider" data-volume-widget>
                                 <div class="volume-slider__track" data-volume-track>
                                     <div class="volume-slider__progress" data-volume-progress style="height: 50%;">
-                                        <button class="volume-slider__btn" data-volume-button type="button" tabindex="-1" aria-label="Изменить громкость"></button>
+                                        <button class="volume-slider__btn" data-volume-button type="button" tabindex="-1" aria-label="{{ __('client.changeVolume') }}"></button>
                                     </div>
                                 </div>
                             </div>
@@ -166,7 +166,7 @@
 				    </div>
 
 				    <div class="dropup-center dropup np-modal__btn-menu">
-					    <button class="btn btn_ico btn_ico-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside" aria-label="Громкость">
+					    <button class="btn btn_ico btn_ico-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside" aria-label="{{ __('client.volume') }}">
 						    <svg class="icon">
 							    <use href="/img/sprite.svg#more-vertical"></use>
 						    </svg>
@@ -178,7 +178,7 @@
 								    <svg class="icon ms-0">
 									    <use href="/img/sprite.svg#share-2"></use>
 								    </svg>
-									Поделиться
+									{{ __('client.share') }}
 							    </span>
 						    </li>
 						    <li>
@@ -186,7 +186,7 @@
 								    <svg class="icon ms-0">
 									    <use href="/img/sprite.svg#download-cloud"></use>
 								    </svg>
-								    Скачать
+								    {{ __('app.download') }}
 							    </span>
 						    </li>
 						    <li>
@@ -194,7 +194,7 @@
 								    <svg class="icon ms-0">
 									    <use href="/img/sprite.svg#check"></use>
 								    </svg>
-								    Прослушано
+								    {{ __('client.listened') }}
 							    </span>
 						    </li>
 					    </ul>
@@ -204,7 +204,7 @@
 	    </div>
 	    <div class="np-modal__playing-list" data-np-modal-playing-list>
 		    <div class="np-modal__header">
-			    <button class="btn btn_ico btn_ico-primary np-modal__header__close-modal" type="button" aria-label="Свернуть" data-np-modal-close>
+			    <button class="btn btn_ico btn_ico-primary np-modal__header__close-modal" type="button" aria-label="{{ __('client.collapse') }}" data-np-modal-close>
 				    <svg class="icon">
 					    <use href="/img/sprite.svg#chevron-down"></use>
 				    </svg>
@@ -212,9 +212,9 @@
 			    <label class="toggle">
 				    <input class="toggle-checkbox" type="checkbox" checked>
 				    <span class="toggle-switch"></span>
-				    <span class="toggle-label">Авто воспроизведение</span>
+				    <span class="toggle-label">{{ __('client.autoplay') }}</span>
 			    </label>
-			    <button class="btn btn_ico btn_ico-primary" type="button" aria-label="Закрыть таймер" data-np-modal-playing-list-close>
+			    <button class="btn btn_ico btn_ico-primary" type="button" aria-label="{{ __('client.closeTimer') }}" data-np-modal-playing-list-close>
 				    <svg class="icon">
 					    <use href="/img/sprite.svg#x"></use>
 				    </svg>
@@ -231,13 +231,13 @@
 	    </div>
         <div class="np-modal__timer" data-np-modal-timer>
             <div class="np-modal__header">
-                <button class="btn btn_ico btn_ico-primary np-modal__header__close-modal" type="button" aria-label="Свернуть" data-np-modal-close>
+                <button class="btn btn_ico btn_ico-primary np-modal__header__close-modal" type="button" aria-label="{{ __('client.collapse') }}" data-np-modal-close>
                     <svg class="icon">
                         <use href="/img/sprite.svg#chevron-down"></use>
                     </svg>
                 </button>
                 <div class="np-modal__header__title h2">{{ __('timer.timer') }}</div>
-                <button class="btn btn_ico btn_ico-primary" type="button" aria-label="Закрыть таймер" data-np-modal-timer-close>
+                <button class="btn btn_ico btn_ico-primary" type="button" aria-label="{{ __('client.closeTimer') }}" data-np-modal-timer-close>
                     <svg class="icon">
                         <use href="/img/sprite.svg#x"></use>
                     </svg>
@@ -294,12 +294,12 @@
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h3 class="h3 modal-title text-center" id="deleteModalLabel">Убрать из списка проигрывания?</h3>
+				<h3 class="h3 modal-title text-center" id="deleteModalLabel">{{ __('client.removeFromListQuestion') }}</h3>
 			</div>
 			<div class="modal-body">
 				<div class="input__actions mt-0">
-					<button class="btn btn_secondary btn_large" type="button" data-bs-dismiss="modal" aria-label="Close">Отмена</button>
-					<button class="btn btn_primary btn_large" type="button" data-bs-dismiss="modal" aria-label="Close">Убрать</button>
+					<button class="btn btn_secondary btn_large" type="button" data-bs-dismiss="modal">{{ __('app.cancel') }}</button>
+					<button class="btn btn_primary btn_large" type="button" data-bs-dismiss="modal">{{ __('app.remove') }}</button>
 				</div>
 			</div>
 		</div>

@@ -2,8 +2,8 @@
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Radio Player Moldova</title>
-<meta name="description" content="Put your description here.">
+<title>{{ __('app.appTitle') }}</title>
+<meta name="description" content="{{ __('app.appSeoDescription') }}">
 <meta name="color-scheme" content="dark light">
 
 <!-- CSRF Token -->

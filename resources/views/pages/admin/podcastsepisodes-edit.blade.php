@@ -23,7 +23,7 @@
                                     <option value="{{$podcast['id']}}" selected> {{ $podcast['name'] }} </option>
                                 </select>
                             @elseif (isset($podcasts))
-                                <select class="form-select" name='podcast' id="podcast" aria-label="Select podcast">
+                                <select class="form-select" name='podcast' id="podcast" aria-label="{{ __('client.selectPodcast') }}">
                                     @foreach($podcasts as $p)
                                         <option value="{{$p['id']}}" {{ (isset($episode) && $p['id'] == $episode['podcast_id']) ? 'selected' : '' }}> {{ $p['name'] }}</option>
                                     @endforeach
@@ -123,5 +123,3 @@
     </script>--}}
 
 @endsection
-
-

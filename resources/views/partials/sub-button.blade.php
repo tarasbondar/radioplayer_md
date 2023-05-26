@@ -2,5 +2,5 @@
     <svg class="podcasts__icon icon">
         <use href="/img/sprite.svg#check"></use>
     </svg>
-    Подписаться
+    {{ __('client.subscribe') }}
 </button>

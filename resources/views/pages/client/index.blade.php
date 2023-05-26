@@ -8,7 +8,7 @@
                 <div class="container">
 
                     <div class="category-slider__header">
-                        <h2 class="h2">Избранные</h2>
+                        <h2 class="h2">{{ __('client.favorites') }}</h2>
                     </div>
 
                     @if (count($fav_stations) == 0)

@@ -25,7 +25,7 @@
                                         <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M16 1.99981C16.2626 1.73717 16.5744 1.52883 16.9176 1.38669C17.2608 1.24455 17.6286 1.17139 18 1.17139C18.3714 1.17139 18.7392 1.24455 19.0824 1.38669C19.4256 1.52883 19.7374 1.73717 20 1.99981C20.2626 2.26246 20.471 2.57426 20.6131 2.91742C20.7553 3.26058 20.8284 3.62838 20.8284 3.99981C20.8284 4.37125 20.7553 4.73905 20.6131 5.08221C20.471 5.42537 20.2626 5.73717 20 5.99981L6.5 19.4998L1 20.9998L2.5 15.4998L16 1.99981Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                         </svg>
-                                        Редактировать
+                                        {{ __('app.edit') }}
                                     </a>
                                 @elseif ($action == 'unsub')
                                     @include('partials.unsub-button')
@@ -42,22 +42,22 @@
                                 @include('partials.episode-card')
                             @endforeach
                         @else
-                            <strong class="podcast__title">У вас нет ни одного выпуска</strong>
-                            <p class="podcast__text">Загрузите фалы выпусков</p>
+                            <strong class="podcast__title">{{ __('client.noEpisodesNotice') }}</strong>
+                            <p class="podcast__text">{{ __('client.noEpisodesDecription') }}</p>
                             <a href="/create-episode/{{$podcast['id']}}" class="btn btn_default btn_primary podcast__add">
                                 <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M12.5 22C18.0228 22 22.5 17.5228 22.5 12C22.5 6.47715 18.0228 2 12.5 2C6.97715 2 2.5 6.47715 2.5 12C2.5 17.5228 6.97715 22 12.5 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                     <path d="M12.5 8V16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                     <path d="M8.5 12H16.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
-                                Добавить выпуск
+                                {{ __('client.addEpisode') }}
                             </a>
                         @endif
                     </ul>
                 </div>
             </div>
             @if ($action == 'edit')
-                <a href="/create-episode/{{$podcast['id']}}" class="btn btn_ico btn_ico-accent page-btn _playing" aria-label="Добавить">
+                <a href="/create-episode/{{$podcast['id']}}" class="btn btn_ico btn_ico-accent page-btn _playing" aria-label="{{ __('app.add') }}">
                     <svg class="icon">
                         <use href="/img/sprite.svg#plus"></use>
                     </svg>
