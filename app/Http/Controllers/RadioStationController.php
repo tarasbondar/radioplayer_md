@@ -121,7 +121,9 @@ class RadioStationController extends Controller
         $station = RadioStation::find($id);
         RadioStation2Category::whereRaw('station_id = ' . $id)->delete();
         RadioStation2Tag::whereRaw('tag_id = ' . $id)->delete();
-        //unset image
+        if (!empty($station->image)) {
+            unlink(RadioStation::UPLOADS_IMAGES . '/' . $station->image);
+        }
         $station->delete();
         return '';
     }

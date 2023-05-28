@@ -75,17 +75,18 @@
                         }
                     });
 
-                    $.ajax({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        url:'/admin/podcasts/remove',
-                        data: {'podcast_id': podcast_id},
-                        method: 'POST',
-                        success: function(response) {
-                            window.location.href = '/admin/podcasts';
-                        }
-                    });
+                    if (confirm('Are you sure?')) {
+                        $.ajax({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            url: '/admin/podcasts/' + podcast_id,
+                            method: 'DELETE',
+                            success: function (response) {
+                                window.location.href = '/admin/podcasts';
+                            }
+                        });
+                    }
                 });
 
             })(jQuery)

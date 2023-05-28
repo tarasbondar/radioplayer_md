@@ -56,7 +56,9 @@ Route::delete('/delete-podcast', [ProfileController::class, 'deletePodcast']);
 Route::get('/episodes/{id}/view', [IndexController::class, 'viewEpisode']);
 Route::get('/create-episode/{id}', [ProfileController::class, 'createEpisode']);
 Route::get('/edit-episode/{id}', [ProfileController::class, 'editEpisode']);
+Route::get('/download-episode', [IndexController::class, 'downloadEpisode']);
 Route::post('/save-episode', [ProfileController::class, 'saveEpisode']);
+Route::post('/get-download-data', [IndexController::class, 'getDownloadData']);
 Route::delete('/delete-episode', [ProfileController::class, 'deleteEpisode']);
 
 Route::get('/subscriptions', [ProfileController::class, 'subscriptions']);
@@ -67,7 +69,6 @@ Route::get('/history', [ProfileController::class, 'history']);
 Route::post('/record-history', [ProfileController::class, 'recordListeningHistory']);
 Route::post('/clear-history', [ProfileController::class, 'clearHistory']);
 Route::get('/downloads', [ProfileController::class, 'downloads']);
-Route::post('/download-episode', [ProfileController::class, 'downloadEpisode']);
 Route::get('/play-episode/{id}', [IndexController::class, 'playEpisode']);
 
 Route::get('/settings', [ProfileController::class, 'settings'])->name('profile.settings');

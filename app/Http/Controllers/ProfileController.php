@@ -176,8 +176,33 @@ class ProfileController extends Controller
         return redirect()->action([ProfileController::class, 'myPodcasts']);
     }
 
-    public function deletePodcast() {
+    public function deletePodcast($id) {
+        $podcast = Podcast::where('id', '=', $id)->first();
 
+        if ($podcast->owner_id != Auth::id()) {
+            return abort(403);
+        }
+
+        $episodes = PodcastEpisode::where('podcast_id', '=', $podcast->id)->get();
+        if ($episodes->count() > 0) {
+            foreach ($episodes as $e) {
+                unlink(PodcastEpisode::UPLOADS_AUDIO . '/' . $e->source);
+                DownloadRecord::where('episode_id', '=', $e->id)->delete();
+                QueuedEpisode::where('episode_id', '=', $e->id)->delete();
+                HistoryRecord::where('episode_id', '=', $e->id)->delete();
+                $e->delete();
+            }
+        }
+
+        if (!empty($podcast->image)) {
+            unlink(Podcast::UPLOADS_IMAGES . '/' . $podcast->image);
+        }
+
+        Podcast2Category::where('podcast_id', '=', $id)->delete();
+        PodcastSub::where('podcast_id', '=', $id)->delete();
+
+        $podcast->delete();
+        return '';
     }
 
     public function getCategoriesByPodcast($id) {
@@ -227,11 +252,18 @@ class ProfileController extends Controller
     }
 
     public function editEpisode($id) {
-        $episode = PodcastEpisode::find($id)->toArray();
+        $episode = PodcastEpisode::where('id', '=', $id)->first();
         if (Auth::id() != Podcast::find($episode['podcast_id'])->owner_id) {
             return abort(403);
         }
-        return view('pages.client.create-episode', ['action' => 'edit', 'episode' => $episode]);
+
+        unlink(PodcastEpisode::UPLOADS_AUDIO . '/' . $episode->source);
+        DownloadRecord::where('episode_id', '=', $episode->id)->delete();
+        QueuedEpisode::where('episode_id', '=', $episode->id)->delete();
+        HistoryRecord::where('episode_id', '=', $episode->id)->delete();
+        $episode->delete();
+
+        return view('pages.client.create-episode'/*, ['action' => 'edit', 'episode' => $episode]*/);
     }
 
     public function saveEpisode(Request $request) {
@@ -260,7 +292,8 @@ class ProfileController extends Controller
             $episode->filename = $request->source->getClientOriginalName();
         }
         elseif ($request->file_remove){
-            $episode->source = '';//file
+            $episode->source = '';
+            unlink(PodcastEpisode::UPLOADS_AUDIO . '/' . $episode->source);
         }
 
         $episode->save();
@@ -272,19 +305,15 @@ class ProfileController extends Controller
         $episode = PodcastEpisode::where('id', '=', $id)->get();
         $podcast = Podcast::where('id', '=', $episode['id'])->get()->toArray()[0];
         if (Auth::id() == $podcast['owner_id']) {
-            //file
+            unlink(PodcastEpisode::UPLOADS_AUDIO . '/' . $episode->source);
             $episode->delete();
-            return '';
+            return redirect()->to('/podcasts/' . $podcast['id'] . '/view');
         }
 
         return abort(405);
     }
 
     public function subscriptions() {
-        /*$subs = DB::table('podcasts_subscriptions')
-            ->where('user_id', '=', Auth::id())
-            ->orderBy('created_at', 'ASC')
-            ->get()->toArray();*/
         $podcasts = Podcast::where('status', '=', Podcast::STATUS_ACTIVE)
             ->where('ps.user_id', '=', Auth::id())
             ->join('podcasts_subscriptions AS ps', 'ps.podcast_id', '=', 'podcasts.id')
@@ -436,27 +465,6 @@ class ProfileController extends Controller
             $downloads = [];
         }
         return view('pages.client.downloads', ['episodes' => $downloads]);
-    }
-
-    public function downloadEpisode(Request $request) {
-        $id = $request->get('id');
-        var_dump($id); exit;
-        $episode = PodcastEpisode::where('id', '=', $id)->get()->toArray()[0];
-        if ($episode['status'] == PodcastEpisode::STATUS_PUBLISHED) {
-            //download file
-            //if ok
-            $record = new DownloadRecord();
-            $record->user_id = Auth::id();
-            $record->episode_id = $episode['id'];
-            $record->save();
-            return '';
-            /*
-            $myFile = storage_path("folder/dummy_pdf.pdf");
-    	    return response()->download($myFile);
-             * */
-        }
-
-        return 'error';
     }
 
     public function settings() {

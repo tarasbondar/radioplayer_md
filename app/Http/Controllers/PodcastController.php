@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DownloadRecord;
+use App\Models\HistoryRecord;
+use App\Models\PodcastEpisode;
+use App\Models\PodcastSub;
+use App\Models\QueuedEpisode;
 use Illuminate\Http\Request;
 use App\Models\Podcast;
 use App\Models\PodcastCategory;
@@ -87,9 +92,27 @@ class PodcastController extends Controller
     }
 
     public function delete($id) {
-        $podcast = Podcast::find($id);
-        Podcast2Category::whereRaw('podcast_id = ' . $id)->delete();
+        $podcast = Podcast::where('id', '=', $id)->first();
+
         //delete episodes
+        $episodes = PodcastEpisode::where('podcast_id', '=', $podcast->id)->get();
+        if ($episodes->count() > 0) {
+            foreach ($episodes as $e) {
+                unlink(PodcastEpisode::UPLOADS_AUDIO . '/' . $e->source);
+                DownloadRecord::where('episode_id', '=', $e->id)->delete();
+                QueuedEpisode::where('episode_id', '=', $e->id)->delete();
+                HistoryRecord::where('episode_id', '=', $e->id)->delete();
+                $e->delete();
+            }
+        }
+
+        if (!empty($podcast->image)) {
+            unlink(Podcast::UPLOADS_IMAGES . '/' . $podcast->image);
+        }
+
+        Podcast2Category::where('podcast_id', '=', $id)->delete();
+        PodcastSub::where('podcast_id', '=', $id)->delete();
+
         $podcast->delete();
         return '';
     }

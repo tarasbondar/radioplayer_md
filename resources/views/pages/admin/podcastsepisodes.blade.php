@@ -84,8 +84,7 @@
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             },
-                            url: '/admin/podcasts-episodes/remove',
-                            data: {'episode_id': episode_id},
+                            url: '/admin/podcasts-episodes/' + episode_id,
                             method: 'DELETE',
                             success: function (response) {
                                 window.location.href = '/admin/podcasts-episodes';

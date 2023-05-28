@@ -3,6 +3,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DownloadRecord;
 use App\Models\Podcast;
 use App\Models\PodcastCategory;
 use App\Models\PodcastEpisode;
@@ -266,6 +267,25 @@ class IndexController
         $episodes = $this->searchPodcasts();
 
         return view('partials.player-podcasts', ['current' => $current, 'episodes' => $episodes, 'podcast' => $podcast])->render();
+    }
+
+    public function downloadEpisode(Request $request){
+        $episode = PodcastEpisode::where('id', '=', $request->get('id'))->first();
+        $podcast = $episode->podcast;
+        if ($episode->status < PodcastEpisode::STATUS_PUBLISHED || $podcast->status == Podcast::STATUS_INACTIVE) {
+            return abort(403);
+        }
+        $file = public_path(PodcastEpisode::UPLOADS_AUDIO . "/" . $episode->source);
+        return response()->download($file);
+    }
+
+    public function getDownloadData(Request $request) {
+        $episode = PodcastEpisode::where('id', '=', $request->get('id'))->first();
+        $record = new DownloadRecord();
+        $record->user_id = Auth::id();
+        $record->episode_id = $episode->id;
+        $record->save();
+        return$filename = $episode->filename;
     }
 
     public function privacy() {

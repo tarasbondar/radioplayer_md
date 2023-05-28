@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\AuthorApplication;
+use App\Models\DownloadRecord;
+use App\Models\HistoryRecord;
 use App\Models\Podcast;
 use App\Models\PodcastCategory;
+use App\Models\PodcastEpisode;
+use App\Models\QueuedEpisode;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -98,10 +102,34 @@ class UsersController extends Controller
     }
 
     public function delete($id) {
-        //owned podcasts if author
-        //queues
-        //history
-        //downloads
+        $user = User::where('id', '=', $id)->first();
+        if ($user->role > 0) {
+            $podcasts = Podcast::where('owner_id', '=', $user->id)->get();
+            if ($podcasts->count()) {
+                foreach($podcasts as $podcast) {
+                    $episodes = PodcastEpisode::where('podcast_id', '=', $podcast->id)->get();
+                    if ($episodes->count() > 0) {
+                        foreach ($episodes as $e) {
+                            unlink(PodcastEpisode::UPLOADS_AUDIO . '/' . $e->source);
+                            DownloadRecord::where('episode_id', '=', $e->id)->delete();
+                            QueuedEpisode::where('episode_id', '=', $e->id)->delete();
+                            HistoryRecord::where('episode_id', '=', $e->id)->delete();
+                            $e->delete();
+                        }
+                    }
+                    if (!empty($podcast->image_logo)) {
+                        unlink(Podcast::UPLOADS_IMAGES . '/' . $podcast->image_logo);
+                    }
+                }
+            }
+        }
+        DownloadRecord::where('user_id', '=', $user->id)->delete();
+        QueuedEpisode::where('user_id', '=', $user->id)->delete();
+        HistoryRecord::where('user_id', '=', $user->id)->delete();
+
+        $user->delete();
+        return '';
+
     }
 
     public function authorApps(Request $request) {

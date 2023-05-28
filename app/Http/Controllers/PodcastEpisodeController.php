@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DownloadRecord;
+use App\Models\HistoryRecord;
 use App\Models\Podcast;
+use App\Models\QueuedEpisode;
 use Illuminate\Http\Request;
 use App\Models\PodcastEpisode;
 use Illuminate\Support\Facades\Auth;
@@ -69,40 +72,14 @@ class PodcastEpisodeController extends Controller
         return redirect()->action([PodcastEpisodeController::class, 'index']);
     }
 
-    public function uploadAudio(Request $request) {
-        $receiver = new FileReceiver('file', $request, HandlerFactory::classFromRequest($request));
-
-        if (!$receiver->isUploaded()) {
-            return [
-                'status' => false
-            ];
-        }
-
-        $upload = $receiver->receive();
-        if ($upload->isFinished()) {
-            $file = $upload->getFile();
-            $extension = $file->getClientOriginalExtension();
-            $filename = time() . '_' . str_replace('.' . $extension, '', $file->getClientOriginalName()) . '.' . $extension;
-            $path = public_path(PodcastEpisode::UPLOADS_AUDIO);
-            $file->move($path, $filename);
-
-            return [
-                'path' => $path,
-                'filename' => $filename
-            ];
-        }
-
-        $handler = $upload->handler();
-        return [
-            'done' => $handler->getPercentageDone(),
-            'status' => true
-        ];
-    }
-
     public function delete($id) {
-        $episode = PodcastEpisode::find($id);
+        $episode = PodcastEpisode::where('id', '=', $id)->first();
+        unlink(PodcastEpisode::UPLOADS_AUDIO . '/' . $episode->source);
+        DownloadRecord::where('episode_id', '=', $episode->id)->delete();
+        QueuedEpisode::where('episode_id', '=', $episode->id)->delete();
+        HistoryRecord::where('episode_id', '=', $episode->id)->delete();
         $episode->delete();
-        //file
+
         return '';
     }
 

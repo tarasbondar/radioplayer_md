@@ -25,10 +25,10 @@
                     <div class="mb-3 form-group row">
                         <label for="group-id" class="col-md-4 col-form-label text-md-right">Group</label>
                         <div class="col-md-6">
-                            <select class="form-select" aria-label="" name="group-id">
+                            <select class="form-select" aria-label="Group select" name="group-id">
                                 <option value="0">No group</option>
                                 @foreach($groups as $g)
-                                    <option value="{{ $g['id'] }}">{{$g['key']}}</option>
+                                    <option value="{{ $g['id'] }}" {{ $g['id'] == @$station['id'] ? 'selected' : '' }}>{{$g['key']}}</option>
                                 @endforeach
                             </select>
                         </div>
