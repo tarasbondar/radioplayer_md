@@ -375,6 +375,33 @@ class ProfileController extends Controller
         ]);
     }
 
+    public function saveWatchTime(Request $request) {
+        $user = Auth::user();
+        if (!$user)
+            return response()->json(['status' => 'error', 'message' => 'Auth required']);
+
+        $episodeId = $request->get('episode_id');
+        $time = $request->get('time');
+        $model = HistoryRecord::where('user_id', '=', $user->id)->where('episode_id', '=', $episodeId)->first();
+        if ($model) {
+            $model->time = $time;
+            $model->save();
+        } else {
+            $model = new HistoryRecord();
+            $model->user_id = $user->id;
+            $model->episode_id = $episodeId;
+            $model->time = $time;
+            $model->save();
+        }
+        //$user->refresh();
+
+
+        return response()->json([
+            'status' => 'success',
+            'episode_id' => $episodeId
+        ]);
+    }
+
     public function addToPlaylist($episode_id){
         $user = Auth::user();
         if (!$user)

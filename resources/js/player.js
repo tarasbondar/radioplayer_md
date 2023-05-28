@@ -21,6 +21,8 @@ export let player = {
     autoplay: true,
     episodeId: null,
     playerOpenedMob: false,
+    lastSavedTime: 0,
+    initialSaveTime: 0,
     init(){
         this.initVolumeSlider();
         this.initEvents();
@@ -82,11 +84,33 @@ export let player = {
                 this.timer.intervalHours = Math.floor((this.timer.seconds + 60) / 60 / 60);
                 this.timer.intervalMinutes = Math.floor(this.timer.seconds / 60) - this.timer.intervalHours * 60;
                 $('[data-timer-active-time]').text(String(this.timer.intervalHours).padStart(2, '0') + ':' + String(this.timer.intervalMinutes + 1).padStart(2, '0'));
+                // send every 5 seconds info to server
             }
             //console.log(this.timer.seconds)
         }, 1000);
 
         this.timerClose();
+    },
+    saveWatchTime(isEnded = false){
+        let self = this;
+        if (self.episodeId === null)
+            return;
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            method: 'POST',
+            url: '/save-watch-time',
+            data: {
+                episode_id: self.episodeId,
+                time: (isEnded) ? 0 : window.audio.currentTime
+            },
+            success: function (response) {
+                if (response.status === 'success'){
+                    $('[data-play-episode="'+ response.episode_id +'"]').addClass('active');
+                }
+            }
+        })
     },
     changeStation(id){
         let self = this;
@@ -142,6 +166,9 @@ export let player = {
                 if (self.playerOpenedMob){
                     $('[data-player]').addClass('open');
                 }
+
+                self.lastSavedTime = 0;
+                self.initialSaveTime = 0;
             }
         })
     },
@@ -154,7 +181,10 @@ export let player = {
         });
     },
     play(forcePlay = false){
+        let startTime = $('#start-time').val();
         if (window.audio.paused || forcePlay) {
+            if (startTime !== undefined && startTime !== null && startTime !== '')
+                window.audio.currentTime = startTime;
             window.audio.play();
         } else {
             window.audio.pause();
@@ -163,12 +193,18 @@ export let player = {
         this.changePlayIcon();
     },
     changePlayIcon(){
+        $('[data-card-icon-play]').show();
+        $('[data-card-icon-pause]').hide();
         if (window.audio.paused) {
             $('[data-icon-play]').show();
             $('[data-icon-pause]').hide();
+            $('[data-play-episode="'+ this.episodeId +'"] [data-card-icon-play]').show();
+            $('[data-play-episode="'+ this.episodeId +'"] [data-card-icon-pause]').hide();
         } else {
             $('[data-icon-play]').hide();
             $('[data-icon-pause]').removeAttr('hidden').show();
+            $('[data-play-episode="'+ this.episodeId +'"] [data-card-icon-play]').hide();
+            $('[data-play-episode="'+ this.episodeId +'"] [data-card-icon-pause]').removeAttr('hidden').show();
 
         }
     },
@@ -182,11 +218,24 @@ export let player = {
 
         $('[data-audio-current-time]').text(String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0'));
 
-        if (e.type === 'ended' && $('[data-player-autoplay]').prop('checked')){
-            $('[data-change-track="next"]').click();
-            //this.changeTrack('next')
+        // Save watch time every 5 seconds after the initial 10 seconds
+        if (!player.initialSaveTime < 10) {
+            player.initialSaveTime = window.audio.currentTime;
+        } else if (window.audio.currentTime - player.initialSaveTime >= 10) {
+            if (!player.lastSavedTime || window.audio.currentTime - player.lastSavedTime >= 5) {
+                player.saveWatchTime();
+                player.lastSavedTime = window.audio.currentTime;
+            }
         }
 
+
+        if (e.type === 'ended'){
+            player.saveWatchTime(true);
+            if ($('[data-player-autoplay]').prop('checked')){
+                player.changeTrack('next')
+            }
+
+        }
     },
     changePlaybackRate(forceRate = null){
         if (forceRate !== null) {
@@ -459,6 +508,7 @@ export let player = {
         });
         $(document).on('change', '[data-audio-progress]', function(){
             window.audio.currentTime = window.audio.duration / 100 * $(this).val();
+            self.saveWatchTime();
         });
         $(document).on('click', '[data-rewind]', function(){
             let secondsStep = 10;

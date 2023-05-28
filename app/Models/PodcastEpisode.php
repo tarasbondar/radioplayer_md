@@ -37,7 +37,8 @@ class PodcastEpisode extends Model
 
     protected $fillable = ['podcast_id', 'name', 'description', 'tags', 'source', 'filename', 'status'];
 
-    protected $appends = ['created_diff', 'is_in_playlist', 'source_path', 'source_url', 'is_in_listen_later'];
+    protected $appends = ['created_diff', 'is_in_playlist', 'source_path', 'source_url', 'is_in_listen_later',
+        'is_in_history', 'start_time'];
 
     public function podcast() {
         return $this->belongsTo(Podcast::class, 'podcast_id', 'id');
@@ -71,6 +72,26 @@ class PodcastEpisode extends Model
             return false;
         }
         return QueuedEpisode::where('user_id', auth()->id())->where('episode_id', $this->id)->exists();
+    }
+
+    public function getIsInHistoryAttribute(): bool
+    {
+        if (!auth()->check()) {
+            return false;
+        }
+        return HistoryRecord::where('user_id', auth()->id())->where('episode_id', $this->id)->exists();
+    }
+
+    public function getStartTimeAttribute(): int
+    {
+        if (!auth()->check()) {
+            return 0;
+        }
+        $historyRecord = HistoryRecord::where('user_id', auth()->id())->where('episode_id', $this->id)->first();
+        if (!$historyRecord) {
+            return 0;
+        }
+        return $historyRecord->time;
     }
 
 }

@@ -13,5 +13,13 @@ class HistoryRecord extends Model
 
     protected $fillable = ['user_id', 'episode_id'];
 
-    public $timestamps = false;
+    public function episode()
+    {
+        return $this->belongsTo(PodcastEpisode::class, 'episode_id', 'id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }

@@ -65,6 +65,7 @@ Route::get('/subscriptions', [ProfileController::class, 'subscriptions']);
 Route::post('/subscribe-to', [ProfileController::class, 'subscribeTo']);
 Route::get('/listen-later', [ProfileController::class, 'listenLater']);
 Route::post('/queue-episode', [ProfileController::class, 'queueToListenLater']);
+Route::post('/save-watch-time', [ProfileController::class, 'saveWatchTime'])->name('profile.saveWatchTime');
 Route::get('/history', [ProfileController::class, 'history']);
 Route::post('/record-history', [ProfileController::class, 'recordListeningHistory']);
 Route::post('/clear-history', [ProfileController::class, 'clearHistory']);

@@ -12,8 +12,8 @@
     <p class="podcast__elem-text"> {{ $episode['description'] }} </p>
     <div class="podcast__holder">
 
-        <div class="podcast__timer active play-episode id-{{ $episode['id'] }}" data-play-episode="{{ $episode['id'] }}" data-episode="{{ $episode['id'] }}">
-            <div class="play">
+        <div class="podcast__timer play-episode {{ ($episode['is_in_history']) ? 'active' : '' }}" data-play-episode="{{ $episode['id'] }}" data-episode="{{ $episode['id'] }}">
+            <div data-card-icon-play>
                 <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g clip-path="url(#clip0_801_29988)">
                         <path d="M2.5 1.5L9.5 6L2.5 10.5V1.5Z" fill="currentColor" stroke="currentColor" stroke-width="0.666667" stroke-linecap="round" stroke-linejoin="round"/>
@@ -23,6 +23,12 @@
                             <rect width="12" height="12" fill="white"/>
                         </clipPath>
                     </defs>
+                </svg>
+            </div>
+            <div data-card-icon-pause hidden>
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 2H3V10H5V2Z" fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M9 2H7V10H9V2Z" fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
                 </svg>
             </div>
             <span>{{ SiteHelper::getMp3Duration(public_path(PodcastEpisode::UPLOADS_AUDIO.'/'.@$episode['source'])) }}</span>

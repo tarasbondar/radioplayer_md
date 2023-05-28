@@ -5,6 +5,7 @@
 <aside class="player" id="player-podcasts" data-player="podcast">
     <div class="now-playing" data-now-playing>
         <input id="audio-source" type="text" value="{{ @$current['source_url']  }}" readonly hidden>
+        <input id="start-time" type="text" value="{{ @$current['start_time']  }}" readonly hidden>
 
         <button class="now-playing__btn" type="button" aria-label="{{ __('client.readmore') }}" data-np-trigger></button>
         <div class="now-playing__track">

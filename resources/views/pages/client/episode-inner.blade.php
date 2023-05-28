@@ -26,7 +26,7 @@ use App\Models\PodcastEpisode;
                         <span class="podcast__data">{{ $episode['created_diff'] }}</span>
                         <strong class="podcast__title">{{ $episode['name'] }}</strong>
                         <div class="podcast__holder">
-                            <div class="podcast__timer active play-episode id-{{ $episode['id'] }}" data-play-episode="{{ $episode['id'] }}" data-episode="{{ $episode['id'] }}">
+                            <div class="podcast__timer play-episode {{ ($episode['is_in_history']) ? 'active' : '' }}" data-play-episode="{{ $episode['id'] }}" data-episode="{{ $episode['id'] }}">
                                 <div class="play">
                                     <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <g clip-path="url(#clip0_801_29988)">
