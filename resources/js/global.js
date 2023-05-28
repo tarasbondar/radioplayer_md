@@ -1,3 +1,5 @@
+import {player} from "./player";
+
 export function global() {
     $(document).on('click', '.download-episode', function(){
         let id = $(this).attr('data-id');
@@ -69,4 +71,44 @@ export function global() {
         });
         return false;
     });
+
+    $(document).on('click', '.shareButton', function () {
+        let fullHostname = window.location.href;
+        if ($('#player-radio').length > 0) {
+            let protocol = window.location.protocol;
+            let hostname = window.location.hostname;
+            fullHostname = protocol + '//' + hostname + '?station=' + $('.fav-station').attr('value');
+        }
+        if (navigator.share) {
+            navigator.share({
+                title: $('.np-modal__playing .np-modal__player-body__header__title').text(),
+                url: fullHostname
+            })
+              .then(() => console.log('Successful share'))
+              .catch((error) => console.log('Error sharing:', error));
+        } else {
+            copyToClipboard(fullHostname);
+        }
+    });
+
+    $( document ).ready(function() {
+        var queryString = window.location.search;
+        var searchParams = new URLSearchParams(queryString);
+        var stationValue = searchParams.get('station');
+        if (stationValue !== null) {
+            player.init();
+            player.changeStation(stationValue);
+        }
+    });
+}
+
+function copyToClipboard(text) {
+    var tempInput = document.createElement("textarea");
+    tempInput.style.position = "fixed";
+    tempInput.style.opacity = 0;
+    tempInput.value = text;
+    document.body.appendChild(tempInput);
+    tempInput.select();
+    document.execCommand("copy");
+    document.body.removeChild(tempInput);
 }
