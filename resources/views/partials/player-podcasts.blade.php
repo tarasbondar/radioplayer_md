@@ -178,7 +178,7 @@
 
 					    <ul class="dropdown-menu dropdown-menu-end px-0 py-2">
 						    <li>
-							    <span class="dropdown-item">
+							    <span class="dropdown-item shareButton">
 								    <svg class="icon ms-0">
 									    <use href="/img/sprite.svg#share-2"></use>
 								    </svg>
