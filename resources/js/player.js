@@ -217,11 +217,9 @@ export let player = {
         const seconds = Math.floor(window.audio.currentTime % 60);
 
         $('[data-audio-current-time]').text(String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0'));
-
+        $('#start-time').val(window.audio.currentTime);
         // Save watch time every 5 seconds after the initial 10 seconds
-        if (!player.initialSaveTime < 10) {
-            player.initialSaveTime = window.audio.currentTime;
-        } else if (window.audio.currentTime - player.initialSaveTime >= 10) {
+        if (window.audio.currentTime >= 10) {
             if (!player.lastSavedTime || window.audio.currentTime - player.lastSavedTime >= 5) {
                 player.saveWatchTime();
                 player.lastSavedTime = window.audio.currentTime;
@@ -234,6 +232,7 @@ export let player = {
             if ($('[data-player-autoplay]').prop('checked')){
                 player.changeTrack('next')
             }
+            player.changePlayIcon();
 
         }
     },
