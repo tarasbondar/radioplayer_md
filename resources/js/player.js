@@ -132,6 +132,7 @@ export let player = {
                 self.setSource($('#audio-source').val());
                 if (self.timer.isActive)
                     self.timerApply(true);
+                self.changePlayIcon();
             }
         })
     },
