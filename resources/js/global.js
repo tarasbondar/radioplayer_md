@@ -70,7 +70,6 @@ export function global() {
 
             }
         });
-        return false;
     });
 
     $(document).on('click', '.shareButton', function () {
