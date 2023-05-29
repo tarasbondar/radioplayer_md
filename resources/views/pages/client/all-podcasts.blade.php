@@ -23,7 +23,7 @@
                     <h2 class="h2 mb-0">{{ __('client.allPodcasts') }}</h2>
                     {{--@if(count($podcasts) > 5)--}} <a href="/podcasts" class="link">Больше</a> {{--@endif--}}
                 </div>
-                <div class="items-list__grid mb-24 podcasts-container">
+                <div class="items-list__grid mb-24 podcasts-container all-podcasts overflow-auto">
                     @foreach($podcasts as $p)
                         @include('partials.podcast-card')
                     @endforeach
