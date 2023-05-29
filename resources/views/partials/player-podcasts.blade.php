@@ -195,7 +195,12 @@
 
 					    <ul class="dropdown-menu dropdown-menu-end px-0 py-2">
 						    <li>
-							    <span class="dropdown-item shareButton">
+							    <span
+									class="dropdown-item shareButton"
+									data-bs-trigger="manual"
+									data-bs-placement="top"
+									data-bs-title="{{ __('client.shareLinkCopied') }}"
+									tabindex="0">
 								    <svg class="icon ms-0">
 									    <use href="/img/sprite.svg#share-2"></use>
 								    </svg>
