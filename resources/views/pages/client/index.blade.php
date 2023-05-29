@@ -10,30 +10,30 @@
                     <h2 class="h2">{{ __('client.favorites') }}</h2>
                 </div>
 
-                @if (count($fav_stations) == 0)
+                <div class="no-favorite @if(count($fav_stations) !== 0) d-none @endif">
                     {{ 'You have no favorite radiostations' }}
-                @else
-                    <div class="category-slider__wrapper">
-                        <div class="swiper" data-category-slider>
-                            <div class="swiper-wrapper favorites-container">
-                                @foreach ($fav_stations as $station_id)
-                                    @include('partials.station-card', ['station' => $stations[$station_id]])
-                                @endforeach
-                            </div>
-                        </div>
+                </div>
 
-                        <div class="swiper-button swiper-button-prev" data-category-slider-prev>
-                            <svg class="icon">
-                                <use href="/img/sprite.svg#chevron-left"></use>
-                            </svg>
-                        </div>
-                        <div class="swiper-button swiper-button-next" data-category-slider-next>
-                            <svg class="icon">
-                                <use href="/img/sprite.svg#chevron-right"></use>
-                            </svg>
+                <div class="category-slider__wrapper @if(count($fav_stations) === 0) d-none @endif">
+                    <div class="swiper" data-category-slider>
+                        <div class="swiper-wrapper favorites-container">
+                            @foreach ($fav_stations as $station_id)
+                                @include('partials.station-card', ['station' => $stations[$station_id]])
+                            @endforeach
                         </div>
                     </div>
-                @endif
+
+                    <div class="swiper-button swiper-button-prev" data-category-slider-prev>
+                        <svg class="icon">
+                            <use href="/img/sprite.svg#chevron-left"></use>
+                        </svg>
+                    </div>
+                    <div class="swiper-button swiper-button-next" data-category-slider-next>
+                        <svg class="icon">
+                            <use href="/img/sprite.svg#chevron-right"></use>
+                        </svg>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -124,6 +124,8 @@
                     success: function(response) {
                         if (response.action === 'added') {
                             if ($('.favorites-container .swiper-slide').length === 0) {
+                                $('.no-favorite').addClass('d-none');
+                                $('.category-slider__wrapper').removeClass('d-none');
                                 $('.favorites-container').html(response.output);
                             } else {
                                 $('.swiper-wrapper').append(response.output);
@@ -133,7 +135,10 @@
                         if (response.action === 'deleted') {
                             $('.fav-station[value="'+response.id+'"]').removeClass('active');
                             $('.favorites-container > .station-' + response.id).remove();
-
+                            if ($('.favorites-container .swiper-slide').length === 0) {
+                                $('.category-slider__wrapper').addClass('d-none');
+                                $('.no-favorite').removeClass('d-none');
+                            }
                         }
                     }
                 })
