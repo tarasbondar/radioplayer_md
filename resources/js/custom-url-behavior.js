@@ -14,6 +14,8 @@ export function customUrlBehavior () {
             const parent = document.querySelector("#appContainer");
             const currentNodes = document.querySelector("#appContainer").childNodes;
 
+            document.querySelector("body").classList.remove("menu-open");
+
             const dataNodes = new DOMParser()
                 .parseFromString(data, "text/html")
                 .querySelector("#appContainer").childNodes;
