@@ -325,12 +325,12 @@ export let player = {
         }
         if (!paused) {
             window.audio.pause();
-            self.changePlayIcon();
+            this.changePlayIcon();
         }
         window.audio.setAttribute("src", src);
         if (!paused) {
             window.audio.play();
-            self.changePlayIcon();
+            this.changePlayIcon();
         }
     },
     addToPlaylist(id) {
