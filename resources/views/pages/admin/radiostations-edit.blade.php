@@ -28,7 +28,7 @@
                             <select class="form-select" aria-label="Group select" name="group-id">
                                 <option value="0">No group</option>
                                 @foreach($groups as $g)
-                                    <option value="{{ $g['id'] }}" {{ $g['id'] == @$station['id'] ? 'selected' : '' }}>{{$g['key']}}</option>
+                                    <option value="{{ $g['id'] }}" {{ $g['id'] == @$station['group_id'] ? 'selected' : '' }}>{{  $g['key'] }}</option>
                                 @endforeach
                             </select>
                         </div>

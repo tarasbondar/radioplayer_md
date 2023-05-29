@@ -294,17 +294,16 @@ class ProfileController extends Controller
         return \redirect('podcasts/' . $episode->podcast_id . '/view');
     }
 
-    public function deleteEpisode($id) {
-        $episode = PodcastEpisode::where('id', '=', $id)->get();
-        $podcast = Podcast::where('id', '=', $episode['id'])->get()->toArray()[0];
+    public function deleteEpisode(Request $request) {
+        $episode = PodcastEpisode::where('id', '=', $request->get('id'))->first();
+        $podcast = Podcast::where('id', '=', $episode->podcast_id)->first()->toArray();
         if (Auth::id() == $podcast['owner_id']) {
             unlink(PodcastEpisode::UPLOADS_AUDIO . '/' . $episode->source);
             DownloadRecord::where('episode_id', '=', $episode->id)->delete();
             QueuedEpisode::where('episode_id', '=', $episode->id)->delete();
             HistoryRecord::where('episode_id', '=', $episode->id)->delete();
             $episode->delete();
-            $episode->delete();
-            return redirect()->to('/podcasts/' . $podcast['id'] . '/view');
+            return redirect()->to('podcasts/' . $podcast['id'] . '/view');
         }
 
         return abort(405);

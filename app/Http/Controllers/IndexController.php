@@ -105,57 +105,105 @@ class IndexController
     }
 
     public function allPodcasts(Request $request) {
+        $page_size = 5;
         $podcasts = Podcast::where('status', '=', Podcast::STATUS_ACTIVE)->limit(5)->get()->toArray(); //$this->searchPodcasts($request->get('name', ''), $request->get('categories', ''));
         $episodes =
             PodcastEpisode::select('podcasts_episodes.*', 'p.name AS podcast_name', 'p.owner_id AS user_id')
                 ->where('podcasts_episodes.status', '=', PodcastEpisode::STATUS_PUBLISHED)
                 ->where('p.status', '=', Podcast::STATUS_ACTIVE)
                 ->join('podcasts AS p', 'podcasts_episodes.podcast_id', '=', 'p.id')
-                ->orderBy('updated_at', 'DESC')
-                ->limit(5)
-                ->get()->toArray();
+                ->orderBy('updated_at', 'DESC');
+        $page_count = ceil($episodes->count() / $page_size);
+        $episodes = $episodes->limit($page_size)->get()->toArray();
         $categories = PodcastCategory::where('status', '=', PodcastCategory::STATUS_ACTIVE)->get()->toArray();
-        return view('pages.client.all-podcasts', ['podcasts' => $podcasts, 'categories' => $categories, 'episodes' => $episodes]);
+        return view('pages.client.all-podcasts', ['podcasts' => $podcasts, 'categories' => $categories, 'episodes' => $episodes, 'page_count' => $page_count]);
     }
 
-    public function allSearch(Request $request) { //text, categories, page
+    public function allSearch(Request $request) { //text, categories
         $page_size = 5;
         $podcasts = Podcast::where('status', '=', Podcast::STATUS_ACTIVE);
 
-        if ($request->has('categories')) {
-            $categories = $request->get('categories');
-            $podcasts = $podcasts->join('podcasts_2_categories AS p2c', 'p2c.podcast_id', '=', 'podcasts.id')->whereRaw("p2c.category_id IN ({$categories})");
+        $categories = $request->get('categories', []);
+        $text = $request->get('text', '');
+
+        //podcasts
+        if (!empty($categories)) {
+            $podcasts = $podcasts->join('podcasts_2_categories AS p2c', 'p2c.podcast_id', '=', 'podcasts.id')->whereRaw("p2c.category_id IN ($categories)");
         }
 
-        if ($request->has('text')) {
-            $text = $request->get('text');
-            $podcasts = $podcasts->where('name', 'LIKE', $text)
-            ->orWhere('description', 'LIKE', $text)
-            ->orWhere('tags', 'LIKE', $text);
+        if (strlen($text) > 3) {
+            $podcasts = $podcasts->where('name', 'LIKE', '%'.$text.'%')
+            ->orWhere('description', 'LIKE', '%'.$text.'%')
+            ->orWhere('tags', 'LIKE', '%'.$text.'%');
         }
 
         $podcasts = $podcasts->distinct()->limit(5)->get()->toArray();
-
-        $episodes = PodcastEpisode::where('status', '=', PodcastEpisode::STATUS_PUBLISHED)
-            ->where('p.status', '=', Podcast::STATUS_ACTIVE)
-            ->join('podcasts AS p', 'p.id', '=', 'podcasts_episodes.podcast_id')
-            ;
-
-        $episodes = $episodes->distinct()->limit($page_size)->get()->toArray();
 
         $podcasts_render = '';
         foreach ($podcasts as $p) {
             $podcasts_render .= view('partials.podcast-card', ['p' => $p])->render();
         }
 
+        //episodes
+        $episodes = PodcastEpisode::select('podcasts_episodes.*', 'p.name AS podcast_name', 'p.owner_id AS user_id')
+            ->where('podcasts_episodes.status', '=', PodcastEpisode::STATUS_PUBLISHED)
+            ->where('p.status', '=', Podcast::STATUS_ACTIVE)
+            ->join('podcasts AS p', 'p.id', '=', 'podcasts_episodes.podcast_id');
+
+        if (!empty($categories)) {
+            $episodes = $episodes->join('podcasts_2_categories AS p2c', 'p2c.podcast_id', '=', 'p.id')->whereRaw("p2c.category_id IN ($categories)");
+        }
+
+        if (strlen($text) > 3) {
+            $episodes = $episodes->where('podcasts_episodes.name', 'LIKE', '%'.$text.'%')
+                ->orWhere('podcasts_episodes.description', 'LIKE', '%'.$text.'%')
+                ->orWhere('podcasts_episodes.tags', 'LIKE', '%'.$text.'%');
+        }
+
+        $episodes = $episodes->distinct('podcasts_episodes.id')->orderBy('updated_at', 'DESC');
+        $page_count = ceil($episodes->count() / $page_size);
+        $episodes = $episodes->limit($page_size)->get()->toArray();
+
         $episodes_render = '';
         foreach ($episodes as $episode) {
             $episodes_render .= view('partials.episode-card', ['episode' => $episode])->render();
         }
 
-        return ['podcasts' => $podcasts_render, 'episodes' => $episodes_render];
+        return ['podcasts' => $podcasts_render, 'episodes' => $episodes_render, 'page_count' => $page_count];
 
     }
+
+    public function appendEpisodes(Request $request) {
+        $page_size = 5;
+        $categories = $request->get('categories', []);
+        $text = $request->get('text', '');
+        $page = $request->get('page', 2);
+
+        $episodes = PodcastEpisode::select('podcasts_episodes.*', 'p.name AS podcast_name', 'p.owner_id AS user_id')
+            ->where('podcasts_episodes.status', '=', PodcastEpisode::STATUS_PUBLISHED)
+            ->where('p.status', '=', Podcast::STATUS_ACTIVE)
+            ->join('podcasts AS p', 'p.id', '=', 'podcasts_episodes.podcast_id');
+
+        if (!empty($categories)) {
+            $episodes = $episodes->join('podcasts_2_categories AS p2c', 'p2c.podcast_id', '=', 'p.id')->whereRaw("p2c.category_id IN ($categories)");
+        }
+
+        if (strlen($text) > 3) {
+            $episodes = $episodes->where('podcasts_episodes.name', 'LIKE', '%'.$text.'%')
+                ->orWhere('podcasts_episodes.description', 'LIKE', '%'.$text.'%')
+                ->orWhere('podcasts_episodes.tags', 'LIKE', '%'.$text.'%');
+        }
+
+        $episodes = $episodes->distinct('podcasts_episodes.id')->orderBy('updated_at', 'DESC')->offset(($page - 1) * $page_size)->limit($page_size)->get()->toArray();
+
+        $episodes_render = '';
+        foreach ($episodes as $episode) {
+            $episodes_render .= view('partials.episode-card', ['episode' => $episode])->render();
+        }
+
+        return $episodes_render;
+    }
+
 
     public function podcasts(Request $request) {
         $podcasts = $this->searchPodcasts($request->get('name', ''), $request->get('categories', ''));

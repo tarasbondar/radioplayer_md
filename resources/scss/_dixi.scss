@@ -216,7 +216,11 @@
 				height: rem(32px);
 			}
 		}
-
+		.publication {
+			@media (max-width: 768px) {
+				display: none;
+			}
+		}
 	}
 	&__elem-option{
 		display: block;
@@ -358,4 +362,34 @@
 
 .publication {
 	margin-right: rem(16px);
+}
+
+.all-podcasts {
+	&.overflow-auto {
+		@media (max-width: 991px) {
+			display: flex;
+			overflow-y: auto;
+			padding: 0 rem(20px);
+			margin-right: rem(-20px);
+			margin-left: rem(-20px);
+		}
+		&.mb-24 {
+			@media (max-width: 991px) {
+				margin-bottom: 0;
+				padding-bottom: rem(12px);
+			}
+		}
+
+		.item {
+			@media (max-width: 991px) {
+				min-width: 95px;
+			}
+		}
+		.x-small {
+			@media (max-width: 991px) {
+				font-size: 11px;
+				line-height: 15px;
+			}
+		}
+	}
 }

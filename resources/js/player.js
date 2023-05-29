@@ -1,4 +1,5 @@
 import Sortable from 'sortablejs';
+import { tooltips } from './_tooltips';
 
 export let player = {
     volume: 0.5,
@@ -124,9 +125,11 @@ export let player = {
                 $('[data-player]').remove();
                 if ($('.page-grid').length) {
                     $('.page-grid').prepend(response);
+                    tooltips();
                 }
                 else {
                     $('body').append(response);
+                    tooltips();
                 }
                 $('body').addClass('player-open');
                 //if isset then stop
@@ -148,10 +151,13 @@ export let player = {
             url: '/play-episode/' + id,
             success: function (response) {
                 $('[data-player]').remove();
-                if ($('.page-grid').length)
+                if ($('.page-grid').length) {
                     $('.page-grid').prepend(response);
-                else
+                    tooltips();
+                } else {
                     $('body').append(response);
+                    tooltips();
+                }
                 $('body').addClass('player-open')
                 self.createPlayer();
                 self.setSource($('#audio-source').val());
@@ -319,12 +325,12 @@ export let player = {
         }
         if (!paused) {
             window.audio.pause();
-            self.changePlayIcon();
+            this.changePlayIcon();
         }
         window.audio.setAttribute("src", src);
         if (!paused) {
             window.audio.play();
-            self.changePlayIcon();
+            this.changePlayIcon();
         }
     },
     addToPlaylist(id) {

@@ -45,6 +45,8 @@ Route::post('/save-playlist-sorting', [ProfileController::class, 'savePlaylistSo
 
 Route::get('/my-podcasts', [ProfileController::class, 'myPodcasts']);
 Route::get('/all-podcasts', [IndexController::class, 'allPodcasts'])->name('index.allPodcasts');
+Route::post('/all-search', [IndexController::class, 'allSearch']);
+Route::post('/append-episodes', [IndexController::class, 'appendEpisodes']);
 Route::get('/podcasts', [IndexController::class, 'podcasts']);
 Route::post('/update-podcasts', [IndexController::class, 'updatePodcasts']);
 Route::get('/podcasts/{id}/view', [IndexController::class, 'viewPodcast']);

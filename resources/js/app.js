@@ -10,23 +10,19 @@ import { categorySlider } from './category-slider.js';
 import { scrollingText } from './scrolling-text.js';
 import { nowPlaying } from './now-playing.js';
 import { debounce } from './debounce.js';
-import { scriptsSetup } from "./scripts-setup";
-import { customUrlBehavior } from "./custom-url-behavior";
+import { tooltips } from './_tooltips';
 
 window.core = core;
 player.init();
 
-// global();
-// header();
-// forms();
-// theme();
-// categorySlider();
-// scrollingText();
-// nowPlaying();
-// debounce();
-
-scriptsSetup()
-customUrlBehavior();
+global();
+header();
+forms();
+theme();
+categorySlider();
+scrollingText();
+nowPlaying();
+debounce();
 
 
 import '../scss/app.scss';

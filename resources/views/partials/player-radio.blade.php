@@ -109,7 +109,15 @@
                 </div>
 
                 <div class="np-modal__player-body__secondary-actions">
-                    <button class="btn btn_ico btn_ico-primary shareButton" id="shareButton" type="button" aria-label="{{ __('client.share') }}">
+                    <button
+                        class="btn btn_ico btn_ico-primary shareButton"
+                        id="shareButton"
+                        type="button"
+                        aria-label="{{ __('client.share') }}"
+                        data-bs-trigger="manual"
+                        data-bs-placement="top"
+                        data-bs-title="{{ __('client.shareLinkCopied') }}"
+                        tabindex="0">
                         <svg class="icon">
                             <use href="/img/sprite.svg#share-2"></use>
                         </svg>

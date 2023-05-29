@@ -1,4 +1,5 @@
 import {player} from "./player";
+import { Tooltip } from "bootstrap";
 
 export function global() {
     $(document).on('click', '.download-episode', function(){
@@ -57,21 +58,19 @@ export function global() {
         return false;
     });
 
-    //delete-episode/$episode['id']
     $(document).on('click', '.delete-episode', function () {
         let id = $(this).attr('data-id');
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            method: 'POST',
+            method: 'DELETE',
             url: '/delete-episode',
             data: {id: id},
             success: function (response) {
 
             }
         });
-        return false;
     });
 
     $(document).on('click', '.shareButton', function () {
@@ -90,6 +89,11 @@ export function global() {
               .catch((error) => console.log('Error sharing:', error));
         } else {
             copyToClipboard(fullHostname);
+            const tooltip = Tooltip.getInstance('.shareButton');
+            tooltip.show();
+            setTimeout(() => {
+                tooltip.hide();
+            }, 1000);
         }
     });
 
