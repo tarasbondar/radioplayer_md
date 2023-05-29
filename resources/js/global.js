@@ -57,14 +57,13 @@ export function global() {
         return false;
     });
 
-    //delete-episode/$episode['id']
     $(document).on('click', '.delete-episode', function () {
         let id = $(this).attr('data-id');
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            method: 'POST',
+            method: 'DELETE',
             url: '/delete-episode',
             data: {id: id},
             success: function (response) {
