@@ -172,7 +172,8 @@ class ProfileController extends Controller
         return redirect()->action([ProfileController::class, 'myPodcasts']);
     }
 
-    public function deletePodcast($id) {
+    public function deletePodcast(Request $request) {
+        $id = $request->get('id');
         $podcast = Podcast::where('id', '=', $id)->first();
 
         if ($podcast->owner_id != Auth::id()) {
@@ -182,7 +183,9 @@ class ProfileController extends Controller
         $episodes = PodcastEpisode::where('podcast_id', '=', $podcast->id)->get();
         if ($episodes->count() > 0) {
             foreach ($episodes as $e) {
-                unlink(PodcastEpisode::UPLOADS_AUDIO . '/' . $e->source);
+                if (!empty($e->source)) {
+                    unlink(PodcastEpisode::UPLOADS_AUDIO . '/' . $e->source);
+                }
                 DownloadRecord::where('episode_id', '=', $e->id)->delete();
                 QueuedEpisode::where('episode_id', '=', $e->id)->delete();
                 HistoryRecord::where('episode_id', '=', $e->id)->delete();
@@ -272,12 +275,14 @@ class ProfileController extends Controller
         $episode = PodcastEpisode::where('id', '=', $request->get('id'))->first();
         $podcast = Podcast::where('id', '=', $episode->podcast_id)->first()->toArray();
         if (Auth::id() == $podcast['owner_id']) {
-            unlink(PodcastEpisode::UPLOADS_AUDIO . '/' . $episode->source);
+            if (!empty($episode->source)) {
+                unlink(PodcastEpisode::UPLOADS_AUDIO . '/' . $episode->source);
+            }
             DownloadRecord::where('episode_id', '=', $episode->id)->delete();
             QueuedEpisode::where('episode_id', '=', $episode->id)->delete();
             HistoryRecord::where('episode_id', '=', $episode->id)->delete();
             $episode->delete();
-            return redirect()->to('podcasts/' . $podcast['id'] . '/view');
+            return $podcast['id'];
         }
 
         return abort(405);

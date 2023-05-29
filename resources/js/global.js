@@ -60,17 +60,19 @@ export function global() {
 
     $(document).on('click', '.delete-episode', function () {
         let id = $(this).attr('data-id');
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            method: 'DELETE',
-            url: '/delete-episode',
-            data: {id: id},
-            success: function (response) {
-
-            }
-        });
+        //if (confirm('Are you sure?')) {
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                method: 'DELETE',
+                url: '/delete-episode',
+                data: {id: id},
+                success: function (response) {
+                    window.location.href = '/podcasts/' + response + '/view';
+                }
+            });
+        //}
     });
 
     $(document).on('click', '.shareButton', function () {

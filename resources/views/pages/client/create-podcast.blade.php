@@ -14,10 +14,6 @@
                             <input id="id" type="text" class="form-control" name="id" value="{{ @$podcast['id'] }}" readonly>
                         </div>
 
-                        {{--<div class="form-group row" hidden>
-                            <input id="owner-id" type="text" class="form-control" name="owner-id" value="{{ isset($podcast['id']) ? $podcast['id'] : ''}}" readonly>
-                        </div>--}}
-
                         <div class="input form-floating">
                             <input type="text" class="form-control" placeholder="{{ __('client.podcastTitle') }}" id="name" name="name" value="{{ @$podcast['name'] }}" required>
                             <label for="name">{{ __('client.podcastTitle') }}</label>
@@ -83,14 +79,14 @@
 
 
                         <label class="toggle mb-24">
-                            <input class="toggle-checkbox" type="checkbox" id="status" name="status" value="0" {{ @$podcast['status'] == 0 ? 'checked' : ''}} {{--checked--}}>
+                            <input class="toggle-checkbox" type="checkbox" id="status" name="status" value="0" {{ @$podcast['status'] == 0 ? 'checked' : ''}}>
                             <span class="toggle-switch"></span>
                             <span class="toggle-label">{{ __('client.published') }}</span>
                         </label>
 
                         @if ($action == 'edit')
                             <div class="input__actions mt-0">
-                                <button class="btn btn_secondary btn_large" type="button">{{ __('client.delete') }}</button>
+                                <button class="btn btn_secondary btn_large" id='delete-podcast' value="{{ @$podcast['id'] }}" type="button">{{ __('client.delete') }}</button>
                                 <button class="btn btn_primary btn_large" type="submit">{{ __('client.save') }}</button>
                             </div>
                         @endif
@@ -145,14 +141,35 @@
             $(document).on('click', '.categories-checkbox > input', function () {
                 let categories_ids = [];
                 let categories_keys = [];
-                    $('.categories-check:checkbox:checked').each(function () {
-                        let val = $(this).val().split("-");
-                        categories_ids.push(val[0]);
-                        categories_keys.push(val[1]);
+
+                $('.categories-check:checkbox:checked').each(function () {
+                    let val = $(this).val().split("-");
+                    categories_ids.push(val[0]);
+                    categories_keys.push(val[1]);
                 });
+
                 $('#categories-ids').val(categories_ids.join(','));
                 $('#categories-keys').val(categories_keys.join(', '));
             });
+
+            $(document).on('click', '#delete-podcast', function () {
+                //if (confirm('Are you sure?')) {
+                    let id = $(this).val();
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        method: 'DELETE',
+                        url: '/delete-podcast',
+                        data: {id: id},
+                        success: function () {
+                            window.location.href = '/my-podcasts';
+                        }
+                    })
+                //}
+
+
+            })
 
         })(jQuery);
 
