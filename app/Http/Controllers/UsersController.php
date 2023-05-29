@@ -117,8 +117,8 @@ class UsersController extends Controller
                             $e->delete();
                         }
                     }
-                    if (!empty($podcast->image_logo)) {
-                        unlink(Podcast::UPLOADS_IMAGES . '/' . $podcast->image_logo);
+                    if (!empty($podcast->image)) {
+                        unlink(Podcast::UPLOADS_IMAGES . '/' . $podcast->image);
                     }
                 }
             }

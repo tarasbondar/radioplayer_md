@@ -282,7 +282,8 @@ class IndexController
     public function getDownloadData(Request $request) {
         $episode = PodcastEpisode::where('id', '=', $request->get('id'))->first();
         $record = new DownloadRecord();
-        $record->user_id = Auth::id();
+        $user_id = (Auth::check() ? Auth::id() : 0 );
+        $record->user_id = $user_id;
         $record->episode_id = $episode->id;
         $record->save();
         return$filename = $episode->filename;

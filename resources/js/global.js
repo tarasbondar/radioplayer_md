@@ -2,7 +2,8 @@ import {player} from "./player";
 
 export function global() {
     $(document).on('click', '.download-episode', function(){
-        let id = $(this).attr('data-id');
+        let elem = $(this);
+        let id = elem.attr('data-id');
 
         $.ajax({
             headers: {
@@ -25,6 +26,7 @@ export function global() {
                     url: '/get-download-data',
                     data: {id: id},
                     success: function (filename) {
+                        elem.closest('.podcast__elem').find('.download-file').addClass('active');
                         let link = document.createElement('a');
                         link.href = window.URL.createObjectURL(blob);
                         link.download = filename;

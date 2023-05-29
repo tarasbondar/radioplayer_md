@@ -122,11 +122,13 @@ export let player = {
             url: '/play-station/' + id,
             success: function (response) {
                 $('[data-player]').remove();
-                if ($('.page-grid').length)
+                if ($('.page-grid').length) {
                     $('.page-grid').prepend(response);
-                else
+                }
+                else {
                     $('body').append(response);
-                $('body').addClass('player-open')
+                }
+                $('body').addClass('player-open');
                 //if isset then stop
                 self.createPlayer();
                 self.setSource($('#audio-source').val());
@@ -197,7 +199,7 @@ export let player = {
         $('[data-card-icon-play]').show();
         $('[data-card-icon-pause]').hide();
         if (window.audio.paused) {
-            $('[data-icon-play]').show();
+            $('[data-icon-play]').removeAttr('hidden').show();
             $('[data-icon-pause]').hide();
             $('[data-play-episode="'+ this.episodeId +'"] [data-card-icon-play]').show();
             $('[data-play-episode="'+ this.episodeId +'"] [data-card-icon-pause]').hide();
@@ -317,10 +319,12 @@ export let player = {
         }
         if (!paused) {
             window.audio.pause();
+            self.changePlayIcon();
         }
         window.audio.setAttribute("src", src);
         if (!paused) {
             window.audio.play();
+            self.changePlayIcon();
         }
     },
     addToPlaylist(id) {
