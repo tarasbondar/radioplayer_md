@@ -7,6 +7,7 @@ import { scrollingText } from './scrolling-text.js';
 import { nowPlaying } from './now-playing.js';
 import { debounce } from './debounce.js';
 import { customUrlBehavior } from "./custom-url-behavior";
+import { tooltips } from './_tooltips';
 
 export function scriptsSetup() {
     global();
@@ -17,6 +18,7 @@ export function scriptsSetup() {
     scrollingText();
     nowPlaying();
     debounce();
+    tooltips();
     customUrlBehavior();
 }
 
