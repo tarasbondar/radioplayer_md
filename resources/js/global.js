@@ -1,4 +1,5 @@
 import {player} from "./player";
+import { Tooltip } from "bootstrap";
 
 export function global() {
     $(document).on('click', '.download-episode', function(){
@@ -89,6 +90,11 @@ export function global() {
               .catch((error) => console.log('Error sharing:', error));
         } else {
             copyToClipboard(fullHostname);
+            const tooltip = Tooltip.getInstance('.shareButton');
+            tooltip.show();
+            setTimeout(() => {
+                tooltip.hide();
+            }, 1000);
         }
     });
 

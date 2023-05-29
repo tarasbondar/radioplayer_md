@@ -50,6 +50,10 @@ $form-floating-line-height: 1.6;
 $modal-content-border-width: 0;
 $modal-content-border-radius: 0;
 
+$tooltip-bg: var(--white);
+$tooltip-color: var(--dark-500);
+$tooltip-opacity: 1;
+
 // $accordion-padding-y: rem(10px);
 // $accordion-padding-x: rem(24px);
 // $accordion-border-width: 0;
@@ -81,3 +85,9 @@ $modal-content-border-radius: 0;
 @import "~bootstrap/scss/forms";
 @import "~bootstrap/scss/modal";
 @import "~bootstrap/scss/spinners";
+@import "~bootstrap/scss/tooltip";
+
+
+.tooltip-inner {
+    box-shadow: 0 rem(4px) rem(16px) rgba(15, 15, 15, 0.15);
+}

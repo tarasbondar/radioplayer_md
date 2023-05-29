@@ -140,13 +140,29 @@
                         <span class="np-modal__btn-timer__time x-small hidden" data-timer-active-time>00:15</span>
                     </button>
 
-				    <button class="btn btn_ico btn_ico-primary np-modal__btn-add-list {{ (@$current['is_in_playlist']) ? 'active' : '' }}" data-add-to-playlist="{{ $current['id'] }}" type="button" aria-label="{{ __('client.addToList') }}">
+				    <button
+						class="btn btn_ico btn_ico-primary np-modal__btn-add-list {{ (@$current['is_in_playlist']) ? 'active' : '' }}"
+						data-add-to-playlist="{{ $current['id'] }}"
+						type="button"
+						aria-label="{{ __('client.addToList') }}"
+						data-bs-toggle="tooltip"
+						data-bs-trigger="focus"
+                        data-bs-placement="top"
+                        data-bs-title="{{ __('client.needToLogin') }}">
 					    <svg class="icon">
 						    <use href="/img/sprite.svg#add-to-list"></use>
 					    </svg>
 				    </button>
 
-				    <button class="btn btn_ico btn_ico-primary np-modal__btn-clock listen-later {{ ($current['is_in_listen_later']) ? 'active' : '' }}" data-listen-later="{{ $current['id'] }}" type="button" aria-label="{{ __('client.time') }}">
+				    <button
+						class="btn btn_ico btn_ico-primary np-modal__btn-clock listen-later {{ ($current['is_in_listen_later']) ? 'active' : '' }}"
+						data-listen-later="{{ $current['id'] }}"
+						type="button"
+						aria-label="{{ __('client.time') }}"
+						data-bs-toggle="tooltip"
+						data-bs-trigger="focus"
+                        data-bs-placement="top"
+                        data-bs-title="{{ __('client.needToLogin') }}">
 					    <svg class="icon">
 						    <use href="/img/sprite.svg#clock"></use>
 					    </svg>
