@@ -34,7 +34,7 @@ Route::get('language/{locale}', function ($locale) {
 Route::get('/', [IndexController::class, 'index']);
 Route::get('/home', [IndexController::class, 'index']);
 Route::get('/podcasts', [IndexController::class, 'podcasts']);
-Route::get('/favorite-station/{id}', [ProfileController::class, 'favStation']);
+Route::get('/favorite-station/{id}', [IndexController::class, 'favStation']);
 Route::post('/update-stations', [IndexController::class, 'updateStations']);
 Route::get('/play-station/{id}', [IndexController::class, 'playStation']);
 

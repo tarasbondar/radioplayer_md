@@ -3,41 +3,39 @@
 @section('content')
 
     <main class="main">
-        @auth
-            <section class="category-slider">
-                <div class="container">
+        <section class="category-slider">
+            <div class="container">
 
-                    <div class="category-slider__header">
-                        <h2 class="h2">{{ __('client.favorites') }}</h2>
-                    </div>
+                <div class="category-slider__header">
+                    <h2 class="h2">{{ __('client.favorites') }}</h2>
+                </div>
 
-                    @if (count($fav_stations) == 0)
-                        {{ 'You have no favorite radiostations' }}
-                    @else
-                        <div class="category-slider__wrapper">
-                            <div class="swiper" data-category-slider>
-                                <div class="swiper-wrapper favorites-container">
-                                    @foreach ($fav_stations as $station)
-                                        @include('partials.station-card')
-                                    @endforeach
-                                </div>
-                            </div>
-
-                            <div class="swiper-button swiper-button-prev" data-category-slider-prev>
-                                <svg class="icon">
-                                    <use href="/img/sprite.svg#chevron-left"></use>
-                                </svg>
-                            </div>
-                            <div class="swiper-button swiper-button-next" data-category-slider-next>
-                                <svg class="icon">
-                                    <use href="/img/sprite.svg#chevron-right"></use>
-                                </svg>
+                @if (count($fav_stations) == 0)
+                    {{ 'You have no favorite radiostations' }}
+                @else
+                    <div class="category-slider__wrapper">
+                        <div class="swiper" data-category-slider>
+                            <div class="swiper-wrapper favorites-container">
+                                @foreach ($fav_stations as $station_id)
+                                    @include('partials.station-card', ['station' => $stations[$station_id]])
+                                @endforeach
                             </div>
                         </div>
-                    @endif
-                </div>
-            </section>
-        @endauth
+
+                        <div class="swiper-button swiper-button-prev" data-category-slider-prev>
+                            <svg class="icon">
+                                <use href="/img/sprite.svg#chevron-left"></use>
+                            </svg>
+                        </div>
+                        <div class="swiper-button swiper-button-next" data-category-slider-next>
+                            <svg class="icon">
+                                <use href="/img/sprite.svg#chevron-right"></use>
+                            </svg>
+                        </div>
+                    </div>
+                @endif
+            </div>
+        </section>
 
         <section class="items-list">
             <div class="container">
@@ -64,7 +62,7 @@
 
                 <div class="items-list__grid stations-container">
                     @foreach($stations as $station)
-                        @include('partials.station-card')
+                        @include('partials.station-card', ['station' => $station])
                     @endforeach
                 </div>
             </div>

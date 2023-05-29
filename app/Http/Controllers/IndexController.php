@@ -11,7 +11,9 @@ use App\Models\PodcastSub;
 use App\Models\RadioStation;
 use App\Models\RadioStationCategory;
 use App\Models\RadioStationTag;
+use App\Services\FavoriteService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -24,21 +26,23 @@ class IndexController
         view()->share(['lang' => $lang]);
     }
 
-    public function index(Request $request) { //alias stations
+    /**
+     * Home page
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Foundation\Application
+     */
+    public function index(Request $request) {
         $category_id = $request->get('category_id', 0);
         $tag_id = $request->get('tag_id', 0);
 
-        $stations = $this->searchStations($category_id, $tag_id);
+        $stations = Arr::keyBy($this->searchStations($category_id, $tag_id), 'id');
 
         $tags = RadioStationTag::select('*')->where('status', '=', RadioStationTag::STATUS_ACTIVE)->get()->toArray();
         $categories = RadioStationCategory::select('*')->where('status', '=', RadioStationCategory::STATUS_ACTIVE)->get()->toArray();
 
-        $fav_stations = [];
-        if (Auth::check()) { //favorited if user logged
-            $fav_stations = RadioStation::select(DB::raw('rs.*, 1 as `favorited`'))->from('radiostations AS rs')
-                ->join('radiostations_favorites AS rf', 'rf.station_id', '=', 'rs.id')
-                ->where('rf.user_id', '=', Auth::id())->orderBy('order', 'DESC')->get()->toArray();
-        }
+        $fav_stations = FavoriteService::getFavorites();
+
         return view('pages.client.index', ['stations' => $stations, 'tags' => $tags, 'categories' => $categories, 'fav_stations' => $fav_stations]);
     }
 
@@ -84,24 +88,26 @@ class IndexController
         return $stations;
     }
 
+    /**
+     * Play radio station
+     *
+     * @param $id
+     * @return string
+     */
     public function playStation($id) {
-        $current = RadioStation::where('id', '=', $id)->first()->toArray();
+        $current = RadioStation::where(['id' => $id])->first()->toArray();
         if ($current['status'] == RadioStation::STATUS_INACTIVE) {
             return '';
         }
 
-        if (Auth::check()) {
-            $favorited = DB::table('radiostations_favorites')->where('user_id', '=', Auth::id())->where('station_id', '=', $current['id'])->count();
-        } else {
-            $favorited = 0;
-        }
+        $favorited = in_array($current['id'], FavoriteService::getFavorites());
 
         $all = [];
         if ($current['group_id'] != 0) {
             $all = $this->searchStations(0, 0, $current['group_id']);
         }
 
-        return view('partials.player-radio', ['current' => $current, 'all' => $all, 'favorited' => $favorited ])->render();
+        return view('partials.player-radio', ['current' => $current, 'all' => $all, 'favorited' => $favorited])->render();
     }
 
     public function allPodcasts(Request $request) {
@@ -334,12 +340,23 @@ class IndexController
         $record->user_id = $user_id;
         $record->episode_id = $episode->id;
         $record->save();
-        return$filename = $episode->filename;
+        return $episode->filename;
     }
 
     public function privacy() {
         return view('');
     }
 
-
+    /**
+     * Add or remove station from favorites
+     *
+     * @param $id
+     * @return array
+     */
+    public function favStation($id) {
+        if (!Auth::check()) {
+            return FavoriteService::favStationForUnregisteredUser($id);
+        }
+        return FavoriteService::favStationForRegisteredUser($id);
+    }
 }

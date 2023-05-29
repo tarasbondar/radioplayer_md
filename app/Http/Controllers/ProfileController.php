@@ -14,7 +14,6 @@ use App\Models\PodcastCategory;
 use App\Models\PodcastEpisode;
 use App\Models\PodcastSub;
 use App\Models\QueuedEpisode;
-use App\Models\RadioStation;
 use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\RedirectResponse;
@@ -24,9 +23,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redirect;
 use Throwable;
-
-//use Illuminate\Support\Facades\Redirect;
-//use function Symfony\Component\ErrorHandler\reRegister;
 
 class ProfileController extends Controller
 {
@@ -219,28 +215,6 @@ class ProfileController extends Controller
             $result[$q->id] = $q->key;
         }
         return $result;
-    }
-
-    public function favStation($id) {
-        if (!Auth::check()) {
-            return 'no auth';
-        }
-
-        $exists = DB::table('radiostations_favorites')->select('*')
-            ->where('station_id', '=', $id)
-            ->where('user_id', '=', Auth::id())
-            ->get()->count();
-
-        if ($exists) {
-            DB::table('radiostations_favorites')->where(['station_id' => $id, 'user_id' => Auth::id()])->delete();
-            return ['action' => 'deleted', 'id' => $id];
-        } else {
-            DB::table('radiostations_favorites')->insert(['station_id' => $id, 'user_id' => Auth::id()]);
-            $station = RadioStation::find($id)->toArray();
-            $station['favorited'] = 1;
-            $output = view('partials.station-card', ['station' => $station])->render();
-            return ['action' => 'added', 'output' => $output, 'id' => $id];
-        }
     }
 
     public function createEpisode($podcast_id) {
@@ -546,5 +520,4 @@ class ProfileController extends Controller
     public function logout() {
         Auth::logout();
     }
-
 }
