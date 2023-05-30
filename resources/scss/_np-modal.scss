@@ -3,6 +3,9 @@
     height: 100%;
     //overflow-y: auto;
     background: var(--np-modal-bg);
+    &.scroll{
+        overflow-y: auto;
+    }
 }
 
 .np-modal__header {
