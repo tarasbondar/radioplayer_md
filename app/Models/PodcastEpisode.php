@@ -38,11 +38,12 @@ class PodcastEpisode extends Model
     protected $fillable = ['podcast_id', 'name', 'description', 'tags', 'source', 'filename', 'status'];
 
     protected $appends = ['created_diff', 'is_in_playlist', 'source_path', 'source_url', 'is_in_listen_later',
-        'is_in_history', 'start_time'];
+        'is_in_history', 'is_downloaded', 'start_time'];
 
     public function podcast() {
         return $this->belongsTo(Podcast::class, 'podcast_id', 'id');
     }
+
     public function getSourceUrlAttribute(): string
     {
         return asset(self::UPLOADS_AUDIO . '/' . $this->source);
@@ -80,6 +81,13 @@ class PodcastEpisode extends Model
             return false;
         }
         return HistoryRecord::where('user_id', auth()->id())->where('episode_id', $this->id)->exists();
+    }
+
+    public function getIsDownloadedAttribute(): bool {
+        if (!auth()->check()) {
+            return false;
+        }
+        return DownloadRecord::where('user_id', auth()->id())->where('episode_id', $this->id)->exists();
     }
 
     public function getStartTimeAttribute(): int

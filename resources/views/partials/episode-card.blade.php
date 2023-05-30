@@ -73,7 +73,7 @@
             @endauth
 
             <li class="item">
-                <a href="#" class="link download-file download-episode" data-id="{{ $episode['id']  }}">
+                <a href="javascript:void(0)" class="link download-file download-episode {{ $episode['is_downloaded'] ? 'active' : '' }}" data-id="{{ $episode['id']  }}">
                     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g clip-path="url(#clip0_801_45183)">
                             <path d="M13 19.75L16 22.75L19 19.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
