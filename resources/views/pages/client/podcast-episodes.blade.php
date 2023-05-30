@@ -16,7 +16,7 @@
                                  width="100%" height="100%" alt="" loading="lazy">
                         </div>
                         <div class="podcast__info-text">
-                            <span class="podcast__descr">{{ $podcast['username'] }}</span>
+                            <span class="podcast__descr"><a href="/author/{{ $podcast['owner_id'] }}">{{ $podcast['username'] }}</a></span>
                             <strong class="podcast__title">{{ $podcast['name'] }}</strong>
 
                             @if(strlen($podcast['description']) < 100)

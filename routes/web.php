@@ -50,6 +50,7 @@ Route::post('/append-episodes', [IndexController::class, 'appendEpisodes']);
 Route::get('/podcasts', [IndexController::class, 'podcasts']);
 Route::post('/update-podcasts', [IndexController::class, 'updatePodcasts']);
 Route::get('/podcasts/{id}/view', [IndexController::class, 'viewPodcast']);
+Route::get('/author/{id}', [IndexController::class, 'viewByAuthor']);
 Route::get('/create-podcast', [ProfileController::class, 'createPodcast']);
 Route::get('/edit-podcast/{id}', [ProfileController::class, 'editPodcast']);
 Route::post('/save-podcast', [ProfileController::class, 'savePodcast']);

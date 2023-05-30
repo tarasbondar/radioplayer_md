@@ -19,7 +19,7 @@ use App\Models\PodcastEpisode;
                                      {{ !empty($podcast['image']) ? '/uploads/podcasts_images/' . $podcast['image'] : "/img/podcast-placeholder.png"}} 2x" alt="img">
                             </div>
                             <div class="text">
-                                <span class="podcast__descr">{{ $podcast['username'] }}</span>
+                                <span class="podcast__descr"><a href="/author/{{ $podcast['owner_id'] }}">{{ $podcast['username'] }}</a></span>
                                 <strong class="podcast__title">{{ $podcast['name'] }}</strong>
                             </div>
                         </div>

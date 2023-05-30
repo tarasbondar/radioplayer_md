@@ -11,6 +11,7 @@ use App\Models\PodcastSub;
 use App\Models\RadioStation;
 use App\Models\RadioStationCategory;
 use App\Models\RadioStationTag;
+use App\Models\User;
 use App\Services\FavoriteService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -89,7 +90,7 @@ class IndexController
             $stations = $stations->where('rs.group_id', '=', $group_id);
         }
 
-        $stations = $stations->orderBy('order', 'DESC')->distinct()->get()->toArray();
+        $stations = $stations->orderBy('order', 'ASC')->distinct()->get()->toArray();
 
         return $stations;
     }
@@ -133,23 +134,30 @@ class IndexController
 
     public function allSearch(Request $request) { //text, categories
         $page_size = 5;
-        $podcasts = Podcast::where('status', '=', Podcast::STATUS_ACTIVE);
 
         $categories = $request->get('categories', []);
         $text = $request->get('text', '');
+        $author = $request->get('author', '');
 
         //podcasts
+        $podcasts = Podcast::select('podcasts.*');
+
         if (!empty($categories)) {
             $podcasts = $podcasts->join('podcasts_2_categories AS p2c', 'p2c.podcast_id', '=', 'podcasts.id')->whereRaw("p2c.category_id IN ($categories)");
         }
 
         if (strlen($text) > 2) {
-            $podcasts = $podcasts->where('name', 'LIKE', '%'.$text.'%')
-            ->orWhere('description', 'LIKE', '%'.$text.'%')
-            ->orWhere('tags', 'LIKE', '%'.$text.'%');
+            $podcasts = $podcasts->where('podcasts.name', 'LIKE', '%'.$text.'%')
+            ->orWhere('podcasts.description', 'LIKE', '%'.$text.'%')
+            ->orWhere('podcasts.tags', 'LIKE', '%'.$text.'%');
         }
 
-        $podcasts = $podcasts->distinct()->limit(5)->get()->toArray();
+        if (!empty($author)) {
+            $podcasts = $podcasts->where('owner_id', '=', $author);
+        }
+
+        $podcasts = $podcasts->where('podcasts.status', '=', Podcast::STATUS_ACTIVE)
+            ->distinct()->limit(5)->get()->toArray();
 
         $podcasts_render = '';
         foreach ($podcasts as $p) {
@@ -170,6 +178,10 @@ class IndexController
             $episodes = $episodes->where('podcasts_episodes.name', 'LIKE', '%'.$text.'%')
                 ->orWhere('podcasts_episodes.description', 'LIKE', '%'.$text.'%')
                 ->orWhere('podcasts_episodes.tags', 'LIKE', '%'.$text.'%');
+        }
+
+        if (!empty($author)) {
+            $episodes = $episodes->where('podcasts.owner_id', '=', $author);
         }
 
         $episodes = $episodes->distinct('podcasts_episodes.id')->orderBy('updated_at', 'DESC');
@@ -218,7 +230,7 @@ class IndexController
 
 
     public function podcasts(Request $request) {
-        $podcasts = $this->searchPodcasts($request->get('name', ''), $request->get('categories', ''));
+        $podcasts = $this->searchPodcasts($request->get('name', ''), $request->get('categories', ''), '');
         $categories = PodcastCategory::where('status', '=', PodcastCategory::STATUS_ACTIVE)->get()->toArray();
         return view('pages.client.podcasts', ['podcasts' => $podcasts, 'categories' => $categories]);
     }
@@ -228,7 +240,7 @@ class IndexController
             exit;
         }
 
-        $podcasts = $this->searchPodcasts($request->get('name', ''), $request->get('categories', ''));
+        $podcasts = $this->searchPodcasts($request->get('name', ''), $request->get('categories', ''), $request->get('author', ''));
         $output = '';
         foreach ($podcasts as $podcast) {
             $output .= view('partials.podcast-card', ['p' => $podcast])->render();
@@ -236,18 +248,23 @@ class IndexController
         return $output;
     }
 
-    public function searchPodcasts($name = '', $categories = '') {
+    public function searchPodcasts($name = '', $categories = '', $author = '') {
         $page_size = 12;
         $search_name = $name;
         $search_categories = $categories;
-        $podcasts = Podcast::where('status', '=', Podcast::STATUS_ACTIVE);
+        $podcasts = Podcast::where('podcasts.status', '=', Podcast::STATUS_ACTIVE)
+            ->join('users', 'podcasts.owner_id', '=', 'users.id');
         if (!empty($search_categories)) {
             $podcasts = $podcasts->join('podcasts_2_categories AS p2c', 'p2c.podcast_id', '=', 'podcasts.id')->whereRaw("p2c.category_id IN ({$search_categories})");
         }
         if (!empty($search_name)) {
-            $podcasts = $podcasts->whereRaw("name LIKE '%{$search_name}%'");
+            $podcasts = $podcasts->whereRaw("podcasts.name LIKE '%{$search_name}%'");
         }
-        $podcasts = $podcasts->distinct()->limit($page_size)->orderBy('updated_at', 'desc')->get()->toArray();
+        if(!empty($author)) {
+            $podcasts = $podcasts->where('podcasts.owner_id', '=', $author);
+        }
+        $podcasts = $podcasts->where('users.status', '=', User::STATUS_NORMAL)
+            ->distinct()->limit($page_size)->orderBy('podcasts.updated_at', 'desc')->get()->toArray();
         return $podcasts;
     }
 
@@ -287,6 +304,22 @@ class IndexController
         }
 
         return abort(403);
+    }
+
+    public function viewByAuthor($id) {
+        $user = User::where('id', '=', $id)->first();
+
+        if (empty($user)) {
+            return abort(404);
+        }
+        if ($user->status != User::STATUS_NORMAL || $user->role == User::ROLE_USER) {
+            return abort(403);
+        }
+
+        $podcasts = $this->searchPodcasts('', '', $user->id);
+        $categories = PodcastCategory::where('status', '=', PodcastCategory::STATUS_ACTIVE)->get()->toArray();
+
+        return view('pages.client.podcasts-author', ['podcasts' => $podcasts, 'categories' => $categories, 'username' => $user->name, 'author' => $user->id]);
     }
 
     public function viewEpisode($id) {

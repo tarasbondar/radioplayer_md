@@ -110,7 +110,8 @@
                     url: '/all-search',
                     data: {
                         text: $('#search-field').val(),
-                        categories: categories.join(',')
+                        categories: categories.join(','),
+                        author: ''
                     },
                     success: function(response) {
                         $('.podcasts-container').html(response.podcasts);
