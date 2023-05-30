@@ -28,7 +28,10 @@ Route::get('language/{locale}', function ($locale) {
         $user->save();
     }
 
-    return redirect()->back();
+    if (url()->previous() !== url()->current()) {
+        return redirect()->back();
+    }
+    return redirect('/');
 });
 
 Route::get('/', [IndexController::class, 'index']);

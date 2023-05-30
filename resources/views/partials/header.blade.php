@@ -43,7 +43,7 @@
             <div class="header__menu__options">
                 <div class="header__menu__lang">
                     @foreach($available_locales as $locale_name => $available_locale)
-                        <a id="lang-{{ $available_locale }}" class="btn btn_large btn_switcher {{ $available_locale === $current_locale ? 'active' : '' }}" href="/{{ $available_locale }}">{{ strtoupper($available_locale) }}</a> {{----}}
+                        <a id="lang-{{ $available_locale }}" class="btn btn_large btn_switcher {{ $available_locale === $current_locale ? 'active' : '' }}" href="/language/{{ $available_locale }}">{{ strtoupper($available_locale) }}</a> {{----}}
                     @endforeach
                     {{--<a id='lang-ru' data-selector-lang class="btn btn_large btn_switcher" href="#">RU</a>
                     <a id='lang-ro' data-selector-lang class="btn btn_large btn_switcher" href="#">RO</a>
@@ -174,28 +174,28 @@
 
     <script>
 
-        (function(){
-            let language = "{{ $lang }}"; //or by cookie
-            $('#lang-'+language).addClass('active');
+        {{--(function(){--}}
+        {{--    let language = "{{ $lang }}"; //or by cookie--}}
+        {{--    $('#lang-'+language).addClass('active');--}}
 
-            $(document).on('click', '[data-selector-lang]:not(.active)', function(){
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    method: 'POST',
-                    url: '/settings/change-language',
-                    data: {'lang': $(this).html()},
-                    success: function (response) {
-                        if (response.length > 0) {
-                            $('.header__menu__lang > a.active').removeClass('active');
-                            $('#lang-'+response).addClass('active');
-                            //cookie
-                        }
-                    }
-                })
-            })
-        })(jQuery)
+        {{--    $(document).on('click', '[data-selector-lang]:not(.active)', function(){--}}
+        {{--        $.ajax({--}}
+        {{--            headers: {--}}
+        {{--                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
+        {{--            },--}}
+        {{--            method: 'POST',--}}
+        {{--            url: '/settings/change-language',--}}
+        {{--            data: {'lang': $(this).html()},--}}
+        {{--            success: function (response) {--}}
+        {{--                if (response.length > 0) {--}}
+        {{--                    $('.header__menu__lang > a.active').removeClass('active');--}}
+        {{--                    $('#lang-'+response).addClass('active');--}}
+        {{--                    //cookie--}}
+        {{--                }--}}
+        {{--            }--}}
+        {{--        })--}}
+        {{--    })--}}
+        {{--})(jQuery)--}}
 
     </script>
 

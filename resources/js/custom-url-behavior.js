@@ -8,7 +8,16 @@ export function customUrlBehavior () {
         async function updateDom(path) {
             // console.log("New content from: ", path);
             const res = await fetch(path);
-            const data = await res.text();
+            let data = null;
+            if (res.redirected) {
+                const redirectedUrl = res.url;
+                const redirectedRes = await fetch(redirectedUrl);
+                path = redirectedUrl;
+                data = await redirectedRes.text();
+            } else {
+                data = await res.text();
+            }
+            //const data = await res.text();
 
             const get = (o) => o;
             const parent = document.querySelector("#appContainer");
@@ -26,7 +35,8 @@ export function customUrlBehavior () {
                 [...dataNodes], // Array of future items/nodes (returned)
                 get // a callback to retrieve the node
             );
-
+            history.pushState({ route: path }, path, path);
+            console.log(path);
             updateLinks();
             scriptsSetup();
             window.scrollTo(0, 0);
@@ -38,7 +48,7 @@ export function customUrlBehavior () {
                     link.addEventListener("click", async (e) => {
                         const destination = link.getAttribute("href");
                         e.preventDefault();
-                        history.pushState({ route: destination }, destination, destination);
+
                         await updateDom(destination);
                     });
                 }
