@@ -1,0 +1,8 @@
+.admin-container{
+    --btn-rows-bg: #fff;
+    --btn-rows-text-color-active: #000;
+
+    .form-check{
+        color: var(--btn-rows-text-color-active);
+    }
+}

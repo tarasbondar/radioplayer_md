@@ -81,9 +81,9 @@
                         <svg class="icon"><use href="/img/sprite.svg#mic"></use></svg>
                         <span>{{ __('client.becomeAuthor') }}</span>
                         <picture>
-                            <source srcset="img/become-author-dark.png 1x, img/become-author-dark@2x.png 2x" media="(prefers-color-scheme: dark)">
-                            <source srcset="img/become-author-light.png 1x, img/become-author-light@2x.png 2x" media="(prefers-color-scheme: light) or (prefers-color-scheme: no-preference)">
-                            <img class="header__menu__link-panel__img" src="img/become-author-light.png" alt="" width="115" height="100" loading="lazy">
+                            <source srcset="/img/become-author-dark.png 1x, /img/become-author-dark@2x.png 2x" media="(prefers-color-scheme: dark)">
+                            <source srcset="/img/become-author-light.png 1x, /img/become-author-light@2x.png 2x" media="(prefers-color-scheme: light) or (prefers-color-scheme: no-preference)">
+                            <img class="header__menu__link-panel__img" src="/img/become-author-light.png" alt="" width="115" height="100" loading="lazy">
                         </picture>
                     </a>
                 @endif
