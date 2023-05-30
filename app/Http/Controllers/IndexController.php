@@ -46,6 +46,12 @@ class IndexController
         return view('pages.client.index', ['stations' => $stations, 'tags' => $tags, 'categories' => $categories, 'fav_stations' => $fav_stations]);
     }
 
+    /**
+     * Update stations
+     *
+     * @param Request $request
+     * @return string
+     */
     public function updateStations(Request $request) {
         if (!$request->ajax()) {
             exit;
@@ -54,10 +60,10 @@ class IndexController
         $category_id = $request->get('category_id', 0);
         $tag_id = $request->get('tag_id', 0);
         $stations = $this->searchStations($category_id, $tag_id);
-
+        $fav_stations = FavoriteService::getFavorites();
         $output = '';
         foreach ($stations as $station) {
-            $output .= view('partials.station-card', ['station' => $station])->render();
+            $output .= view('partials.station-card', ['station' => $station, 'fav_stations' => $fav_stations])->render();
         }
         return $output;
     }
