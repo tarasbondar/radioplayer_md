@@ -331,4 +331,3 @@
 		</div>
 	</div>
 </div>
-{{--<audio loop="true" ref="audiofile" src="https://res.cloudinary.com/dmf10fesn/video/upload/v1548882863/audio/Post_Malone_-_Wow._playvk.com.mp3" preload style="display: none" controls></audio>--}}

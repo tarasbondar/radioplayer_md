@@ -79,7 +79,7 @@
 
         (function(){
             $(document).on('change', '#search-field', function() {
-                if ($(this).val().length > 5) {
+                if ($(this).val().length > 2) {
                     allSearch();
                 }
             });

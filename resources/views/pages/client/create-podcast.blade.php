@@ -153,7 +153,7 @@
             });
 
             $(document).on('click', '#delete-podcast', function () {
-                //if (confirm('Are you sure?')) {
+                if (confirm('Are you sure?')) {
                     let id = $(this).val();
                     $.ajax({
                         headers: {
@@ -166,8 +166,7 @@
                             window.location.href = '/my-podcasts';
                         }
                     })
-                //}
-
+                }
 
             })
 

@@ -143,7 +143,7 @@ class IndexController
             $podcasts = $podcasts->join('podcasts_2_categories AS p2c', 'p2c.podcast_id', '=', 'podcasts.id')->whereRaw("p2c.category_id IN ($categories)");
         }
 
-        if (strlen($text) > 5) {
+        if (strlen($text) > 2) {
             $podcasts = $podcasts->where('name', 'LIKE', '%'.$text.'%')
             ->orWhere('description', 'LIKE', '%'.$text.'%')
             ->orWhere('tags', 'LIKE', '%'.$text.'%');

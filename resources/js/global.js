@@ -60,7 +60,7 @@ export function global() {
 
     $(document).on('click', '.delete-episode', function () {
         let id = $(this).attr('data-id');
-        //if (confirm('Are you sure?')) {
+        if (confirm('Are you sure?')) {
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -72,7 +72,7 @@ export function global() {
                     window.location.href = '/podcasts/' + response + '/view';
                 }
             });
-        //}
+        }
     });
 
     $(document).on('click', '.shareButton', function () {

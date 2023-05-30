@@ -1,5 +1,5 @@
 <ul class="dropdown-menu dropdown-menu-end">
-    <li>
+    {{--<li>
         <a class="dropdown-item" href="/episodes/{{$episode['id']}}/view">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -7,21 +7,10 @@
             </svg>
             {{ __('app.view') }}
         </a>
-    </li>
+    </li>--}}
 
-    @if(auth()->id() == $episode['user_id'])
-        <li>
-            <a class="dropdown-item" href="/edit-episode/{{$episode['id']}}">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M17 2.99981C17.2626 2.73717 17.5744 2.52883 17.9176 2.38669C18.2608 2.24455 18.6286 2.17139 19 2.17139C19.3714 2.17139 19.7392 2.24455 20.0824 2.38669C20.4256 2.52883 20.7374 2.73717 21 2.99981C21.2626 3.26246 21.471 3.57426 21.6131 3.91742C21.7553 4.26058 21.8284 4.62838 21.8284 4.99981C21.8284 5.37125 21.7553 5.73905 21.6131 6.08221C21.471 6.42537 21.2626 6.73717 21 6.99981L7.5 20.4998L2 21.9998L3.5 16.4998L17 2.99981Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                {{ __('app.edit') }}
-            </a>
-        </li>
-    @endif
-
-    <li>
-        <a class="dropdown-item download-episode" href="#">
+    {{--<li>
+        <a class="dropdown-item download-episode" href="javascript:void(0)">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_820_11406)">
                     <path d="M8 17L12 21L16 17" stroke="#0F0F0F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -36,11 +25,34 @@
             </svg>
             {{ __('app.download') }}
         </a>
+    </li>--}}
+
+    <li>
+        <a class="dropdown-item mark-as-listened" href="javascript:void(0)">
+            {{ __('app.mark-as-listened') }}
+        </a>
+    </li>
+
+    <li>
+        <a class="dropdown-item share-episode" href="javascript:void(0)">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <use href="/img/sprite.svg#share-2"></use>
+            </svg>
+            {{ __('app.share') }}
+        </a>
     </li>
 
     @if(auth()->id() == $episode['user_id'])
         <li>
-            <a class="dropdown-item delete-episode" data-id="{{ $episode['id'] }}" href="">
+            <a class="dropdown-item" href="/edit-episode/{{$episode['id']}}">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17 2.99981C17.2626 2.73717 17.5744 2.52883 17.9176 2.38669C18.2608 2.24455 18.6286 2.17139 19 2.17139C19.3714 2.17139 19.7392 2.24455 20.0824 2.38669C20.4256 2.52883 20.7374 2.73717 21 2.99981C21.2626 3.26246 21.471 3.57426 21.6131 3.91742C21.7553 4.26058 21.8284 4.62838 21.8284 4.99981C21.8284 5.37125 21.7553 5.73905 21.6131 6.08221C21.471 6.42537 21.2626 6.73717 21 6.99981L7.5 20.4998L2 21.9998L3.5 16.4998L17 2.99981Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                {{ __('app.edit') }}
+            </a>
+        </li>
+        <li>
+            <a class="dropdown-item delete-episode" data-id="{{ $episode['id'] }}" href="javascript:void(0)">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     <path d="M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
