@@ -8,6 +8,7 @@ use App\Models\RadioStationGroup;
 use App\Models\RadioStationTag;
 use App\Models\RadioStation2Category;
 use App\Models\RadioStation2Tag;
+use App\Services\RadioApiService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -31,7 +32,16 @@ class RadioStationController extends Controller
         $categories = RadioStationCategory::where('status', '=', RadioStationCategory::STATUS_ACTIVE)->get(['id', 'key']);
         $tags = RadioStationTag::where('status', '=', RadioStationTag::STATUS_ACTIVE)->get(['id', 'key']);
         $groups = RadioStationGroup::all()->toArray();
-        return view('pages.admin.radiostations-edit', ['action' => 'add', 'categories' => $categories, 's2c' => [], 'tags' => $tags, 's2t' => [], 'groups' => $groups]);
+
+        return view('pages.admin.radiostations-edit', [
+            'action' => 'add',
+            'categories' => $categories,
+            's2c' => [],
+            'tags' => $tags,
+            's2t' => [],
+            'groups' => $groups,
+            'apis' => RadioApiService::$apiLabels
+        ]);
     }
 
     public function edit($id) {
@@ -41,7 +51,16 @@ class RadioStationController extends Controller
         $tags = RadioStationTag::where('status', '=', RadioStationTag::STATUS_ACTIVE)->get(['id', 'key']);
         $s2t = $this->getTagsByStation($id);
         $groups = RadioStationGroup::all()->toArray();
-        return view('pages.admin.radiostations-edit', ['action' => 'edit', 'station' => $station, 'categories' => $categories, 's2c' => $s2c, 'tags' => $tags, 's2t' => $s2t, 'groups' => $groups]);
+        return view('pages.admin.radiostations-edit', [
+            'action' => 'edit',
+            'station' => $station,
+            'categories' => $categories,
+            's2c' => $s2c,
+            'tags' => $tags,
+            's2t' => $s2t,
+            'groups' => $groups,
+            'apis' => RadioApiService::$apiLabels
+        ]);
     }
 
     public function save(Request $request) {
@@ -60,6 +79,7 @@ class RadioStationController extends Controller
         $station->source = $request['source'];
         $station->source_hd = $request['source-hd'];
         $station->source_meta = $request['source-meta'];
+        $station->api_id = $request['api_id'];
 
         if ($request->has('image')) {
             if (isset($station->image_logo)) {

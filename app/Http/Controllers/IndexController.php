@@ -13,6 +13,7 @@ use App\Models\RadioStationCategory;
 use App\Models\RadioStationTag;
 use App\Models\User;
 use App\Services\FavoriteService;
+use App\Services\RadioApiService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
@@ -22,10 +23,16 @@ use Illuminate\Support\Facades\DB;
 class IndexController
 {
 
-    public function __construct() {
+    private RadioApiService $radioApiService;
+
+    public function __construct(RadioApiService $radioApiService)
+    {
+        $this->radioApiService = $radioApiService;
+
         $lang = Auth::check() ? Auth::user()->language : 'en';
         view()->share(['lang' => $lang]);
     }
+
 
     /**
      * Home page
@@ -397,5 +404,13 @@ class IndexController
             return FavoriteService::favStationForUnregisteredUser($id);
         }
         return FavoriteService::favStationForRegisteredUser($id);
+    }
+
+    public function getStationInfo($id) {
+        $model = RadioStation::find($id);
+        if (!$model)
+            return response()->json(['status' => 'error', 'message' => 'No entity found'], 404);
+
+        return response()->json($this->radioApiService->getStationInfo($model));
     }
 }

@@ -20,10 +20,13 @@ export let player = {
     },
     playlist: [],
     autoplay: true,
+    stationId: null,
     episodeId: null,
     playerOpenedMob: false,
     lastSavedTime: 0,
     initialSaveTime: 0,
+    lastRadioInfoTime: 0,
+    playerType: 'radio',
     init(){
         this.initVolumeSlider();
         this.initEvents();
@@ -115,6 +118,7 @@ export let player = {
     },
     changeStation(id){
         let self = this;
+
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -132,12 +136,15 @@ export let player = {
                     tooltips();
                 }
                 $('body').addClass('player-open');
-                //if isset then stop
                 self.createPlayer();
                 self.setSource($('#audio-source').val());
+                self.stationId = id;
                 if (self.timer.isActive)
                     self.timerApply(true);
                 self.changePlayIcon();
+                self.lastSavedTime = 0;
+                self.initialSaveTime = 0;
+                self.lastRadioInfoTime = 0;
             }
         })
     },
@@ -178,6 +185,7 @@ export let player = {
 
                 self.lastSavedTime = 0;
                 self.initialSaveTime = 0;
+                self.lastRadioInfoTime = 0;
             }
         })
     },
@@ -224,26 +232,46 @@ export let player = {
         $('[data-audio-progress]').val(progress);
         const minutes = Math.floor(window.audio.currentTime / 60);
         const seconds = Math.floor(window.audio.currentTime % 60);
-
+        let playerType = $('[data-player]').attr('data-player');
         $('[data-audio-current-time]').text(String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0'));
         $('#start-time').val(window.audio.currentTime);
         // Save watch time every 5 seconds after the initial 10 seconds
-        if (window.audio.currentTime >= 10) {
+        if (playerType === 'podcast' && window.audio.currentTime >= 10) {
             if (!player.lastSavedTime || window.audio.currentTime - player.lastSavedTime >= 5) {
                 player.saveWatchTime();
                 player.lastSavedTime = window.audio.currentTime;
             }
         }
 
+        if (playerType === 'radio' && (!player.lastRadioInfoTime || window.audio.currentTime - player.lastRadioInfoTime >= 5)){
+            player.getStationInfo();
+            player.lastRadioInfoTime = window.audio.currentTime;
+        }
+
 
         if (e.type === 'ended'){
-            player.saveWatchTime(true);
+            if ($('[data-player]').attr('data-player') === 'podcast')
+                player.saveWatchTime(true);
             if ($('[data-player-autoplay]').prop('checked')){
                 player.changeTrack('next')
             }
             player.changePlayIcon();
 
         }
+    },
+    getStationInfo(){
+        let self = this;
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            method: 'GET',
+            url: '/get-station-info/'+self.stationId,
+            success: function (response) {
+                $('[data-artist]').html(response.artist);
+                $('[data-song]').html(response.song);
+            }
+        })
     },
     changePlaybackRate(forceRate = null){
         if (forceRate !== null) {

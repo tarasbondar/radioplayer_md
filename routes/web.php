@@ -40,6 +40,7 @@ Route::get('/podcasts', [IndexController::class, 'podcasts']);
 Route::get('/favorite-station/{id}', [IndexController::class, 'favStation']);
 Route::post('/update-stations', [IndexController::class, 'updateStations']);
 Route::get('/play-station/{id}', [IndexController::class, 'playStation']);
+Route::get('/get-station-info/{id}', [IndexController::class, 'getStationInfo']);
 
 Route::get('/apply', [ProfileController::class, 'apply']);
 Route::post('/send-application', [ProfileController::class, 'sendApplication']);

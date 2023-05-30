@@ -41,8 +41,21 @@
                         <label for="source-hd" class="col-md-4 col-form-label text-md-right">Source HD</label>
                         <div class="col-md-6"> <input id="source-hd" type="text" class="form-control" name="source-hd" value="{{ @$station['source_hd'] }}"> </div>
                     </div>
+
                     <div class="mb-3 form-group row">
-                        <label for="source-meta" class="col-md-4 col-form-label text-md-right">Metadata</label>
+                        <label for="group-id" class="col-md-4 col-form-label text-md-right">API</label>
+                        <div class="col-md-6">
+                            <select class="form-select" aria-label="API select" name="api_id">
+                                <option value="0">No API</option>
+                                @foreach($apis as $apiId => $apiLabel)
+                                    <option value="{{ $apiId }}" {{ $apiId == @$station['api_id'] ? 'selected' : '' }}>{{ $apiLabel }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 form-group row">
+                        <label for="source-meta" class="col-md-4 col-form-label text-md-right">API Metadata</label>
                         <div class="col-md-6"> <input id="source-meta" type="text" class="form-control" name="source-meta" value="{{ @$station['source_meta'] }}"> </div>
                     </div>
 
