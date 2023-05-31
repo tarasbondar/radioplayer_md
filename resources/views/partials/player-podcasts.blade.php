@@ -1,3 +1,6 @@
+<?php
+    use App\Helpers\SiteHelper;
+?>
 @php
     /** @var \App\Models\Podcast $podcast */
     $image = $podcast->image ? '/uploads/podcasts_images/' . $podcast->image : '/img/podcast-placeholder.png';
@@ -81,7 +84,7 @@
 			    <div class="np-modal__player-body__player-progress">
 				    <input type="range" data-audio-progress class="custom-range" value="0">
 				    <span class="current-progress x-small" data-audio-current-time>0:00</span>
-				    <span class="end-progress x-small">{{ \App\Helpers\SiteHelper::getMp3Duration($current['source_path'])  }}</span>
+				    <span class="end-progress x-small">{{ SiteHelper::getFormattedDuration(SiteHelper::getMp3Duration($current['source_path'])) }}</span>
 			    </div>
 
 			    <div class="np-modal__player-body__main-actions">
@@ -216,7 +219,7 @@
 							    </span>
 						    </li>
 						    <li>
-							    <span class="dropdown-item">
+							    <span class="dropdown-item" data-set-listened="{{ $current['id'] }}">
 								    <svg class="icon ms-0">
 									    <use href="/img/sprite.svg#check"></use>
 								    </svg>

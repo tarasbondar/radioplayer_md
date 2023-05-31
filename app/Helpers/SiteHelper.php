@@ -14,7 +14,7 @@ class SiteHelper
         return round(pow(1024, $base - floor($base)), $precision) . $suffixes[floor($base)];
     }
 
-    public static function getMp3Duration($filePath): ?string
+    public static function getMp3Duration($filePath): int
     {
         $getID3 = new GetID3;
 
@@ -24,12 +24,17 @@ class SiteHelper
         // Check if duration information is available
         if (isset($fileInfo['playtime_seconds'])) {
             $duration = $fileInfo['playtime_seconds'];
-
+            return $duration;
             // Format the duration as HH:MM:SS or MM:SS
-            return gmdate("H:i:s", $duration);
+
             //return ($duration >= 3600) ? gmdate("H:i:s", $duration) : gmdate("i:s", $duration);
         }
 
-        return null; // Duration information not found
+        return 0; // Duration information not found
+    }
+
+    public static function getFormattedDuration($duration = 0): string
+    {
+        return gmdate("H:i:s", $duration);
     }
 }

@@ -111,7 +111,35 @@ export let player = {
             },
             success: function (response) {
                 if (response.status === 'success'){
-                    $('[data-play-episode="'+ response.episode_id +'"]').addClass('active');
+                    if (!isEnded && !response.is_listened){
+                        $('[data-play-episode="'+ response.episode_id +'"]').addClass('active');
+                        $('[data-play-episode="'+ response.episode_id +'"] [data-is_listened="0"]').removeClass('hidden');
+                        $('[data-play-episode="'+ response.episode_id +'"] [data-is_listened="1"]').addClass('hidden');
+                    }
+
+                    $('[data-duration-left="'+ response.episode_id +'"]').html(response.duration_left_label);
+                }
+            }
+        })
+    },
+    setListened(episodeId){
+        let self = this;
+        if (self.episodeId === null)
+            return;
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            method: 'POST',
+            url: '/set-listened',
+            data: {
+                episode_id: episodeId,
+            },
+            success: function (response) {
+                if (response.status === 'success'){
+                    $('[data-play-episode="'+ response.episode_id +'"]').removeClass('active').addClass('listened');
+                    $('[data-play-episode="'+ response.episode_id +'"] [data-is_listened="0"]').addClass('hidden');
+                    $('[data-play-episode="'+ response.episode_id +'"] [data-is_listened="1"]').removeClass('hidden');
                 }
             }
         })
@@ -250,8 +278,11 @@ export let player = {
 
 
         if (e.type === 'ended'){
-            if ($('[data-player]').attr('data-player') === 'podcast')
+            if ($('[data-player]').attr('data-player') === 'podcast'){
+                player.setListened(player.episodeId);
                 player.saveWatchTime(true);
+            }
+
             if ($('[data-player-autoplay]').prop('checked')){
                 player.changeTrack('next')
             }
@@ -580,6 +611,10 @@ export let player = {
         $(document).on('click', '[data-np-modal-close]', function(){
             $('[data-player]').removeClass('open')
             self.playerOpenedMob = false;
+        })
+        $(document).on('click', '[data-set-listened]', function(){
+            let episodeId = $(this).attr('data-set-listened')
+            self.setListened(episodeId);
         })
     },
 }

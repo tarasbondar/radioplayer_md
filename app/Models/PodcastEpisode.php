@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\SiteHelper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -38,7 +39,7 @@ class PodcastEpisode extends Model
     protected $fillable = ['podcast_id', 'name', 'description', 'tags', 'source', 'filename', 'status'];
 
     protected $appends = ['created_diff', 'is_in_playlist', 'source_path', 'source_url', 'is_in_listen_later',
-        'is_in_history', 'is_downloaded', 'start_time'];
+        'is_in_history', 'is_downloaded', 'start_time', 'is_listened', 'duration_left_label'];
 
     public function podcast() {
         return $this->belongsTo(Podcast::class, 'podcast_id', 'id');
@@ -83,6 +84,17 @@ class PodcastEpisode extends Model
         return HistoryRecord::where('user_id', auth()->id())->where('episode_id', $this->id)->exists();
     }
 
+    public function getIsListenedAttribute(): bool
+    {
+        if (!auth()->check()) {
+            return false;
+        }
+        return HistoryRecord::where('user_id', auth()->id())
+            ->where('episode_id', $this->id)
+            ->where('is_listened', true)
+            ->exists();
+    }
+
     public function getIsDownloadedAttribute(): bool {
         if (!auth()->check()) {
             return false;
@@ -100,6 +112,19 @@ class PodcastEpisode extends Model
             return 0;
         }
         return $historyRecord->time;
+    }
+
+    public function getDurationLeftLabelAttribute(): ?string
+    {
+        $duration = SiteHelper::getMp3Duration(public_path(PodcastEpisode::UPLOADS_AUDIO.'/'.@$this->source));
+        if (!auth()->check()) {
+            return SiteHelper::getFormattedDuration($duration);
+        }
+        $historyRecord = HistoryRecord::where('user_id', auth()->id())->where('episode_id', $this->id)->first();
+        if (!$historyRecord) {
+            return SiteHelper::getFormattedDuration($duration);
+        }
+        return SiteHelper::getFormattedDuration($duration - $historyRecord->time);;
     }
 
 }

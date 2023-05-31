@@ -27,7 +27,7 @@ use App\Models\PodcastEpisode;
                         <strong class="podcast__title">{{ $episode['name'] }}</strong>
                         <div class="podcast__holder">
                             <div class="podcast__timer play-episode {{ ($episode['is_in_history']) ? 'active' : '' }}" data-play-episode="{{ $episode['id'] }}" data-episode="{{ $episode['id'] }}">
-                                <div class="play">
+                                <div data-card-icon-play>
                                     <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <g clip-path="url(#clip0_801_29988)">
                                             <path d="M2.5 1.5L9.5 6L2.5 10.5V1.5Z" fill="currentColor" stroke="currentColor" stroke-width="0.666667" stroke-linecap="round" stroke-linejoin="round"/>
@@ -39,7 +39,14 @@ use App\Models\PodcastEpisode;
                                         </defs>
                                     </svg>
                                 </div>
-                                <span>{{ SiteHelper::getMp3Duration(public_path(PodcastEpisode::UPLOADS_AUDIO.'/'.@$episode['source'])) }}</span>
+                                <div data-card-icon-pause hidden>
+                                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M5 2H3V10H5V2Z" fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
+                                        <path d="M9 2H7V10H9V2Z" fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    </svg>
+                                </div>
+                                <span data-is_listened="0" data-duration-left="{{ $episode['id'] }}" class="{{ $episode['is_listened'] ? 'hidden' : '' }}">{{ @$episode['duration_left_label'] }}</span>
+                                <span data-is_listened="1" class="{{ !$episode['is_listened'] ? 'hidden' : '' }}">{{ __('client.listened') }}</span>
                             </div>
                         </div>
                         <p class="podcast__text">{{ $episode['description'] }}</p>

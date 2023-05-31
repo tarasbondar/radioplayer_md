@@ -12,7 +12,7 @@
     <p class="podcast__elem-text"> {{ $episode['description'] }} </p>
     <div class="podcast__holder">
 
-        <div class="podcast__timer play-episode {{ ($episode['is_in_history']) ? 'active' : '' }}" data-play-episode="{{ $episode['id'] }}" data-episode="{{ $episode['id'] }}">
+        <div class="podcast__timer play-episode {{ ($episode['is_in_history'] && !$episode['is_listened']) ? 'active' : '' }}" data-play-episode="{{ $episode['id'] }}" data-episode="{{ $episode['id'] }}">
             <div data-card-icon-play>
                 <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g clip-path="url(#clip0_801_29988)">
@@ -31,7 +31,8 @@
                     <path d="M9 2H7V10H9V2Z" fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
                 </svg>
             </div>
-            <span>{{ SiteHelper::getMp3Duration(public_path(PodcastEpisode::UPLOADS_AUDIO.'/'.@$episode['source'])) }}</span>
+            <span data-is_listened="0" data-duration-left="{{ $episode['id'] }}" class="{{ $episode['is_listened'] ? 'hidden' : '' }}">{{ @$episode['duration_left_label'] }}</span>
+            <span data-is_listened="1" class="{{ !$episode['is_listened'] ? 'hidden' : '' }}">{{ __('client.listened') }}</span>
         </div>
 
         @if(auth()->id() == $episode['user_id'])

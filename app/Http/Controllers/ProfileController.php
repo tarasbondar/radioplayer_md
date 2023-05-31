@@ -355,6 +355,9 @@ class ProfileController extends Controller
             return response()->json(['status' => 'error', 'message' => 'Auth required']);
 
         $episodeId = $request->get('episode_id');
+        $episode = PodcastEpisode::find($episodeId);
+        if (!$episode)
+            return response()->json(['status' => 'error', 'message' => 'No episode found']);
         $time = $request->get('time');
         $model = HistoryRecord::where('user_id', '=', $user->id)->where('episode_id', '=', $episodeId)->first();
         if ($model) {
@@ -372,7 +375,32 @@ class ProfileController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'episode_id' => $episodeId
+            'episode_id' => $episodeId,
+            'is_listened' => $model->is_listened,
+            'duration_left_label' => $episode->duration_left_label
+        ]);
+    }
+
+    public function setListened(Request $request) {
+        $user = Auth::user();
+        if (!$user)
+            return response()->json(['status' => 'error', 'message' => 'Auth required']);
+
+        $episodeId = $request->get('episode_id');
+        $model = HistoryRecord::where('user_id', '=', $user->id)->where('episode_id', '=', $episodeId)->first();
+        if (!$model)
+            $model = new HistoryRecord();
+
+        $model->is_listened = 1;
+        $model->save();
+
+        //$user->refresh();
+
+
+        return response()->json([
+            'status' => 'success',
+            'episode_id' => $episodeId,
+            'is_listened' => $model->is_listened
         ]);
     }
 
