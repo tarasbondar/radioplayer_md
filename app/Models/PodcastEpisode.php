@@ -64,7 +64,7 @@ class PodcastEpisode extends Model
         if (!auth()->check()) {
             return false;
         }
-        return Playlist::where('user_id', auth()->id())->where('episode_id', $this->id)->exists();
+        return PlaylistRecord::where('user_id', auth()->id())->where('episode_id', $this->id)->exists();
     }
 
     public function getIsInListenLaterAttribute(): bool

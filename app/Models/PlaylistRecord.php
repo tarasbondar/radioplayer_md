@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * App\Models\Playlist
+ * App\Models\PlaylistRecord
  *
  * @property int $id
  * @property int $user_id
@@ -17,9 +17,11 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \App\Models\PodcastEpisode|null $episode
  * @property-read \App\Models\User|null $user
  */
-class Playlist extends Model
+class PlaylistRecord extends Model
 {
     use HasFactory;
+
+    protected $table = 'playlists';
 
     protected $fillable = [
         'user_id',

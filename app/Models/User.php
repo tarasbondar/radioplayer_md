@@ -22,7 +22,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string|null $language
  * @property string|null $remember_token
  *
- * @property Playlist[] $playlist
+ * @property PlaylistRecord[] $playlist
  * @property QueuedEpisode[] $listenLater
  * @property-read string $role_name
  * @property-read string $status_name
@@ -79,7 +79,7 @@ class User extends Authenticatable
 
     public function playlist()
     {
-        return $this->hasMany(Playlist::class, 'user_id')->orderBy('sort');
+        return $this->hasMany(PlaylistRecord::class, 'user_id')->orderBy('sort');
     }
 
     public function listenLater()

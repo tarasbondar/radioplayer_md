@@ -6,6 +6,7 @@
 
         <h2>
             @switch ($app['status'])
+                @case(-1) {{ 'Blocked' }} @break
                 @case(0) {{ 'Declined' }} @break
                 @case(1) {{ 'Pending' }} @break
                 @case(2) {{ 'Accepted' }} @break
@@ -70,13 +71,12 @@
 
                 <div class="form-group row mb-0">
                     <div class="col-md-8 offset-md-4">
-                        <button class="btn submit-app btn-success" value="2" id="app-accept"> Accept </button>
-                        <button class="btn submit-app btn-warning" value="0" id="app-decline"> Decline </button>
-                        <button class="btn submit-app btn-danger" value="-1" id="app-no-retry"> Decline and block </button>
+                        <button class="btn submit-app btn-success" value="2"> Accept </button>
+                        <button class="btn submit-app btn-warning" value="0"> Decline </button>
+                        <button class="btn submit-app btn-danger" value="-1"> Decline and block </button>
                         <a href="{{ request()->headers->get('referer') }}" class="btn"> Go back </a>
                     </div>
                 </div>
-
 
             </div>
         </div>

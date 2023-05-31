@@ -107,6 +107,29 @@ export function global() {
         copyToClipboard(share);
     });
 
+    $(document).on('click', '.subscribe-to', function () {
+        let button = $(this);
+        let classes = button.attr('class').split(" ");
+        let podcast_id = 0;
+        $.each(classes, function (k, v) {
+            if (v.search('podcast-') >= 0) {
+                podcast_id = v.split("-")[1];
+            }
+        });
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            method: 'POST',
+            url: '/subscribe-to',
+            data: {id: podcast_id },
+            success: function(response){
+                $('.button-container').html(response);
+            }
+        })
+    });
+
 
     $( document ).ready(function() {
         var queryString = window.location.search;

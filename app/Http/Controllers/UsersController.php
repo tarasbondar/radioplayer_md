@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AuthorApplication;
 use App\Models\DownloadRecord;
 use App\Models\HistoryRecord;
+use App\Models\PlaylistRecord;
 use App\Models\Podcast;
 use App\Models\PodcastCategory;
 use App\Models\PodcastEpisode;
@@ -114,6 +115,7 @@ class UsersController extends Controller
                             DownloadRecord::where('episode_id', '=', $e->id)->delete();
                             QueuedEpisode::where('episode_id', '=', $e->id)->delete();
                             HistoryRecord::where('episode_id', '=', $e->id)->delete();
+                            PlaylistRecord::where('episode_id', '=', $e->id)->delete();
                             $e->delete();
                         }
                     }

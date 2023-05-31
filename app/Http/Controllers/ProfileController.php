@@ -7,7 +7,7 @@ use App\Http\Requests\ChangePasswordRequest;
 use App\Models\AuthorApplication;
 use App\Models\DownloadRecord;
 use App\Models\HistoryRecord;
-use App\Models\Playlist;
+use App\Models\PlaylistRecord;
 use App\Models\Podcast;
 use App\Models\Podcast2Category;
 use App\Models\PodcastCategory;
@@ -186,6 +186,7 @@ class ProfileController extends Controller
                 DownloadRecord::where('episode_id', '=', $e->id)->delete();
                 QueuedEpisode::where('episode_id', '=', $e->id)->delete();
                 HistoryRecord::where('episode_id', '=', $e->id)->delete();
+                PlaylistRecord::where('episode_id', '=', $e->id)->delete();
                 $e->delete();
             }
         }
@@ -278,6 +279,7 @@ class ProfileController extends Controller
             DownloadRecord::where('episode_id', '=', $episode->id)->delete();
             QueuedEpisode::where('episode_id', '=', $episode->id)->delete();
             HistoryRecord::where('episode_id', '=', $episode->id)->delete();
+            PlaylistRecord::where('episode_id', '=', $episode->id)->delete();
             $episode->delete();
             return $podcast['id'];
         }
@@ -392,7 +394,7 @@ class ProfileController extends Controller
             $existingPlaylistItem->delete();
         } else {
             // If the playlist item does not exist, create a new playlist item
-            $newPlaylistItem = new Playlist();
+            $newPlaylistItem = new PlaylistRecord();
             $newPlaylistItem->user_id = $user->id;
             $newPlaylistItem->episode_id = $episode->id;
             $newPlaylistItem->sort = 0;
@@ -414,7 +416,7 @@ class ProfileController extends Controller
         if (!$user)
             return response()->json(['status' => 'error', 'message' => 'User not found'], 404);
         foreach ($request['playlist'] as $key => $episodeId){
-            Playlist::where([
+            PlaylistRecord::where([
                 ['user_id', '=', $user->id],
                 ['episode_id', '=', $episodeId]
             ])->update(['sort' => $key]);
