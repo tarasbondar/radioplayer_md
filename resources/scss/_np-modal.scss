@@ -38,6 +38,7 @@
     }
     .logo__img {
       height: rem(210px);
+      object-fit: cover;
       @media (max-width: 768px) {
         height: auto;
       }
