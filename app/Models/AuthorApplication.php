@@ -9,6 +9,7 @@ class AuthorApplication extends Model
 {
     use HasFactory;
 
+    const STATUS_NO_RETRY = -1;
     const STATUS_DECLINED = 0;
     const STATUS_PENDING = 1;
     const STATUS_APPROVED = 2;

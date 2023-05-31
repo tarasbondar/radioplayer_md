@@ -155,23 +155,21 @@ class UsersController extends Controller
     }
 
     public function reviewApp(Request $request) {
-        if ($request->get('status') == AuthorApplication::STATUS_APPROVED) {
-            $app = AuthorApplication::find($request->get('id'));
-            $app->status = AuthorApplication::STATUS_APPROVED;
-            $app->save();
-            $user = User::find($app->user_id);
+        $status = $request->get('status');
+        $app = AuthorApplication::find($request->get('id'));
+        $user = User::find($app->user_id);
+        if ($status == AuthorApplication::STATUS_APPROVED) {
             $user->role = User::ROLE_AUTHOR;
-            $user->save();
-        } elseif ($request->get('status') == AuthorApplication::STATUS_DECLINED) {
-            $app = AuthorApplication::find($request->get('id'));
-            $app->status = AuthorApplication::STATUS_DECLINED;
+        } elseif ($status == AuthorApplication::STATUS_DECLINED || $status == AuthorApplication::STATUS_NO_RETRY) {
             $app->feedback_message = $request->get('feedback');
-            $app->save();
-            //notification?
+            $user->role = User::ROLE_USER;
         }
 
-        return;
-        //return $request->all();
+        $user->save();
+        $app->status = $status;
+        $app->save();
+
+        return '';
     }
 
 }

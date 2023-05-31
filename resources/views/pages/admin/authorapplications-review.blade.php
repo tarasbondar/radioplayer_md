@@ -55,30 +55,29 @@
                     <div class="col-md-6 py-2"> <span> {{ (@$app['status'] == 2 ? 'Accepted' : ($app['status'] == 1 ? 'Pending' : 'Declined') ) }} </span>  </div>
                 </div>
 
-                @if($app['status'] == 1)
-                    <div class="form-group row" hidden>
-                        <input id="app-id" type="text" class="form-control" name="id" value="{{ @$app['id'] }}" readonly>
-                    </div>
-                    <div class="mb-3 form-group row">
-                        <label for="feedback" class="col-md-4 col-form-label text-md-right">Feedback</label>
-                        <div class="col-md-6"> <textarea id="feedback" type="text" class="form-control" name="feedback" required> {{ @$app['feedback'] }} </textarea> </div>
-                    </div>
+                <div class="mb-3 form-group row">
+                    <label class="col-md-4 col-form-label text-md-right">Review time</label>
+                    <div class="col-md-6 py-2"> <span> {{ @$app['updated_at'] }} </span>  </div>
+                </div>
 
-                    <div class="form-group row mb-0">
-                        <div class="col-md-6 offset-md-4">
-                            <button class="btn btn-success" id="app-accept"> Accept </button>
-                            <button class="btn btn-danger" id="app-decline"> Decline </button>
-                            <a href="{{ request()->headers->get('referer') }}" class="btn"> Go back </a>
-                        </div>
-                    </div>
-                @endif
+                <div class="form-group row" hidden>
+                    <input id="app-id" type="text" class="form-control" name="id" value="{{ @$app['id'] }}" readonly>
+                </div>
+                <div class="mb-3 form-group row">
+                    <label for="feedback" class="col-md-4 col-form-label text-md-right">Feedback</label>
+                    <div class="col-md-6"> <textarea id="feedback" type="text" class="form-control" name="feedback" required> {{ @$app['feedback_message'] }} </textarea> </div>
+                </div>
 
-                @if($app['status'] == 0)
-                    <div class="mb-3 form-group row">
-                        <label for="feedback" class="col-md-4 col-form-label text-md-right">Feedback</label>
-                        <div class="col-md-6"> <textarea id="feedback" type="text" class="form-control" name="feedback" readonly> {{ @$app['feedback'] }} </textarea> </div>
+                <div class="form-group row mb-0">
+                    <div class="col-md-8 offset-md-4">
+                        <button class="btn submit-app btn-success" value="2" id="app-accept"> Accept </button>
+                        <button class="btn submit-app btn-warning" value="0" id="app-decline"> Decline </button>
+                        <button class="btn submit-app btn-danger" value="-1" id="app-no-retry"> Decline and block </button>
+                        <a href="{{ request()->headers->get('referer') }}" class="btn"> Go back </a>
                     </div>
-                @endif
+                </div>
+
+
             </div>
         </div>
     </div>
@@ -87,8 +86,8 @@
 
         (function(){
 
-            $(document).on('click', '#app-accept', function() {
-                //console.log($('#app-id').val());
+            $(document).on('click', '.submit-app', function(){
+                let status = $(this).val();
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -96,25 +95,7 @@
                     url: '/admin/author-apps-review',
                     data: {
                         id: $('#app-id').val(),
-                        status: 2
-
-                    },
-                    method: 'POST',
-                    success: function (response) {
-                        window.location.href = '/admin/author-apps';
-                    }
-                });
-            });
-
-            $(document).on('click', '#app-decline', function(){
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    url: '/admin/author-apps-review',
-                    data: {
-                        id: $('#app-id').val(),
-                        status: 0,
+                        status: status,
                         feedback: $("#feedback").val()
                     },
                     method: 'POST',
@@ -124,7 +105,7 @@
                 });
             });
 
-        })(jQuery)
+        })(jQuery);
 
 
     </script>

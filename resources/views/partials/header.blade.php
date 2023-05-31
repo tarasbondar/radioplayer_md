@@ -172,31 +172,4 @@
     </div>
     <div class="header__menu-backdrop" data-menu-backdrop></div>
 
-    <script>
-
-        {{--(function(){--}}
-        {{--    let language = "{{ $lang }}"; //or by cookie--}}
-        {{--    $('#lang-'+language).addClass('active');--}}
-
-        {{--    $(document).on('click', '[data-selector-lang]:not(.active)', function(){--}}
-        {{--        $.ajax({--}}
-        {{--            headers: {--}}
-        {{--                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
-        {{--            },--}}
-        {{--            method: 'POST',--}}
-        {{--            url: '/settings/change-language',--}}
-        {{--            data: {'lang': $(this).html()},--}}
-        {{--            success: function (response) {--}}
-        {{--                if (response.length > 0) {--}}
-        {{--                    $('.header__menu__lang > a.active').removeClass('active');--}}
-        {{--                    $('#lang-'+response).addClass('active');--}}
-        {{--                    //cookie--}}
-        {{--                }--}}
-        {{--            }--}}
-        {{--        })--}}
-        {{--    })--}}
-        {{--})(jQuery)--}}
-
-    </script>
-
 </header>

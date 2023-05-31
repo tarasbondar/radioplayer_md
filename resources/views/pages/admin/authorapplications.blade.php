@@ -10,7 +10,8 @@
             <div class="col-md-12 text-right mt-3 mb-3">
                 <a href="/admin/author-apps?status={{ \App\Models\AuthorApplication::STATUS_PENDING }}" class="btn btn-primary" type="button">Pending</a>
                 <a href="/admin/author-apps?status={{ \App\Models\AuthorApplication::STATUS_APPROVED }}" class="btn btn-success" type="button">Approved</a>
-                <a href="/admin/author-apps?status={{ \App\Models\AuthorApplication::STATUS_DECLINED }}" class="btn btn-danger" type="button">Declined</a>
+                <a href="/admin/author-apps?status={{ \App\Models\AuthorApplication::STATUS_DECLINED }}" class="btn btn-warning" type="button">Declined</a>
+                <a href="/admin/author-apps?status={{ \App\Models\AuthorApplication::STATUS_NO_RETRY }}" class="btn btn-danger" type="button">Blocked</a>
             </div>
         </div>
 

@@ -1,5 +1,5 @@
 <div class="author__wrapper">
-    <form action="/send-application" method='POST' id="apply-form" {{--data-validate="apply-form"--}} enctype='multipart/form-data' data-episode-form>
+    <form action="/send-application" method='POST' id="apply-form" enctype='multipart/form-data' data-episode-form>
         @csrf
 
         <div class="input form-floating">

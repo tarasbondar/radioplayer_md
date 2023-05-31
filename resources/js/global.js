@@ -99,6 +99,15 @@ export function global() {
         }
     });
 
+    $(document).on('click', '.share-episode', function() {
+        let id = $(this).val();
+        let protocol = window.location.protocol;
+        let hostname = window.location.hostname;
+        let share = protocol + '//' + hostname + '/episodes/' + id + '/view';
+        copyToClipboard(share);
+    });
+
+
     $( document ).ready(function() {
         var queryString = window.location.search;
         var searchParams = new URLSearchParams(queryString);

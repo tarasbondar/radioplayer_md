@@ -34,12 +34,18 @@
     </li>
 
     <li>
-        <a class="dropdown-item share-episode" href="javascript:void(0)">
+        <button class="dropdown-item share-episode"
+           aria-label="{{ __('client.share') }}"
+           data-bs-trigger="focus"
+           data-bs-title="{{ __('client.shareLinkCopied') }}"
+           data-bs-toggle="tooltip"
+           value="{{$episode['id']}}"
+           tabindex="0">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <use href="/img/sprite.svg#share-2"></use>
             </svg>
             {{ __('app.share') }}
-        </a>
+        </button>
     </li>
 
     @if(auth()->id() == $episode['user_id'])

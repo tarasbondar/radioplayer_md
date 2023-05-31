@@ -17,8 +17,10 @@
                     @include('partials.application-in-progress')
                 @elseif ($status == 'declined')
                     @include('partials.application-declined', ['feedback' => $feedback])
+                    @include('partials.application-form')
+                @elseif ($status == 'no_retry')
+                    @include('partials.application-declined', ['feedback' => $feedback])
                 @endif
-                {{--declined retry?--}}
 
             </div>
         </section>

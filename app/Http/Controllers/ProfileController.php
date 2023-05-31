@@ -43,20 +43,17 @@ class ProfileController extends Controller
     public function apply() {
         $role = (Auth::user())->role;
         if ($role == User::STATUS_NORMAL) {
-            $app = AuthorApplication::where('user_id', '=', Auth::id())->orderBy('updated_at', 'desc')->first();
+            $app = AuthorApplication::where('user_id', '=', Auth::id())->orderBy('id', 'desc')->first();
 
             if (!empty($app)) {
                 if ($app->status == AuthorApplication::STATUS_PENDING) {
-                    return view('pages.client.author-application', ['status' => 'pending',]);
+                    return view('pages.client.author-application', ['status' => 'pending']);
                 }
                 if ($app->status == AuthorApplication::STATUS_DECLINED) {
-                    /*$day_ago = date('Y-m-d H:i:s', strtotime("-1 day"));
-                    if ($app->updated_at > $day_ago) {
-                        //display form
-                    } else {
-                        //display wait
-                    }*/
                     return view('pages.client.author-application', ['status' => 'declined', 'feedback' => $app->feedback_message]);
+                }
+                if ($app->status == AuthorApplication::STATUS_NO_RETRY) {
+                    return view('pages.client.author-application', ['status' => 'no_retry', 'feedback' => $app->feedback_message]);
                 }
             }
         } else { //already author
