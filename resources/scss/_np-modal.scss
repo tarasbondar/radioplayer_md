@@ -36,6 +36,12 @@
     .logo__img {
         border-radius: rem(32px) rem(32px) 0 0;
     }
+    .logo__img {
+      height: rem(210px);
+      @media (max-width: 768px) {
+        height: auto;
+      }
+    }
 
     .logo__bg {
         filter: blur(10vw);
