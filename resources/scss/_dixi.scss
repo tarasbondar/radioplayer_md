@@ -2,7 +2,7 @@
 	position: relative;
 	display: block;
 	&___img {
-		height: rem(200px);
+		height: rem(210px);
 		object-fit: cover;
 		@media (max-width: 768px) {
 			&.logo__img {
@@ -67,7 +67,7 @@
 	&__img{
 		position: relative;
 		z-index: 1;
-		width: rem(240px);
+		width: rem(210px);
 		@media (max-width: 768px) {
 			position: absolute;
 			top: 50%;
