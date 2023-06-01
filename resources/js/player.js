@@ -43,9 +43,7 @@ export let player = {
 
     timerShow(){
         $('[data-np-modal-player]').addClass('hidden');
-        $('[data-np-modal-timer]').removeClass('hidden');
-        $('[data-np-modal-timer]').addClass('open');
-
+        $('[data-np-modal-timer]').removeClass('hidden').addClass('open');
 
         this.timer.hours = this.timer.intervalHours;
         if (this.timer.intervalMinutes)
@@ -54,8 +52,7 @@ export let player = {
     },
     timerClose(){
         $('[data-np-modal-player]').removeClass('hidden');
-        $('[data-np-modal-timer]').addClass('hidden');
-        $('[data-np-modal-timer]').removeClass('open');
+        $('[data-np-modal-timer]').addClass('hidden').removeClass('open');
     },
     timerReset(){
         this.timer.isActive = false;
@@ -124,16 +121,17 @@ export let player = {
     },
     setListened(episodeId){
         let self = this;
-        if (self.episodeId === null)
+        if (self.episodeId === null) {
             return;
+        }
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             method: 'POST',
-            url: '/set-listened',
+            url: '/record-history',
             data: {
-                episode_id: episodeId,
+                id: episodeId,
             },
             success: function (response) {
                 if (response.status === 'success'){
@@ -329,6 +327,13 @@ export let player = {
         }
 
         window.audio.currentTime = newTime;
+    },
+    markAsListened() { //???
+        window.audio.currentTime = window.audio.duration;
+        player.saveWatchTime(true);
+        if ($('[data-player-autoplay]').prop('checked')){
+            player.changeTrack('next');
+        }
     },
     changeTrack(direction){
         let self = this;

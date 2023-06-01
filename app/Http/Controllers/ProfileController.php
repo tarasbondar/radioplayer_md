@@ -386,7 +386,7 @@ class ProfileController extends Controller
         if (!$user)
             return response()->json(['status' => 'error', 'message' => 'Auth required']);
 
-        $episodeId = $request->get('episode_id');
+        $episodeId = $request->get('id');
         $model = HistoryRecord::where('user_id', '=', $user->id)->where('episode_id', '=', $episodeId)->first();
         if (!$model)
             $model = new HistoryRecord();
@@ -472,9 +472,18 @@ class ProfileController extends Controller
     }
 
     public function recordListeningHistory(Request $request) {
+        if (!Auth::check()) {
+            return response()->json(['status' => 'error', 'message' => 'Auth required']);
+        }
+
         $episode_id = $request->get('id');
-        HistoryRecord::upsert(['episode_id' => $episode_id, 'user_id' => Auth::id()], ['created_at' => date('Y-m-d H:i:s')]);
-        return '';
+        HistoryRecord::updateOrCreate(['episode_id' => $episode_id, 'user_id' => Auth::id()], ['is_listened' => 1]);
+
+        return response()->json([
+            'status' => 'success',
+            'episode_id' => $episode_id,
+            'is_listened' => 1
+        ]);
     }
 
     public function clearHistory() {

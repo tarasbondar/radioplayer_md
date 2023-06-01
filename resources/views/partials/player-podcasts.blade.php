@@ -151,7 +151,7 @@
 						data-bs-toggle="tooltip"
 						data-bs-trigger="focus"
                         data-bs-placement="top"
-                        data-bs-title="{{ __('client.needToLogin') }}">
+                        data-bs-title="{{ auth()->check() ? 'Added to playlist' : __('client.needToLogin') }}">
 					    <svg class="icon">
 						    <use href="/img/sprite.svg#add-to-list"></use>
 					    </svg>
@@ -165,7 +165,7 @@
 						data-bs-toggle="tooltip"
 						data-bs-trigger="focus"
                         data-bs-placement="top"
-                        data-bs-title="{{ __('client.needToLogin') }}">
+                        data-bs-title="{{ auth()->check() ? 'Added to listen later' : __('client.needToLogin') }}">
 					    <svg class="icon">
 						    <use href="/img/sprite.svg#clock"></use>
 					    </svg>

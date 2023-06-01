@@ -41,9 +41,9 @@ Route::get('/favorite-station/{id}', [IndexController::class, 'favStation']);
 Route::post('/update-stations', [IndexController::class, 'updateStations']);
 Route::get('/play-station/{id}', [IndexController::class, 'playStation']);
 Route::get('/get-station-info/{id}', [IndexController::class, 'getStationInfo']);
-
 Route::get('/apply', [ProfileController::class, 'apply']);
 Route::post('/send-application', [ProfileController::class, 'sendApplication']);
+
 Route::post('/add-to-playlist/{id}', [ProfileController::class, 'addToPlaylist'])->name('profile.addToPlaylist');
 Route::post('/save-playlist-sorting', [ProfileController::class, 'savePlaylistSorting'])->name('profile.savePlaylistSorting');
 
@@ -73,9 +73,9 @@ Route::post('/subscribe-to', [ProfileController::class, 'subscribeTo']);
 Route::get('/listen-later', [ProfileController::class, 'listenLater']);
 Route::post('/queue-episode', [ProfileController::class, 'queueToListenLater']);
 Route::post('/save-watch-time', [ProfileController::class, 'saveWatchTime'])->name('profile.saveWatchTime');
-Route::post('/set-listened', [ProfileController::class, 'setListened'])->name('profile.setListened');
 Route::get('/history', [ProfileController::class, 'history']);
 Route::post('/record-history', [ProfileController::class, 'recordListeningHistory']);
+//Route::post('/set-listened', [ProfileController::class, 'setListened'])->name('profile.setListened');
 Route::post('/clear-history', [ProfileController::class, 'clearHistory']);
 Route::get('/downloads', [ProfileController::class, 'downloads']);
 Route::get('/play-episode/{id}', [IndexController::class, 'playEpisode']);
