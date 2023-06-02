@@ -139,7 +139,7 @@ class IndexController
         return view('pages.client.all-podcasts', ['podcasts' => $podcasts, 'categories' => $categories, 'episodes' => $episodes, 'page_count' => $page_count]);
     }
 
-    public function allSearch(Request $request) { //text, categories
+    public function allSearch(Request $request) { //text, categories, author
         $page_size = 5;
 
         $categories = $request->get('categories', []);

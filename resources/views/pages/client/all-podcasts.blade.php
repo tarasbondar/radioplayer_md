@@ -78,7 +78,7 @@
     <script>
 
         (function(){
-            $(document).on('change', '#search-field', function() {
+            $(document).on('keyup', '#search-field', function() {
                 if ($(this).val().length > 2) {
                     allSearch();
                 }

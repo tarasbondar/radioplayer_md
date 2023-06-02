@@ -11,6 +11,15 @@
             </div>
         </div>
 
+        <div class="row mb-3">
+            <div class="col-md-4"> <input id="username" type="text" class="form-control" name="username" value="{{ app('request')->input('username') }}" placeholder="Username"> </div>
+            <div class="col-md-5"> <input id="email" type="text" class="form-control" name="email" value="{{ app('request')->input('email') }}" placeholder="Email"> </div>
+            <div class="col-md-3 row">
+                <div class="col-md-5"><button id="apply-filters" class="btn btn-lg btn-primary">Apply</button> </div>
+                <div class="col-md-5"> <a id="reset-filters" class="btn btn-lg" href="/admin/users">Reset</a> </div>
+            </div>
+        </div>
+
         @if (!empty($users))
             <table class="table">
                 <thead class="thead-light">
@@ -43,11 +52,11 @@
 
             {!! $pagination !!}
 
-            {{--<div class="row">
+            <div class="row">
                 <div class="col-md-12 text-right mt-3 mb-3 align-items-end clearfix">
-                    <a href="#" class="btn btn-success float-end" id="stations-download" type="button">Download</a>
+                    <a href="javascript:void(0)" class="btn btn-success float-end" id="users-download" type="button">Download</a>
                 </div>
-            </div>--}}
+            </div>
 
         @endif
 
@@ -130,6 +139,57 @@
                     });
                 }
             });
+
+            $(document).on('click', '#users-download', function() {
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    xhrFields: {
+                        responseType: "blob",
+                    },
+                    data: {
+                        username: $('#username').val(),
+                        email: $('#email').val()
+                    },
+                    url: '/admin/users/download',
+                    method: 'GET',
+                    success: function (response) {
+                        let blob = new Blob([response]);
+                        let link = document.createElement('a');
+                        link.href = window.URL.createObjectURL(blob);
+                        let dt = new Date(); //$.now()
+                        let time = dt.getFullYear() + '_' + (dt.getMonth() + 1) + '_' + dt.getDate() + '_' + dt.getHours() + "_" + dt.getMinutes() + "_" + dt.getSeconds();
+                        link.download = 'users_' + time + '.xlsx';
+                        link.click();
+                    }
+                })
+            });
+
+            $(document).on('click', '#apply-filters', function () {
+                let username = $('#username').val();
+                let email = $('#email').val();
+                let params = [];
+                let uri = '';
+
+                if (username.length > 3) {
+                    params.push('username=' + username);
+                }
+
+                if (email.length > 3) {
+                    params.push('email=' + email);
+                }
+
+                let searchParams = new URLSearchParams(window.location.search);
+                if (searchParams.has('page')) {
+                    params.push('page=' + searchParams.get('page'));
+                }
+
+                if (params.length > 0) {
+                    uri = '?' + params.join('&');
+                    window.location.href = '/admin/users' + uri;
+                }
+            })
 
         })(jQuery)
 

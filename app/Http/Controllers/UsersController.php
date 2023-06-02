@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\UsersExport;
 use App\Models\AuthorApplication;
 use App\Models\DownloadRecord;
 use App\Models\HistoryRecord;
@@ -16,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UsersController extends Controller
 {
@@ -23,10 +25,27 @@ class UsersController extends Controller
     public function index(Request $request) {
         $page_size = ($request->has('page-size') ? $request->get('page-size') : 10);
         $page = ($request->has('page') ? $request->get('page') : 1);
-        $role = $request->get('status', 1);
+        $username = $request->get('username', '');
+        $email = $request->get('email', '');
+        //$role = $request->get('status', 1); //->where('role', '=', $status)
+        $appends = [];
 
-        $users = User::select("*")/*->where('role', '=', $status)*/;
-        $pagination = User::paginate($page_size)->links();
+        $users = User::select("*");
+        if (!empty($username)) {
+            $users = $users->where('name', 'LIKE', "%{$username}%");
+            $appends['username'] = $username;
+        }
+
+        if (!empty($email)) {
+            $users = $users->where('email', 'LIKE', "%{$email}%");
+            $appends['email'] = $email;
+        }
+
+        if ($page > 1) {
+            $appends['page'] = $page;
+        }
+
+        $pagination = $users->paginate($page_size)->appends($appends)->links();
 
         $users = $users
             ->orderBy('created_at', 'desc')->offset(($page - 1) * $page_size)->limit($page_size)
@@ -102,6 +121,12 @@ class UsersController extends Controller
         return redirect()->action([UsersController::class, 'index']);
     }
 
+    public function download(Request $request) {
+        $username = $request->get('username', '');
+        $email = $request->get('email', '');
+        return Excel::download(new UsersExport($username, $email), '1.xlsx');
+    }
+
     public function delete($id) {
         $user = User::where('id', '=', $id)->first();
         if ($user->role > 0) {
@@ -137,14 +162,37 @@ class UsersController extends Controller
     public function authorApps(Request $request) {
         $page_size = ($request->has('page-size') ? $request->get('page-size') : 10);
         $page = ($request->has('page') ? $request->get('page') : 1);
-        $status = $request->get('status', 1);
+        $status = $request->get('status', 'all');
+        $username = $request->get('username', '');
+        $email = $request->get('email', '');
+        $appends['status'] = $status;
 
-        $apps = AuthorApplication::select('*')->where('status', '=', $status);
-        $pagination = $apps->paginate($page_size)->appends(['status' => $status])->links(); //appends($request->all())
+        $apps = AuthorApplication::select('author_applications.*', "users.name AS username", "users.email AS email")
+            ->join('users', 'users.id', '=', 'author_applications.user_id');
 
-        $apps = $apps->orderBy('created_at', 'asc')->offset(($page - 1) * $page_size)->limit($page_size)
+        if ($status != 'all') {
+            $apps = $apps->where('author_applications.status', '=', $status);
+        }
+
+        if (!empty($username)) {
+            $apps = $apps->where('users.name', 'LIKE', "%{$username}%");
+            $appends['username'] = $username;
+        }
+
+        if (!empty($email)) {
+            $apps = $apps->where('users.email', 'LIKE', "%{$email}%");
+            $appends['email'] = $email;
+        }
+
+        if ($page > 1) {
+            $appends['page'] = $page;
+        }
+
+        $pagination = $apps->paginate($page_size)->appends($appends)->links(); //appends($request->all())
+
+        $apps = $apps->orderBy('created_at', 'desc')->offset(($page - 1) * $page_size)->limit($page_size)
             ->get()->toArray();
-        return view('pages.admin.authorapplications', ['status' => $status, 'apps' => $apps, 'pagination' => $pagination]);
+        return view('pages.admin.authorapplications', ['status' => $status, 'apps' => $apps, 'pagination' => $pagination, 'appends' => $appends]);
     }
 
     public function authorAppsEdit($id) {

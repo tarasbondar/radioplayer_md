@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redirect;
 use Throwable;
+use function PHPUnit\Runner\render;
 
 class ProfileController extends Controller
 {
@@ -104,6 +105,36 @@ class ProfileController extends Controller
         $podcasts = Podcast::where('owner_id', '=', Auth::id())->get()->toArray();
         $categories = PodcastCategory::where('status', '=', PodcastCategory::STATUS_ACTIVE)->get()->toArray();
         return view('pages.client.my-podcasts', ['podcasts' => $podcasts, 'categories' => $categories]);
+    }
+
+
+    public function myPodcastsSearch(Request $request) {
+        //$page_size = 12;
+        $user = Auth::user();
+        if ($user->status == User::STATUS_BLOCKED) {
+            return abort(403);
+        }
+
+        $search_name = $request->get('name');
+        $search_categories = $request->request->('categories');
+
+        $podcasts = Podcast::join('users', 'podcasts.owner_id', '=', 'users.id');
+        if (!empty($search_categories)) {
+            $podcasts = $podcasts->join('podcasts_2_categories AS p2c', 'p2c.podcast_id', '=', 'podcasts.id')->whereRaw("p2c.category_id IN ({$search_categories})");
+        }
+        if (!empty($search_name)) {
+            $podcasts = $podcasts->whereRaw("podcasts.name LIKE '%{$search_name}%'");
+        }
+
+        $podcasts = $podcasts->where('podcasts.owner_id', '=', Auth::id())
+            ->distinct()->orderBy('podcasts.updated_at', 'desc')->get()->toArray();
+
+        $podcasts_render = '';
+
+        foreach ($podcasts as $p) {
+            $podcasts_render .= view('partials.podcast-card', ['p' => $p])->render();
+        }
+        return $podcasts_render;
     }
 
 
@@ -291,7 +322,7 @@ class ProfileController extends Controller
         $podcasts = Podcast::where('status', '=', Podcast::STATUS_ACTIVE)
             ->where('ps.user_id', '=', Auth::id())
             ->join('podcasts_subscriptions AS ps', 'ps.podcast_id', '=', 'podcasts.id')
-            ->get()->toArray();
+            ->distinct()->get()->toArray();
         return view('pages.client.subscriptions', ['podcasts' => $podcasts]);
     }
 

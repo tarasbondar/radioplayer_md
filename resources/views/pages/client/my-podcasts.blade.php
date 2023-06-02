@@ -55,9 +55,7 @@
                         </button>
                     </div>
 
-
-
-                    <div class="items-list__grid">
+                    <div class="items-list__grid podcasts-container">
                         @foreach($podcasts as $p)
                             @include('partials.podcast-card')
                         @endforeach
@@ -87,23 +85,65 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
-                        <div class="list">
-                            @foreach($categories as $c)
-                                <div class="input input__inner">
-                                    <input class="input__checkbox" type="checkbox" id="category-{{ $c['id'] }}" {{--checked--}} value="{{ $c['id'] }}">
-                                    <label class="input__label light" for="category-{{ $c['id'] }}"> {{ $c['key'] }} </label>
-                                    <svg class="icon"> <use href="/img/sprite.svg#check"></use> </svg>
-                                    <div class="messages"></div>
-                                </div>
-                            @endforeach
-                        </div>
-                        <div class="form-actions">
-                            <button class="btn btn_default btn_primary categories-submit">{{ __('client.save') }}</button>
-                        </div>
-                    </form>
+                    <div class="list">
+                        @foreach($categories as $c)
+                            <div class="input input__inner">
+                                <input class="input__checkbox" type="checkbox" id="category-{{ $c['id'] }}" {{--checked--}} value="{{ $c['id'] }}">
+                                <label class="input__label light" for="category-{{ $c['id'] }}"> {{ $c['key'] }} </label>
+                                <svg class="icon"> <use href="/img/sprite.svg#check"></use> </svg>
+                                <div class="messages"></div>
+                            </div>
+                        @endforeach
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn btn_default btn_primary categories-submit">{{ __('client.save') }}</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+
+    <script>
+
+        (function(){
+
+            $(document).on('keyup', '#search-field', function() {
+                if ($(this).val().length > 2) {
+                    mySearch();
+                }
+            });
+
+            $(document).on('change', '.input__checkbox', function () {
+                mySearch();
+            });
+
+            function mySearch() {
+                let categories = [];
+                $('.input__checkbox:checked').each(function(){
+                    categories.push($(this).val());
+                });
+
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    method: 'POST',
+                    url: '/my-podcasts-search',
+                    data: {
+                        text: $('#search-field').val(),
+                        categories: categories.join(','),
+                    },
+                    success: function(response) {
+                        $('.podcasts-container').html(response);
+                    }
+                })
+
+            }
+
+        })(jQuery)
+
+    </script>
+
+
 @endsection

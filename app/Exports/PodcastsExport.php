@@ -2,10 +2,10 @@
 
 namespace App\Exports;
 
-use App\Models\RadioStation;
+use App\Models\Podcast;
 use Maatwebsite\Excel\Concerns\FromCollection;
 
-class RadioStationsExport implements FromCollection
+class PodcastsExport implements FromCollection
 {
 
     protected $name;
@@ -17,7 +17,7 @@ class RadioStationsExport implements FromCollection
     }
 
     public function collection() {
-        $result = RadioStation::select('*');
+        $result = Podcast::select('*');
 
         if (!empty($this->name)) {
             $result = $result->where('name', 'LIKE', "%{$this->name}%");
@@ -29,8 +29,4 @@ class RadioStationsExport implements FromCollection
         $result = $result->get();
         return $result;
     }
-
-    /*public function headings(): array {
-        return ["ID", "Name", "Email"];
-    }*/
 }

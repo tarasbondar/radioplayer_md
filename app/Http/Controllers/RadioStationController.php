@@ -12,7 +12,8 @@ use App\Services\RadioApiService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
-use Maatwebsite\Excel\Excel;
+//use Maatwebsite\Excel\Excel;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\RadioStationsExport;
 
 class RadioStationController extends Controller
@@ -21,11 +22,29 @@ class RadioStationController extends Controller
     public function index(Request $request) {
         $page_size = ($request->has('page-size') ? $request->get('page-size') : 10);
         $page = ($request->has('page') ? $request->get('page') : 1);
-        $stations = RadioStation::select("*")
-            ->offset(($page - 1) * $page_size)->limit($page_size)
+        $name = $request->get('name', '');
+        $descr = $request->get('descr', '');
+        $appends = [];
+
+        $stations = RadioStation::select("*");
+        if (!empty($name)) {
+            $stations = $stations->where('name', 'LIKE', "%{$name}%");
+            $appends['name'] = $name;
+        }
+        if (!empty($descr)) {
+            $stations = $stations->where('description', 'LIKE', "%{$descr}%");
+            $appends['descr'] = $descr;
+        }
+        if ($page > 1) {
+            $appends['page'] = $page;
+        }
+
+        $pagination = $stations->paginate($page_size)->appends($appends)->links();
+
+         $stations = $stations->offset(($page - 1) * $page_size)->limit($page_size)
             ->get()->toArray();
-        $pagination = RadioStation::paginate($page_size)->links();
-        return view('pages.admin.radiostations', ['stations' => $stations, 'pagination' => $pagination]);
+
+        return view('pages.admin.radiostations', ['stations' => $stations, 'pagination' => $pagination, 'params' => $appends]);
     }
 
     public function add() {
@@ -149,8 +168,9 @@ class RadioStationController extends Controller
     }
 
     public function download(Request $request) {
-        return (new Excel)->download(new RadioStationsExport, 'radiostations', '');
-        //return 'tba';
+        $name = $request->get('name', '');
+        $descr = $request->get('descr', '');
+        return Excel::download(new RadioStationsExport($name, $descr), '1.xlsx');
     }
 
     public function getCategoriesByStation($station_id) {

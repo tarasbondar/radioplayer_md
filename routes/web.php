@@ -48,6 +48,7 @@ Route::post('/add-to-playlist/{id}', [ProfileController::class, 'addToPlaylist']
 Route::post('/save-playlist-sorting', [ProfileController::class, 'savePlaylistSorting'])->name('profile.savePlaylistSorting');
 
 Route::get('/my-podcasts', [ProfileController::class, 'myPodcasts']);
+Route::post('/my-podcasts-search', [ProfileController::class, 'myPodcastsSearch']);
 Route::get('/all-podcasts', [IndexController::class, 'allPodcasts'])->name('index.allPodcasts');
 Route::post('/all-search', [IndexController::class, 'allSearch']);
 Route::post('/append-episodes', [IndexController::class, 'appendEpisodes']);
@@ -99,6 +100,7 @@ Route::name('admin.')->prefix('admin')->middleware([IsAdmin::class])->group(func
     Route::get('/users/edit/{id}', [UsersController::class, 'edit']);
     Route::post('/users/save', [UsersController::class, 'save']);
     Route::delete('/users/{id}', [UsersController::class, 'delete']);
+    Route::get('/users/download', [UsersController::class, 'download']);
 
     Route::get('/author-apps/{status?}', [UsersController::class, 'authorApps']);
     Route::get('/author-apps-review/{id}', [UsersController::class, 'authorAppsEdit']);
@@ -109,6 +111,7 @@ Route::name('admin.')->prefix('admin')->middleware([IsAdmin::class])->group(func
     Route::get('/podcasts/edit/{id}', [PodcastController::class, 'edit']);
     Route::post('/podcasts/save', [PodcastController::class, 'save']);
     Route::delete('/podcasts/{id}', [PodcastController::class, 'delete']);
+    Route::get('/podcasts/download', [PodcastController::class, 'download']);
 
     Route::get('/podcast-categories', [PodcastCategoryController::class, 'index']);
     Route::get('/podcast-categories/add', [PodcastCategoryController::class, 'add']);
@@ -128,7 +131,7 @@ Route::name('admin.')->prefix('admin')->middleware([IsAdmin::class])->group(func
     Route::get('/stations/edit/{id}', [RadioStationController::class, 'edit']);
     Route::post('/stations/save', [RadioStationController::class, 'save']);
     Route::delete('/stations/{id}', [RadioStationController::class, 'delete']);
-    Route::post('/stations/download', [RadioStationController::class, 'download']);
+    Route::get('/stations/download', [RadioStationController::class, 'download']);
 
     Route::get('/station-categories', [RadioStationCategoryController::class, 'index']);
     Route::get('/station-categories/add', [RadioStationCategoryController::class, 'add']);
