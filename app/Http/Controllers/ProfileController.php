@@ -116,7 +116,7 @@ class ProfileController extends Controller
         }
 
         $search_name = $request->get('name');
-        $search_categories = $request->request->('categories');
+        $search_categories = $request->get('categories');
 
         $podcasts = Podcast::join('users', 'podcasts.owner_id', '=', 'users.id');
         if (!empty($search_categories)) {
