@@ -20,7 +20,9 @@
                     </div>
                     <div class="mb-3 form-group row">
                         <label for="description" class="col-md-4 col-form-label text-md-right">Description</label>
-                        <div class="col-md-6"> <textarea id="description" type="text" class="form-control " name="description" rows="6"> {{ @$station['description'] }} </textarea> </div>
+                        <div class="col-md-6"> <textarea id="stations-description" type="text" class="form-control " name="description" rows="6"> {{ @$station['description'] }} </textarea>
+                            {{--<div class="input"> <div class="input__editor" data-editor value="{{ @$station['description'] }}"></div> </div>--}}
+                        </div>
                     </div>
                     <div class="mb-3 form-group row">
                         <label for="group-id" class="col-md-4 col-form-label text-md-right">Group</label>

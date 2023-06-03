@@ -30,6 +30,7 @@
 .now-playing__actions {
     display: flex;
     gap: rem(8px);
+    margin-left: auto;
 
     .btn {
         position: relative;

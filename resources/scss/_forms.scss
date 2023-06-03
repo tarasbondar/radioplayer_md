@@ -562,3 +562,11 @@ textarea.form-control {
 	position: relative;
 	top: 2px;
 }
+
+.input__editor {
+    padding: rem(12px);
+    border-radius: rem(8px);
+    background: var(--editor-bg);
+    color: var(--editor-color);
+    border: var(--editor-border);
+}

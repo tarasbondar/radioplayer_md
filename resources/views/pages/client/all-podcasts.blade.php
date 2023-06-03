@@ -79,9 +79,7 @@
 
         (function(){
             $(document).on('keyup', '#search-field', function() {
-                if ($(this).val().length > 2) {
-                    allSearch();
-                }
+                allSearch();
             });
 
             $(document).on('change', '.input__checkbox', function () {

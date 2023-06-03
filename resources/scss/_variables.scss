@@ -144,6 +144,10 @@ $base-font-size: 16px;
     --podcast-btn: var(--grey-200);
     --podcast-border: var(--grey-200);
 
+    --editor-bg: var(--white);
+    --editor-color: var(--dark-500);
+    --editor-border: 1px solid var(--grey-200);
+
 	--btn-primary-disabled-bg: var(--grey-200);
 	--btn-primary-disabled-color: var(--grey-300);
 	--red: var(--red-300);
@@ -251,6 +255,10 @@ $base-font-size: 16px;
     --wave-stop-color-1: var(--dark-500);
     --wave-stop-color-2: var(--dark-300);
     --wave-stop-color-3: var(--dark-500);
+
+    --editor-bg: var(--dark-300);
+    --editor-color: var(--white);
+    --editor-border: 0;
 
     --wave-stop-color-1-lg:var(--dark-300);
     --wave-stop-color-2-lg: var(--dark-200);

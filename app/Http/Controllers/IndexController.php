@@ -14,6 +14,7 @@ use App\Models\RadioStationTag;
 use App\Models\User;
 use App\Services\FavoriteService;
 use App\Services\RadioApiService;
+//use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
@@ -147,24 +148,28 @@ class IndexController
         $author = $request->get('author', '');
 
         //podcasts
-        $podcasts = Podcast::select('podcasts.*');
+        $podcasts = Podcast::selectRaw('podcasts.*')->where('podcasts.status', '=', Podcast::STATUS_ACTIVE);
 
         if (!empty($categories)) {
             $podcasts = $podcasts->join('podcasts_2_categories AS p2c', 'p2c.podcast_id', '=', 'podcasts.id')->whereRaw("p2c.category_id IN ($categories)");
         }
 
         if (strlen($text) > 2) {
-            $podcasts = $podcasts->where('podcasts.name', 'LIKE', '%'.$text.'%')
-            ->orWhere('podcasts.description', 'LIKE', '%'.$text.'%')
-            ->orWhere('podcasts.tags', 'LIKE', '%'.$text.'%');
+            $podcasts = $podcasts->whereRaw("(podcasts.name LIKE '%{$text}%' OR podcasts.description LIKE '%{$text}%' OR podcasts.tags LIKE '%{$text}%')");
+            /*$podcasts = $podcasts->where(function ($query, $text) {
+                $query->where('podcasts.name', 'LIKE', '%'.$text.'%')
+                    ->orWhere('podcasts.description', 'LIKE', '%'.$text.'%')
+                    ->orWhere('podcasts.tags', 'LIKE', '%'.$text.'%');
+            });*/
         }
 
         if (!empty($author)) {
             $podcasts = $podcasts->where('owner_id', '=', $author);
         }
 
-        $podcasts = $podcasts->where('podcasts.status', '=', Podcast::STATUS_ACTIVE)
-            ->distinct()->limit(5)->get()->toArray();
+        $podcasts = $podcasts
+            ->distinct('podcasts.id')->limit(5)
+            ->get()->toArray();
 
         $podcasts_render = '';
         foreach ($podcasts as $p) {
@@ -182,9 +187,7 @@ class IndexController
         }
 
         if (strlen($text) > 3) {
-            $episodes = $episodes->where('podcasts_episodes.name', 'LIKE', '%'.$text.'%')
-                ->orWhere('podcasts_episodes.description', 'LIKE', '%'.$text.'%')
-                ->orWhere('podcasts_episodes.tags', 'LIKE', '%'.$text.'%');
+            $episodes = $episodes->whereRaw("(podcasts_episodes.name LIKE '%$text%' OR podcasts_episodes.description LIKE '%{$text}'%' OR podcasts_episodes.tags LIKE '%{$text}%' )");
         }
 
         if (!empty($author)) {
@@ -220,9 +223,7 @@ class IndexController
         }
 
         if (strlen($text) > 3) {
-            $episodes = $episodes->where('podcasts_episodes.name', 'LIKE', '%'.$text.'%')
-                ->orWhere('podcasts_episodes.description', 'LIKE', '%'.$text.'%')
-                ->orWhere('podcasts_episodes.tags', 'LIKE', '%'.$text.'%');
+            $episodes = $episodes->whereRaw("(podcasts_episodes.name LIKE '%$text%' OR podcasts_episodes.description LIKE '%{$text}'%' OR podcasts_episodes.tags LIKE '%{$text}%' )");
         }
 
         $episodes = $episodes->distinct('podcasts_episodes.id')->orderBy('updated_at', 'DESC')->offset(($page - 1) * $page_size)->limit($page_size)->get()->toArray();

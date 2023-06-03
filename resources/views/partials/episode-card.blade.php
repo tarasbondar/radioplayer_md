@@ -41,37 +41,43 @@
 
         <ul class="list">
 
-            @auth
-                <li class="item">
-                    <a href="#" class="link add-to-playlist {{ (@$episode['is_in_playlist']) ? 'active' : '' }}" data-add-to-playlist="{{ $episode['id'] }}">
-                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M9.25 16H17.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M9.25 11.5H17.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M9.25 20.5H15.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M18.25 20.5H22.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M20.5 22.75L20.5 18.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </a>
-                </li>
-            @endauth
 
-            @auth
-                <li class="item">
-                    <a href="#" class="link listen-later {{ ($episode['is_in_listen_later']) ? 'active' : '' }}" data-listen-later="{{ $episode['id']  }}">
-                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <g clip-path="url(#clip0_801_45179)">
-                                <path d="M16 23.5C20.1421 23.5 23.5 20.1421 23.5 16C23.5 11.8579 20.1421 8.5 16 8.5C11.8579 8.5 8.5 11.8579 8.5 16C8.5 20.1421 11.8579 23.5 16 23.5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M16 11.5V16L19 17.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            </g>
-                            <defs>
-                                <clipPath id="clip0_801_45179">
-                                    <rect width="18" height="18" fill="currentColor" transform="translate(7 7)"/>
-                                </clipPath>
-                            </defs>
-                        </svg>
-                    </a>
-                </li>
-            @endauth
+            <li class="item">
+                <a href="javascript:void(0)"
+                   class="link {{--add-to-playlist--}} {{ (@$episode['is_in_playlist']) ? 'active' : '' }}"
+                   data-add-to-playlist="{{ $episode['id'] }}"
+                   data-bs-toggle="tooltip"
+                   data-bs-title="{{ auth()->check() ? 'Added to playlist' : __('client.needToLogin') }}"
+                   data-player-playlist>
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9.25 16H17.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M9.25 11.5H17.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M9.25 20.5H15.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M18.25 20.5H22.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M20.5 22.75L20.5 18.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </a>
+            </li>
+
+            <li class="item">
+                <a href="javascript:void(0)"
+                   class="link listen-later {{ ($episode['is_in_listen_later']) ? 'active' : '' }}"
+                   data-bs-toggle="tooltip"
+                   data-bs-title="{{ auth()->check() ? 'Added to playlist' : __('client.needToLogin') }}"
+                   data-listen-later="{{ $episode['id']  }}">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_801_45179)">
+                            <path d="M16 23.5C20.1421 23.5 23.5 20.1421 23.5 16C23.5 11.8579 20.1421 8.5 16 8.5C11.8579 8.5 8.5 11.8579 8.5 16C8.5 20.1421 11.8579 23.5 16 23.5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M16 11.5V16L19 17.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </g>
+                        <defs>
+                            <clipPath id="clip0_801_45179">
+                                <rect width="18" height="18" fill="currentColor" transform="translate(7 7)"/>
+                            </clipPath>
+                        </defs>
+                    </svg>
+                </a>
+            </li>
 
             <li class="item">
                 <a href="javascript:void(0)" class="link download-file download-episode {{ $episode['is_downloaded'] ? 'active' : '' }}" data-id="{{ $episode['id']  }}">
