@@ -22,8 +22,11 @@
     <!-- Styles -->
     {{--<link href="{{ asset('css/style.css') }}" rel="stylesheet">--}}
     {{--<link href="{{ asset('css/app.css') }}" rel="stylesheet">--}}
-
-
+    <style>
+        .ck-powered-by-balloon {
+            display: none !important;
+        }
+    </style>
 </head>
 <body>
 <div id="app" class="admin-container">
@@ -73,28 +76,20 @@
         </div>
     </main>
 </div>
+<script src="{{ asset('js/ckeditor/build/ckeditor.js') }}"></script>
 
-<script src="{{ asset('js/ckeditor/ckeditor.js') }}"></script>
-<script type="text/javascript">
-
-    (function(){
-        //$('.ckeditor-custom').each(function(){
-            //$(this).ckeditor();
-        //});//
-        //$('.ckeditor-custom').ckeditor();
-        //CKEDITOR.replace('ckeditor-custom');
-        var allEditors = document.querySelectorAll('.ckeditor-custom');
-        for (var i = 0; i < allEditors.length; ++i) {
-            CKEDITOR.replace( allEditors[i], {
+<script type="application/javascript">
+    ClassicEditor.create( document.querySelector( '.ckeditor-custom' ), {
                 autoParagraph: false,
-                allowedContent: true,
-                removePlugins: 'about, uploadimage, uploadwidget, image, image2, sourcearea, save, preview, print, newpage, ' +
-                    'language, templates, selectall, find, replace, form, iframe, flash, copyformatting, removeformat'
+                allowedContent: true
+            } )
+            .then( editor => {
+                window.editor = editor;
+            } )
+            .catch( err => {
+                console.error( err.stack );
             });
-        }
-    })(jQuery)
 </script>
-
 </body>
 </html>
 
