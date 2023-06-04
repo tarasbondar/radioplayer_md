@@ -18,21 +18,21 @@
                         <input id="owner-id" type="text" class="form-control" name="owner-id" value="{{ isset($podcast['id']) ? $podcast['id'] : ''}}" readonly>
                     </div>
                     <div class="mb-3 form-group row">
-                        <label for="name" class="col-md-12 col-form-label text-md-right">Name</label>
-                        <div class="col-md-12"> <input id="name" type="text" class="form-control" name="name" value="{{ @$podcast['name'] }}" required> </div>
-                    </div>
-                    <div class="mb-3 form-group row"> {{-- Text editor here --}}
-                        <label for="description" class="col-md-12 col-form-label text-md-right">Description</label>
-                        <div class="col-md-12"> <textarea id="description" type="text" class="form-control ckeditor-custom" name="description" rows="6" required> {{ @$podcast['description'] }} </textarea> </div>
+                        <label for="name" class="col-md-4 col-form-label text-md-right">Name</label>
+                        <div class="col-md-6"> <input id="name" type="text" class="form-control" name="name" value="{{ @$podcast['name'] }}" required> </div>
                     </div>
                     <div class="mb-3 form-group row">
-                        <label for="tags" class="col-md-12 col-form-label text-md-right">Tags</label>
-                        <div class="col-md-12"> <input id="tags" type="text" class="form-control" name="tags" value="{{ @$podcast['tags'] }}"> </div>
+                        <label for="description" class="col-md-4 col-form-label text-md-right">Description</label>
+                        <div class="col-md-6"> <textarea id="description" type="text" class="form-control ckeditor-custom" name="description" required> {{ @$podcast['description'] }} </textarea> </div>
+                    </div>
+                    <div class="mb-3 form-group row">
+                        <label for="tags" class="col-md-4 col-form-label text-md-right">Tags</label>
+                        <div class="col-md-6"> <input id="tags" type="text" class="form-control" name="tags" value="{{ @$podcast['tags'] }}"> </div>
                     </div>
 
                     <div class="mb-3 form-group row">
-                        <label class="col-md-12 col-form-label text-md-right">Current Image</label>
-                        <div class="col-md-12">
+                        <label class="col-md-4 col-form-label text-md-right">Current Image</label>
+                        <div class="col-md-6">
                                 @if (!empty($podcast['image']))
                                     <img id="image" alt="" src="/uploads/podcasts_images/{{ $podcast['image'] }}" width="325" height="325"/>
                                 @else
@@ -41,13 +41,13 @@
                         </div>
                     </div>
                     <div class="mb-3 form-group row">
-                        <label for="image" class="col-md-12 col-form-label text-md-right">Upload Image</label>
-                        <div class="col-md-12"><input id="image" type="file" name="image" accept=".png, .jpg, .jpeg"></div>
+                        <label for="image" class="col-md-4 col-form-label text-md-right">Upload Image</label>
+                        <div class="col-md-6"><input id="image" type="file" name="image" accept=".png, .jpg, .jpeg"></div>
                     </div>
 
                     <div class="mb-3 form-group row">
-                        <label for="status" class="col-md-12 col-form-label text-md-right">Status</label>
-                        <div class="col-md-12">
+                        <label for="status" class="col-md-4 col-form-label text-md-right">Status</label>
+                        <div class="col-md-6">
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="status" id="status-active" value="0" {{ empty(@$podcast['status']) ? 'checked' : ''}}>
                                 <label class="form-check-label" for="status-active">Active</label>
