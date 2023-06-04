@@ -388,7 +388,7 @@
 
 		.item {
 			@media (max-width: 991px) {
-				min-width: 95px;
+				max-width: rem(96px);
 			}
 		}
 		.x-small {
