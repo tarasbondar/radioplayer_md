@@ -16,8 +16,8 @@
                     </div>
 
                     <div class="mb-3 form-group row">
-                        <label for="podcast" class="col-md-4 col-form-label text-md-right">Podcast</label>
-                        <div class="col-md-6">
+                        <label for="podcast" class="col-md-12 col-form-label text-md-right">Podcast</label>
+                        <div class="col-md-12">
                             @if (isset($podcast))
                                 <select class="form-select" name='podcast' id="podcast" aria-label="Episodes podcast">
                                     <option value="{{$podcast['id']}}" selected> {{ $podcast['name'] }} </option>
@@ -33,21 +33,21 @@
                     </div>
 
                     <div class="mb-3 form-group row">
-                        <label for="name" class="col-md-4 col-form-label text-md-right">Name</label>
-                        <div class="col-md-6"> <input id="name" type="text" class="form-control" name="name" value="{{ @$episode['name'] }}" required> </div>
+                        <label for="name" class="col-md-12 col-form-label text-md-right">Name</label>
+                        <div class="col-md-12"> <input id="name" type="text" class="form-control" name="name" value="{{ @$episode['name'] }}" required> </div>
                     </div>
                     <div class="mb-3 form-group row"> {{-- Text editor here --}}
-                        <label for="description" class="col-md-4 col-form-label text-md-right">Description</label>
-                        <div class="col-md-6"> <textarea id="description" type="text" class="form-control ckeditor-custom" name="description" rows="6" required> {{ @$episode['description'] }} </textarea> </div>
+                        <label for="description" class="col-md-12 col-form-label text-md-right">Description</label>
+                        <div class="col-md-12"> <textarea id="description" type="text" class="form-control ckeditor-custom" name="description" rows="6" required> {{ @$episode['description'] }} </textarea> </div>
                     </div>
                     <div class="mb-3 form-group row">
-                        <label for="tags" class="col-md-4 col-form-label text-md-right">Tags</label>
-                        <div class="col-md-6"> <input id="tags" type="text" class="form-control " name="tags" value="{{ @$episode['tags'] }}" required>  </div>
+                        <label for="tags" class="col-md-12 col-form-label text-md-right">Tags</label>
+                        <div class="col-md-12"> <input id="tags" type="text" class="form-control " name="tags" value="{{ @$episode['tags'] }}" required>  </div>
                     </div>
 
                     <div class="mb-3 form-group row">
-                        <label class="col-md-4 col-form-label text-md-right">Current Source</label>
-                        <div class="col-md-6">
+                        <label class="col-md-12 col-form-label text-md-right">Current Source</label>
+                        <div class="col-md-12">
                             @if(!empty($episode['source']))
                                 <audio id="audio" controls class="form-control"><source src="/uploads/podcasts_episodes/{{ $episode['source'] }}">
                             @else
@@ -56,13 +56,13 @@
                         </div>
                     </div>
                     <div class="mb-3 form-group row">
-                        <label for="source" class="col-md-4 col-form-label text-md-right">Upload</label>
-                        <div class="col-md-6"><input id="source" type="file" name="source" accept=".mp3, .wav"></div>
+                        <label for="source" class="col-md-12 col-form-label text-md-right">Upload</label>
+                        <div class="col-md-12"><input id="source" type="file" name="source" accept=".mp3, .wav"></div>
                     </div>
 
                     <div class="mb-3 form-group row">
-                        <label for="status" class="col-md-4 col-form-label text-md-right">Status</label>
-                        <div class="col-md-6">
+                        <label for="status" class="col-md-12 col-form-label text-md-right">Status</label>
+                        <div class="col-md-12">
                             <select class="form-select" name='status' id="status" aria-label="Select episode status">
                                 <option value="1"> {{ 'Draft' }} </option>
                                 <option value="2"> {{ 'Published' }} </option>
