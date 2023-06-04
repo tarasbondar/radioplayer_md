@@ -15,7 +15,7 @@
                         <div class="input input__inner">
                             <input class="input__checkbox" type="checkbox" id="category-{{$c['id']}}" value="{{$c['id']}}">
                             <label class="input__label light" for="category-{{$c['id']}}">
-                                {{ $c['key'] }}
+                                {{ __('podcastcategories.'.$c['key']) }}
                             </label>
                             <svg class="icon"><use href="/img/sprite.svg#check"></use></svg>
                             <div class="messages"></div>

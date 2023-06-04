@@ -21,7 +21,7 @@
 
                 <div class="podcasts__header d-flex flex-row justify-content-between mb-24">
                     <h2 class="h2 mb-0">{{ __('client.allPodcasts') }}</h2>
-                    {{--@if(count($podcasts) > 5)--}} <a href="/podcasts" class="link">Больше</a> {{--@endif--}}
+                    {{--@if(count($podcasts) > 5)--}} <a href="/podcasts" class="link"> {{'Больше'}}</a> {{--@endif--}}
                 </div>
                 <div class="items-list__grid mb-24 podcasts-container all-podcasts overflow-auto">
                     @foreach($podcasts as $p)
@@ -60,7 +60,7 @@
                             <div class="input input__inner">
                                 <input class="input__checkbox" type="checkbox" id="category-{{$c['id']}}" value="{{$c['id']}}">
                                 <label class="input__label light" for="category-{{$c['id']}}">
-                                    {{ $c['key'] }}
+                                    {{ __('podcastcategories.'.$c['key']) }}
                                 </label>
                                 <svg class="icon"><use href="/img/sprite.svg#check"></use></svg>
                                 <div class="messages"></div>

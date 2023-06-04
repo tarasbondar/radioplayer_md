@@ -11,7 +11,7 @@
                 </div>
 
                 <div class="no-favorite @if(count($fav_stations) !== 0) d-none @endif">
-                    {{ 'You have no favorite radiostations' }}
+                    {{ __('client.noFavStations') }}
                 </div>
 
                 <div class="category-slider__wrapper @if(count($fav_stations) === 0) d-none @endif">
@@ -42,11 +42,11 @@
                 <div class="tab-filters">
                     <ul class="tab-filters__list">
                         <li class="tab-filters__item">
-                            <button id="search-all" class="btn btn_switcher btn_large {{ !isset($_GET['category_id']) ? 'active' : '' }}" type="button" value="0"> All </button>
+                            <button id="search-all" class="btn btn_switcher btn_large {{ !isset($_GET['category_id']) ? 'active' : '' }}" type="button" value="0"> {{ __('stationcategories.all') }} </button>
                         </li>
                         @foreach($categories as $c)
                             <li class="tab-filters__item">
-                                <button class="btn btn_switcher btn_large button-category {{ (isset($_GET['category_id']) && $_GET['category_id'] == $c['id']) ? 'active' : '' }}" type="button" value="{{ $c['id'] }}"> {{$c['key']}} </button>
+                                <button class="btn btn_switcher btn_large button-category {{ (isset($_GET['category_id']) && $_GET['category_id'] == $c['id']) ? 'active' : '' }}" type="button" value="{{ $c['id'] }}"> {{ __('stationcategories.'.$c['key']) }} </button>
                             </li>
                         @endforeach
                     </ul>
@@ -54,7 +54,7 @@
                     <ul class="tab-filters__list">
                         @foreach($tags as $t)
                             <li class="tab-filters__item">
-                                <button class="btn btn_switcher btn_large button-tag {{ (isset($_GET['tag_id']) && $_GET['tag_id'] == $t['id']) ? 'active' : '' }}" type="button" value=" {{$t['id']}}"> {{$t['key']}} </button>
+                                <button class="btn btn_switcher btn_large button-tag {{ (isset($_GET['tag_id']) && $_GET['tag_id'] == $t['id']) ? 'active' : '' }}" type="button" value=" {{$t['id']}}"> {{ __('stationtags.'.$t['key']) }} </button>
                             </li>
                         @endforeach
                     </ul>
