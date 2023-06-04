@@ -73,6 +73,19 @@
         </div>
     </main>
 </div>
+<script src="{{ asset('js/ckeditor/ckeditor.js') }}"></script>
+
+<script>
+    var allEditors = document.querySelectorAll('.ckeditor-custom');
+    for (var i = 0; i < allEditors.length; ++i) {
+        CKEDITOR.replace( allEditors[i], {
+            autoParagraph: false,
+            allowedContent: true,
+            removePlugins: 'about, uploadimage, uploadwidget, image, image2, sourcearea, save, preview, print, newpage, ' +
+                    'language, templates, selectall, find, replace, form, iframe, flash, copyformatting, removeformat'
+        });
+    }
+</script>
 </body>
 </html>
 
