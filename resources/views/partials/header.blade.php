@@ -151,15 +151,24 @@
                 </a>
             </nav>
 
-            <div class="header__menu__app-links">
-                <a class="header__menu__app-links__link" href="!#" rel="nofollow noopener" target="_blank" aria-label="{{ __('app.downloadAtAppStore') }}">
-                    <img class="header__menu__app-links__img header__menu__app-links__img_app-store" src="/img/app_store-ru.svg" width="120" height="40" alt="App Store" loading="lazy">
-                </a>
+            <?php
+                $isAndroid = is_numeric(strpos(strtolower($_SERVER["HTTP_USER_AGENT"]), "android"));
+                $isIPhone = is_numeric(strpos(strtolower($_SERVER["HTTP_USER_AGENT"]), "iphone"));
+                $isIPad = is_numeric(strpos(strtolower($_SERVER["HTTP_USER_AGENT"]), "ipad"));
+                $isMobile = ($isIPhone || $isIPad || $isAndroid);
+            ?>
 
-                <a class="header__menu__app-links__link" href="!#" rel="nofollow noopener" target="_blank" aria-label="{{ __('app.downloadFromGooglePlay') }}">
-                    <img class="header__menu__app-links__img header__menu__app-links__img_google-play" src="/img/google_play-ru.svg" width="135" height="40" alt="Google Play" loading="lazy">
-                </a>
-            </div>
+            {{--@if(!$isMobile)
+                <div class="header__menu__app-links">
+                    <a class="header__menu__app-links__link" href="!#" rel="nofollow noopener" target="_blank" aria-label="{{ __('app.downloadAtAppStore') }}">
+                        <img class="header__menu__app-links__img header__menu__app-links__img_app-store" src="/img/app_store-ru.svg" width="120" height="40" alt="App Store" loading="lazy">
+                    </a>
+
+                    <a class="header__menu__app-links__link" href="!#" rel="nofollow noopener" target="_blank" aria-label="{{ __('app.downloadFromGooglePlay') }}">
+                        <img class="header__menu__app-links__img header__menu__app-links__img_google-play" src="/img/google_play-ru.svg" width="135" height="40" alt="Google Play" loading="lazy">
+                    </a>
+                </div>
+            @endif--}}
 
             <div class="header__menu__footer x-small">
                 {{ __('client.contactTitle') }}<br>

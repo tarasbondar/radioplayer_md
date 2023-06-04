@@ -67,12 +67,14 @@ class RadioApiService
             $response = $this->client->send($request);
             $body = $response->getBody();
             $data = json_decode($body, true);
-            if (isset($data['name']))
+            if (isset($data['name'])) {
+                $tmp = explode(' - ', $data['name']);
                 return [
                     'status' => 'success',
-                    'artist' => '&nbsp;',
-                    'song' => $data['name'],
+                    'artist' => $tmp[1],
+                    'song' => $tmp[0],
                 ];
+            }
 
         }
 
