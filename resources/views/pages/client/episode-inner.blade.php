@@ -49,7 +49,7 @@ use App\Models\PodcastEpisode;
                                 <span data-is_listened="1" class="{{ !$episode['is_listened'] ? 'hidden' : '' }}">{{ __('client.listened') }}</span>
                             </div>
                         </div>
-                        <p class="podcast__text">{{ $episode['description'] }}</p>
+                        <p class="podcast__text">{!! $episode['description'] !!}</p>
                     </div>
 
                 </div>

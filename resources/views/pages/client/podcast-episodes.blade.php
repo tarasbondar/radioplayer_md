@@ -20,10 +20,10 @@
                             <strong class="podcast__title">{{ $podcast['name'] }}</strong>
 
                             @if(strlen($podcast['description']) < 100)
-                                <p class="podcast__descr">{{ $podcast['description'] }}</p>
+                                <p class="podcast__descr">{!! $podcast['description'] !!}</p>
                             @else
                                 <p id="descr-full" class="podcast__descr" hidden="true">
-                                    {{ $podcast['description'] }}
+                                    {!! !$podcast['description'] !!}
                                     <button class="btn btn_more" id="less" type="button"><span>{{ __('client.less') }}</span></button>
                                 </p>
                                 <p id="descr-short" class="podcast__descr">

@@ -20,7 +20,23 @@
     </div>
 </div>
 
-@include('partials.scripts')
+{{--@include('partials.scripts')--}}
+
+<script src="{{ asset('js/ckeditor/build/ckeditor.js') }}"></script>
+
+<script type="application/javascript">
+    ClassicEditor.create( document.querySelector( '.ckeditor-custom' ), {
+        autoParagraph: false,
+        allowedContent: true
+    } )
+        .then( editor => {
+            window.editor = editor;
+        } )
+        .catch( err => {
+            console.error( err.stack );
+        });
+</script>
 
 </body>
 </html>
+
