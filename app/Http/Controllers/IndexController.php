@@ -260,7 +260,7 @@ class IndexController
         $page_size = 12;
         $search_name = $name;
         $search_categories = $categories;
-        $podcasts = Podcast::where('podcasts.status', '=', Podcast::STATUS_ACTIVE)
+        $podcasts = Podcast::select('podcasts.*', 'users.name AS username')->where('podcasts.status', '=', Podcast::STATUS_ACTIVE)
             ->join('users', 'podcasts.owner_id', '=', 'users.id');
         if (!empty($search_categories)) {
             $podcasts = $podcasts->join('podcasts_2_categories AS p2c', 'p2c.podcast_id', '=', 'podcasts.id')->whereRaw("p2c.category_id IN ({$search_categories})");

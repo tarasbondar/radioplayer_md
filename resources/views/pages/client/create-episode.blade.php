@@ -38,7 +38,7 @@ use App\Helpers\SiteHelper;
                             </div>
 
                             <div class="input form-floating">
-                                <textarea class="form-control ckeditor-custom" placeholder="{{ __('client.episodeDescription') }}" id="description" name="description">{{ @$episode['description'] }}</textarea>
+                                <textarea class="form-control" placeholder="{{ __('client.episodeDescription') }}" id="description" name="description">{{ @$episode['description'] }}</textarea>
                                 <label for="description">{{ __('client.episodeDescription') }}</label>
                                 <div class="messages"></div>
                             </div>

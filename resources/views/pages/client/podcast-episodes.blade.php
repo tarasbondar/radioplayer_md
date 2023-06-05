@@ -27,7 +27,7 @@
                                     <button class="btn btn_more" id="less" type="button"><span>{{ __('client.less') }}</span></button>
                                 </p>
                                 <p id="descr-short" class="podcast__descr">
-                                    {{ substr($podcast['description'], 0, 95) }}
+                                    {!! substr($podcast['description'], 0, 95) !!}
                                     <button class="btn btn_more" id="more" type="button"><span>{{ __('client.more') }}</span></button>
                                 </p>
                             @endif

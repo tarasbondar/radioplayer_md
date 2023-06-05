@@ -13,7 +13,5 @@
              width="100%" alt="" loading="lazy">
     </div>
     <h3 class="x-small item__title">{{ $p['name'] }}</h3>
-    {{--<button class="item__link" type="button" aria-label="Select podcast"></button>--}}
     <a class="item__link" aria-label="{{ __('client.selectPodcast') }}" href="/podcasts/{{$p['id']}}/view"></a>
-
 </div>

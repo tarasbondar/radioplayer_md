@@ -21,7 +21,7 @@
 
                 <div class="items-list__grid podcasts-container">
                     @foreach($podcasts as $p)
-                        @include('partials.podcast-card')
+                        @include('partials.podcast-card', ['p' => $p])
                     @endforeach
                 </div>
             </div>

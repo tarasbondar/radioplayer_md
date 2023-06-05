@@ -11,7 +11,7 @@
         </div>
 
         <div class="input form-floating">
-            <textarea class="form-control ckeditor-custom" placeholder="{{ __('client.podcastDescription') }}" id="description" name="description"> {{ old('description') }}</textarea>
+            <textarea class="form-control" placeholder="{{ __('client.podcastDescription') }}" id="description" name="description"> {{ old('description') }}</textarea>
             <label for="description">{{ __('client.podcastDescription') }}</label>
             <div class="messages">
                 {{ $errors->has('description') ? $errors->first('description') : '' }}
