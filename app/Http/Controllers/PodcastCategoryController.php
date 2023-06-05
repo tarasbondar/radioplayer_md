@@ -20,7 +20,7 @@ class PodcastCategoryController extends Controller
 
     public function edit($id) {
         $category = PodcastCategory::find($id)->toArray();
-        return view('pages.admin.stationcategories-edit', ['action' => 'edit', 'category' => $category]);
+        return view('pages.admin.podcastcategories-edit', ['action' => 'edit', 'category' => $category]);
     }
 
     public function save(Request $request) {
