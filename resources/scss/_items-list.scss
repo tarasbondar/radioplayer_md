@@ -13,6 +13,7 @@
         .podcast___img {
             height: rem(96px);
             width: rem(96px);
+            max-width: inherit;
         }
     }
 }
