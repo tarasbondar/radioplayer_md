@@ -136,14 +136,14 @@
 
                 <hr class="header__menu__sep">
 
-                <a class="btn btn_list-item" href="#" rel="nofollow noopener" target="_blank">
+                <a class="btn btn_list-item" href="https://www.facebook.com/radioplayer.md/" rel="nofollow noopener" target="_blank">
                     <svg class="icon">
                         <use href="/img/sprite.svg#facebook"></use>
                     </svg>
                     <span>Facebook</span>
                 </a>
 
-                <a class="btn btn_list-item" href="#" rel="nofollow noopener" target="_blank">
+                <a class="btn btn_list-item" href="https://www.instagram.com/radioplayer.md/" rel="nofollow noopener" target="_blank">
                     <svg class="icon">
                         <use href="/img/sprite.svg#instagram"></use>
                     </svg>
