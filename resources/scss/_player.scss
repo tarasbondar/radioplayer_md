@@ -17,6 +17,11 @@
             display: block;
         }
     }
+
+    &_animated{
+        //background: red;
+        height: 80px;
+    }
 }
 
 @media (min-width: 992px) {

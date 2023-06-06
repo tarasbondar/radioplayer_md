@@ -8,6 +8,7 @@ import { nowPlaying } from './now-playing.js';
 import { debounce } from './debounce.js';
 import { customUrlBehavior } from "./custom-url-behavior";
 import { tooltips } from './_tooltips';
+// import { draggablePlayer } from "./draggable-player";
 
 export function scriptsSetup() {
     global();
@@ -19,6 +20,7 @@ export function scriptsSetup() {
     nowPlaying();
     debounce();
     tooltips();
+    // draggablePlayer();
     customUrlBehavior();
 }
 

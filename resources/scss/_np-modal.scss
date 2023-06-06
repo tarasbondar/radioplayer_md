@@ -6,6 +6,13 @@
     &.scroll{
         overflow-y: auto;
     }
+
+    &.player-animated{
+        display: block;
+        //height: 80px;
+        //transform: translateY(calc(100% - 80px));
+        //transform: translateY(50%);
+    }
 }
 
 .np-modal__header {
