@@ -3,6 +3,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CustomValue;
 use App\Models\DownloadRecord;
 use App\Models\Podcast;
 use App\Models\PodcastCategory;
@@ -391,7 +392,12 @@ class IndexController
     }
 
     public function privacy() {
-        return view('');
+        $privacy = '';
+        $queue = CustomValue::where('key', '=', 'privacy_' . app()->getLocale())->pluck('value')->toArray();
+        if (!empty($queue[0])) {
+            $privacy = $queue[0];
+        }
+        return view('pages.client.privacy', ['privacy' => $privacy]);
     }
 
     /**

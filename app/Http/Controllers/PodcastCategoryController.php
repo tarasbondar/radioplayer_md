@@ -24,13 +24,13 @@ class PodcastCategoryController extends Controller
     }
 
     public function save(Request $request) {
-        if (empty($request['id'])) {
+        if (empty($request->get('id'))) {
             $category = new PodcastCategory();
         } else {
-            $category = PodcastCategory::find($request['id']);
+            $category = PodcastCategory::find($request->get('id'));
         }
-        $category->key = $request['key'];
-        $category->status = $request['status'];
+        $category->key = $request->get('key');
+        $category->status = $request->get('status');
         $category->save();
 
         return redirect()->action([PodcastCategoryController::class, 'index']);

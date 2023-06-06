@@ -47,7 +47,7 @@
                    class="link {{ (@$episode['is_in_playlist']) ? 'active' : '' }}"
                    data-add-to-playlist="{{ $episode['id'] }}"
                    data-bs-toggle="tooltip"
-                   data-bs-title="{{ auth()->check() ? 'Added to playlist' : __('client.needToLogin') }}">
+                   data-bs-title="{{ auth()->check() ? __('client.addedToPlaylist') : __('client.needToLogin') }}">
                     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M9.25 16H17.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                         <path d="M9.25 11.5H17.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -62,7 +62,7 @@
                 <a href="javascript:void(0)"
                    class="link listen-later {{ ($episode['is_in_listen_later']) ? 'active' : '' }}"
                    data-bs-toggle="tooltip"
-                   data-bs-title="{{ auth()->check() ? 'Queued to listen later' : __('client.needToLogin') }}"
+                   data-bs-title="{{ auth()->check() ? __('client.addedToList') : __('client.needToLogin') }}"
                    data-listen-later="{{ $episode['id']  }}">
                     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g clip-path="url(#clip0_801_45179)">

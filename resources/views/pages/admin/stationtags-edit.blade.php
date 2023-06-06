@@ -9,7 +9,7 @@
         <div class="row justify-content-center">
             <div class="col-md-10">
 
-                <form method="POST" action="/admin/station-tags/save" enctype = 'multipart/form-data'>
+                <form method="POST" action="/admin/station-tags/save">
                     @csrf
                     <div class="form-group row" hidden>
                         <input id="id" type="text" class="form-control" name="id" value="{{ @$tag['id'] }}" readonly>

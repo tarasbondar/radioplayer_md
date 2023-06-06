@@ -31,6 +31,9 @@
             <a class="nav-link" href="{{ '/admin/podcast-categories' }}">Podcast Categories</a>
         </li>
         <li class="nav-item">
+            <a class="nav-link" href="{{ '/admin/custom-values' }}">Custom Values</a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" href="{{ '/translations' }}" target="_blank">Translations</a>
         </li>
     </ul>

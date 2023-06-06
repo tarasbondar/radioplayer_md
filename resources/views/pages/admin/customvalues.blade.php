@@ -4,55 +4,53 @@
 
     <div class="container">
 
-        <h2>Radio Station Tags</h2>
+        <h2>Custom Values</h2>
 
         <div class="row">
             <div class="col-md-12 text-right mt-3 mb-3">
-                <a href="/admin/station-tags/add" class="btn btn-primary" type="button">Add Radio Station Tag</a>
+                <a href="/admin/custom-values/add" class="btn btn-primary" type="button">Add Value</a>
             </div>
         </div>
 
-        @if (!empty($tags))
+        @if (!empty($values))
             <table class="table">
                 <thead class="thead-light">
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Key</th>
-                    <th scope="col">Status</th>
                     <th scope="col">Actions</th>
                 </tr>
                 </thead>
 
                 <tbody>
-                    @foreach ($tags as $t)
+                    @foreach ($values as $v)
                         <tr>
-                            <th scope="row">{{ $t['id'] }}</th>
-                            <td>{{ $t['key'] }}</td>
-                            <td>{{ ($t['status'] === 0 ? 'Active' : 'Inactive' ) }}</td>
+                            <th scope="row">{{ $v['id'] }}</th>
+                            <td>{{ $v['key'] }}</td>
                             <td>
-                                <a href="/admin/station-tags/edit/{{ $t['id'] }}" class="edit-tag">Edit</a>
-                                <a href="#" class="remove-tag remove-{{ $t['id'] }}">Delete</a>
+                                <a href="/admin/custom-values/edit/{{ $v['id'] }}">Edit</a>
+                                <a href="#" class="remove-value remove-{{ $v['id'] }}">Delete</a>
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
 
-            {!! $pagination !!}
+            {{--{!! $pagination !!}--}}
 
         @endif
 
         <script>
             (function(){
 
-                $(document).on('click', '.remove-tag', function(){
+                $(document).on('click', '.remove-value', function(){
                     let button = $(this);
 
                     let classes = button.attr('class').split(" ");
-                    let tag_id = 0;
+                    let value_id = 0;
                     $.each(classes, function (k, v) {
                         if (v.search('remove-') >= 0) {
-                            tag_id = v.split("-")[1];
+                            value_id = v.split("-")[1];
                         }
                     });
 
@@ -61,10 +59,10 @@
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             },
-                            url:'/admin/station-tags/' + tag_id,
+                            url:'/admin/custom-values/' + value_id,
                             method: 'DELETE',
                             success: function(response) {
-                                window.location.href = '/admin/station-tags';
+                                window.location.href = '/admin/custom-values';
                             }
                         });
                     }

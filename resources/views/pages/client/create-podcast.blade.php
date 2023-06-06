@@ -26,6 +26,10 @@
                             <div class="messages"></div>
                         </div>
 
+                        {{--<div class="input form-floating">
+                            <div class="input__editor" data-editor>{{ @$podcast['description'] }}</div>
+                        </div>--}}
+
                         <div class="form-group row" hidden>
                             <input id="categories-ids" name='categories-ids' type="text" class="form-control" value="{{ implode(',', array_keys($p2c)) }}" readonly>
                         </div>

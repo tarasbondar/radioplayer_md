@@ -43,6 +43,7 @@ Route::get('/play-station/{id}', [IndexController::class, 'playStation']);
 Route::get('/get-station-info/{id}', [IndexController::class, 'getStationInfo']);
 Route::get('/apply', [ProfileController::class, 'apply']);
 Route::post('/send-application', [ProfileController::class, 'sendApplication']);
+Route::get('/privacy', [IndexController::class, 'privacy']);
 
 Route::post('/add-to-playlist/{id}', [ProfileController::class, 'addToPlaylist'])->name('profile.addToPlaylist');
 Route::post('/save-playlist-sorting', [ProfileController::class, 'savePlaylistSorting'])->name('profile.savePlaylistSorting');
@@ -151,6 +152,10 @@ Route::name('admin.')->prefix('admin')->middleware([IsAdmin::class])->group(func
     Route::post('/station-groups/save', [RadioStationGroupController::class, 'save']);
     Route::delete('/station-groups/{id}', [RadioStationGroupController::class, 'delete']);
 
-    /*Route::delete('/translations', [Translations::class, 'delete']);*/
+    Route::get('/custom-values', [AdminController::class, 'customValues']);
+    Route::get('/custom-values/add', [AdminController::class, 'addValue']);
+    Route::get('/custom-values/edit/{id}', [AdminController::class, 'editValue']);
+    Route::post('/custom-values/save', [AdminController::class, 'saveValue']);
+    Route::delete('/custom-values/{id}', [AdminController::class, 'deleteValue']);
 
 });
