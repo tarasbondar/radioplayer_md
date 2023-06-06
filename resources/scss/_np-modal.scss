@@ -426,7 +426,8 @@
     }
 
     .np-modal__player-body {
-        margin: rem(80px) 0;
+        margin: rem(20px) 0 rem(80px);
+        overflow-y: auto;
     }
 
     .np-modal__player-body__main-actions__wave {
@@ -490,6 +491,13 @@
 @media (min-width: 1200px) {
     .np-modal__btn-volume {
         display: block;
+    }
+}
+
+@media (min-height: 680px) {
+    .np-modal__player-body {
+        margin: rem(80px) 0;
+        //overflow-y: auto;
     }
 }
 
