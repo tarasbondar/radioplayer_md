@@ -12,9 +12,6 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::middleware('guest')->group(function () {
-    Route::get('register', [RegisterController::class, 'create'])
-        ->name('register');
-
     Route::post('register', [RegisterController::class, 'store']);
 
     Route::post('login', [LoginController::class, 'login'])->middleware('verified');
