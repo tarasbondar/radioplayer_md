@@ -16,7 +16,7 @@
                      srcset="{{ !empty($current['image_logo']) ? 'uploads/stations_images/' . $current['image_logo'] : "/img/station-placeholder.png"}} 1x,
                      {{ !empty($current['image_logo']) ? 'uploads/stations_images/' . $current['image_logo'] : "/img/station-placeholder.png"}} 2x"
                      src="{{ !empty($current['image_logo']) ? 'uploads/stations_images/' . $current['image_logo'] : "/img/station-placeholder.png"}}"
-                     width="100%" alt="" loading="lazy">
+                     alt="" width="228px" loading="lazy">
             </div>
             <div class="now-playing__track__body">
                 <div class="now-playing__track__author x-small">
