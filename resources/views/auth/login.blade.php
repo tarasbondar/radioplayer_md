@@ -12,7 +12,7 @@
                 <div class="login__wrapper">
                     <form action="{{ route('login') }}" method="POST">
                         @csrf
-
+                        <x-auth-session-status :status="session('status')" />
                         <div class="input form-floating _icon">
                             <input type="email" class="form-control @error('email') is-invalid @enderror" placeholder="{{ __('auth.emailAddress') }}" name="email" id="email" value="{{ old('email') }}" autocomplete="email" autofocus/>
 

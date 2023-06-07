@@ -12,6 +12,10 @@
 .form-floating > .form-select ~ label {
 	font-size: rem(12px);
 	color: var(--btn-rows-text-color-active);
+
+	&::after {
+		background-color: transparent;
+	}
 }
 
 .form-floating._icon {

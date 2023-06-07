@@ -16,7 +16,7 @@ use App\Http\Controllers\RadioStationGroupController;
 use App\Http\Middleware\IsAdmin;
 use \Illuminate\Support\Facades\Auth;
 
-Auth::routes();
+require __DIR__.'/auth.php';
 
 Route::get('language/{locale}', function ($locale) {
     app()->setLocale($locale);
