@@ -343,10 +343,16 @@
 		flex-direction: column;
 		flex: 1 1 auto;
 	}
+
 	.np-modal__player-body__secondary-actions {
 		background: none;
 		box-shadow: none;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
 	}
+
 	.np-modal__player-body__main-actions {
 		// flex: 1 1 auto;
 		display: flex;
@@ -392,6 +398,7 @@
         background: var(--np-modal-secodary-actions-bg);
         backdrop-filter: blur(rem(12px));
         box-shadow: var(--np-modal-secodary-actions-shadow);
+        transform: none;
     }
 
     .np-modal__player-body__secondary-actions_podcasts {
