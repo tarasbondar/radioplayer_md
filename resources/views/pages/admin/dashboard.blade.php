@@ -2,6 +2,8 @@
 
 @section('content')
 
-    dashboard
+    @foreach($stats as $k => $v)
+        {{ "$k: $v"  }}<br>
+    @endforeach
 
 @endsection()

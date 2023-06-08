@@ -11,6 +11,7 @@ use App\Models\Podcast;
 use App\Models\PodcastCategory;
 use App\Models\PodcastEpisode;
 use App\Models\QueuedEpisode;
+use App\Models\RadioStationFavorite;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -74,9 +75,24 @@ class UsersController extends Controller
         if ($user['role'] == User::ROLE_AUTHOR) {
             $users_podcasts = Podcast::where('owner_id', '=', $id)->get()->toArray();
         }
-        // stats
-        return view('pages.admin.users-view', ['user' => $user, 'users_podcast' => $users_podcasts]);
+
+        $user_stats = [];
+        $user_stats['episodes_listened'] = HistoryRecord::where('user_id', '=', $id)->count();
+        $user_stats['episodes_downloaded'] = DownloadRecord::where('user_id', '=', $id)->count();
+        $user_stats['stations_favorited'] = RadioStationFavorite::where('user_id', '=', $id)->count();
+
+        if ($user['role'] == User::ROLE_AUTHOR) {
+            $user_stats['podcasts_created'] = Podcast::where('owner_id', '=', $id)->count();
+            $user_stats['episodes_uploaded'] = PodcastEpisode::join('podcasts', 'podcasts.id', '=', 'podcasts_episodes.podcast_id')->where('podcasts.owner_id', '=', $id)->count();
+        }
+
+
+        return view('pages.admin.users-view', ['user' => $user, 'users_podcast' => $users_podcasts, 'stats' => $user_stats]);
     }
+
+    /*public function stats() {
+
+    }*/
 
     public function add() {
         return view('pages.admin.users-edit', ['action' => 'add', 'model' => [], 'roles' => User::$roles, 'statuses' => User::$statuses]);

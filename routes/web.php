@@ -110,6 +110,7 @@ Route::name('admin.')->prefix('admin')->middleware([IsAdmin::class])->group(func
     Route::get('/podcasts', [PodcastController::class, 'index']);
     Route::get('/podcasts/add', [PodcastController::class, 'add']);
     Route::get('/podcasts/edit/{id}', [PodcastController::class, 'edit']);
+    Route::get('/podcasts/stats', [PodcastController::class, 'stats']);
     Route::post('/podcasts/save', [PodcastController::class, 'save']);
     Route::delete('/podcasts/{id}', [PodcastController::class, 'delete']);
     Route::get('/podcasts/download', [PodcastController::class, 'download']);

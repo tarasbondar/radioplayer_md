@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\CustomValue;
+use App\Models\Podcast;
+use App\Models\PodcastEpisode;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -13,7 +16,12 @@ class AdminController extends Controller
     }
 
     public function dashboard(Request $request) {
-        return view('pages.admin.dashboard');
+        $stats = [];
+        $stats['user_count'] = User::where('role', '=', User::ROLE_USER)->count();
+        $stats['author_count'] = User::where('role', '=', User::ROLE_AUTHOR)->count();
+        $stats['active_podcasts'] = Podcast::where('status', '=', Podcast::STATUS_ACTIVE)->count();
+        $stats['published_episodes'] = PodcastEpisode::where('status', '=', PodcastEpisode::STATUS_PUBLISHED)->count();
+        return view('pages.admin.dashboard', ['stats' => $stats]);
     }
 
     public function customValues() {

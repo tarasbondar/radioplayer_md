@@ -62,6 +62,17 @@ class PodcastController extends Controller
         return view('pages.admin.podcasts-edit', ['action' => 'edit', 'podcast' => $podcast, 'categories' => $categories]);
     }
 
+    public function stats(Request $request) {
+        if (!$request->has('id')) {
+            exit;
+        }
+        //time filters
+        $id = $request->get('id');
+        $stats = [];
+
+        return '';
+    }
+
     public function save(Request $request) {
         if (empty($request['id'])) {
             $podcast = new Podcast();

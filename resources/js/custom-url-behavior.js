@@ -36,7 +36,7 @@ export function customUrlBehavior () {
                 get // a callback to retrieve the node
             );
             history.pushState({ route: path }, path, path);
-            console.log(path);
+            //console.log(path);
             updateLinks();
             scriptsSetup();
             window.scrollTo(0, 0);

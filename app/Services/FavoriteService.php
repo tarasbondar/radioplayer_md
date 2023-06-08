@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Models\RadioStation;
-use App\Models\RadiostationFavorite;
+use App\Models\RadioStationFavorite;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -76,7 +76,7 @@ class FavoriteService
     public static function getFavorites(): array
     {
         if (Auth::check()) {
-            return RadiostationFavorite::where(['user_id' => Auth::id()])->get()->pluck('station_id')->toArray();
+            return RadioStationFavorite::where(['user_id' => Auth::id()])->get()->pluck('station_id')->toArray();
         }
 
         return Session::get('favorites', []);

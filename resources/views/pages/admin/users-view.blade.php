@@ -39,14 +39,11 @@
                 </div>
 
                 <div class="mb-3 form-group row">
-                    History TBA
+                    @foreach($stats as $k=>$v)
+                        {{ "$k: $v" }}<br>
+                    @endforeach
                 </div>
 
-                @if ($user['role'] == 1)
-                    <div class="mb-3 form-group row">
-                        Podcasts TBA
-                    </div>
-                @endif
                 {{-- <a href="{{ request()->headers->get('referer') }}" class="btn"> Go back </a> --}}
             </div>
         </div>
