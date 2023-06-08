@@ -575,3 +575,14 @@ textarea.form-control {
     color: var(--editor-color);
     border: var(--editor-border);
 }
+
+.input__desc {
+	padding: 0 0 0 rem(12px);
+	margin-top: rem(8px);
+	color: var(--input-desc-color);
+
+	&:empty {
+		margin-top: 0;
+		padding: 0;
+	}
+}
