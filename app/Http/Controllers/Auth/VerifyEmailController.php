@@ -22,8 +22,8 @@ class VerifyEmailController extends Controller
                 event(new Verified($user));
             }
 
-            return redirect('/login')->with('status', 'auth.verified');
+            return redirect('/login')->with('status', __('auth.verified'));
         }
-        return redirect('/login')->with('error', 'auth.link-expired');
+        return redirect('/login')->with('error', __('auth.link-expired'));
     }
 }
