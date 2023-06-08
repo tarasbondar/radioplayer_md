@@ -158,6 +158,19 @@ $base-font-size: 16px;
 
     --btn-more-color: var(--green-300);
     --btn-more-bg: linear-gradient(90deg, rgba(247, 247, 248, 0) 0%, var(--grey-100) 100%);
+
+    --settings-title-color: var(--dark-500);
+
+    --btn-fake-input-color: var(--dark-500);
+    --btn-fake-input-bg: var(--white);
+    --btn-fake-input-border: 1px solid var(--grey-200);
+    --btn-fake-input-small-color: var(--grey-500);
+
+    --input-desc-color: var(--grey-500);
+
+    --modal-content-bg-color: var(--grey-100);
+
+    --text-page-title-color: var(--dark-500);
 }
 
 @mixin darkTheme() {
@@ -281,6 +294,19 @@ $base-font-size: 16px;
 
     --btn-more-color: var(--accent-500);
     --btn-more-bg: linear-gradient(90deg, rgba(15, 15, 15, 0) 0%, var(--dark-500) 100%);
+
+    --settings-title-color: var(--white);
+
+    --btn-fake-input-color: var(--white);
+    --btn-fake-input-bg: var(--dark-300);
+    --btn-fake-input-border: 0;
+    --btn-fake-input-small-color: var(--white-75);
+
+    --input-desc-color: var(--white-75);
+
+    --modal-content-bg-color: var(--dark-500);
+
+    --text-page-title-color: var(--white);
 }
 
 :root {

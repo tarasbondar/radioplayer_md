@@ -1,5 +1,5 @@
 .modal-header {
-    padding: rem(24px);
+    padding: rem(24px) rem(20px);
 
     .h3 {
         margin-bottom: 0;
@@ -20,10 +20,11 @@
 }
 
 .modal-body {
-    padding: 0 rem(24px) rem(24px);
+    padding: 0 rem(20px);
 }
 .modal-content {
 	border-radius: rem(16px);
+	background: var(--modal-content-bg-color);
 }
 
 .modal-request,
@@ -35,6 +36,10 @@
     .form-actions .btn_primary {
         width: 100%;
     }
+
+	.form-actions {
+		padding-bottom: rem(32px);
+	}
 }
 
 .modal-filter {
@@ -83,6 +88,57 @@
     }
 
     .modal-body {
-        padding: 0 rem(24px) rem(24px);
+        padding: 0 rem(24px);
     }
+}
+
+.modal-footer {
+	padding: 0 rem(20px) rem(32px);
+	gap: rem(20px);
+
+	> * {
+		flex: 1;
+		margin: 0;
+	}
+}
+
+@media (min-width: 576px) {
+	.modal-header {
+    	padding: rem(24px);
+	}
+
+	.modal-dialog {
+		max-width: rem(375px);
+	}
+
+	.modal-footer {
+		padding: 0 rem(24px) rem(32px);
+	}
+
+	.modal-content {
+		background: var(--grey-100);
+	}
+
+	.modal {
+		.form-control {
+			background: var(--white);
+			color: var(--dark-500);
+			border: 1px solid var(--grey-200);
+		}
+
+		.form-floating > .form-control ~ label {
+			color: var(--dark-500);
+		}
+
+		.form-floating > .form-control:focus ~ label,
+		.form-floating > .form-control:not(:placeholder-shown) ~ label,
+		.form-floating > .form-control-plaintext ~ label,
+		.form-floating > .form-select ~ label {
+			color: var(--grey-500);
+		}
+
+		.input__desc {
+			color: var(--grey-500);
+		}
+	}
 }

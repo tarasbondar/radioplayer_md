@@ -43,6 +43,7 @@
 		right: 0;
 		bottom: 0;
 		min-width: rem(48px);
+		min-height: rem(48px);
 		color: var(--btn-rows-text-color-active);
 		opacity: 0.4;
 	}
@@ -76,7 +77,7 @@
 
 .input__inner {
     position: relative;
-	margin-bottom: 24px;
+	// margin-bottom: 24px;
 }
 
 .input__checkbox {

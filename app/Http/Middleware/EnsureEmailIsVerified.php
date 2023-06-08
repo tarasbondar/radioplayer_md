@@ -23,7 +23,7 @@ class EnsureEmailIsVerified
         $user = User::where('email', $request->only('email'))->first();
         if ($user && !$user->hasVerifiedEmail()) {
             return back()->withInput($request->only('email'))
-                ->with('status', 'auth.verify')
+                ->with('status', __('auth.verify'))
                 ->withErrors(['email' => __('auth.verify')]);
         }
 
