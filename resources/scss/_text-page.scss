@@ -1,0 +1,15 @@
+.text-page {
+    margin: 0 auto;
+    max-width: rem(684px);
+
+    h1,
+    .h1,
+    h2,
+    h3 {
+        color: var(--text-page-title-color);
+    }
+
+    .x-small + .h1 {
+        margin-top: rem(4px);
+    }
+}

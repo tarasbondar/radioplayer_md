@@ -169,6 +169,35 @@
     }
 }
 
+
+.btn_fake-input {
+    position: relative;
+    color: var(--btn-fake-input-color);
+    width: 100%;
+    text-align: left;
+    align-items: flex-start;
+    padding: rem(12px) rem(64px) rem(12px) rem(12px);
+    background: var(--btn-fake-input-bg);
+    border-radius: rem(8px);
+    border: var(--btn-fake-input-border);
+    flex-direction: column;
+
+    .btn-modal-toggle {
+        bottom: auto;
+    }
+
+    .small {
+        color: var(--btn-fake-input-small-color);
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        &+ .h3 {
+            margin-top: rem(4px);
+        }
+    }
+}
+
 /* mouse, touch pad */
 @media (hover: hover) and (pointer: fine) {
     .btn_ico-primary:hover {
