@@ -29,7 +29,7 @@
                 <div class="now-playing__track__title x-small">
                     <div class="scrolling-text" data-scrolling-text-container>
                         <div class="scrolling-text__inner" data-scrolling-text>
-                            <span class="scrolling-text__data song-title" data-scrolling-text-data data-song>{{ @$current['description'] }}</span>
+                            <span class="scrolling-text__data song-title" data-scrolling-text-data data-song>{!! @$current['description'] !!}</span>
                         </div>
                     </div>
                 </div>
@@ -78,7 +78,7 @@
                              width="100%" alt="" loading="lazy">
                     </div>
                     <div class="np-modal__player-body__header__inner">
-                        <div class="np-modal__player-body__header__pretitle x-small" data-song>{{ @$current['description'] }}</div>
+                        <div class="np-modal__player-body__header__pretitle x-small" data-song>{!! @$current['description'] !!}</div>
                         <div class="np-modal__player-body__header__pretitle x-small" data-artist>&nbsp;</div>
                         <div class="np-modal__player-body__header__title h2">{{ $current['name'] }}</div>
                     </div>
