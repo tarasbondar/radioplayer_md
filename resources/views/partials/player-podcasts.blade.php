@@ -95,12 +95,13 @@
 				    </svg>
 
 				    <div class="np-modal__player-body__main-actions__inner">
-					    <button class="btn btn_ico btn_ico-primary" data-change-track="prev" type="button" aria-label="Предыдущий">
+					    <button id="player-prev" class="btn btn_ico btn_ico-primary" data-change-track="prev" type="button" aria-label="{{ __('client.previous') }}"
+                            {!! (!auth()->check() || count(auth()->user()->playlist) == 0 ? 'style="color: darkgrey"' : '') !!}>
 						    <svg class="icon">
 							    <use href="/img/sprite.svg#chevrons-left"></use>
 						    </svg>
 					    </button>
-					    <button class="btn btn_ico btn_ico-primary" data-rewind="backward" type="button" aria-label="Перемотать назад">
+					    <button class="btn btn_ico btn_ico-primary" data-rewind="backward" type="button" aria-label="{{ __('client.rewind') }}">
 						    <svg class="icon">
 							    <use href="/img/sprite.svg#rewind-ccw"></use>
 						    </svg>
@@ -120,7 +121,8 @@
 							    <use href="/img/sprite.svg#rewind-cw"></use>
 						    </svg>
 					    </button>
-					    <button class="btn btn_ico btn_ico-primary" data-change-track="next" type="button" aria-label="{{ __('client.next') }}">
+					    <button id="player-next" class="btn btn_ico btn_ico-primary" data-change-track="next" type="button" aria-label="{{ __('client.next') }}"
+                            {!! (!auth()->check() || count(auth()->user()->playlist) == 0 ? 'style="color: darkgrey"' : '') !!}>
 						    <svg class="icon">
 							    <use href="/img/sprite.svg#chevrons-right"></use>
 						    </svg>

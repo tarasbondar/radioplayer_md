@@ -34,7 +34,7 @@ export let player = {
     createPlayer(){
         if (typeof window.audio === 'undefined'){
             window.audio = document.createElement("audio");
-            window.audio.setAttribute('crossorigin', "anonymous");
+            //window.audio.setAttribute('crossorigin', "anonymous");
             window.audio.addEventListener('timeupdate', this.updateProgressBar);
             window.audio.addEventListener('pause', this.updateProgressBar);
             window.audio.addEventListener('ended', this.updateProgressBar);
@@ -414,6 +414,8 @@ export let player = {
                         $('[data-add-to-playlist="'+ episodeId +'"]').addClass('active');
                     })
                 }
+                $('#player-prev').css('color', 'black');
+                $('#player-next').css('color', 'black');
             }
         })
     },
