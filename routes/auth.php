@@ -4,7 +4,6 @@ use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
-use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -12,11 +11,6 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::middleware('guest')->group(function () {
-    Route::get('register', [RegisterController::class, 'create'])
-        ->name('register');
-
-    Route::post('register', [RegisterController::class, 'store']);
-
     Route::post('login', [LoginController::class, 'login'])->middleware('verified');
 
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
