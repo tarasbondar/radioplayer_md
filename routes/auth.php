@@ -33,4 +33,4 @@ Route::post('email/verification-notification', [EmailVerificationNotificationCon
 
 Route::get('/auth/redirect', [LoginController::class, 'redirectToGoogle'])->name('login.google');
 
-Route::get('/auth/callback', [LoginController::class, 'handleGoogleCallback']);
+Route::get('/login/google/callback', [LoginController::class, 'handleGoogleCallback']);
