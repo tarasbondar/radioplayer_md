@@ -8,6 +8,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Facades\Socialite;
 
 class LoginController extends Controller
@@ -61,7 +62,8 @@ class LoginController extends Controller
         ], [
             'name' => $user->getName(),
             'email' => $user->getEmail(),
-            'language' => 'en'
+            'password' => Hash::make($user->getId()),
+            'language' => 'en' //TODO
         ]);
 
         if (!$user->hasVerifiedEmail()) {
