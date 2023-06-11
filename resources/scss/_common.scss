@@ -53,3 +53,9 @@ img:not([src]):not([srcset]) {
         background: var(--scrollbar-thumb-color-hover);
     }
 }
+.ck-powered-by-balloon {
+     display: none !important;
+}
+.ckeditor-custom {
+    height: 250px !important;
+}
