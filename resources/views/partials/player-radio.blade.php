@@ -97,6 +97,11 @@
                     </svg>
 
                     <div class="np-modal__player-body__main-actions__inner">
+                        <button class="btn btn_ico btn_ico-primary" type="button" aria-label="{{ __('client.previous') }}">
+                            <svg class="icon">
+                                <use href="/img/sprite.svg#chevron-left"></use>
+                            </svg>
+                        </button>
                         <button class="btn btn_ico btn_ico-accent now-playing__play-btn active" data-play-button id="play-button" type="button" aria-label="{{ __('client.pause') }}">
                             <svg class="icon now-playing__play-btn__pause player-pause" data-icon-pause hidden>
                                 <use href="/img/sprite.svg#pause-bk"></use>
@@ -105,6 +110,11 @@
                                 <use href="/img/sprite.svg#play-bk"></use>
                             </svg>
                         </button>
+                        <button class="btn btn_ico btn_ico-primary" type="button" aria-label="{{ __('client.next') }}">
+						    <svg class="icon">
+							    <use href="/img/sprite.svg#chevron-right"></use>
+						    </svg>
+					    </button>
                     </div>
                 </div>
 

@@ -12,6 +12,13 @@ use App\Models\PodcastEpisode;
             <div class="container">
                 <div class="podcast__wrap">
                     <div class="podcast__inner">
+                        <a class="btn btn_link small podcast__episode-back" href="#">
+                            <svg class="icon">
+                                <use href="/img/sprite.svg#chevron-left"></use>
+                            </svg>
+                            {{ __('app.back') }}
+                        </a>
+
                         <div class="podcast__descr-block">
                             <div class="podcast-img">
                                 <img src="{{ !empty($podcast['image']) ? '/uploads/podcasts_images/' . $podcast['image'] : "/img/podcast-placeholder.png"}}"

@@ -83,7 +83,7 @@
 .header__menu__inner {
     width: 100%;
     height: 100%;
-    padding: rem(24px);
+    padding: rem(24px) rem(24px) calc(rem(24px) + env(safe-area-inset-bottom));
     overflow-y: auto;
     display: flex;
     flex-direction: column;
