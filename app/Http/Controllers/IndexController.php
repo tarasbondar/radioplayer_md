@@ -8,14 +8,17 @@ use App\Models\DownloadRecord;
 use App\Models\Podcast;
 use App\Models\PodcastCategory;
 use App\Models\PodcastEpisode;
+use App\Models\PodcastStatRecord;
 use App\Models\PodcastSub;
 use App\Models\RadioStation;
 use App\Models\RadioStationCategory;
+use App\Models\RadioStationStatRecord;
 use App\Models\RadioStationTag;
 use App\Models\User;
 use App\Services\FavoriteService;
 use App\Services\RadioApiService;
 //use Illuminate\Database\Query\Builder;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
@@ -126,6 +129,45 @@ class IndexController
         return view('partials.player-radio', ['current' => $current, 'all' => $all, 'favorited' => $favorited])->render();
     }
 
+    public function recordPlayStation(Request $request){
+        $station_id = $request->get('id');
+        $ip = $request->ip();
+        $datetime = Carbon::now();
+        $user_id = Auth::check() ? Auth::id() : 0;
+
+        if (Auth::check()) {
+            $record = RadioStationStatRecord::where('user_id', '=', $user_id)
+                ->where('station_id', '=', $station_id)->orderBy('click_time', 'desc')->first();
+        } else {
+            $record = RadioStationStatRecord::where('user_id', '=', $user_id)
+                ->where('station_id', '=', $station_id)
+                ->where('ip', '=', $ip)->orderBy('click_time', 'desc')->first();
+        }
+
+
+
+        if (!empty($record)) {
+            $clicktime = Carbon::create($record->click_time);
+            if (!$datetime->greaterThan($clicktime->addHour())) {
+                RadioStationStatRecord::where('station_id', '=', $station_id)
+                ->where('user_id', '=', $user_id)
+                ->where('ip', '=', $ip)
+                ->update(['click_time' => $datetime]);
+                return '';
+            }
+        }
+
+        $record = new RadioStationStatRecord;
+        $record->station_id = $station_id;
+        $record->user_id = $user_id;
+        $record->ip = $ip;
+        $record->click_time = $datetime;
+        $record->save();
+
+        return '';
+
+    }
+
     public function allPodcasts(Request $request) {
         $page_size = 5;
         $podcasts = Podcast::where('status', '=', Podcast::STATUS_ACTIVE)->limit(5)->get()->toArray(); //$this->searchPodcasts($request->get('name', ''), $request->get('categories', ''));
@@ -157,11 +199,6 @@ class IndexController
 
         if (strlen($text) > 2) {
             $podcasts = $podcasts->whereRaw("( podcasts.name LIKE '%{$text}%' OR podcasts.description LIKE '%{$text}%' OR podcasts.tags LIKE '%{$text}%' )");
-            /*$podcasts = $podcasts->where(function ($query) use ($text) {
-                $query->where('podcasts.name', 'LIKE', "'%{$text}%'")
-                    ->orWhere('podcasts.description', 'LIKE', "'%{$text}%'")
-                    ->orWhere('podcasts.tags', 'LIKE', "'%{$text}%'");
-            });*/
         }
 
         if (!empty($author)) {
@@ -369,6 +406,42 @@ class IndexController
         $episodes = $this->searchPodcasts();
 
         return view('partials.player-podcasts', ['current' => $current, 'episodes' => $episodes, 'podcast' => $podcast])->render();
+    }
+
+    public function recordPlayEpisode(Request $request) {
+        $episode_id = $request->get('id');
+        $ip = $request->ip();
+        $datetime = Carbon::now();
+        $user_id = Auth::check() ? Auth::id() : 0;
+
+        if (Auth::check()) {
+            $record = PodcastStatRecord::where('user_id', '=', $user_id)
+                ->where('episode_id', '=', $episode_id)->orderBy('click_time', 'desc')->first();
+        } else {
+            $record = PodcastStatRecord::where('user_id', '=', $user_id)
+                ->where('episode_id', '=', $episode_id)
+                ->where('ip', '=', $ip)->orderBy('click_time', 'desc')->first();
+        }
+
+        if (!empty($record)) {
+            $clicktime = Carbon::create($record->click_time);
+            if (!$datetime->greaterThan($clicktime->addHour())) {
+                PodcastStatRecord::where('episode_id', '=', $episode_id)
+                    ->where('user_id', '=', $user_id)
+                    ->where('ip', '=', $ip)
+                    ->update(['click_time' => $datetime]);
+                return '';
+            }
+        }
+
+        $record = new PodcastStatRecord;
+        $record->episode_id = $episode_id;
+        $record->user_id = $user_id;
+        $record->ip = $ip;
+        $record->click_time = $datetime;
+        $record->save();
+
+        return '';
     }
 
     public function downloadEpisode(Request $request){

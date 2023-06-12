@@ -16,6 +16,18 @@
 		@media (max-width: 768px) {
 			margin: 0 rem(-20px);
 		}
+
+		.podcast__back {
+			margin-bottom: rem(16px);
+
+			@media (max-width: 768px) {
+				display: none;
+			}
+		}
+
+		.podcast__episode-back {
+			margin-bottom: rem(16px);
+		}
 	}
 	&__info{
 		display: flex;
@@ -49,6 +61,17 @@
 				width: 100%;
 				height: 50%;
 				z-index: 1;
+			}
+		}
+
+		.btn_overlay {
+			position: absolute;
+			top: rem(20px);
+			left: rem(20px);
+			z-index: 2;
+
+			@media (min-width: 769px) {
+				display: none;
 			}
 		}
 

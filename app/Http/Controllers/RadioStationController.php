@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\RadioStation;
 use App\Models\RadioStationCategory;
+use App\Models\RadioStationFavorite;
 use App\Models\RadioStationGroup;
+use App\Models\RadioStationStatRecord;
 use App\Models\RadioStationTag;
 use App\Models\RadioStation2Category;
 use App\Models\RadioStation2Tag;
@@ -41,10 +43,58 @@ class RadioStationController extends Controller
 
         $pagination = $stations->paginate($page_size)->appends($appends)->links();
 
-         $stations = $stations->offset(($page - 1) * $page_size)->limit($page_size)
+        $stations = $stations->offset(($page - 1) * $page_size)->limit($page_size)
             ->get()->toArray();
 
         return view('pages.admin.radiostations', ['stations' => $stations, 'pagination' => $pagination, 'params' => $appends]);
+    }
+
+    public function stats(Request $request) {
+        $from = $request->get('from', '');
+        $to = $request->get('to', '');
+
+        $stats_plays = RadioStationStatRecord::from('radiostations_history AS rh')
+            ->selectRaw('rs.id, rs.name, COUNT(rh.station_id) AS plays')
+            ->join('radiostations AS rs', 'rh.station_id', '=', 'rs.id');
+
+        if (!empty($from)) {
+            $stats_plays = $stats_plays->where('click_time', '>=', $from . ' 00:00:00');
+        }
+
+        if (!empty($to)) {
+            $stats_plays = $stats_plays->where('click_time', '<=', $to . ' 23:59:59');
+        }
+
+        $stats_plays = $stats_plays->groupBy('rs.id')
+            ->get()->toArray();
+
+        $stats_favs = RadioStationFavorite::from('radiostations_favorites AS rf')
+            ->selectRaw('rs.id, rs.name,  COUNT(rf.station_id) AS favs')
+            ->join('radiostations AS rs', 'rf.station_id', '=', 'rs.id');
+
+        if (!empty($from)) {
+            $stats_favs = $stats_favs->where('rf.created_at', '>=', $from . ' 00:00:00');
+        }
+
+        if (!empty($to)) {
+            $stats_favs = $stats_favs->where('rf.created_at', '<=', $to . ' 23:59:59');
+        }
+
+        $stats_favs = $stats_favs->groupBy('rs.id')
+            ->get()->toArray();
+
+        $stats = [];
+        foreach ($stats_plays as $stat) {
+            $stats[$stat['id']]['name'] = $stat['name'];
+            $stats[$stat['id']]['plays'] = $stat['plays'];
+        }
+
+        foreach ($stats_favs as $stat) {
+            $stats[$stat['id']]['name'] = $stat['name'];
+            $stats[$stat['id']]['favs'] = $stat['favs'];
+        }
+
+        return view('pages.admin.station-stats', ['stats' => $stats]);
     }
 
     public function add() {

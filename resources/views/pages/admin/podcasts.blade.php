@@ -44,7 +44,6 @@
                         <td>{{ $p['status'] == 0 ? 'Active' : 'Inactive' }}</td>
                         <td>
                             <a href="/admin/podcasts/edit/{{ $p['id'] }}">Edit</a>
-                            <a href="/admin/podcasts/stats/{{ $p['id'] }}">Stats</a>
                             <a href="#" class="remove-podcast remove-{{ $p['id'] }}">Delete</a>
                         </td>
                     </tr>

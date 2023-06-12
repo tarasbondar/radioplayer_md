@@ -9,9 +9,12 @@ class DownloadRecord extends Model
 {
     use HasFactory;
 
+    const STATUS_NORMAL = 0;
+    const STATUS_DELETED = 1;
+
     protected $table = 'users_downloads';
 
-    protected $fillable = ['user_id', 'episode_id'];
+    protected $fillable = ['user_id', 'episode_id', 'deleted'];
 
     public $timestamps = false;
 

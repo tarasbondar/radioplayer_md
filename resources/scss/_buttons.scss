@@ -198,6 +198,48 @@
     }
 }
 
+
+.btn_small {
+    min-height: rem(32px);
+    gap: rem(4px);
+    padding: rem(8px) rem(12px);
+    border-radius: rem(16px);
+
+    .icon {
+        width: rem(12px);
+        height: rem(12px);
+    }
+}
+
+.btn_overlay {
+    color: var(--btn-overlay-color);
+    background: var(--btn-overlay-bg);
+
+    &:hover,
+    &:focus {
+        text-decoration: none;
+        color: var(--btn-overlay-color);
+        background: var(--btn-overlay-bg);
+    }
+}
+
+
+.btn_link {
+    gap: rem(4px);
+    color: var(--btn-link-color);
+
+    .icon {
+        width: rem(18px);
+        height: rem(18px);
+    }
+
+    &:hover,
+    &:focus {
+        color: var(--btn-link-color);
+        text-decoration: none;
+    }
+}
+
 /* mouse, touch pad */
 @media (hover: hover) and (pointer: fine) {
     .btn_ico-primary:hover {

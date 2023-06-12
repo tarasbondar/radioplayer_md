@@ -137,12 +137,12 @@
 				    </svg>
 
 				    <div class="np-modal__player-body__main-actions__inner">
-					    <button class="btn btn_ico btn_ico-primary" data-change-track="prev" type="button" aria-label="Предыдущий">
+					    <button class="btn btn_ico btn_ico-primary" data-change-track="prev" type="button" aria-label="{{ __('client.previous') }}">
 						    <svg class="icon">
 							    <use href="/img/sprite.svg#chevrons-left"></use>
 						    </svg>
 					    </button>
-					    <button class="btn btn_ico btn_ico-primary" data-rewind="backward" type="button" aria-label="Перемотать назад">
+					    <button class="btn btn_ico btn_ico-primary" data-rewind="backward" type="button" aria-label="{{ __('client.rewind') }}">
 						    <svg class="icon">
 							    <use href="/img/sprite.svg#rewind-ccw"></use>
 						    </svg>

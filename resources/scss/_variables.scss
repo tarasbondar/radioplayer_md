@@ -171,6 +171,11 @@ $base-font-size: 16px;
     --modal-content-bg-color: var(--grey-100);
 
     --text-page-title-color: var(--dark-500);
+
+    --btn-overlay-color: var(--dark-500);
+    --btn-overlay-bg: var(--white-75);
+
+    --btn-link-color: var(--green-300);
 }
 
 @mixin darkTheme() {
@@ -307,6 +312,11 @@ $base-font-size: 16px;
     --modal-content-bg-color: var(--dark-500);
 
     --text-page-title-color: var(--white);
+
+    --btn-overlay-color: var(--white);
+    --btn-overlay-bg: var(--dark-500-075);
+
+    --btn-link-color: var(--accent-500);
 }
 
 :root {

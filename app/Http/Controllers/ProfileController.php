@@ -518,7 +518,9 @@ class ProfileController extends Controller
     }
 
     public function clearHistory() {
-        HistoryRecord::where('user_id', '=', Auth::id())->delete();
+        HistoryRecord::where('user_id', '=', Auth::id())
+            ->where('is_deleted', '=', DownloadRecord::STATUS_NORMAL)
+            ->update(['is_deleted', DownloadRecord::STATUS_DELETED]);
         return '';
     }
 
@@ -527,6 +529,7 @@ class ProfileController extends Controller
             $downloads =
             PodcastEpisode::select('podcasts_episodes.*', 'p.name AS podcast_name', 'p.owner_id AS user_id')
                 ->where('ud.user_id', '=', Auth::id())
+                ->where('ud.is_deleted', '=', DownloadRecord::STATUS_NORMAL)
                 ->join('podcasts AS p', 'podcasts_episodes.podcast_id', '=', 'p.id')
                 ->join('users_downloads AS ud', 'ud.episode_id', '=', 'podcasts_episodes.id')
                 ->distinct()->get()->toArray();

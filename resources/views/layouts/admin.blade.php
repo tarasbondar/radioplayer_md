@@ -17,7 +17,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-    <script src="{{ asset('js/resumable.min.js') }}" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
     <!-- Styles -->
     {{--<link href="{{ asset('css/style.css') }}" rel="stylesheet">--}}
@@ -25,6 +25,9 @@
     <style>
         .ck-powered-by-balloon {
             display: none !important;
+        }
+        .input-group-append {
+            cursor: pointer;
         }
     </style>
 </head>

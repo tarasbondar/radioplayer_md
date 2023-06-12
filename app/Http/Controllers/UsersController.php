@@ -29,6 +29,10 @@ class UsersController extends Controller
         $username = $request->get('username', '');
         $email = $request->get('email', '');
         //$role = $request->get('status', 1); //->where('role', '=', $status)
+        $registered_from = $request->get('registered-from', '');
+        $registered_to = $request->get('registered-to', '');
+        $logged_from = $request->get('logged-from', '');
+        $logged_to = $request->get('logged-to', '');
         $appends = [];
 
         $users = User::select("*");
@@ -40,6 +44,26 @@ class UsersController extends Controller
         if (!empty($email)) {
             $users = $users->where('email', 'LIKE', "%{$email}%");
             $appends['email'] = $email;
+        }
+
+        if (!empty($registered_from)) {
+            $users = $users->where('created_at', '>=', $registered_from . ' 00:00:00');
+            $appends['registered-from'] = $registered_from;
+        }
+
+        if (!empty($registered_to)) {
+            $users = $users->where('created_at', '<=', $registered_to . ' 23:59:59');
+            $appends['registered-to'] = $registered_to;
+        }
+
+        if (!empty($logged_from)) {
+            $users = $users->where('last_login_at', '>=', $logged_from . ' 00:00:00');
+            $appends['logged-from'] = $logged_from;
+        }
+
+        if (!empty($logged_to)) {
+            $users = $users->where('last_login_at', '<=', $logged_to . ' 23:59:59');
+            $appends['logged-to'] = $registered_to;
         }
 
         if ($page > 1) {
@@ -138,9 +162,15 @@ class UsersController extends Controller
     }
 
     public function download(Request $request) {
-        $username = $request->get('username', '');
-        $email = $request->get('email', '');
-        return Excel::download(new UsersExport($username, $email), '1.xlsx');
+        $args = [
+            'username' => $request->get('username', ''),
+            'email' => $request->get('email', ''),
+            'registered_from' => $request->get('registered-from', ''),
+            'registered_to' => $request->get('registered-to', ''),
+            'logged_from' => $request->get('logged-from', ''),
+            'logged_to' => $request->get('logged-to', ''),
+        ];
+        return Excel::download(new UsersExport($args), '1.xlsx');
     }
 
     public function delete($id) {
@@ -182,6 +212,7 @@ class UsersController extends Controller
         $username = $request->get('username', '');
         $email = $request->get('email', '');
         $appends['status'] = $status;
+        //registered and login
 
         $apps = AuthorApplication::select('author_applications.*', "users.name AS username", "users.email AS email")
             ->join('users', 'users.id', '=', 'author_applications.user_id');

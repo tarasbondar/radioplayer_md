@@ -12,11 +12,58 @@
         </div>
 
         <div class="row mb-3">
-            <div class="col-md-4"> <input id="username" type="text" class="form-control" name="username" value="{{ app('request')->input('username') }}" placeholder="Username"> </div>
-            <div class="col-md-5"> <input id="email" type="text" class="form-control" name="email" value="{{ app('request')->input('email') }}" placeholder="Email"> </div>
-            <div class="col-md-3 row">
-                <div class="col-md-5"><button id="apply-filters" class="btn btn-lg btn-primary">Apply</button> </div>
-                <div class="col-md-5"> <a id="reset-filters" class="btn btn-lg" href="/admin/users">Reset</a> </div>
+            <div class="col-md-9 row">
+                <div class="col-md-5"> <input id="username" type="text" class="form-control" name="username" value="{{ app('request')->input('username') }}" placeholder="Username"> </div>
+                <div class="col-md-5"> <input id="email" type="text" class="form-control" name="email" value="{{ app('request')->input('email') }}" placeholder="Email"> </div>
+
+                {{--registered from/to--}}
+                <div class="col-md-5">
+                    <div class="input-group date datepicker">
+                        <input type="text" class="form-control" name="registered-from" id="registered-from" value="{{ app('request')->input('registered-from') }}"/>
+                        <span class="input-group-append">
+                          <span class="input-group-text bg-light d-block">
+                            <i class="fa fa-calendar"></i>
+                          </span>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="input-group date datepicker">
+                        <input type="text" class="form-control" name="registered-to" id="registered-to" value="{{ app('request')->input('registered-to') }}"/>
+                        <span class="input-group-append">
+                          <span class="input-group-text bg-light d-block">
+                            <i class="fa fa-calendar"></i>
+                          </span>
+                        </span>
+                    </div>
+                </div>
+
+                {{--logged from/to--}}
+                <div class="col-md-5">
+                    <div class="input-group date datepicker">
+                        <input type="text" class="form-control" name="logged-from" id="logged-from" value="{{ app('request')->input('logged-from') }}"/>
+                        <span class="input-group-append">
+                          <span class="input-group-text bg-light d-block">
+                            <i class="fa fa-calendar"></i>
+                          </span>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="input-group date datepicker">
+                        <input type="text" class="form-control" name="logged-to" id="logged-to" value="{{ app('request')->input('logged-to') }}"/>
+                        <span class="input-group-append">
+                          <span class="input-group-text bg-light d-block">
+                            <i class="fa fa-calendar"></i>
+                          </span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-md-3 row">
+                    <div class="col-md-5"><button id="apply-filters" class="btn btn-lg btn-primary">Apply</button> </div>
+                    <div class="col-md-5"> <a id="reset-filters" class="btn btn-lg" href="/admin/users">Reset</a> </div>
+                </div>
             </div>
         </div>
 
@@ -141,6 +188,14 @@
             });
 
             $(document).on('click', '#users-download', function() {
+                let data = {
+                    username: $('#username').val(),
+                    email: $('#email').val(),
+                    registered_from: $('#registered-from').val(),
+                    registered_to: $('#registered-to').val(),
+                    logged_from: $('#logged-from').val(),
+                    logged_to: $('#logged-to').val(),
+                };
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -148,10 +203,7 @@
                     xhrFields: {
                         responseType: "blob",
                     },
-                    data: {
-                        username: $('#username').val(),
-                        email: $('#email').val()
-                    },
+                    data: data,
                     url: '/admin/users/download',
                     method: 'GET',
                     success: function (response) {
@@ -169,6 +221,10 @@
             $(document).on('click', '#apply-filters', function () {
                 let username = $('#username').val();
                 let email = $('#email').val();
+                let registered_from = $('#registered-from').val();
+                let registered_to = $('#registered-to').val();
+                let logged_from = $('#logged-from').val();
+                let logged_to = $('#logged-to').val();
                 let params = [];
                 let uri = '';
 
@@ -180,6 +236,22 @@
                     params.push('email=' + email);
                 }
 
+                if (registered_from.length > 1) {
+                    params.push('registered-from=' + registered_from);
+                }
+
+                if (registered_to.length > 1) {
+                    params.push('registered-to=' + registered_to);
+                }
+
+                if (logged_from.length > 1) {
+                    params.push('logged-from=' + logged_from);
+                }
+
+                if (logged_to.length > 1) {
+                    params.push('logged-to=' + logged_to);
+                }
+
                 let searchParams = new URLSearchParams(window.location.search);
                 if (searchParams.has('page')) {
                     params.push('page=' + searchParams.get('page'));
@@ -189,7 +261,11 @@
                     uri = '?' + params.join('&');
                     window.location.href = '/admin/users' + uri;
                 }
-            })
+            });
+
+            $('.datepicker').datepicker({
+                format: 'yyyy-mm-dd'
+            });
 
         })(jQuery)
 
