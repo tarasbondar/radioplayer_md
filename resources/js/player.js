@@ -27,6 +27,7 @@ export let player = {
     initialSaveTime: 0,
     lastRadioInfoTime: 0,
     playerType: 'radio',
+    stationInfoRequest: null,
     init(){
         this.initVolumeSlider();
         this.initEvents();
@@ -316,7 +317,10 @@ export let player = {
     },
     getStationInfo(){
         let self = this;
-        $.ajax({
+        if (self.stationInfoRequest !== null && self.stationInfoRequest.readyState !== 4) {
+            self.stationInfoRequest.abort();
+        }
+        self.stationInfoRequest = $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
