@@ -7,26 +7,14 @@
         <h2>Podcasts Stats</h2>
 
         <div class="row justify-content-left">
-            <div class="col-md-12 row">
-                <div class="col-md-4">
-                    <div class="input-group date datepicker">
-                        <input type="text" class="form-control" name="from" id="from" value="{{ app('request')->input('from') }}"/>
-                        <span class="input-group-append">
-                          <span class="input-group-text bg-light d-block">
-                            <i class="fa fa-calendar"></i>
-                          </span>
-                        </span>
-                    </div>
+            <div class="col-md-12 row mb-3">
+                <div class="col-md-4 mb-3">
+                    <label for="from">From: </label>
+                    <input id="from" value="{{ app('request')->input('from') }}"/>
                 </div>
                 <div class="col-md-4">
-                    <div class="input-group date datepicker">
-                        <input type="text" class="form-control" name="to" id="to" value="{{ app('request')->input('to') }}"/>
-                        <span class="input-group-append">
-                          <span class="input-group-text bg-light d-block">
-                            <i class="fa fa-calendar"></i>
-                          </span>
-                        </span>
-                    </div>
+                    <label for="to">To: </label>
+                    <input id="to" value="{{ app('request')->input('to') }}"/>
                 </div>
                 <div class="col-md-3 row">
                     <div class="col-md-5"> <button id="apply-filters" class="btn btn-lg btn-primary">Apply</button> </div>
@@ -34,13 +22,14 @@
                 </div>
             </div>
 
-            <div>
-                <table>
+            <div class="row">
+                <table class="table table-bordered table-striped">
                     <tr>
                         <th>Name</th>
                         <th>Play Count</th>
                         <th>Marked to listen later</th>
                         <th>Downloaded</th>
+                        <th>Subscribers</th>
                     </tr>
                     @foreach($stats as $stat)
                         <tr>
@@ -48,6 +37,7 @@
                             <td>{{!empty($stat['plays']) ? $stat['plays'] : 0}}</td>
                             <td>{{!empty($stat['later']) ? $stat['later'] : 0}}</td>
                             <td>{{!empty($stat['downloads']) ? $stat['downloads'] : 0}}</td>
+                            <td>{{!empty($stat['subs']) ? $stat['subs'] : 0}}</td>
                         </tr>
                     @endforeach
                 </table>
@@ -60,6 +50,21 @@
     <script>
 
         (function(){
+
+            const picker_from = new easepick.create({
+                element: document.getElementById('from'),
+                css: [
+                    'https://cdn.jsdelivr.net/npm/@easepick/bundle@1.2.1/dist/index.css',
+                ],
+            });
+
+            const picker_to = new easepick.create({
+                element: document.getElementById('to'),
+                css: [
+                    'https://cdn.jsdelivr.net/npm/@easepick/bundle@1.2.1/dist/index.css',
+                ],
+            });
+
             $(document).on('click', '#apply-filters', function () {
                 let from = $('#from').val();
                 let to = $('#to').val();
@@ -78,10 +83,6 @@
                     uri = '?' + params.join('&');
                     window.location.href = '/admin/podcasts-stats' + uri;
                 }
-            });
-
-            $('.datepicker').datepicker({
-                format: 'yyyy-mm-dd'
             });
 
         })(jQuery)

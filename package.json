@@ -17,6 +17,7 @@
         "vite-plugin-handlebars": "^1.6.0"
     },
     "dependencies": {
+        "@easepick/bundle": "^1.2.1",
         "@editorjs/editorjs": "^2.27.0",
         "@editorjs/header": "^2.7.0",
         "@editorjs/list": "^1.8.0",

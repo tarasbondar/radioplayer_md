@@ -8,20 +8,17 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') . ' Admin Panel' }}</title>
+
     @vite(['resources/js/admin/app.js'])
-{{--    @vite(['resources/css/app.css'])--}}
-    <!-- Scripts -->
-    {{--<script src="{{ asset('js/app.js') }}"></script>--}}
-    <script src="{{ asset('js/jquery-3.6.4.min.js') }}" type="text/javascript"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
-    <!-- Styles -->
-    {{--<link href="{{ asset('css/style.css') }}" rel="stylesheet">--}}
-    {{--<link href="{{ asset('css/app.css') }}" rel="stylesheet">--}}
+    <script src="{{ asset('js/jquery-3.6.4.min.js') }}" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@easepick/bundle@1.2.1/dist/index.umd.min.js"></script>
+
     <style>
         .ck-powered-by-balloon {
             display: none !important;

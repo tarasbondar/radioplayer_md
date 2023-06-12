@@ -12,51 +12,29 @@
         </div>
 
         <div class="row mb-3">
-            <div class="col-md-9 row">
-                <div class="col-md-5"> <input id="username" type="text" class="form-control" name="username" value="{{ app('request')->input('username') }}" placeholder="Username"> </div>
-                <div class="col-md-5"> <input id="email" type="text" class="form-control" name="email" value="{{ app('request')->input('email') }}" placeholder="Email"> </div>
 
-                {{--registered from/to--}}
-                <div class="col-md-5">
-                    <div class="input-group date datepicker">
-                        <input type="text" class="form-control" name="registered-from" id="registered-from" value="{{ app('request')->input('registered-from') }}"/>
-                        <span class="input-group-append">
-                          <span class="input-group-text bg-light d-block">
-                            <i class="fa fa-calendar"></i>
-                          </span>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-md-5">
-                    <div class="input-group date datepicker">
-                        <input type="text" class="form-control" name="registered-to" id="registered-to" value="{{ app('request')->input('registered-to') }}"/>
-                        <span class="input-group-append">
-                          <span class="input-group-text bg-light d-block">
-                            <i class="fa fa-calendar"></i>
-                          </span>
-                        </span>
-                    </div>
-                </div>
+                <div class="col-md-9 row">
 
-                {{--logged from/to--}}
-                <div class="col-md-5">
-                    <div class="input-group date datepicker">
-                        <input type="text" class="form-control" name="logged-from" id="logged-from" value="{{ app('request')->input('logged-from') }}"/>
-                        <span class="input-group-append">
-                          <span class="input-group-text bg-light d-block">
-                            <i class="fa fa-calendar"></i>
-                          </span>
-                        </span>
+                    <div class="col-md-5"> <input id="username" type="text" class="form-control" name="username" value="{{ app('request')->input('username') }}" placeholder="Username"> </div>
+                    <div class="col-md-5"> <input id="email" type="text" class="form-control" name="email" value="{{ app('request')->input('email') }}" placeholder="Email"> </div>
+                    {{--registered from/to--}}
+                    <div class="col-md-5">
+                        <label for="registered-from">Registered from: </label>
+                        <input id="registered-from" class="form-control" value="{{ app('request')->input('registered-from') }}"/>
                     </div>
-                </div>
-                <div class="col-md-5">
-                    <div class="input-group date datepicker">
-                        <input type="text" class="form-control" name="logged-to" id="logged-to" value="{{ app('request')->input('logged-to') }}"/>
-                        <span class="input-group-append">
-                          <span class="input-group-text bg-light d-block">
-                            <i class="fa fa-calendar"></i>
-                          </span>
-                        </span>
+                    <div class="col-md-5">
+                        <label for="registered-to">Registered to: </label>
+                        <input id="registered-to" class="form-control" value="{{ app('request')->input('registered-to') }}"/>
+                    </div>
+
+                    {{--logged from/to--}}
+                    <div class="col-md-5">
+                        <label for="logged-from">Logged from: </label>
+                        <input id="logged-from" class="form-control" value="{{ app('request')->input('logged-from') }}"/>
+                    </div>
+                    <div class="col-md-5">
+                        <label for="logged-to">Logged to: </label>
+                        <input id="logged-to" class="form-control" value="{{ app('request')->input('logged-to') }}"/>
                     </div>
                 </div>
 
@@ -64,7 +42,8 @@
                     <div class="col-md-5"><button id="apply-filters" class="btn btn-lg btn-primary">Apply</button> </div>
                     <div class="col-md-5"> <a id="reset-filters" class="btn btn-lg" href="/admin/users">Reset</a> </div>
                 </div>
-            </div>
+
+
         </div>
 
         @if (!empty($users))
@@ -111,6 +90,22 @@
 
     <script>
         (function() {
+
+            const picker_reg_from = new easepick.create({
+                element: document.getElementById('registered-from'),
+                css: [
+                    'https://cdn.jsdelivr.net/npm/@easepick/bundle@1.2.1/dist/index.css',
+                ],
+            });
+
+            const picker_reg_to = new easepick.create({
+                element: document.getElementById('registered-to'),
+                css: [
+                    'https://cdn.jsdelivr.net/npm/@easepick/bundle@1.2.1/dist/index.css',
+                ],
+            });
+
+
             $(document).on('click', '.edit-user', function(){
                 let button = $(this);
 
@@ -263,9 +258,11 @@
                 }
             });
 
-            $('.datepicker').datepicker({
+            /*$('.datepicker').datepicker({
                 format: 'yyyy-mm-dd'
-            });
+            });*/
+
+
 
         })(jQuery)
 

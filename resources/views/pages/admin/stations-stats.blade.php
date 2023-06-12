@@ -7,28 +7,16 @@
         <h2>Stations Stats</h2>
 
         <div class="row justify-content-left">
-            <div class="col-md-12 row">
+            <div class="col-md-12 row mb-3">
                 {{--<div class="col-md-2"> <input id="id" type="text" class="form-control" name="id" value="{{ app('request')->input('id') }}" placeholder="Id"> </div>--}}
 
-                <div class="col-md-4">
-                    <div class="input-group date datepicker">
-                        <input type="text" class="form-control" name="from" id="from" value="{{ app('request')->input('from') }}"/>
-                        <span class="input-group-append">
-                          <span class="input-group-text bg-light d-block">
-                            <i class="fa fa-calendar"></i>
-                          </span>
-                        </span>
-                    </div>
+                <div class="col-md-4 mb-3">
+                    <label for="from">From: </label>
+                    <input id="from" value="{{ app('request')->input('from') }}"/>
                 </div>
                 <div class="col-md-4">
-                    <div class="input-group date datepicker">
-                        <input type="text" class="form-control" name="to" id="to" value="{{ app('request')->input('to') }}"/>
-                        <span class="input-group-append">
-                          <span class="input-group-text bg-light d-block">
-                            <i class="fa fa-calendar"></i>
-                          </span>
-                        </span>
-                    </div>
+                    <label for="to">To: </label>
+                    <input id="to" value="{{ app('request')->input('to') }}"/>
                 </div>
                 <div class="col-md-3 row">
                     <div class="col-md-5"> <button id="apply-filters" class="btn btn-lg btn-primary">Apply</button> </div>
@@ -36,8 +24,8 @@
                 </div>
             </div>
 
-            <div>
-                <table>
+            <div class="row">
+                <table class="table table-bordered table-striped">
                     <tr>
                         <th>Name</th>
                         <th>Plays</th>
@@ -60,6 +48,21 @@
     <script>
 
         (function(){
+
+            const picker_from = new easepick.create({
+                element: document.getElementById('from'),
+                css: [
+                    'https://cdn.jsdelivr.net/npm/@easepick/bundle@1.2.1/dist/index.css',
+                ],
+            });
+
+            const picker_to = new easepick.create({
+                element: document.getElementById('to'),
+                css: [
+                    'https://cdn.jsdelivr.net/npm/@easepick/bundle@1.2.1/dist/index.css',
+                ],
+            });
+
             $(document).on('click', '#apply-filters', function () {
                 let from = $('#from').val();
                 let to = $('#to').val();
@@ -79,12 +82,6 @@
                     window.location.href = '/admin/stations-stats' + uri;
                 }
             });
-
-            $('.datepicker').datepicker({
-                format: 'yyyy-mm-dd'
-            });
-
-
 
         })(jQuery)
 

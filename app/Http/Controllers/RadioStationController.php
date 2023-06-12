@@ -94,7 +94,7 @@ class RadioStationController extends Controller
             $stats[$stat['id']]['favs'] = $stat['favs'];
         }
 
-        return view('pages.admin.station-stats', ['stats' => $stats]);
+        return view('pages.admin.stations-stats', ['stats' => $stats]);
     }
 
     public function add() {

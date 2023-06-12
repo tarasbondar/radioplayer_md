@@ -107,6 +107,22 @@ class PodcastController extends Controller
         $stats_downloads = $stats_downloads->groupBy('p.id')
             ->get()->toArray();
 
+
+        $stats_subs = PodcastSub::from('podcasts_subscriptions AS ps')
+            ->selectRaw('p.id, p.name, COUNT(ps.podcast_id) AS subs')
+            ->join('podcasts AS p', 'ps.podcast_id', '=', 'p.id');
+
+        if (!empty($from)) {
+            $stats_subs = $stats_subs->where('ps.created_at', '>=', $from . ' 00:00:00');
+        }
+
+        if (!empty($to)) {
+            $stats_subs = $stats_subs->where('ps.created_at', '<=', $to . ' 23:59:59');
+        }
+
+        $stats_subs = $stats_subs->groupBy('p.id')
+            ->get()->toArray();
+
         foreach ($stats_plays as $stat) {
             $stats[$stat['id']]['name'] = $stat['name'];
             $stats[$stat['id']]['plays'] = $stat['plays'];
@@ -120,6 +136,11 @@ class PodcastController extends Controller
         foreach ($stats_downloads as $stat) {
             $stats[$stat['id']]['name'] = $stat['name'];
             $stats[$stat['id']]['downloads'] = $stat['downloads'];
+        }
+
+        foreach ($stats_subs as $stat) {
+            $stats[$stat['id']]['name'] = $stat['name'];
+            $stats[$stat['id']]['subs'] = $stat['subs'];
         }
 
         return view('pages.admin.podcasts-stats', ['stats' => $stats]);
