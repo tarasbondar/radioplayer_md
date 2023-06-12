@@ -166,13 +166,25 @@ export let player = {
                 self.createPlayer();
                 self.setSource($('#audio-source').val());
                 self.stationId = id;
-                if (self.timer.isActive)
+                if (self.timer.isActive) {
                     self.timerApply(true);
+                }
                 self.changePlayIcon();
                 self.lastSavedTime = 0;
                 self.initialSaveTime = 0;
                 self.lastRadioInfoTime = 0;
+                self.recordPlayStation(id);
             }
+        })
+    },
+    recordPlayStation(id){
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            method: 'POST',
+            url: '/record-play-station',
+            data: {'id': id}
         })
     },
     changeEpisode(id){
@@ -192,19 +204,21 @@ export let player = {
                     $('body').append(response);
                     tooltips();
                 }
-                $('body').addClass('player-open')
+                $('body').addClass('player-open');
                 self.createPlayer();
                 self.setSource($('#audio-source').val());
                 self.episodeId = id;
                 $('[data-player-playlist-item]').removeClass('active');
                 $('[data-player-playlist-item="'+ self.episodeId +'"]').addClass('active');
 
-                if (self.timer.isActive)
+                if (self.timer.isActive) {
                     self.timerApply(true);
+                }
                 self.changePlaybackRate(self.playbackRate);
                 self.changePlayIcon();
-                if (self.autoplay)
+                if (self.autoplay) {
                     self.play(true);
+                }
                 self.initSortable();
                 if (self.playerOpenedMob){
                     $('[data-player]').addClass('open');
@@ -213,7 +227,18 @@ export let player = {
                 self.lastSavedTime = 0;
                 self.initialSaveTime = 0;
                 self.lastRadioInfoTime = 0;
+                self.recordPlayEpisode(id);
             }
+        })
+    },
+    recordPlayEpisode(id){
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            method: 'POST',
+            url: '/record-play-episode',
+            data: {'id': id}
         })
     },
     initSortable(){

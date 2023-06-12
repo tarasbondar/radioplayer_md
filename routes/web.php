@@ -41,6 +41,7 @@ Route::get('/favorite-station/{id}', [IndexController::class, 'favStation']);
 Route::post('/update-stations', [IndexController::class, 'updateStations']);
 Route::get('/play-station/{id}', [IndexController::class, 'playStation']);
 Route::get('/get-station-info/{id}', [IndexController::class, 'getStationInfo']);
+Route::post('/record-play-station', [IndexController::class, 'recordPlayStation']);
 Route::get('/apply', [ProfileController::class, 'apply']);
 Route::post('/send-application', [ProfileController::class, 'sendApplication']);
 Route::get('/privacy', [IndexController::class, 'privacy']);
@@ -81,6 +82,7 @@ Route::post('/record-history', [ProfileController::class, 'recordListeningHistor
 Route::post('/clear-history', [ProfileController::class, 'clearHistory']);
 Route::get('/downloads', [ProfileController::class, 'downloads']);
 Route::get('/play-episode/{id}', [IndexController::class, 'playEpisode']);
+Route::post('/record-play-episode', [IndexController::class, 'recordPlayEpisode']);
 
 Route::get('/settings', [ProfileController::class, 'settings'])->name('profile.settings');
 Route::post('/settings/change-name', [ProfileController::class, 'changeName'])->name('profile.changeName');
@@ -108,9 +110,9 @@ Route::name('admin.')->prefix('admin')->middleware([IsAdmin::class])->group(func
     Route::post('/author-apps-review', [UsersController::class, 'reviewApp']);
 
     Route::get('/podcasts', [PodcastController::class, 'index']);
+    Route::get('/podcasts-stats', [PodcastController::class, 'stats']);
     Route::get('/podcasts/add', [PodcastController::class, 'add']);
     Route::get('/podcasts/edit/{id}', [PodcastController::class, 'edit']);
-    Route::get('/podcasts/stats', [PodcastController::class, 'stats']);
     Route::post('/podcasts/save', [PodcastController::class, 'save']);
     Route::delete('/podcasts/{id}', [PodcastController::class, 'delete']);
     Route::get('/podcasts/download', [PodcastController::class, 'download']);
@@ -129,6 +131,7 @@ Route::name('admin.')->prefix('admin')->middleware([IsAdmin::class])->group(func
     Route::delete('/podcasts-episodes/{id}', [PodcastEpisodeController::class, 'delete']);
 
     Route::get('/stations', [RadioStationController::class, 'index']);
+    Route::get('/stations-stats', [RadioStationController::class, 'stats']);
     Route::get('/stations/add', [RadioStationController::class, 'add']);
     Route::get('/stations/edit/{id}', [RadioStationController::class, 'edit']);
     Route::post('/stations/save', [RadioStationController::class, 'save']);

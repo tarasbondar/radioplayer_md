@@ -7,6 +7,7 @@ use App\Models\DownloadRecord;
 use App\Models\HistoryRecord;
 use App\Models\PlaylistRecord;
 use App\Models\PodcastEpisode;
+use App\Models\PodcastStatRecord;
 use App\Models\PodcastSub;
 use App\Models\QueuedEpisode;
 use Illuminate\Http\Request;
@@ -50,6 +51,80 @@ class PodcastController extends Controller
         return view('pages.admin.podcasts', ['podcasts' => $podcasts, 'pagination' => $pagination]);
     }
 
+    public function stats(Request $request) {
+        $from = $request->get('from', '');
+        $to = $request->get('to', '');
+
+        $stats = [];
+
+        $stats_plays = PodcastStatRecord::from('podcasts_history AS ph')
+            ->selectRaw('p.id, p.name, COUNT(ph.episode_id) AS plays')
+            ->join('podcasts_episodes AS pe', 'ph.episode_id', '=', 'pe.id')
+            ->join('podcasts AS p', 'pe.podcast_id', '=', 'p.id');
+
+        if (!empty($from)) {
+            $stats_plays = $stats_plays->where('click_time', '>=', $from . ' 00:00:00');
+        }
+
+        if (!empty($to)) {
+            $stats_plays = $stats_plays->where('click_time', '<=', $to . ' 23:59:59');
+        }
+
+        $stats_plays = $stats_plays->groupBy('p.id')
+            ->get()->toArray();
+
+
+        $stats_later = QueuedEpisode::from('users_queues AS ll')
+            ->selectRaw('p.id, p.name, COUNT(ll.episode_id) AS later')
+            ->join('podcasts_episodes AS pe', 'll.episode_id', '=', 'pe.id')
+            ->join('podcasts AS p', 'pe.podcast_id', '=', 'p.id');
+
+        if (!empty($from)) {
+            $stats_later = $stats_later->where('ll.created_at', '>=', $from . ' 00:00:00');
+        }
+
+        if (!empty($to)) {
+            $stats_later = $stats_later->where('ll.created_at', '<=', $to . ' 23:59:59');
+        }
+
+        $stats_later = $stats_later->groupBy('p.id')
+            ->get()->toArray();
+
+
+        $stats_downloads = DownloadRecord::from('users_downloads AS ud')
+            ->selectRaw('p.id, p.name, COUNT(ud.episode_id) AS downloads')
+            ->join('podcasts_episodes AS pe', 'ud.episode_id', '=', 'pe.id')
+            ->join('podcasts AS p', 'pe.podcast_id', '=', 'p.id');
+
+        if (!empty($from)) {
+            $stats_downloads = $stats_downloads->where('ud.created_at', '>=', $from . ' 00:00:00');
+        }
+
+        if (!empty($to)) {
+            $stats_downloads = $stats_downloads->where('ud.created_at', '<=', $to . ' 23:59:59');
+        }
+
+        $stats_downloads = $stats_downloads->groupBy('p.id')
+            ->get()->toArray();
+
+        foreach ($stats_plays as $stat) {
+            $stats[$stat['id']]['name'] = $stat['name'];
+            $stats[$stat['id']]['plays'] = $stat['plays'];
+        }
+
+        foreach ($stats_later as $stat) {
+            $stats[$stat['id']]['name'] = $stat['name'];
+            $stats[$stat['id']]['later'] = $stat['later'];
+        }
+
+        foreach ($stats_downloads as $stat) {
+            $stats[$stat['id']]['name'] = $stat['name'];
+            $stats[$stat['id']]['downloads'] = $stat['downloads'];
+        }
+
+        return view('pages.admin.podcasts-stats', ['stats' => $stats]);
+    }
+
     public function add() {
         $categories = PodcastCategory::where('status', '=', PodcastCategory::STATUS_ACTIVE)->get(['id', 'key']);
         return view('pages.admin.podcasts-edit', ['action' => 'add', 'categories' => $categories]);
@@ -60,17 +135,6 @@ class PodcastController extends Controller
         //categories that belong to podcast
         $categories = PodcastCategory::where('status', '=', PodcastCategory::STATUS_ACTIVE)->get(['id', 'key']);
         return view('pages.admin.podcasts-edit', ['action' => 'edit', 'podcast' => $podcast, 'categories' => $categories]);
-    }
-
-    public function stats(Request $request) {
-        if (!$request->has('id')) {
-            exit;
-        }
-        //time filters
-        $id = $request->get('id');
-        $stats = [];
-
-        return '';
     }
 
     public function save(Request $request) {

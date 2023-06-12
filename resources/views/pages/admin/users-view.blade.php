@@ -39,6 +39,11 @@
                 </div>
 
                 <div class="mb-3 form-group row">
+                    <label class="col-md-4 col-form-label text-md-right">Last Login</label>
+                    <div class="col-md-6 py-2"> <span> {{$user['last_login_at']}} </span> </div>
+                </div>
+
+                <div class="mb-3 form-group row">
                     @foreach($stats as $k=>$v)
                         {{ "$k: $v" }}<br>
                     @endforeach

@@ -13,6 +13,9 @@
             <a class="nav-link" href="{{ '/admin/stations' }}">Radio Stations</a>
         </li>
         <li class="nav-item">
+            <a class="nav-link" href="{{ '/admin/stations-stats' }}">Radio Stations Stats</a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" href="{{ '/admin/station-categories' }}">Radio Stations Categories</a>
         </li>
         <li class="nav-item">
@@ -26,6 +29,9 @@
         </li>
         <li class="nav-item">
             <a class="nav-link" href="{{ '/admin/podcasts-episodes' }}">Podcast Episodes</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ '/admin/podcasts-stats' }}">Podcast Stats</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="{{ '/admin/podcast-categories' }}">Podcast Categories</a>
