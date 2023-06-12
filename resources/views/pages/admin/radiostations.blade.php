@@ -38,7 +38,7 @@
                     <tr>
                         <th scope="row">{{ $s['id'] }}</th>
                         <td>{{ $s['name'] }}</td>
-                        <td>{{ $s['description'] }}</td>
+                        <td>{!! $s['description'] !!}</td>
                         <td>
                             <a href="#" class="edit-station edit-{{ $s['id'] }}">Edit</a>
                             <a href="#" class="remove-station remove-{{ $s['id'] }}">Delete</a>

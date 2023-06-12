@@ -44,7 +44,7 @@ export function customUrlBehavior () {
 
         function updateLinks() {
             document.querySelectorAll("a").forEach((link) => {
-                if (link.host === window.location.host) {
+                if (link.host === window.location.host && link.getAttribute("data-ignore") === null) {
                     link.addEventListener("click", async (e) => {
                         const destination = link.getAttribute("href");
                         e.preventDefault();

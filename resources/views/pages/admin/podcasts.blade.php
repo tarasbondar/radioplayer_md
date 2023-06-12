@@ -39,7 +39,7 @@
                     <tr>
                         <th scope="row">{{ $p['id'] }}</th>
                         <td>{{ $p['name'] }}</td>
-                        <td>{{ $p['description'] }}</td>
+                        <td>{!! $p['description'] !!}</td>
                         <td> <a href="/admin/users/view/{{$p['owner_id']}}" target="_blank"> {{ $p['username'] }} </a> </td>
                         <td>{{ $p['status'] == 0 ? 'Active' : 'Inactive' }}</td>
                         <td>

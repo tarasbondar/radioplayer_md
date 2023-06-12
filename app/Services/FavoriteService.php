@@ -6,37 +6,36 @@ use App\Models\RadioStation;
 use App\Models\RadioStationFavorite;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Request;
 
 class FavoriteService
 {
+    const cookieLifetime = 60*24*365;
+
     /**
      * Favorite station for unregistered user
+     *
      * @param $id
-     * @return array
+     * @return \Illuminate\Http\JsonResponse
      */
-    public static function favStationForUnregisteredUser($id): array
+    public static function favStationForUnregisteredUser($id): \Illuminate\Http\JsonResponse
     {
-        $favorites = Session::get('favorites', []);
+        $favorites = json_decode(Request::cookie('favorites'), true) ?? [];
 
         if (in_array($id, $favorites)) {
             // Remove from favorites
             $favorites = array_diff($favorites, [$id]);
 
-            Session::put('favorites', $favorites);
-
-            return ['action' => 'deleted', 'id' => $id];
+            return response()->json(['action' => 'deleted', 'id' => $id])->cookie('favorites', json_encode($favorites, ), self::cookieLifetime);
         }
 
         // Add to favorites
         $favorites[] = $id;
 
-        Session::put('favorites', $favorites);
-
         $station = RadioStation::find($id)->toArray();
         $output = view('partials.station-card', ['station' => $station, 'fav_stations' => $favorites])->render();
 
-        return ['action' => 'added', 'output' => $output, 'id' => $id];
+        return response()->json(['action' => 'added', 'output' => $output, 'id' => $id])->cookie('favorites', json_encode($favorites), self::cookieLifetime);
     }
 
     /**
@@ -78,7 +77,7 @@ class FavoriteService
         if (Auth::check()) {
             return RadioStationFavorite::where(['user_id' => Auth::id()])->get()->pluck('station_id')->toArray();
         }
-
-        return Session::get('favorites', []);
+        $favorites = Request::cookie('favorites');
+        return $favorites ? json_decode($favorites, true) : [];
     }
 }

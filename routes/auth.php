@@ -30,3 +30,7 @@ Route::middleware('guest')->group(function () {
 Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
     ->middleware('throttle:6,1')
     ->name('verification.send');
+
+Route::get('/auth/redirect', [LoginController::class, 'redirectToGoogle'])->name('login.google');
+
+Route::get('/login/google/callback', [LoginController::class, 'handleGoogleCallback']);

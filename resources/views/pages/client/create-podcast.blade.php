@@ -21,7 +21,7 @@
                         </div>
 
                         <div class="input form-floating">
-                            <textarea class="form-control" placeholder="{{ __('client.podcastDescription') }}" id="description" name="description" required> {{ @$podcast['description'] }} </textarea>
+                            <dic class="form-control ckeditor-custom" placeholder="{{ __('client.podcastDescription') }}" id="description" name="description" required> {!! @$podcast['description'] !!} </dic>
                             <label for="description">{{ __('client.podcastDescription') }}</label>
                             <div class="messages"></div>
                         </div>
@@ -100,9 +100,6 @@
 
                     </form>
                 </div>
-
-
-
             </div>
         </section>
     </main>
@@ -139,8 +136,20 @@
         </div>
     </div>
 
+    <script src="https://cdn.ckeditor.com/ckeditor5/38.0.1/inline/ckeditor.js"></script>
     <script>
         (function() {
+            $(document).ready(function() {
+                if ($('.ckeditor-custom').length > 0) {
+                    InlineEditor.create(document.querySelector('.ckeditor-custom'))
+                            .then(editor => {
+                                window.editor = editor;
+                            })
+                            .catch(error => {
+                                console.error(error);
+                            });
+                }
+            });
 
             $(document).on('click', '.categories-checkbox > input', function () {
                 let categories_ids = [];

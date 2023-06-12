@@ -161,9 +161,9 @@
 	color: var(--btn-rows-text-color-active);
 	background-color: var(--btn-rows-bg);
 	background-clip: padding-box;
-	border: 1px solid var(--btn-rows-active-bg);
+	border: 1px solid var(--btn-rows-active-bg) !important;
 	appearance: none;
-	border-radius: rem(8px);
+	border-radius: rem(8px) !important;
 	&:focus-visible,
 	&:focus {
 		color: var(--btn-rows-text-color-active);
