@@ -141,8 +141,8 @@ export function global() {
         }
     });
 
-    $(document).on('click', '.podcast__back', function () {
-      window.history.back();
+    $(".podcast__back").click(function() {
+        history.back();
     });
 }
 
