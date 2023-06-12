@@ -6,7 +6,7 @@
         <section class="podcast">
             <div class="container">
                 <div class="podcast__wrap">
-                    <a class="btn btn_link small podcast__back" href="#">
+                    <a class="btn btn_link small podcast__back" href="javascript:void(0);">
                         <svg class="icon">
                             <use href="/img/sprite.svg#chevron-left"></use>
                         </svg>

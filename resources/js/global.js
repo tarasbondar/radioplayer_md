@@ -140,6 +140,10 @@ export function global() {
             player.changeStation(stationValue);
         }
     });
+
+    $(document).on('click', '.podcast__back', function () {
+      window.history.back();
+    });
 }
 
 function copyToClipboard(text) {

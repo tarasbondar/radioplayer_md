@@ -97,7 +97,7 @@
                     </svg>
 
                     <div class="np-modal__player-body__main-actions__inner">
-                        <button class="btn btn_ico btn_ico-primary" type="button" aria-label="{{ __('client.previous') }}">
+                        <button class="btn btn_ico btn_ico-primary" type="button" @isset($prev->id) data-play-station="{{$prev->id}}" @endisset aria-label="{{ __('client.previous') }}">
                             <svg class="icon">
                                 <use href="/img/sprite.svg#chevron-left"></use>
                             </svg>
@@ -110,7 +110,7 @@
                                 <use href="/img/sprite.svg#play-bk"></use>
                             </svg>
                         </button>
-                        <button class="btn btn_ico btn_ico-primary" type="button" aria-label="{{ __('client.next') }}">
+                        <button class="btn btn_ico btn_ico-primary" type="button" @isset($next->id) data-play-station="{{$next->id}}"  @endisset aria-label="{{ __('client.next') }}">
 						    <svg class="icon">
 							    <use href="/img/sprite.svg#chevron-right"></use>
 						    </svg>

@@ -119,16 +119,25 @@ class IndexController
             return '';
         }
 
-        $favorited = in_array($current['id'], FavoriteService::getFavorites());
+        $favorite = in_array($current['id'], FavoriteService::getFavorites());
 
         $all = [];
         if ($current['group_id'] != 0) {
             $all = $this->searchStations(0, 0, $current['group_id']);
         }
 
-        return view('partials.player-radio', ['current' => $current, 'all' => $all, 'favorited' => $favorited])->render();
+        $next = RadioStation::where(['order' => $current['order']+1])->first();
+        $prev = RadioStation::where(['order' => $current['order']-1])->first();
+
+        return view('partials.player-radio', ['current' => $current, 'all' => $all, 'favorited' => $favorite, 'next' => $next, 'prev' => $prev])->render();
     }
 
+    /**
+     * Record play radio station
+     *
+     * @param Request $request
+     * @return string
+     */
     public function recordPlayStation(Request $request){
         $station_id = $request->get('id');
         $ip = $request->ip();
