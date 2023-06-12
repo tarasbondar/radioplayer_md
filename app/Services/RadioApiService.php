@@ -153,9 +153,16 @@ class RadioApiService
         $needle = 'StreamTitle=';
         $ua = 'Dailymate Radio/1.0';
 
-        $opts = ['http' => ['method' => 'GET',
-            'header' => 'Icy-MetaData: 1',
-            'user_agent' => $ua]
+        $opts = [
+            'http' => [
+                'method' => 'GET',
+                'header' => 'Icy-MetaData: 1',
+                'user_agent' => $ua
+            ],
+            'ssl' => [
+                'verify_peer' => false,
+                'verify_peer_name' => false
+            ]
         ];
 
         $context = stream_context_create($opts);
