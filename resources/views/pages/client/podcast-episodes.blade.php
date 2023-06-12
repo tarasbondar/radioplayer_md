@@ -6,8 +6,20 @@
         <section class="podcast">
             <div class="container">
                 <div class="podcast__wrap">
+                    <a class="btn btn_link small podcast__back" href="#">
+                        <svg class="icon">
+                            <use href="/img/sprite.svg#chevron-left"></use>
+                        </svg>
+                        {{ __('app.back') }}
+                    </a>
                     <div class="podcast__info">
                         <div class="podcast__picture">
+                            <a class="btn btn_small btn_overlay x-small" href="#">
+                                <svg class="icon">
+                                    <use href="/img/sprite.svg#chevron-left"></use>
+                                </svg>
+                                {{ __('app.back') }}
+                            </a>
                             <img class="podcast__bg" srcset="/img/podcast-bg.png 1x, /img/podcast-bg@2x.png 2x" src="/img/podcast-bg.png" width="100%" alt="" loading="lazy">
                             <img class="podcast__img podcast___img"
                                  srcset="{{ !empty($podcast['image']) ? '/uploads/podcasts_images/' . $podcast['image'] : "/img/podcast-placeholder.png"}} 1x,
