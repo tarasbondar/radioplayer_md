@@ -12,7 +12,7 @@ use App\Models\PodcastEpisode;
             <div class="container">
                 <div class="podcast__wrap">
                     <div class="podcast__inner">
-                        <a class="btn btn_link small podcast__episode-back" href="#">
+                        <a class="btn btn_link small podcast__episode-back" data-ignore href="javascript:void(0);">
                             <svg class="icon">
                                 <use href="/img/sprite.svg#chevron-left"></use>
                             </svg>
