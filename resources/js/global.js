@@ -141,7 +141,7 @@ export function global() {
         }
     });
 
-    $(".podcast__back").click(function() {
+    $(".podcast__back, .podcast__episode-back").click(function() {
         history.back();
     });
 }
