@@ -14,6 +14,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 
 <script src="{{ asset('js/jquery-3.6.4.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('js/ckeditor.js') }}" type="text/javascript"></script>
 
 @vite(['resources/js/app.js'])
 

@@ -94,23 +94,4 @@
             @endif
         </section>
     </main>
-
-    <script>
-
-        (function(){
-
-            $(document).on('click', '#more', function(){
-                $('#descr-full').removeAttr('hidden').show();
-                $('#descr-short').hide();
-            });
-
-            $(document).on('click', '#less', function(){
-                $('#descr-short').removeAttr('hidden').show();
-                $('#descr-full').hide();
-            });
-
-        })(jQuery)
-
-    </script>
-
 @endsection

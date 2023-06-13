@@ -47,7 +47,7 @@
                                 <use href="/img/sprite.svg#search"></use>
                             </svg>
                         </label>
-                        <input type="search" class="form-control" placeholder="{{ __('client.searchPodcast') }}" id="search-field" name="search-field" />
+                        <input type="search" class="form-control" placeholder="{{ __('client.searchPodcast') }}" id="search-field-my" name="search-field" />
                         <button type="button" class="btn btn_filter" data-bs-toggle="modal" data-bs-target="#exampleModal">
                             <svg class="icon">
                                 <use href="/img/sprite.svg#sliders"></use>
@@ -88,7 +88,7 @@
                     <div class="list">
                         @foreach($categories as $c)
                             <div class="input input__inner">
-                                <input class="input__checkbox" type="checkbox" id="category-{{ $c['id'] }}" value="{{ $c['id'] }}">
+                                <input class="input__checkbox input__checkbox-my" type="checkbox" id="category-{{ $c['id'] }}" value="{{ $c['id'] }}">
                                 <label class="input__label light" for="category-{{ $c['id'] }}"> {{ __('podcastcategories.'.$c['key']) }} </label>
                                 <svg class="icon"> <use href="/img/sprite.svg#check"></use> </svg>
                                 <div class="messages"></div>
@@ -102,48 +102,5 @@
             </div>
         </div>
     </div>
-
-
-    <script>
-
-        (function(){
-
-            $(document).on('keyup', '#search-field', function() {
-                if ($(this).val().length > 2) {
-                    mySearch();
-                }
-            });
-
-            $(document).on('change', '.input__checkbox', function () {
-                mySearch();
-            });
-
-            function mySearch() {
-                let categories = [];
-                $('.input__checkbox:checked').each(function(){
-                    categories.push($(this).val());
-                });
-
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    method: 'POST',
-                    url: '/my-podcasts-search',
-                    data: {
-                        text: $('#search-field').val(),
-                        categories: categories.join(','),
-                    },
-                    success: function(response) {
-                        $('.podcasts-container').html(response);
-                    }
-                })
-
-            }
-
-        })(jQuery)
-
-    </script>
-
 
 @endsection

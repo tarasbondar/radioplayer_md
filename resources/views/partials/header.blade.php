@@ -124,10 +124,10 @@
                 </a>
 
                 @auth
-                    <a class="btn btn_list-item" href="{{ route('logout') }}"  onclick="event.preventDefault(); $('#logout-form').submit();">
+                    <button type="button" class="btn btn_list-item pe-auto" href="{{ route('logout') }}"  onclick="event.preventDefault(); $('#logout-form').submit();">
                         <svg class="icon"><use href="/img/sprite.svg#log-out"></use></svg>
                         <span>{{ __('auth.logout') }}</span>
-                    </a>
+                    </button>
 
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         {{ csrf_field() }}

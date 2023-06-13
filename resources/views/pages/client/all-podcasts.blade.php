@@ -11,7 +11,7 @@
                             <use href="img/sprite.svg#search"></use>
                         </svg>
                     </label>
-                    <input type="search" class="form-control" placeholder="{{ __('client.searchPodcast') }}" id="search-field" name="search-field" />
+                    <input type="search" class="form-control" placeholder="{{ __('client.searchPodcast') }}" id="search-field-all" name="search-field" />
                     <button type="button" class="btn btn_filter" data-bs-toggle="modal" data-bs-target="#exampleModal">
                         <svg class="icon">
                             <use href="img/sprite.svg#sliders"></use>
@@ -58,7 +58,7 @@
                     <div class="list">
                         @foreach($categories as $c)
                             <div class="input input__inner">
-                                <input class="input__checkbox" type="checkbox" id="category-{{$c['id']}}" value="{{$c['id']}}">
+                                <input class="input__checkbox input__checkbox-all" type="checkbox" id="category-{{$c['id']}}" value="{{$c['id']}}">
                                 <label class="input__label light" for="category-{{$c['id']}}">
                                     {{ __('podcastcategories.'.$c['key']) }}
                                 </label>
@@ -74,81 +74,4 @@
             </div>
         </div>
     </div>
-
-    <script>
-
-        (function(){
-            $(document).on('keyup', '#search-field', function() {
-                allSearch();
-            });
-
-            $(document).on('change', '.input__checkbox', function () {
-                allSearch();
-            });
-
-            $(window).scroll(function() {
-                if ($(window).scrollTop() + $(window).height() === $(document).height()) {
-                    if ($('#allsearch-page').val() < $('#allsearch-last').val()) { //last page check
-                        appendEpisodes();
-                    }
-                }
-            });
-
-            function allSearch() {
-                let categories = [];
-                $('.input__checkbox:checked').each(function(){
-                    categories.push($(this).val());
-                });
-
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    method: 'POST',
-                    url: '/all-search',
-                    data: {
-                        text: $('#search-field').val(),
-                        categories: categories.join(','),
-                        author: ''
-                    },
-                    success: function(response) {
-                        $('.podcasts-container').html(response.podcasts);
-                        $('.episodes-container').html(response.episodes);
-                        $('#allsearch-page').value = 1;
-                        $('#allsearch-last').val(response.page_count)
-                    }
-                })
-
-            }
-
-            function appendEpisodes() {
-                let categories = [];
-                $('.input__checkbox:checked').each(function(){
-                    categories.push($(this).val());
-                });
-                let page = $('#allsearch-page').val();
-
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    method: 'POST',
-                    url: '/append-episodes',
-                    data: {
-                        text: $('#search-field').val(),
-                        categories: categories.join(','),
-                        page: page,
-                    },
-                    success: function(response) {
-                        $('.episodes-container').append(response);
-                        $('#allsearch-page').val(++page);
-                    }
-                })
-
-            }
-
-        })(jQuery)
-
-    </script>
-
 @endsection

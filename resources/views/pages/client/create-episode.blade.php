@@ -208,28 +208,4 @@ use App\Helpers\SiteHelper;
                 </div>
             </section>
         </main>
-
-        <script>
-
-        (function(){
-            let $form = $('[data-episode-form]');
-            $(document).on('change', '[data-episode-form] input[name="source"]', function(){
-                let selectedFile = this.files[0];
-                let fileName = selectedFile.name;
-                let fileSizeBytes = selectedFile.size;
-                let sizeFormatted = core.formatBytes(fileSizeBytes, 2);
-                $form.find('[data-item-filename]').html(fileName);
-                $form.find('[data-item-uploaded]').html(sizeFormatted);
-                $form.find('[data-item-size]').html(sizeFormatted);
-                $form.find('[data-file-item]').removeClass('hidden');
-            });
-            $(document).on('click', '[data-file-remove]', function(){
-                $('[data-file-list] [data-file-item]').addClass('hidden');
-                $form.find('input[name="source"]').val('');
-                $form.find('input[name="file_remove"]').val(1);
-            });
-
-        })(jQuery)
-
-    </script>
 @endsection

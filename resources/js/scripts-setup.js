@@ -8,10 +8,15 @@ import { nowPlaying } from './now-playing.js';
 import { debounce } from './debounce.js';
 import { customUrlBehavior } from "./custom-url-behavior";
 import { tooltips } from './_tooltips';
+import { ckeditor } from './_ckeditor';
 // import { draggablePlayer } from "./draggable-player";
 
-export function scriptsSetup() {
+export function oneTimeScriptsSetup() {
     global();
+    customUrlBehavior();
+}
+
+export function scriptsSetup() {
     header();
     forms();
     theme();
@@ -20,7 +25,8 @@ export function scriptsSetup() {
     nowPlaying();
     debounce();
     tooltips();
+    ckeditor();
     // draggablePlayer();
-    customUrlBehavior();
+
 }
 

@@ -13,7 +13,7 @@
                 <div class="list">
                     @foreach($categories as $c)
                         <div class="input input__inner">
-                            <input class="input__checkbox" type="checkbox" id="category-{{$c['id']}}" value="{{$c['id']}}">
+                            <input class="input__checkbox-podcasts" type="checkbox" id="category-{{$c['id']}}" value="{{$c['id']}}">
                             <label class="input__label light" for="category-{{$c['id']}}">
                                 {{ __('podcastcategories.'.$c['key']) }}
                             </label>

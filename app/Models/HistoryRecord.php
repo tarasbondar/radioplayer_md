@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $episode_id
  * @property int $time
  * @property bool $is_listened
+ * @property bool $is_deleted
  * @property PodcastEpisode $episode
  * @property User $user
  */
@@ -23,7 +24,7 @@ class HistoryRecord extends Model
 
     protected $table = 'users_history';
 
-    protected $fillable = ['user_id', 'episode_id', 'time', 'is_listened'];
+    protected $fillable = ['user_id', 'episode_id', 'time', 'is_listened', 'is_deleted'];
 
     public function episode()
     {

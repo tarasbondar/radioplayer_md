@@ -107,42 +107,4 @@
             </form>
         </div>
     </div>
-
-
-    <script>
-
-        (function () {
-            $(document).ready(function(){
-                $(document).on('submit', '[data-ajax-form]', function(){
-                    let form = $(this);
-                    let url = form.attr('action');
-                    let method = form.attr('method');
-                    let data = form.serialize();
-                    $('[data-for]').html('');
-                    $.ajax({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        method: method,
-                        url: url,
-                        data: data,
-                        success: function (response) {
-                            if (response.status === 'success') {
-                                if (typeof response.redirectUrl != 'undefined') {
-                                    window.location.href = response.redirectUrl;
-                                }
-                            } else {
-                                $.each(response.errors, function (key, value) {
-                                    form.find('[data-for="' + key + '"]').html(value[0]);
-                                });
-                            }
-                        }
-                    });
-                    return false;
-                });
-            });
-        })(jQuery)
-
-    </script>
-
 @endsection

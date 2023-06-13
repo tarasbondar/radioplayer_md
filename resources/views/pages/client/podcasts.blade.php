@@ -29,39 +29,4 @@
     </main>
 
     @include('partials/podcasts-filter')
-
-    <script>
-        (function() {
-            $(document).on('change', '#search-name', function() {
-                searchPodcast();
-            });
-
-            $(document).on('change', '.input__checkbox', function () {
-                searchPodcast();
-            });
-
-            function searchPodcast() {
-                let categories = [];
-                $('.input__checkbox:checked').each(function(){
-                    categories.push($(this).val());
-                });
-
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    method: 'POST',
-                    url: '/update-podcasts',
-                    data: {
-                        name: $('#search-name').val(),
-                        categories: categories.join(',')
-                    },
-                    success: function(response) {
-                        $('.podcasts-container').html(response);
-                    }
-                })
-            }
-        })(jQuery);
-    </script>
-
 @endsection

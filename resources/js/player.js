@@ -123,7 +123,7 @@ export let player = {
     },
     setListened(episodeId){
         let self = this;
-        if (self.episodeId === null) {
+        if (episodeId === null) {
             return;
         }
         $.ajax({

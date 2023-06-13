@@ -115,7 +115,7 @@ class ProfileController extends Controller
             return abort(403);
         }
 
-        $search_name = $request->get('name');
+        $search_name = $request->get('text');
         $search_categories = $request->get('categories');
 
         $podcasts = Podcast::join('users', 'podcasts.owner_id', '=', 'users.id');
@@ -127,6 +127,7 @@ class ProfileController extends Controller
         }
 
         $podcasts = $podcasts->where('podcasts.owner_id', '=', Auth::id())
+            ->select('podcasts.*')
             ->distinct()->orderBy('podcasts.updated_at', 'desc')->get()->toArray();
 
         $podcasts_render = '';
@@ -393,12 +394,14 @@ class ProfileController extends Controller
         $model = HistoryRecord::where('user_id', '=', $user->id)->where('episode_id', '=', $episodeId)->first();
         if ($model) {
             $model->time = $time;
+            $model->is_deleted = DownloadRecord::STATUS_NORMAL;
             $model->save();
         } else {
             $model = new HistoryRecord();
             $model->user_id = $user->id;
             $model->episode_id = $episodeId;
             $model->time = $time;
+            $model->is_deleted = DownloadRecord::STATUS_NORMAL;
             $model->save();
         }
         //$user->refresh();
@@ -493,6 +496,7 @@ class ProfileController extends Controller
                 ->where('uh.user_id', '=', Auth::id())
                 ->where('podcasts_episodes.status', '=', PodcastEpisode::STATUS_PUBLISHED)
                 ->where('p.status', '=', Podcast::STATUS_ACTIVE)
+                ->where('uh.is_deleted', '=', DownloadRecord::STATUS_NORMAL)
                 ->join('podcasts AS p', 'podcasts_episodes.podcast_id', '=', 'p.id')
                 ->join('users_history AS uh', 'uh.episode_id', '=', 'podcasts_episodes.id')
                 ->distinct()->get()->toArray();
@@ -520,7 +524,13 @@ class ProfileController extends Controller
     public function clearHistory() {
         HistoryRecord::where('user_id', '=', Auth::id())
             ->where('is_deleted', '=', DownloadRecord::STATUS_NORMAL)
-            ->update(['is_deleted', DownloadRecord::STATUS_DELETED]);
+            ->update(['is_deleted' => DownloadRecord::STATUS_DELETED]);
+        return '';
+    }
+    public function clearDownloads() {
+        DownloadRecord::where('user_id', '=', Auth::id())
+            ->where('is_deleted', '=', DownloadRecord::STATUS_NORMAL)
+            ->update(['is_deleted' => DownloadRecord::STATUS_DELETED]);
         return '';
     }
 

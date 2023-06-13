@@ -80,6 +80,7 @@ Route::get('/history', [ProfileController::class, 'history']);
 Route::post('/record-history', [ProfileController::class, 'recordListeningHistory']);
 //Route::post('/set-listened', [ProfileController::class, 'setListened'])->name('profile.setListened');
 Route::post('/clear-history', [ProfileController::class, 'clearHistory']);
+Route::post('/clear-downloads', [ProfileController::class, 'clearDownloads']);
 Route::get('/downloads', [ProfileController::class, 'downloads']);
 Route::get('/play-episode/{id}', [IndexController::class, 'playEpisode']);
 Route::post('/record-play-episode', [IndexController::class, 'recordPlayEpisode']);

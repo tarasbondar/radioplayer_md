@@ -24,27 +24,4 @@
             </div>
         </section>
     </main>
-
-    <script>
-
-        (function(){
-            $(document).on('click', '#clear-history', function () {
-                let link = $(this);
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    method: 'POST',
-                    url: '/clear-history',
-                    success: function () {
-                        $('.podcast__list').html('');
-                        link.hide();
-                    }
-                })
-            })
-
-        })(jQuery)
-
-    </script>
-
 @endsection
