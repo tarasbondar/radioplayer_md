@@ -190,6 +190,19 @@ export let player = {
     },
     changeEpisode(id){
         let self = this;
+
+        if (self.episodeId === id && window.audio) {
+            if (!window.audio.paused){
+                window.audio.pause();
+                self.changePlayIcon()
+            }
+            else{
+                window.audio.play();
+                self.changePlayIcon()
+            }
+            return false;
+        }
+
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
