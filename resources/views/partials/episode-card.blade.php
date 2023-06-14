@@ -9,7 +9,7 @@
         <a class="podcast__elem-name" href="/podcasts/{{$episode['podcast_id']}}/view">{{$episode['podcast_name']}}</a>
     </div>
     <div class="podcast__elem-title"><a class="podcast__elem-title__link" href="/episodes/{{$episode['id']}}/view">{{ $episode['name'] }}</a></div>
-    <p class="podcast__elem-text"> {{ $episode['description'] }} </p>
+    <p class="podcast__elem-text"> {!! $episode['description'] !!} </p>
     <div class="podcast__holder">
 
         <div class="podcast__timer play-episode {{ ($episode['is_in_history'] && !$episode['is_listened']) ? 'active' : '' }}" data-play-episode="{{ $episode['id'] }}" data-episode="{{ $episode['id'] }}">

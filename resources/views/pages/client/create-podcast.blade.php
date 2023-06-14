@@ -21,7 +21,8 @@
                         </div>
 
                         <div class="input form-floating">
-                            <div class="form-control ckeditor-custom" id="description"> {!! @$podcast['description'] !!} </div>
+                            <div class="form-control ckeditor-custom"> {!! @$podcast['description'] !!} </div>
+                            <textarea class="form-control d-none" id="description" name="description"> </textarea>
                             <label for="description">{{ __('client.podcastDescription') }}</label>
                             <div class="messages"></div>
                         </div>
