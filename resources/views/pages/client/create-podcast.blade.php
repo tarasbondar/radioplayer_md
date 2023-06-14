@@ -21,7 +21,7 @@
                         </div>
 
                         <div class="input form-floating">
-                            <dic class="form-control ckeditor-custom" placeholder="{{ __('client.podcastDescription') }}" id="description" name="description" required> {!! @$podcast['description'] !!} </dic>
+                            <div class="form-control ckeditor-custom" id="description"> {!! @$podcast['description'] !!} </div>
                             <label for="description">{{ __('client.podcastDescription') }}</label>
                             <div class="messages"></div>
                         </div>

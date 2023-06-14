@@ -175,6 +175,7 @@ export let player = {
                 self.initialSaveTime = 0;
                 self.lastRadioInfoTime = 0;
                 self.recordPlayStation(id);
+                window.postMessage(JSON.stringify({station: $('#audio-source').val(), logo: $('.now-playing__track .logo__img').attr('src')}), '*');
             }
         })
     },
@@ -342,6 +343,7 @@ export let player = {
             success: function (response) {
                 $('[data-artist]').html(response.artist);
                 $('[data-song]').html(response.song);
+                window.postMessage(JSON.stringify({artist: response.artist, song: response.song}), '*');
             }
         })
     },
