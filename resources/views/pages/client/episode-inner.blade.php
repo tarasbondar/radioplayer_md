@@ -5,6 +5,10 @@ use App\Helpers\SiteHelper;
 use App\Models\PodcastEpisode;
 ?>
 
+@section('meta_title', $episode->getMetaTitle())
+@section('meta_keywords', $episode->getMetaKeywords())
+@section('meta_description', $episode->getMetaDescription())
+
 @section('content')
 
     <main class="main">

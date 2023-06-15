@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MetaTagController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AdminController;
@@ -27,7 +28,6 @@ Route::get('language/{locale}', function ($locale) {
         $user->language = $locale;
         $user->save();
     }
-
     if (url()->previous() !== url()->current()) {
         return redirect()->back();
     }
@@ -117,6 +117,13 @@ Route::name('admin.')->prefix('admin')->middleware([IsAdmin::class])->group(func
     Route::post('/podcasts/save', [PodcastController::class, 'save']);
     Route::delete('/podcasts/{id}', [PodcastController::class, 'delete']);
     Route::get('/podcasts/download', [PodcastController::class, 'download']);
+
+    Route::get('/meta-tags', [MetaTagController::class, 'index']);
+    Route::get('/meta-tags/add', [MetaTagController::class, 'add']);
+    Route::get('/meta-tags/edit/{id}', [MetaTagController::class, 'edit']);
+    Route::post('/meta-tags/save', [MetaTagController::class, 'save']);
+    Route::delete('/meta-tags/{id}', [MetaTagController::class, 'delete']);
+
 
     Route::get('/podcast-categories', [PodcastCategoryController::class, 'index']);
     Route::get('/podcast-categories/add', [PodcastCategoryController::class, 'add']);

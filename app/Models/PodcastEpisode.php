@@ -3,8 +3,10 @@
 namespace App\Models;
 
 use App\Helpers\SiteHelper;
+use App\Traits\Translatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 /**
  * Class PodcastEpisode
@@ -26,7 +28,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PodcastEpisode extends Model
 {
-    use HasFactory;
+    use HasFactory, Translatable;
 
     const STATUS_DRAFT = 1;
     const STATUS_PUBLISHED = 2;
@@ -40,6 +42,12 @@ class PodcastEpisode extends Model
 
     protected $appends = ['created_diff', 'is_in_playlist', 'source_path', 'source_url', 'is_in_listen_later',
         'is_in_history', 'is_downloaded', 'start_time', 'is_listened', 'duration_left_label'];
+
+    protected $translatable = [
+        'meta_title',
+        'meta_keywords',
+        'meta_description',
+    ];
 
     public function podcast() {
         return $this->belongsTo(Podcast::class, 'podcast_id', 'id');
@@ -125,6 +133,29 @@ class PodcastEpisode extends Model
             return SiteHelper::getFormattedDuration($duration);
         }
         return SiteHelper::getFormattedDuration($duration - $historyRecord->time);;
+    }
+
+    public function getMetaTitle(){
+        $text = $this->getTranslation('meta_title');
+        if (empty($text))
+            $text = $this->name;
+        return strip_tags($text);
+    }
+
+    public function getMetaKeywords(){
+        $text = $this->getTranslation('meta_keywords');
+        if (empty($text))
+            $text = $this->tags;
+        return strip_tags($text);
+    }
+
+    public function getMetaDescription(){
+        $text = $this->getTranslation('meta_description');
+        if (empty($text))
+            $text = $this->description;
+        $text = strip_tags($text);
+
+        return Str::limit($text, 160);
     }
 
 }

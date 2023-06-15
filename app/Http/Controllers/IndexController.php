@@ -326,7 +326,7 @@ class IndexController
     public function viewPodcast($id) {
         $podcast = Podcast::select('podcasts.*', 'users.name AS username')
             ->join('users', 'podcasts.owner_id', '=', 'users.id')
-            ->where('podcasts.id', '=', $id)->first()->toArray();
+            ->where('podcasts.id', '=', $id)->first();
 
         if (Auth::id() == $podcast['owner_id'] || $podcast['status'] == Podcast::STATUS_ACTIVE) {
             if(!Auth::check() ) {
@@ -382,7 +382,7 @@ class IndexController
                 ->where('podcasts_episodes.id', '=', $id)
                 ->join('podcasts AS p', 'podcasts_episodes.podcast_id', '=', 'p.id')
                 ->orderBy('updated_at', 'DESC')
-                ->first()->toArray();
+                ->first();
         $podcast = Podcast::select('podcasts.*', 'users.name AS username')
             ->join('users', 'podcasts.owner_id', '=', 'users.id')
             ->where('podcasts.id', '=', $episode['podcast_id'])->first()->toArray();

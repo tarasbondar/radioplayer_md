@@ -40,6 +40,9 @@
             <a class="nav-link" href="{{ '/admin/custom-values' }}">Custom Values</a>
         </li>
         <li class="nav-item">
+            <a class="nav-link" href="{{ '/admin/meta-tags' }}">Meta tags</a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" href="{{ '/translations' }}" target="_blank">Translations</a>
         </li>
     </ul>

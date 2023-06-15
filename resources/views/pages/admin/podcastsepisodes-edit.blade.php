@@ -11,6 +11,36 @@
 
                 <form method="POST" action="/admin/podcasts-episodes/save" enctype = 'multipart/form-data'>
                     @csrf
+
+                    <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
+                        @foreach(\App\Helpers\LanguageHelper::getLanguages() as $key => $language)
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link {{ ($key == 0) ? 'active' : '' }}" id="lang-{{ $language->code }}-tab" data-bs-toggle="tab" data-bs-target="#lang-{{ $language->code }}" type="button" role="tab" aria-controls="home" aria-selected="true">{{ $language->name }}</button>
+                            </li>
+                        @endforeach
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        @foreach(\App\Helpers\LanguageHelper::getLanguages() as $key => $language)
+                            <div class="tab-pane fade {{ ($key == 0) ? 'show active' : '' }}" id="lang-{{ $language->code }}" role="tabpanel" aria-labelledby="lang-{{ $language->code }}-tab">
+
+                                <div class="mb-3 form-group row">
+                                    <label for="meta_title_{{ $language->code }}" class="col-md-4 col-form-label text-md-right">Meta title ({{ $language->code }})</label>
+                                    <div class="col-md-6"> <input id="meta_title_{{ $language->code }}" type="text" class="form-control" name="meta_title_{{ $language->code }}" value="{{ (@$episode) ? @$episode->getTranslation('meta_title', $language->code) : '' }}"> </div>
+                                </div>
+                                <div class="mb-3 form-group row">
+                                    <label for="meta_keywords_{{ $language->code }}" class="col-md-4 col-form-label text-md-right">Meta keywords ({{ $language->code }})</label>
+                                    <div class="col-md-6"> <input id="meta_keywords_{{ $language->code }}" type="text" class="form-control" name="meta_keywords_{{ $language->code }}" value="{{ (@$episode) ? @$episode->getTranslation('meta_keywords', $language->code) : '' }}"> </div>
+                                </div>
+
+                                <div class="mb-3 form-group row">
+                                    <label for="meta_description_{{ $language->code }}" class="col-md-4 col-form-label text-md-right">Meta description ({{ $language->code }})</label>
+                                    <div class="col-md-6"> <input id="meta_description_{{ $language->code }}" type="text" class="form-control" name="meta_description_{{ $language->code }}" value="{{ (@$episode) ? @$episode->getTranslation('meta_description', $language->code) : '' }}"> </div>
+                                </div>
+
+                            </div>
+                        @endforeach
+                    </div>
+
                     <div class="form-group row" hidden>
                         <input id="id" type="text" class="form-control" name="id" value="{{ @$episode['id'] }}" readonly>
                     </div>

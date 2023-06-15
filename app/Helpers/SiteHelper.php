@@ -2,7 +2,9 @@
 
 namespace App\Helpers;
 
+use App\Models\MetaTag;
 use getID3;
+use Illuminate\Http\Request;
 
 class SiteHelper
 {
@@ -36,5 +38,51 @@ class SiteHelper
     public static function getFormattedDuration($duration = 0): string
     {
         return gmdate("H:i:s", $duration);
+    }
+
+    public static function getMetaTitle(){
+        // get current route
+        $request = Request::capture();
+        $path = $request->path();
+        $model = MetaTag::where('route', '/'.$path)->first();
+        $text = __('app.appTitle');
+        if (!$model)
+            $model = MetaTag::where('is_default', 1)->first();
+        if ($model){
+            $modelText = $model->getTranslation('meta_title');
+            if (!empty($modelText))
+                $text = $modelText;
+        }
+        return $text;
+    }
+    public static function getMetaKeywords(){
+        // get current route
+        $request = Request::capture();
+        $path = $request->path();
+        $model = MetaTag::where('route', '/'.$path)->first();
+        $text = __('app.appSeoKeywords');
+        if (!$model)
+            $model = MetaTag::where('is_default', 1)->first();
+        if ($model){
+            $modelText = $model->getTranslation('meta_title');
+            if (!empty($modelText))
+                $text = $modelText;
+        }
+        return $text;
+    }
+    public static function getMetaDescription(){
+        // get current route
+        $request = Request::capture();
+        $path = $request->path();
+        $model = MetaTag::where('route', '/'.$path)->first();
+        $text = __('app.appSeoDescription');
+        if (!$model)
+            $model = MetaTag::where('is_default', 1)->first();
+        if ($model){
+            $modelText = $model->getTranslation('meta_title');
+            if (!empty($modelText))
+                $text = $modelText;
+        }
+        return $text;
     }
 }
