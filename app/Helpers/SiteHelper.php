@@ -64,7 +64,7 @@ class SiteHelper
         if (!$model)
             $model = MetaTag::where('is_default', 1)->first();
         if ($model){
-            $modelText = $model->getTranslation('meta_title');
+            $modelText = $model->getTranslation('meta_keywords');
             if (!empty($modelText))
                 $text = $modelText;
         }
@@ -79,7 +79,7 @@ class SiteHelper
         if (!$model)
             $model = MetaTag::where('is_default', 1)->first();
         if ($model){
-            $modelText = $model->getTranslation('meta_title');
+            $modelText = $model->getTranslation('meta_description');
             if (!empty($modelText))
                 $text = $modelText;
         }
