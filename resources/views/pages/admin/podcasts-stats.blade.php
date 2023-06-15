@@ -10,11 +10,11 @@
             <div class="col-md-12 row mb-3">
                 <div class="col-md-4 mb-3">
                     <label for="from">From: </label>
-                    <input id="from" value="{{ app('request')->input('from') }}"/>
+                    <input id="from" class="form-control" value="{{ app('request')->input('from') }}"/>
                 </div>
                 <div class="col-md-4">
                     <label for="to">To: </label>
-                    <input id="to" value="{{ app('request')->input('to') }}"/>
+                    <input id="to" class="form-control" value="{{ app('request')->input('to') }}"/>
                 </div>
                 <div class="col-md-3 row">
                     <div class="col-md-5"> <button id="apply-filters" class="btn btn-lg btn-primary">Apply</button> </div>
