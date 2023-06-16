@@ -98,7 +98,7 @@
                         @foreach($categories as $c)
                             <div class="form-check form-check-inline categories-checkbox">
                                 <input class="form-check-input categories-check" type="checkbox" id="category-{{$c->id}}" value="{{$c->id}}" {{in_array($c->id, $s2c) ? 'checked' : ''}}>
-                                <label class="form-check-label" for="category-{{$c->id}}">{{$c->key}}</label>
+                                <label class="form-check-label" for="category-{{$c->id}}">{{$c->getTranslation('title')}}</label>
                             </div>
                         @endforeach
                     </div>
@@ -111,7 +111,7 @@
                         @foreach($tags as $t)
                             <div class="form-check form-check-inline tags-checkbox">
                                 <input class="form-check-input tags-check" type="checkbox" id="tag-{{$t->id}}" value="{{$t->id}}" {{in_array($t->id, $s2t) ? 'checked' : ''}}>
-                                <label class="form-check-label" for="tag-{{$t->id}}">{{$t->key}}</label>
+                                <label class="form-check-label" for="tag-{{$t->id}}">{{$t->getTranslation('title')}}</label>
                             </div>
                         @endforeach
                     </div>

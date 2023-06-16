@@ -17,7 +17,7 @@
                 <thead class="thead-light">
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Key</th>
+                    <th scope="col">Title</th>
                     <th scope="col">Status</th>
                     <th scope="col">Actions</th>
                 </tr>
@@ -27,7 +27,7 @@
                 @foreach ($categories as $c)
                     <tr>
                         <th scope="row">{{ $c['id'] }}</th>
-                        <td>{{ $c['key'] }}</td>
+                        <td>{{ $c->getTranslation('title') }}</td>
                         <td>{{ ($c['status'] === 0 ? 'Active' : 'Inactive' ) }}</td>
                         <td>
                             <a href="#" class="edit-category edit-{{ $c['id'] }}">Edit</a>

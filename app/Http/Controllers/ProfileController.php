@@ -43,6 +43,7 @@ class ProfileController extends Controller
 
     public function apply() {
         $role = (Auth::user())->role;
+        $categories = PodcastCategory::where('status', '=', PodcastCategory::STATUS_ACTIVE)->get();
         if ($role == User::STATUS_NORMAL) {
             $app = AuthorApplication::where('user_id', '=', Auth::id())->orderBy('id', 'desc')->first();
 
@@ -51,7 +52,7 @@ class ProfileController extends Controller
                     return view('pages.client.author-application', ['status' => 'pending']);
                 }
                 if ($app->status == AuthorApplication::STATUS_DECLINED) {
-                    return view('pages.client.author-application', ['status' => 'declined', 'feedback' => $app->feedback_message]);
+                    return view('pages.client.author-application', ['status' => 'declined', 'categories' => $categories, 'feedback' => $app->feedback_message]);
                 }
                 if ($app->status == AuthorApplication::STATUS_NO_RETRY) {
                     return view('pages.client.author-application', ['status' => 'no_retry', 'feedback' => $app->feedback_message]);
@@ -60,7 +61,7 @@ class ProfileController extends Controller
         } else { //already author
             return redirect()->action([ProfileController::class, 'myPodcasts']);
         }
-        $categories = PodcastCategory::where('status', '=', PodcastCategory::STATUS_ACTIVE)->get()->toArray();
+
         return view('pages.client.author-application', ['status' => 'new', 'user_role' => $role,'categories' => $categories]);
     }
 
@@ -140,13 +141,13 @@ class ProfileController extends Controller
 
 
     public function createPodcast() {
-        $categories = PodcastCategory::where('status', '=', PodcastCategory::STATUS_ACTIVE)->get(['id', 'key']);
+        $categories = PodcastCategory::where('status', '=', PodcastCategory::STATUS_ACTIVE)->get();
         return view('pages.client.create-podcast', ['categories' => $categories, 'action' => 'add', 'p2c' => []]);
     }
 
     public function editPodcast($id) {
         $podcast = Podcast::find($id)->toArray();
-        $categories = PodcastCategory::where('status', '=', PodcastCategory::STATUS_ACTIVE)->get(['id', 'key']);
+        $categories = PodcastCategory::where('status', '=', PodcastCategory::STATUS_ACTIVE)->get();
         $podcast2category = $this->getCategoriesByPodcast($id);
         return view('pages.client.create-podcast', ['action' => 'edit', 'podcast' => $podcast, 'categories' => $categories, 'p2c' => $podcast2category]);
     }
