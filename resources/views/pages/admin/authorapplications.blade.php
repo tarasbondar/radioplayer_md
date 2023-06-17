@@ -7,6 +7,19 @@
         <h2>Author Applications</h2>
 
         <div class="row mb-3">
+            <div class="col-md-12 form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="apps-enable" value="1" {{ !(isset($apps_enable) && $apps_enable == 0) ? 'checked' : '' }}>
+                <label class="form-check-label" for="apps-enable" id="for-apps-enable">
+                    @if(isset($apps_enable) && $apps_enable == 0)
+                        {{ 'Apps are off' }}
+                    @else
+                        {{ 'Apps are on' }}
+                    @endif
+                </label>
+            </div>
+        </div>
+
+        <div class="row mb-3">
 
             <div class="col-md-3"> <input id="username" type="text" class="form-control" name="name" value="{{ app('request')->input('username') }}" placeholder="Username"> </div>
             <div class="col-md-4"> <input id="email" type="text" class="form-control" name="description" value="{{ app('request')->input('email') }}" placeholder="Email"> </div>
@@ -67,6 +80,25 @@
 
     <script>
         (function() {
+
+            $(document).on('change', '#apps-enable', function(){
+                console.log();
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    method: 'POST',
+                    url: '/author-apps-enable',
+                    success: function(response){
+                        let label = $('#for-apps-enable');
+                        if (response == 1) {
+                            label.html('Apps are enabled');
+                        } else {
+                            label.html('Apps are disabled');
+                        }
+                    }
+                });
+            });
 
             $(document).on('click', '.review', function () {
                 let button = $(this);

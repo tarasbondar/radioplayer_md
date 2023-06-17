@@ -36,6 +36,8 @@ class IndexController
 
         $lang = Auth::check() ? Auth::user()->language : 'en';
         view()->share(['lang' => $lang]);
+        $apps_enable = strip_tags(CustomValue::where('key', '=', 'apps_enable')->pluck('value')->first());
+        view()->share(['apps_enable' => $apps_enable]);
     }
 
 

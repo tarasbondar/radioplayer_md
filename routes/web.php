@@ -109,6 +109,7 @@ Route::name('admin.')->prefix('admin')->middleware([IsAdmin::class])->group(func
     Route::get('/author-apps/{status?}', [UsersController::class, 'authorApps']);
     Route::get('/author-apps-review/{id}', [UsersController::class, 'authorAppsEdit']);
     Route::post('/author-apps-review', [UsersController::class, 'reviewApp']);
+    Route::post('/author-apps-enable', [UsersController::class, 'authorAppsEnable']);
 
     Route::get('/podcasts', [PodcastController::class, 'index']);
     Route::get('/podcasts-stats', [PodcastController::class, 'stats']);

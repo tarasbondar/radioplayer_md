@@ -76,7 +76,7 @@
                     </div>
                 @endguest
 
-                @if(!auth()->check() || auth()->user()->role < 1)
+                @if((!auth()->check() || auth()->user()->role < 1) && $apps_enable)
                     <a class="btn header__menu__link-panel" href="/apply">
                         <svg class="icon"><use href="/img/sprite.svg#mic"></use></svg>
                         <span>{{ __('client.becomeAuthor') }}</span>

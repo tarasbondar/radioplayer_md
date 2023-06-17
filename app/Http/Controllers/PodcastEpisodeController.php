@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\notifyPodcastsSubs;
 use App\Models\DownloadRecord;
 use App\Models\HistoryRecord;
 use App\Models\Podcast;
@@ -65,6 +66,11 @@ class PodcastEpisodeController extends Controller
             $request->source->move(PodcastEpisode::UPLOADS_AUDIO, $filename);
             $episode->source = $filename;
             $episode->filename = $request->source->getClientOriginalName();
+        }
+
+        if ($episode->status == PodcastEpisode::STATUS_PUBLISHED && $episode->announced == 0 && $episode->podcast()->owner_id == Auth::id()) {
+            $episode->announced = 1;
+            notifyPodcastsSubs::dispatch($episode->id);
         }
 
         $episode->save();

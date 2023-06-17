@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\UsersExport;
 use App\Models\AuthorApplication;
+use App\Models\CustomValue;
 use App\Models\DownloadRecord;
 use App\Models\HistoryRecord;
 use App\Models\PlaylistRecord;
@@ -239,7 +240,10 @@ class UsersController extends Controller
 
         $apps = $apps->orderBy('created_at', 'desc')->offset(($page - 1) * $page_size)->limit($page_size)
             ->get()->toArray();
-        return view('pages.admin.authorapplications', ['status' => $status, 'apps' => $apps, 'pagination' => $pagination, 'appends' => $appends]);
+
+        $enable = strip_tags(CustomValue::where('key', '=', 'apps_enable')->pluck('value')->first());
+
+        return view('pages.admin.authorapplications', ['status' => $status, 'apps' => $apps, 'pagination' => $pagination, 'appends' => $appends, 'apps_enable' => $enable]);
     }
 
     public function authorAppsEdit($id) {
@@ -267,6 +271,18 @@ class UsersController extends Controller
         $app->save();
 
         return '';
+    }
+
+    public function authorAppsEnable(){
+        $enable = strip_tags(CustomValue::where('key', '=', 'apps_enable')->pluck('value')->first());
+        if ($enable != 0) {
+            CustomValue::where('key', '=', 'apps_enable')->update(['value' => 0]);
+            return 0;
+        } else {
+            CustomValue::where('key', '=', 'apps_enable')->update(['value' => 1]);
+            return 1;
+        }
+
     }
 
 }

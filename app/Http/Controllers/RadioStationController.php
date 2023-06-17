@@ -10,7 +10,9 @@ use App\Models\RadioStationStatRecord;
 use App\Models\RadioStationTag;
 use App\Models\RadioStation2Category;
 use App\Models\RadioStation2Tag;
+use App\Models\StationFavHistoryRecord;
 use App\Services\RadioApiService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -50,37 +52,50 @@ class RadioStationController extends Controller
     }
 
     public function stats(Request $request) {
-        $from = $request->get('from', '');
-        $to = $request->get('to', '');
+        $id = $request->get('id', '');
+        $from = $request->get('from', Carbon::yesterday());
+        $to = $request->get('to', Carbon::now());
 
         $stats_plays = RadioStationStatRecord::from('radiostations_history AS rh')
             ->selectRaw('rs.id, rs.name, COUNT(rh.station_id) AS plays')
             ->join('radiostations AS rs', 'rh.station_id', '=', 'rs.id');
 
+        $stats_favs_total = RadioStationFavorite::from('radiostations_favorites AS rf')
+            ->selectRaw('rs.id, rs.name,  COUNT(rf.station_id) AS favs_total')
+            ->join('radiostations AS rs', 'rf.station_id', '=', 'rs.id');
+
+        $stats_favs_history = StationFavHistoryRecord::from('radiostations_favorites_history AS sfh')
+            ->selectRaw('rs.id, rs.name,  COUNT(sfh.station_id) AS favs')
+            ->join('radiostations AS rs', 'sfh.station_id', '=', 'rs.id');
+
+        if (!empty($id)) {
+            $stats_plays = $stats_plays->where('rs.id', '=', $id);
+            $stats_favs_total = $stats_favs_total->where('rs.id', '=', $id);
+            $stats_favs_history = $stats_favs_history->where('rs.id', '=', $id);
+        }
+
         if (!empty($from)) {
             $stats_plays = $stats_plays->where('click_time', '>=', $from . ' 00:00:00');
+            $stats_favs_total = $stats_favs_total->where('rf.created_at', '>=', $from . ' 00:00:00');
+            $stats_favs_history = $stats_favs_history->where('sfh.created_at', '>=', $from . ' 00:00:00');
         }
 
         if (!empty($to)) {
             $stats_plays = $stats_plays->where('click_time', '<=', $to . ' 23:59:59');
+            $stats_favs_total = $stats_favs_total->where('rf.created_at', '<=', $to . ' 23:59:59');
+            $stats_favs_history = $stats_favs_history->where('sfh.created_at', '<=', $to . ' 23:59:59');
         }
 
         $stats_plays = $stats_plays->groupBy('rs.id')
             ->get()->toArray();
 
-        $stats_favs = RadioStationFavorite::from('radiostations_favorites AS rf')
-            ->selectRaw('rs.id, rs.name,  COUNT(rf.station_id) AS favs')
-            ->join('radiostations AS rs', 'rf.station_id', '=', 'rs.id');
+        $stats_favs_total = $stats_favs_total->groupBy('rs.id')
+            ->get()->toArray();
 
-        if (!empty($from)) {
-            $stats_favs = $stats_favs->where('rf.created_at', '>=', $from . ' 00:00:00');
-        }
+        $stats_favs = $stats_favs_history->where('sfh.action', '=', StationFavHistoryRecord::ACTION_FAV)->groupBy('rs.id')
+            ->get()->toArray();
 
-        if (!empty($to)) {
-            $stats_favs = $stats_favs->where('rf.created_at', '<=', $to . ' 23:59:59');
-        }
-
-        $stats_favs = $stats_favs->groupBy('rs.id')
+        $stats_unfavs = $stats_favs_history->where('sfh.action', '=', StationFavHistoryRecord::ACTION_UNFAV)->groupBy('rs.id')
             ->get()->toArray();
 
         $stats = [];
@@ -89,9 +104,19 @@ class RadioStationController extends Controller
             $stats[$stat['id']]['plays'] = $stat['plays'];
         }
 
+        foreach ($stats_favs_total as $stat) {
+            $stats[$stat['id']]['name'] = $stat['name'];
+            $stats[$stat['id']]['favs_total'] = $stat['favs_total'];
+        }
+
         foreach ($stats_favs as $stat) {
             $stats[$stat['id']]['name'] = $stat['name'];
             $stats[$stat['id']]['favs'] = $stat['favs'];
+        }
+
+        foreach ($stats_unfavs as $stat) {
+            $stats[$stat['id']]['name'] = $stat['name'];
+            $stats[$stat['id']]['unfavs'] = $stat['unfavs'];
         }
 
         return view('pages.admin.stations-stats', ['stats' => $stats]);

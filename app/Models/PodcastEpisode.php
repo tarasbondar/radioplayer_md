@@ -36,7 +36,7 @@ class PodcastEpisode extends Model
 
     protected $table = 'podcasts_episodes';
 
-    protected $fillable = ['podcast_id', 'name', 'description', 'tags', 'source', 'filename', 'status'];
+    protected $fillable = ['podcast_id', 'name', 'description', 'tags', 'source', 'filename', 'status', 'announced'];
 
     protected $appends = ['created_diff', 'is_in_playlist', 'source_path', 'source_url', 'is_in_listen_later',
         'is_in_history', 'is_downloaded', 'start_time', 'is_listened', 'duration_left_label'];

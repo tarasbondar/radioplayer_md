@@ -25,8 +25,8 @@ class FavoriteService
         if (in_array($id, $favorites)) {
             // Remove from favorites
             $favorites = array_diff($favorites, [$id]);
-
-            return response()->json(['action' => 'deleted', 'id' => $id])->cookie('favorites', json_encode($favorites, ), self::cookieLifetime);
+            DB::table('radiostations_favorites_history')->insert(['station_id' => $id, 'user_id' => 0, 'action' => 0]);
+            return response()->json(['action' => 'deleted', 'id' => $id])->cookie('favorites', json_encode($favorites), self::cookieLifetime);
         }
 
         // Add to favorites
@@ -34,7 +34,7 @@ class FavoriteService
 
         $station = RadioStation::find($id)->toArray();
         $output = view('partials.station-card', ['station' => $station, 'fav_stations' => $favorites])->render();
-
+        DB::table('radiostations_favorites_history')->insert(['station_id' => $id, 'user_id' => 0, 'action' => 1]);
         return response()->json(['action' => 'added', 'output' => $output, 'id' => $id])->cookie('favorites', json_encode($favorites), self::cookieLifetime);
     }
 
@@ -55,6 +55,7 @@ class FavoriteService
                 ->where(['station_id' => $id, 'user_id' => Auth::id()])
                 ->delete();
 
+            DB::table('radiostations_favorites_history')->insert(['station_id' => $id, 'user_id' => Auth::id(), 'action' => 0]);
             return ['action' => 'deleted', 'id' => $id];
         }
 
@@ -63,7 +64,7 @@ class FavoriteService
 
         $station = RadioStation::find($id)->toArray();
         $output = view('partials.station-card', ['station' => $station, 'fav_stations' => [$id]])->render();
-
+        DB::table('radiostations_favorites_history')->insert(['station_id' => $id, 'user_id' => Auth::id(), 'action' => 1]);
         return ['action' => 'added', 'output' => $output, 'id' => $id];
     }
 

@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ChangeNameRequest;
 use App\Http\Requests\ChangePasswordRequest;
+use App\Jobs\notifyPodcastsSubs;
 use App\Models\AuthorApplication;
+use App\Models\CustomValue;
 use App\Models\DownloadRecord;
 use App\Models\HistoryRecord;
 use App\Models\PlaylistRecord;
@@ -42,6 +44,10 @@ class ProfileController extends Controller
     }
 
     public function apply() {
+        if (strip_tags(CustomValue::where('key', '=', 'apps_enable')->pluck('value')->first()) == 0) {
+            abort(403);
+        }
+
         $role = (Auth::user())->role;
         if ($role == User::STATUS_NORMAL) {
             $app = AuthorApplication::where('user_id', '=', Auth::id())->orderBy('id', 'desc')->first();
@@ -65,6 +71,10 @@ class ProfileController extends Controller
     }
 
     public function sendApplication(Request $request) : RedirectResponse {
+        if (strip_tags(CustomValue::where('key', '=', 'apps_enable')->pluck('value')->first()) == 0) {
+            abort(403);
+        }
+
         $validator = $request->validate([
             'title' => ['required', 'max:255'],
             'description' => ['required'],
@@ -296,7 +306,14 @@ class ProfileController extends Controller
             unlink(PodcastEpisode::UPLOADS_AUDIO . '/' . $episode->source);
         }
 
+        if ($episode->status == PodcastEpisode::STATUS_PUBLISHED && $episode->announced == 0) {
+            $episode->announced = 1;
+            notifyPodcastsSubs::dispatch($episode->id);
+        }
+
         $episode->save();
+
+
 
         return \redirect('podcasts/' . $episode->podcast_id . '/view');
     }
@@ -333,12 +350,14 @@ class ProfileController extends Controller
         $podcast = Podcast::where('id', '=', $id)->get()->toArray()[0];
         if (count($sub)) {
             PodcastSub::where('user_id', '=', Auth::id())->where('podcast_id', '=', $id)->delete();
+            DB::table('podcasts_subscriptions_history')->insert(['podcast_id' => $id, 'user_id' => Auth::id(), 'action' => 0]);
             return view('partials.sub-button', ['podcast' => $podcast])->render();
         } else {
             $sub = new PodcastSub();
             $sub->user_id = Auth::id();
             $sub->podcast_id = $id;
             $sub->save();
+            DB::table('podcasts_subscriptions_history')->insert(['podcast_id' => $id, 'user_id' => Auth::id(), 'action' => 1]);
             return view('partials.unsub-button', ['podcast' => $podcast])->render();
         }
     }
