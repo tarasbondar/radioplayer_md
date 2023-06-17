@@ -17,7 +17,7 @@
                 <thead class="thead-light">
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Key</th>
+                    <th scope="col">Title</th>
                     <th scope="col">Status</th>
                     <th scope="col">Actions</th>
                 </tr>
@@ -27,7 +27,7 @@
                     @foreach ($tags as $t)
                         <tr>
                             <th scope="row">{{ $t['id'] }}</th>
-                            <td>{{ $t['key'] }}</td>
+                            <td>{{ $t->getTranslation('title') }}</td>
                             <td>{{ ($t['status'] === 0 ? 'Active' : 'Inactive' ) }}</td>
                             <td>
                                 <a href="/admin/station-tags/edit/{{ $t['id'] }}" class="edit-tag">Edit</a>

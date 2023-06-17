@@ -15,6 +15,8 @@ import Header from "@editorjs/header";
 import List from '@editorjs/list';
 import LinkTool from '@editorjs/link';
 
+import { Tab } from "bootstrap";
+
 editor();
 
 export function editor() {

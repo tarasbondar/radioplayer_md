@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\LanguageHelper;
 use App\Models\CustomValue;
 use App\Models\Podcast;
 use App\Models\PodcastEpisode;
@@ -25,7 +26,7 @@ class AdminController extends Controller
     }
 
     public function customValues() {
-        $values = CustomValue::all()->toArray();
+        $values = CustomValue::all();
         return view('pages.admin.customvalues', ['values' => $values]);
     }
 
@@ -34,19 +35,32 @@ class AdminController extends Controller
     }
 
     public function editValue($id) {
-        $value = CustomValue::find($id)->toArray();
+        $value = CustomValue::find($id);
         return view('pages.admin.customvalues-edit', ['action' => 'edit', 'value' => $value]);
     }
 
     public function saveValue(Request $request) {
         if (empty($request->get('id'))) {
-            $value = new CustomValue();
+            $model = new CustomValue();
         } else {
-            $value = CustomValue::find($request->get('id'));
+            $model = CustomValue::find($request->get('id'));
         }
-        $value->key = $request->get('key');
-        $value->value = $request->get('value');
-        $value->save();
+        $model->key = $request->get('key');
+        $model->value = $request->get('value');
+        $model->save();
+
+        // save translations
+        $languages = LanguageHelper::getLanguages();
+        foreach ($model->getTranslatableAttributes() as $attribute) {
+            foreach ($languages as $language) {
+                $translationKey = $attribute.'_'.$language->code;
+                $translationValue = $request->input($translationKey);
+
+                if (!empty($translationValue)) {
+                    $model->setTranslation($attribute, $language->code, $translationValue);
+                }
+            }
+        }
 
         return redirect()->action([AdminController::class, 'customValues']);
     }

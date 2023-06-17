@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\PodcastsExport;
+use App\Helpers\LanguageHelper;
 use App\Models\DownloadRecord;
 use App\Models\HistoryRecord;
 use App\Models\PlaylistRecord;
@@ -135,7 +136,7 @@ class PodcastController extends Controller
     }
 
     public function edit($id) {
-        $podcast = Podcast::find($id)->toArray();
+        $podcast = Podcast::find($id);
         //categories that belong to podcast
         $categories = PodcastCategory::where('status', '=', PodcastCategory::STATUS_ACTIVE)->get(['id', 'key']);
         return view('pages.admin.podcasts-edit', ['action' => 'edit', 'podcast' => $podcast, 'categories' => $categories]);
@@ -166,6 +167,20 @@ class PodcastController extends Controller
         }
 
         $podcast->save();
+
+        // save translations
+        $languages = LanguageHelper::getLanguages();
+        foreach ($podcast->getTranslatableAttributes() as $attribute) {
+            foreach ($languages as $language) {
+                $translationKey = $attribute.'_'.$language->code;
+                $translationValue = $request->input($translationKey);
+
+                if (!empty($translationValue)) {
+                    $podcast->setTranslation($attribute, $language->code, $translationValue);
+                }
+            }
+        }
+
 
         //categories
         $categories_new = $request->get('categories', []);

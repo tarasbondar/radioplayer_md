@@ -249,9 +249,9 @@ class UsersController extends Controller
     public function authorAppsEdit($id) {
         $app = AuthorApplication::find($id)->toArray();
         $user = User::find($app['user_id']);
-        $categories_keys = PodcastCategory::select('key')->whereIn('id', explode(',', $app['categories']))->where('status', '=', PodcastCategory::STATUS_ACTIVE)->get()->toArray();
+        $categories_keys = PodcastCategory::whereIn('id', explode(',', $app['categories']))->where('status', '=', PodcastCategory::STATUS_ACTIVE)->get();
         $categories = [];
-        foreach ($categories_keys as $k) {array_push($categories, $k['key']);}
+        foreach ($categories_keys as $k) {array_push($categories, $k->getTranslation('title'));}
         return view('pages.admin.authorapplications-review', ['app' => $app, 'user' => $user, 'categories' => implode(', ', $categories)]);
     }
 

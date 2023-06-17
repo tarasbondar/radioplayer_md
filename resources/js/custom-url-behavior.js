@@ -35,6 +35,16 @@ export function customUrlBehavior () {
                 [...dataNodes], // Array of future items/nodes (returned)
                 get // a callback to retrieve the node
             );
+
+            // Обновление метатегов
+            const newDataDocument = new DOMParser().parseFromString(data, "text/html");
+            const newTitle = newDataDocument.querySelector("title").innerText;
+            const newMetaKeywords = newDataDocument.querySelector('meta[name="keywords"]').getAttribute("content");
+            const newMetaDescription = newDataDocument.querySelector('meta[name="description"]').getAttribute("content");
+            document.querySelector("title").innerText = newTitle;
+            document.querySelector('meta[name="keywords"]').setAttribute("content", newMetaKeywords);
+            document.querySelector('meta[name="description"]').setAttribute("content", newMetaDescription);
+
             history.pushState({ route: path }, path, path);
             //console.log(path);
             updateLinks();

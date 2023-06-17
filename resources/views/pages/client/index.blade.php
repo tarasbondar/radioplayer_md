@@ -46,7 +46,7 @@
                         </li>
                         @foreach($categories as $c)
                             <li class="tab-filters__item">
-                                <button class="btn btn_switcher btn_large button-category {{ (isset($_GET['category_id']) && $_GET['category_id'] == $c['id']) ? 'active' : '' }}" type="button" value="{{ $c['id'] }}"> {{ __('stationcategories.'.$c['key']) }} </button>
+                                <button class="btn btn_switcher btn_large button-category {{ (isset($_GET['category_id']) && $_GET['category_id'] == $c['id']) ? 'active' : '' }}" type="button" value="{{ $c['id'] }}"> {{ $c->getTranslation('title') }} </button>
                             </li>
                         @endforeach
                     </ul>
@@ -54,7 +54,7 @@
                     <ul class="tab-filters__list">
                         @foreach($tags as $t)
                             <li class="tab-filters__item">
-                                <button class="btn btn_switcher btn_large button-tag {{ (isset($_GET['tag_id']) && $_GET['tag_id'] == $t['id']) ? 'active' : '' }}" type="button" value=" {{$t['id']}}"> {{ __('stationtags.'.$t['key']) }} </button>
+                                <button class="btn btn_switcher btn_large button-tag {{ (isset($_GET['tag_id']) && $_GET['tag_id'] == $t['id']) ? 'active' : '' }}" type="button" value=" {{$t['id']}}"> {{ $t->getTranslation('title') }} </button>
                             </li>
                         @endforeach
                     </ul>

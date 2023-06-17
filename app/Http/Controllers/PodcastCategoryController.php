@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\LanguageHelper;
 use App\Models\PodcastCategory;
 use App\Models\Podcast2Category;
 use Illuminate\Http\Request;
@@ -10,7 +11,7 @@ class PodcastCategoryController extends Controller
 {
 
     public function index(Request $request) {
-        $categories = PodcastCategory::all()->toArray();
+        $categories = PodcastCategory::all();
         return view('pages.admin.podcastcategories', ['categories' => $categories]);
     }
 
@@ -19,19 +20,32 @@ class PodcastCategoryController extends Controller
     }
 
     public function edit($id) {
-        $category = PodcastCategory::find($id)->toArray();
+        $category = PodcastCategory::find($id);
         return view('pages.admin.podcastcategories-edit', ['action' => 'edit', 'category' => $category]);
     }
 
     public function save(Request $request) {
         if (empty($request->get('id'))) {
-            $category = new PodcastCategory();
+            $model = new PodcastCategory();
         } else {
-            $category = PodcastCategory::find($request->get('id'));
+            $model = PodcastCategory::find($request->get('id'));
         }
-        $category->key = $request->get('key');
-        $category->status = $request->get('status');
-        $category->save();
+        $model->key = $request->get('key');
+        $model->status = $request->get('status');
+        $model->save();
+
+        // save translations
+        $languages = LanguageHelper::getLanguages();
+        foreach ($model->getTranslatableAttributes() as $attribute) {
+            foreach ($languages as $language) {
+                $translationKey = $attribute.'_'.$language->code;
+                $translationValue = $request->input($translationKey);
+
+                if (!empty($translationValue)) {
+                    $model->setTranslation($attribute, $language->code, $translationValue);
+                }
+            }
+        }
 
         return redirect()->action([PodcastCategoryController::class, 'index']);
     }

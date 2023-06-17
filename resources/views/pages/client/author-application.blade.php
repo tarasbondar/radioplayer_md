@@ -26,7 +26,7 @@
         </section>
     </main>
 
-    @if ($status == 'new')
+    @if ($status == 'new' || $status == 'declined')
         <div class="modal modal-filter fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -43,8 +43,8 @@
                             <div class="list categories-list">
                                 @foreach($categories as $c)
                                     <div class="input input__inner">
-                                        <input class="input__checkbox" type="checkbox" id="category-{{$c['id']}}" name="{{ $c['key'] }}" value="{{$c['id']}}">
-                                        <label class="input__label light" for="category-{{$c['id']}}"> {{ __('podcastcategories.'.$c['key']) }} </label>
+                                        <input class="input__checkbox" type="checkbox" id="category-{{$c['id']}}" name="{{ $c->getTranslation('title') }}" value="{{$c['id']}}">
+                                        <label class="input__label light" for="category-{{$c['id']}}"> {{ $c->getTranslation('title') }} </label>
                                         <svg class="icon">
                                             <use href="/img/sprite.svg#check"></use>
                                         </svg>

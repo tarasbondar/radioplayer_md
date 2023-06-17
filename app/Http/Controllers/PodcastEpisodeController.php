@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\notifyPodcastsSubs;
+use App\Helpers\LanguageHelper;
 use App\Models\DownloadRecord;
 use App\Models\HistoryRecord;
 use App\Models\Podcast;
@@ -35,7 +36,7 @@ class PodcastEpisodeController extends Controller
     }
 
     public function edit($id) {
-        $episode = PodcastEpisode::find($id)->toArray();
+        $episode = PodcastEpisode::find($id);
         $podcast = Podcast::find($episode['podcast_id'])->toArray();
 
         if ($podcast['owner_id'] == Auth::id()) {
@@ -74,6 +75,19 @@ class PodcastEpisodeController extends Controller
         }
 
         $episode->save();
+
+        // save translations
+        $languages = LanguageHelper::getLanguages();
+        foreach ($episode->getTranslatableAttributes() as $attribute) {
+            foreach ($languages as $language) {
+                $translationKey = $attribute.'_'.$language->code;
+                $translationValue = $request->input($translationKey);
+
+                if (!empty($translationValue)) {
+                    $episode->setTranslation($attribute, $language->code, $translationValue);
+                }
+            }
+        }
 
         return redirect()->action([PodcastEpisodeController::class, 'index']);
     }

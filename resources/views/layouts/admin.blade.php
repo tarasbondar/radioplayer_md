@@ -78,18 +78,19 @@
 <script src="{{ asset('js/ckeditor/build/ckeditor.js') }}"></script>
 
 <script type="application/javascript">
-    if ($( '.ckeditor-custom' ).length > 0) {
-        ClassicEditor.create(document.querySelector('.ckeditor-custom'), {
+
+    $('.ckeditor-custom').each(function(){
+        ClassicEditor.create($(this).get(0), {
             autoParagraph: false,
             allowedContent: true
         })
-        .then(editor => {
-            window.editor = editor;
-        })
-        .catch(err => {
-            console.error(err.stack);
-        });
-    }
+            .then(editor => {
+                window.editor = editor;
+            })
+            .catch(err => {
+                console.error(err.stack);
+            });
+    });
 </script>
 </body>
 </html>

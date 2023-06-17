@@ -120,9 +120,9 @@
                     <div class="list">
                         @foreach($categories as $c)
                             <div class="input input__inner categories-checkbox">
-                                <input class="input__checkbox categories-check" type="checkbox" id="category-{{ $c['id'] }}" value="{{$c->id . '-' . $c->key}}" {{in_array($c->id, array_keys($p2c)) ? 'checked' : ''}}>
+                                <input class="input__checkbox categories-check" type="checkbox" id="category-{{ $c['id'] }}" value="{{$c->id . '-' . $c->getTranslation('title')}}" {{in_array($c->id, array_keys($p2c)) ? 'checked' : ''}}>
                                 <label class="input__label light" for="category-{{ $c['id'] }}">
-                                    {{ $c['key'] }}
+                                    {{ $c->getTranslation('title') }}
                                 </label>
                                 <svg class="icon"><use href="/img/sprite.svg#check"></use></svg>
                                 <div class="messages"></div>

@@ -1,5 +1,9 @@
 @extends('layouts/client')
 
+@section('meta_title', $podcast->getMetaTitle())
+@section('meta_keywords', $podcast->getMetaKeywords())
+@section('meta_description', $podcast->getMetaDescription())
+
 @section('content')
 
     <main class="main">

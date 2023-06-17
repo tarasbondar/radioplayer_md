@@ -2,8 +2,9 @@
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{{ __('app.appTitle') }}</title>
-<meta name="description" content="{{ __('app.appSeoDescription') }}">
+<title>@yield('meta_title', \App\Helpers\SiteHelper::getMetaTitle())</title>
+<meta name="keywords" content="@yield('meta_keywords', \App\Helpers\SiteHelper::getMetaKeywords())">
+<meta name="description" content="@yield('meta_description', \App\Helpers\SiteHelper::getMetaDescription())">
 <meta name="color-scheme" content="dark light">
 
 <!-- CSRF Token -->

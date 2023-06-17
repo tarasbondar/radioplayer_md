@@ -53,8 +53,8 @@ class IndexController
 
         $stations = Arr::keyBy($this->searchStations($category_id, $tag_id), 'id');
 
-        $tags = RadioStationTag::select('*')->where('status', '=', RadioStationTag::STATUS_ACTIVE)->get()->toArray();
-        $categories = RadioStationCategory::select('*')->where('status', '=', RadioStationCategory::STATUS_ACTIVE)->get()->toArray();
+        $tags = RadioStationTag::select('*')->where('status', '=', RadioStationTag::STATUS_ACTIVE)->get();
+        $categories = RadioStationCategory::select('*')->where('status', '=', RadioStationCategory::STATUS_ACTIVE)->get();
 
         $fav_stations = FavoriteService::getFavorites();
 
@@ -189,8 +189,8 @@ class IndexController
                 ->join('podcasts AS p', 'podcasts_episodes.podcast_id', '=', 'p.id')
                 ->orderBy('updated_at', 'DESC');
         $page_count = ceil($episodes->count() / $page_size);
-        $episodes = $episodes->limit($page_size)->get()->toArray();
-        $categories = PodcastCategory::where('status', '=', PodcastCategory::STATUS_ACTIVE)->get()->toArray();
+        $episodes = $episodes->limit($page_size)->get();
+        $categories = PodcastCategory::where('status', '=', PodcastCategory::STATUS_ACTIVE)->get();
         return view('pages.client.all-podcasts', ['podcasts' => $podcasts, 'categories' => $categories, 'episodes' => $episodes, 'page_count' => $page_count]);
     }
 
@@ -288,7 +288,7 @@ class IndexController
 
     public function podcasts(Request $request) {
         $podcasts = $this->searchPodcasts($request->get('name', ''), $request->get('categories', ''), '');
-        $categories = PodcastCategory::where('status', '=', PodcastCategory::STATUS_ACTIVE)->get()->toArray();
+        $categories = PodcastCategory::where('status', '=', PodcastCategory::STATUS_ACTIVE)->get();
         return view('pages.client.podcasts', ['podcasts' => $podcasts, 'categories' => $categories]);
     }
 
@@ -328,7 +328,7 @@ class IndexController
     public function viewPodcast($id) {
         $podcast = Podcast::select('podcasts.*', 'users.name AS username')
             ->join('users', 'podcasts.owner_id', '=', 'users.id')
-            ->where('podcasts.id', '=', $id)->first()->toArray();
+            ->where('podcasts.id', '=', $id)->first();
 
         if (Auth::id() == $podcast['owner_id'] || $podcast['status'] == Podcast::STATUS_ACTIVE) {
             if(!Auth::check() ) {
@@ -384,7 +384,7 @@ class IndexController
                 ->where('podcasts_episodes.id', '=', $id)
                 ->join('podcasts AS p', 'podcasts_episodes.podcast_id', '=', 'p.id')
                 ->orderBy('updated_at', 'DESC')
-                ->first()->toArray();
+                ->first();
         $podcast = Podcast::select('podcasts.*', 'users.name AS username')
             ->join('users', 'podcasts.owner_id', '=', 'users.id')
             ->where('podcasts.id', '=', $episode['podcast_id'])->first()->toArray();
@@ -477,10 +477,10 @@ class IndexController
 
     public function privacy() {
         $privacy = '';
-        $queue = CustomValue::where('key', '=', 'privacy_' . app()->getLocale())->pluck('value')->toArray();
-        if (!empty($queue[0])) {
-            $privacy = $queue[0];
-        }
+        $model = CustomValue::where('key', '=', 'privacy')->first();
+        if ($model)
+            $privacy = $model->getTranslation('description');
+
         return view('pages.client.privacy', ['privacy' => $privacy]);
     }
 
