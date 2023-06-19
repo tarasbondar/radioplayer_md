@@ -4,10 +4,10 @@
 
     <div class="container">
 
-        <h2>Users</h2>
+        <h2>Пользователи</h2>
         <div class="row">
             <div class="col-md-12 text-right mt-3 mb-3">
-                <a href="/admin/users/add" class="btn btn-primary" type="button">Add User</a>
+                <a href="/admin/users/add" class="btn btn-primary" type="button">Добавить</a>
             </div>
         </div>
 
@@ -15,32 +15,32 @@
 
                 <div class="col-md-9 row">
 
-                    <div class="col-md-5"> <input id="username" type="text" class="form-control" name="username" value="{{ app('request')->input('username') }}" placeholder="Username"> </div>
+                    <div class="col-md-5"> <input id="username" type="text" class="form-control" name="username" value="{{ app('request')->input('username') }}" placeholder="Имя"> </div>
                     <div class="col-md-5"> <input id="email" type="text" class="form-control" name="email" value="{{ app('request')->input('email') }}" placeholder="Email"> </div>
                     {{--registered from/to--}}
                     <div class="col-md-5">
-                        <label for="registered-from">Registered from: </label>
+                        <label for="registered-from">Зарегистрирован от: </label>
                         <input id="registered-from" class="form-control" value="{{ app('request')->input('registered-from') }}"/>
                     </div>
                     <div class="col-md-5">
-                        <label for="registered-to">Registered to: </label>
+                        <label for="registered-to">Зарегистрирован до: </label>
                         <input id="registered-to" class="form-control" value="{{ app('request')->input('registered-to') }}"/>
                     </div>
 
                     {{--logged from/to--}}
                     <div class="col-md-5">
-                        <label for="logged-from">Logged from: </label>
+                        <label for="logged-from">Вход от: </label>
                         <input id="logged-from" class="form-control" value="{{ app('request')->input('logged-from') }}"/>
                     </div>
                     <div class="col-md-5">
-                        <label for="logged-to">Logged to: </label>
+                        <label for="logged-to">Вход до: </label>
                         <input id="logged-to" class="form-control" value="{{ app('request')->input('logged-to') }}"/>
                     </div>
                 </div>
 
                 <div class="col-md-3 row">
-                    <div class="col-md-5"><button id="apply-filters" class="btn btn-lg btn-primary">Apply</button> </div>
-                    <div class="col-md-5"> <a id="reset-filters" class="btn btn-lg" href="/admin/users">Reset</a> </div>
+                    <div class="col-md-5"><button id="apply-filters" class="btn btn-lg btn-primary">Применить</button> </div>
+                    <div class="col-md-5"> <a id="reset-filters" class="btn btn-lg" href="/admin/users">Сбросить</a> </div>
                 </div>
 
 
@@ -51,10 +51,10 @@
                 <thead class="thead-light">
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Name</th>
+                    <th scope="col">Имя</th>
                     <th scope="col">Email</th>
-                    <th scope="col">Role</th>
-                    <th scope="col">Actions</th>
+                    <th scope="col">Роль</th>
+                    <th scope="col">Действия</th>
                 </tr>
                 </thead>
 
@@ -64,12 +64,12 @@
                         <th scope="row">{{ $u['id'] }}</th>
                         <td>{{ $u['name'] }}</td>
                         <td>{{ $u['email'] }}</td>
-                        <td>{{ $u['role'] == 2 ? 'Admin' : ($u['role'] == 1 ? 'Author' : 'User') }}</td>
+                        <td>{{ $u['role'] == 2 ? 'Админ' : ($u['role'] == 1 ? 'Автор' : 'Пользователь') }}</td>
                         <td>
-                            <a href="#" class="edit-user edit-{{ $u['id'] }}">Edit</a>
-                            <a href="#" class="change-user-status id-{{ $u['id'] }}">{{ ($u['status'] == 1 ? 'Unblock' : 'Block') }}</a>
-                            <a href="#" class="view-user view-{{ $u['id'] }}">View details</a>
-                            <a href="#" class="remove-user remove-{{ $u['id'] }}">Delete</a>
+                            <a href="#" class="edit-user edit-{{ $u['id'] }}">Редактировать</a>
+                            <a href="#" class="change-user-status id-{{ $u['id'] }}">{{ ($u['status'] == 1 ? 'Разблокировать' : 'Заблокировать') }}</a>
+                            <a href="#" class="view-user view-{{ $u['id'] }}">Просмотреть</a>
+                            <a href="#" class="remove-user remove-{{ $u['id'] }}">Удалить</a>
                         </td>
                     </tr>
                 @endforeach
@@ -80,7 +80,7 @@
 
             <div class="row">
                 <div class="col-md-12 text-right mt-3 mb-3 align-items-end clearfix">
-                    <a href="javascript:void(0)" class="btn btn-success float-end" id="users-download" type="button">Download</a>
+                    <a href="javascript:void(0)" class="btn btn-success float-end" id="users-download" type="button">Скачать</a>
                 </div>
             </div>
 

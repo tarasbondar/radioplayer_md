@@ -4,11 +4,11 @@
 
     <div class="container">
 
-        <h2>Radio Station Groups</h2>
+        <h2>Группы радиостанций</h2>
 
         <div class="row">
             <div class="col-md-12 text-right mt-3 mb-3">
-                <a href="/admin/station-groups/add" class="btn btn-primary" type="button">Add Radio Station Group</a>
+                <a href="/admin/station-groups/add" class="btn btn-primary" type="button">Добавить</a>
             </div>
         </div>
 
@@ -17,9 +17,9 @@
                 <thead class="thead-light">
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Key</th>
-                    <th scope="col">Created at</th>
-                    <th scope="col">Actions</th>
+                    <th scope="col">Ключ</th>
+                    <th scope="col">Дата создания</th>
+                    <th scope="col">Действия</th>
                 </tr>
                 </thead>
 
@@ -30,8 +30,8 @@
                         <td>{{ $group['key'] }}</td>
                         <td>{{ $group['created_at'] }}</td>
                         <td>
-                            <a href="#" class="edit-group edit-{{ $group['id'] }}">Edit</a>
-                            <a href="#" class="remove-group remove-{{ $group['id'] }}">Delete</a>
+                            <a href="#" class="edit-group edit-{{ $group['id'] }}">Править</a>
+                            <a href="#" class="remove-group remove-{{ $group['id'] }}">Удалить</a>
                         </td>
                     </tr>
                 @endforeach

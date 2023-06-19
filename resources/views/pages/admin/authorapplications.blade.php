@@ -27,16 +27,16 @@
             <div class="col-md-2">
                 <select id="status" class="form-select form-control" aria-label="Status select">
                     <option class="select-option" value="all" {{ empty($appends['status']) || $appends['status'] == 'all' ? 'selected' : '' }}>All</option>
-                    <option class="select-option" value="1" {{ @$appends['status'] == 1 ? 'selected' : '' }}>Pending</option>
-                    <option class="select-option" value="2" {{ @$appends['status'] == 2 ? 'selected' : '' }}>Approved</option>
-                    <option class="select-option" value="0" {{ @$appends['status'] == 0 ? 'selected' : '' }}>Declined</option>
-                    <option class="select-option" value="-1"{{ @$appends['status'] == -1 ? 'selected' : '' }}>Blocked</option>
+                    <option class="select-option" value="1" {{ @$appends['status'] == 1 ? 'selected' : '' }}>На рассмотрении</option>
+                    <option class="select-option" value="2" {{ @$appends['status'] == 2 ? 'selected' : '' }}>Принятые</option>
+                    <option class="select-option" value="0" {{ @$appends['status'] == 0 ? 'selected' : '' }}>Отклонённые</option>
+                    <option class="select-option" value="-1"{{ @$appends['status'] == -1 ? 'selected' : '' }}>Заблокированные</option>
                 </select>
             </div>
 
             <div class="col-md-3 row">
-                <div class="col-md-5"> <button id="apply-filters" class="btn btn-lg btn-primary">Apply</button> </div>
-                <div class="col-md-5"> <a id="reset-filters" class="btn btn-lg" href="/admin/author-apps">Reset</a> </div>
+                <div class="col-md-5"> <button id="apply-filters" class="btn btn-lg btn-primary">Применить</button> </div>
+                <div class="col-md-5"> <a id="reset-filters" class="btn btn-lg" href="/admin/author-apps">Сбросить</a> </div>
             </div>
 
         </div>
@@ -46,10 +46,10 @@
                 <thead class="thead-light">
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">Username</th>
+                    <th scope="col">Название</th>
+                    <th scope="col">Имя пользователя</th>
                     <th scope="col">Email</th>
-                    <th scope="col">Actions</th>
+                    <th scope="col">Действия</th>
                 </tr>
                 </thead>
 
@@ -61,11 +61,7 @@
                         <td>{{ $a['username'] }}</td>
                         <td>{{ $a['email'] }}</td>
                         <td>
-                            @if ($a['status'] == \App\Models\AuthorApplication::STATUS_PENDING )
-                                <a href="#" class="review id-{{ $a['id'] }}">Review</a>
-                            @else
-                                <a href="#" class="review id-{{ $a['id'] }}">View</a>
-                            @endif
+                            <a href="#" class="review id-{{ $a['id'] }}">Просмотреть</a>
                         </td>
                     </tr>
                 @endforeach

@@ -4,7 +4,7 @@
 
     <div class="container">
 
-        <h2>Stations Stats</h2>
+        <h2>Статистика радиостанций</h2>
 
         <div class="row justify-content-left">
             <div class="col-md-12 row mb-3">
@@ -14,27 +14,27 @@
                 </div>
 
                 <div class="col-md-3">
-                    <label for="from">From: </label>
+                    <label for="from">От: </label>
                     <input id="from" class="form-control" value="{{ app('request')->input('from') }}"/>
                 </div>
                 <div class="col-md-3">
-                    <label for="to">To: </label>
+                    <label for="to">До: </label>
                     <input id="to"  class="form-control" value="{{ app('request')->input('to') }}"/>
                 </div>
                 <div class="col-md-3 mb-3 row">
-                    <div class="col-md-5"> <button id="apply-filters-rs-stats" class="btn btn-lg btn-primary">Apply</button> </div>
-                    <div class="col-md-5"> <a id="reset-filters" class="btn btn-lg" href="/admin/stations-stats">Reset</a> </div>
+                    <div class="col-md-5"> <button id="apply-filters-rs-stats" class="btn btn-lg btn-primary">Применить</button> </div>
+                    <div class="col-md-5"> <a id="reset-filters" class="btn btn-lg" href="/admin/stations-stats">Сбросить</a> </div>
                 </div>
             </div>
 
             <div class="row">
                 <table class="table table-bordered table-striped">
                     <tr>
-                        <th>Name</th>
-                        <th>Plays</th>
-                        <th>Favorites Total</th>
-                        <th>Favorited</th>
-                        <th>Unfavorited</th>
+                        <th>Название</th>
+                        <th>Кол-во проигрываний</th>
+                        <th>Всего отмечено избранные</th>
+                        <th>Отметили избранным</th>
+                        <th>Убрали из избранного</th>
                     </tr>
                     @foreach($stats as $stat)
                         <tr>

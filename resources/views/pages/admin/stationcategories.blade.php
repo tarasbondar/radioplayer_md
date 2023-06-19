@@ -4,11 +4,11 @@
 
     <div class="container">
 
-        <h2>Radio Station Categories</h2>
+        <h2>Категории радиостанций</h2>
 
         <div class="row">
             <div class="col-md-12 text-right mt-3 mb-3">
-                <a href="/admin/station-categories/add" class="btn btn-primary" type="button">Add Radio Station Category</a>
+                <a href="/admin/station-categories/add" class="btn btn-primary" type="button">Добавить</a>
             </div>
         </div>
 
@@ -17,9 +17,9 @@
                 <thead class="thead-light">
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Actions</th>
+                    <th scope="col">Название</th>
+                    <th scope="col">Статус</th>
+                    <th scope="col">Действия</th>
                 </tr>
                 </thead>
 
@@ -30,8 +30,8 @@
                         <td>{{ $c->getTranslation('title') }}</td>
                         <td>{{ ($c['status'] === 0 ? 'Active' : 'Inactive' ) }}</td>
                         <td>
-                            <a href="#" class="edit-category edit-{{ $c['id'] }}">Edit</a>
-                            <a href="#" class="remove-category remove-{{ $c['id'] }}">Delete</a>
+                            <a href="#" class="edit-category edit-{{ $c['id'] }}">Править</a>
+                            <a href="#" class="remove-category remove-{{ $c['id'] }}">Удалить</a>
                         </td>
                     </tr>
                 @endforeach

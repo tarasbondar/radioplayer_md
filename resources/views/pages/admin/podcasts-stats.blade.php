@@ -25,11 +25,13 @@
             <div class="row">
                 <table class="table table-bordered table-striped">
                     <tr>
-                        <th>Name</th>
-                        <th>Play Count</th>
-                        <th>Marked to listen later</th>
-                        <th>Downloaded</th>
-                        <th>Subscribers</th>
+                        <th>Название</th>
+                        <th>Кол-во проигрываний</th>
+                        <th>Отмечено "Прослушать позже"</th>
+                        <th>Скачано</th>
+                        <th>Всего подписчиков</th>
+                        <th>Подписалось</th>
+                        <th>Отписалось</th>
                     </tr>
                     @foreach($stats as $stat)
                         <tr>
@@ -37,7 +39,9 @@
                             <td>{{!empty($stat['plays']) ? $stat['plays'] : 0}}</td>
                             <td>{{!empty($stat['later']) ? $stat['later'] : 0}}</td>
                             <td>{{!empty($stat['downloads']) ? $stat['downloads'] : 0}}</td>
+                            <td>{{!empty($stat['subs_total']) ? $stat['subs_total'] : 0}}</td>
                             <td>{{!empty($stat['subs']) ? $stat['subs'] : 0}}</td>
+                            <td>{{!empty($stat['unsubs']) ? $stat['unsubs'] : 0}}</td>
                         </tr>
                     @endforeach
                 </table>

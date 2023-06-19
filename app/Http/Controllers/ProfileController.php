@@ -36,6 +36,8 @@ class ProfileController extends Controller
     {
         $this->middleware('auth');
         $this->userService = $userService;
+        $apps_enable = strip_tags(CustomValue::where('key', '=', 'apps_enable')->pluck('value')->first());
+        view()->share(['apps_enable' => $apps_enable]);
     }
 
     public function index()

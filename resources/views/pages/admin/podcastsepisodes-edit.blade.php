@@ -46,7 +46,7 @@
                     </div>
 
                     <div class="mb-3 form-group row">
-                        <label for="podcast" class="col-md-4 col-form-label text-md-right">Podcast</label>
+                        <label for="podcast" class="col-md-4 col-form-label text-md-right">Подкаст</label>
                         <div class="col-md-6">
                             @if (isset($podcast))
                                 <select class="form-select" name='podcast' id="podcast" aria-label="Episodes podcast">
@@ -63,20 +63,20 @@
                     </div>
 
                     <div class="mb-3 form-group row">
-                        <label for="name" class="col-md-4 col-form-label text-md-right">Name</label>
+                        <label for="name" class="col-md-4 col-form-label text-md-right">Название</label>
                         <div class="col-md-6"> <input id="name" type="text" class="form-control" name="name" value="{{ @$episode['name'] }}" required> </div>
                     </div>
                     <div class="mb-3 form-group row">
-                        <label for="description" class="col-md-4 col-form-label text-md-right">Description</label>
+                        <label for="description" class="col-md-4 col-form-label text-md-right">Описание</label>
                         <div class="col-md-6"> <textarea id="description" type="text" class="form-control ckeditor-custom" name="description" required> {{ @$episode['description'] }} </textarea> </div>
                     </div>
                     <div class="mb-3 form-group row">
-                        <label for="tags" class="col-md-4 col-form-label text-md-right">Tags</label>
+                        <label for="tags" class="col-md-4 col-form-label text-md-right">Тэги</label>
                         <div class="col-md-6"> <input id="tags" type="text" class="form-control " name="tags" value="{{ @$episode['tags'] }}" required>  </div>
                     </div>
 
                     <div class="mb-3 form-group row">
-                        <label class="col-md-4 col-form-label text-md-right">Current Source</label>
+                        <label class="col-md-4 col-form-label text-md-right">Текущий файл</label>
                         <div class="col-md-6">
                             @if(!empty($episode['source']))
                                 <audio id="audio" controls class="form-control"><source src="/uploads/podcasts_episodes/{{ $episode['source'] }}">
@@ -86,25 +86,25 @@
                         </div>
                     </div>
                     <div class="mb-3 form-group row">
-                        <label for="source" class="col-md-4 col-form-label text-md-right">Upload</label>
+                        <label for="source" class="col-md-4 col-form-label text-md-right">Загрузить</label>
                         <div class="col-md-6"><input id="source" type="file" name="source" accept=".mp3, .wav"></div>
                     </div>
 
                     <div class="mb-3 form-group row">
-                        <label for="status" class="col-md-4 col-form-label text-md-right">Status</label>
+                        <label for="status" class="col-md-4 col-form-label text-md-right">Статус</label>
                         <div class="col-md-6">
                             <select class="form-select" name='status' id="status" aria-label="Select episode status">
-                                <option value="1"> {{ 'Draft' }} </option>
-                                <option value="2"> {{ 'Published' }} </option>
-                                <option value="0"> {{ 'Blocked' }} </option>
+                                <option value="1"> {{ 'Черновик' }} </option>
+                                <option value="2"> {{ 'Опубликован' }} </option>
+                                <option value="0"> {{ 'Заблокирован' }} </option>
                             </select>
                         </div>
                     </div>
 
                     <div class="form-group row mb-0">
                         <div class="col-md-6 offset-md-4">
-                            <button type="submit" class="btn btn-primary"> Save </button>
-                            <a href="{{ request()->headers->get('referer') }}" class="btn"> Discard </a>
+                            <button type="submit" class="btn btn-primary"> Сохранить </button>
+                            <a href="{{ request()->headers->get('referer') }}" class="btn"> Отклонить </a>
                         </div>
                     </div>
                 </form>

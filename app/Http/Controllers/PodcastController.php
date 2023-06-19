@@ -10,6 +10,7 @@ use App\Models\PlaylistRecord;
 use App\Models\PodcastEpisode;
 use App\Models\PodcastStatRecord;
 use App\Models\PodcastSub;
+use App\Models\PodcastSubHistoryRecord;
 use App\Models\QueuedEpisode;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -74,25 +75,29 @@ class PodcastController extends Controller
             ->join('podcasts_episodes AS pe', 'ud.episode_id', '=', 'pe.id')
             ->join('podcasts AS p', 'pe.podcast_id', '=', 'p.id');
 
-        $stats_subs = PodcastSub::from('podcasts_subscriptions AS ps')
-            ->selectRaw('p.id, p.name, COUNT(ps.podcast_id) AS subs')
+        $stats_subs_total = PodcastSub::from('podcasts_subscriptions AS ps')
+            ->selectRaw('p.id, p.name, COUNT(ps.podcast_id) AS subs_total')
             ->join('podcasts AS p', 'ps.podcast_id', '=', 'p.id');
-        //stats subs
-        //stats unsubs
+
+        $stats_subs_history = PodcastSubHistoryRecord::from('podcasts_subscriptions_history AS psh')
+            ->selectRaw('p.id, p.name,  COUNT(psh.podcast_id) AS subs')
+            ->join('podcasts AS p', 'psh.podcast_id', '=', 'p.id');
 
 
         if (!empty($from)) {
             $stats_plays = $stats_plays->where('click_time', '>=', $from . ' 00:00:00');
             $stats_later = $stats_later->where('ll.created_at', '>=', $from . ' 00:00:00');
             $stats_downloads = $stats_downloads->where('ud.created_at', '>=', $from . ' 00:00:00');
-            $stats_subs = $stats_subs->where('ps.created_at', '>=', $from . ' 00:00:00');
+            $stats_subs_total = $stats_subs_total->where('ps.created_at', '>=', $from . ' 00:00:00');
+            $stats_subs_history = $stats_subs_history->where('psh.created_at', '>=', $from . ' 00:00:00');
         }
 
         if (!empty($to)) {
             $stats_plays = $stats_plays->where('click_time', '<=', $to . ' 23:59:59');
             $stats_later = $stats_later->where('ll.created_at', '<=', $to . ' 23:59:59');
             $stats_downloads = $stats_downloads->where('ud.created_at', '<=', $to . ' 23:59:59');
-            $stats_subs = $stats_subs->where('ps.created_at', '<=', $to . ' 23:59:59');
+            $stats_subs_total = $stats_subs_total->where('ps.created_at', '<=', $to . ' 23:59:59');
+            $stats_subs_history = $stats_subs_history->where('psh.created_at', '<=', $to . ' 23:59:59');
         }
 
         $stats_plays = $stats_plays->groupBy('p.id')
@@ -104,7 +109,13 @@ class PodcastController extends Controller
         $stats_downloads = $stats_downloads->groupBy('p.id')
             ->get()->toArray();
 
-        $stats_subs = $stats_subs->groupBy('p.id')
+        $stats_subs_total = $stats_subs_total->groupBy('p.id')
+            ->get()->toArray();
+
+        $stats_subs = $stats_subs_history->where('psh.action', '=', PodcastSubHistoryRecord::ACTION_SUB)->groupBy('p.id')
+            ->get()->toArray();
+
+        $stats_unsubs = $stats_subs_history->where('psh.action', '=', PodcastSubHistoryRecord::ACTION_UNSUB)->groupBy('p.id')
             ->get()->toArray();
 
         foreach ($stats_plays as $stat) {
@@ -122,9 +133,19 @@ class PodcastController extends Controller
             $stats[$stat['id']]['downloads'] = $stat['downloads'];
         }
 
+        foreach ($stats_subs_total as $stat) {
+            $stats[$stat['id']]['name'] = $stat['name'];
+            $stats[$stat['id']]['subs_total'] = $stat['subs_total'];
+        }
+
         foreach ($stats_subs as $stat) {
             $stats[$stat['id']]['name'] = $stat['name'];
             $stats[$stat['id']]['subs'] = $stat['subs'];
+        }
+
+        foreach ($stats_unsubs as $stat) {
+            $stats[$stat['id']]['name'] = $stat['name'];
+            $stats[$stat['id']]['unsubs'] = $stat['unsubs'];
         }
 
         return view('pages.admin.podcasts-stats', ['stats' => $stats]);

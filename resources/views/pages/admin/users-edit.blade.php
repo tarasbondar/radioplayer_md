@@ -24,7 +24,7 @@
                         <input id="id" type="text" class="form-control" name="id" value="{{ @$model['id'] }}" readonly>
                     </div>
                     <div class="mb-3 form-group row">
-                        <label for="name" class="col-md-4 col-form-label text-md-right">Name</label>
+                        <label for="name" class="col-md-4 col-form-label text-md-right">Имя</label>
                         <div class="col-md-6"> <input id="name" type="text" class="form-control" name="name" value="{{ @$model['name'] }}" required> </div>
                     </div>
                     <div class="mb-3 form-group row">
@@ -33,11 +33,11 @@
                     </div>
 
                     <div class="mb-3 form-group row">
-                        <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
+                        <label for="password" class="col-md-4 col-form-label text-md-right">Пароль</label>
                         <div class="col-md-6"> <input id="password" type="text" class="form-control" name="password" value="" {{ ($action === 'add') ? 'required' : ''  }}> </div>
                     </div>
                     <div class="mb-3 form-group row">
-                        <label for="status" class="col-md-4 col-form-label text-md-right">Role</label>
+                        <label for="status" class="col-md-4 col-form-label text-md-right">Роль</label>
                         <div class="col-md-6">
                             <select class="form-select" name="role" id="status" aria-label="Select role">
                                 @foreach($roles as $role => $roleLabel)
@@ -48,7 +48,7 @@
                     </div>
 
                     <div class="mb-3 form-group row">
-                        <label for="status" class="col-md-4 col-form-label text-md-right">Status</label>
+                        <label for="status" class="col-md-4 col-form-label text-md-right">Статус</label>
                         <div class="col-md-6">
                             <select class="form-select" name="status" id="status" aria-label="Select status">
                                 @foreach($statuses as $status => $statusLabel)
@@ -61,8 +61,8 @@
 
                     <div class="form-group row mb-0">
                         <div class="col-md-6 offset-md-4">
-                            <button type="submit" class="btn btn-primary"> Save </button>
-                            <a href="{{ request()->headers->get('referer') }}" class="btn"> Discard </a>
+                            <button type="submit" class="btn btn-primary"> Сохранить </button>
+                            <a href="{{ request()->headers->get('referer') }}" class="btn"> Отклонить </a>
                         </div>
                     </div>
                 </form>
@@ -70,13 +70,6 @@
             </div>
         </div>
     </div>
-
-    <script>
-        (function(){
-
-
-        })(jQuery)
-    </script>
 
 @endsection
 

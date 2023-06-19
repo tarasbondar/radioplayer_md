@@ -4,11 +4,11 @@
 
     <div class="container">
 
-        <h2>Custom Values</h2>
+        <h2>Особые переменные</h2>
 
         <div class="row">
             <div class="col-md-12 text-right mt-3 mb-3">
-                <a href="/admin/custom-values/add" class="btn btn-primary" type="button">Add Value</a>
+                <a href="/admin/custom-values/add" class="btn btn-primary" type="button">Добавить</a>
             </div>
         </div>
 
@@ -17,8 +17,8 @@
                 <thead class="thead-light">
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Key</th>
-                    <th scope="col">Actions</th>
+                    <th scope="col">Ключ</th>
+                    <th scope="col">Действия</th>
                 </tr>
                 </thead>
 
@@ -28,8 +28,8 @@
                             <th scope="row">{{ $v['id'] }}</th>
                             <td>{{ $v['key'] }}</td>
                             <td>
-                                <a href="/admin/custom-values/edit/{{ $v['id'] }}">Edit</a>
-                                <a href="#" class="remove-value remove-{{ $v['id'] }}">Delete</a>
+                                <a href="/admin/custom-values/edit/{{ $v['id'] }}">Править</a>
+                                <a href="#" class="remove-value remove-{{ $v['id'] }}">Удалить</a>
                             </td>
                         </tr>
                     @endforeach
