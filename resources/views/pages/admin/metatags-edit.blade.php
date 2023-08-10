@@ -68,8 +68,8 @@
 
                     <div class="form-group row mb-0">
                         <div class="col-md-6 offset-md-4">
-                            <button type="submit" class="btn btn-primary"> Сохранить </button>
-                            <a href="{{ request()->headers->get('referer') }}" class="btn"> Отменить </a>
+                            <button type="submit" class="btn btn-primary"> Save </button>
+                            <a href="{{ request()->headers->get('referer') }}" class="btn"> Discard </a>
                         </div>
                     </div>
                 </form>

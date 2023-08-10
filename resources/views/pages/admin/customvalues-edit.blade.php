@@ -13,7 +13,7 @@
                     @csrf
 
                     <div class="mb-3 form-group row">
-                        <label for="key" class="col-md-4 col-form-label text-md-right">Ключ</label>
+                        <label for="key" class="col-md-4 col-form-label text-md-right">Key</label>
                         <div class="col-md-6"> <input id="key" type="text" class="form-control" name="key" value="{{ @$value['key'] }}" required> </div>
                     </div>
 
@@ -28,7 +28,7 @@
                         @foreach(\App\Helpers\LanguageHelper::getLanguages() as $key => $language)
                             <div class="tab-pane fade {{ ($key == 0) ? 'show active' : '' }}" id="lang-{{ $language->code }}" role="tabpanel" aria-labelledby="lang-{{ $language->code }}-tab">
                                 <div class="mb-3 form-group row">
-                                    <label for="title_{{ $language->code }}" class="col-md-4 col-form-label text-md-right">Описание ({{ $language->code }})</label>
+                                    <label for="title_{{ $language->code }}" class="col-md-4 col-form-label text-md-right">Description ({{ $language->code }})</label>
                                     <div class="col-md-6">
                                         <textarea id="description_{{ $language->code }}" type="text" class="form-control ckeditor-custom" name="description_{{ $language->code }}" required> {{ (@$value) ? @$value->getTranslation('description', $language->code) : '' }} </textarea>
                                     </div>
@@ -48,8 +48,8 @@
 
                     <div class="form-group row mb-0">
                         <div class="col-md-6 offset-md-4">
-                            <button type="submit" class="btn btn-primary"> Сохранить </button>
-                            <a href="{{ request()->headers->get('referer') }}" class="btn"> Отменить </a>
+                            <button type="submit" class="btn btn-primary"> Save </button>
+                            <a href="{{ request()->headers->get('referer') }}" class="btn"> Discard </a>
                         </div>
                     </div>
                 </form>

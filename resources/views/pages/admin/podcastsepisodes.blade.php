@@ -4,11 +4,11 @@
 
     <div class="container">
 
-        <h2>Эпизоды подкастов</h2>
+        <h2>Podcasts episodes</h2>
 
         <div class="row">
             <div class="col-md-12 text-right mt-3 mb-3">
-                <a href="/admin/podcasts-episodes/add" class="btn btn-primary" type="button">Добавить</a>
+                <a href="/admin/podcasts-episodes/add" class="btn btn-primary" type="button">Add</a>
             </div>
         </div>
 
@@ -17,10 +17,10 @@
                 <thead class="thead-light">
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Подкаст</th>
-                    <th scope="col">Название эпизода</th>
-                    <th scope="col">Статус</th>
-                    <th scope="col">Действия</th>
+                    <th scope="col">Podcast</th>
+                    <th scope="col">Episode name</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Actions</th>
                 </tr>
                 </thead>
 
@@ -32,14 +32,14 @@
                         <td>{{ $e['name'] }}</td>
                         <td>
                             @switch($e['status'])
-                                @case(0) {{ 'заблокирован' }} @break
-                                @case(1) {{ 'черновик' }} @break
-                                @case(2) {{ 'опубликован' }} @break
+                                @case(0) {{ 'blocked' }} @break
+                                @case(1) {{ 'draft' }} @break
+                                @case(2) {{ 'published' }} @break
                             @endswitch
                         </td>
                         <td>
-                            <a href="#" class="edit-episode edit-{{ $e['id'] }}">Править</a>
-                            <a href="#" class="remove-episode remove-{{ $e['id'] }}">Удалить</a>
+                            <a href="#" class="edit-episode edit-{{ $e['id'] }}">Edit</a>
+                            <a href="#" class="remove-episode remove-{{ $e['id'] }}">Delete</a>
                         </td>
                     </tr>
                 @endforeach

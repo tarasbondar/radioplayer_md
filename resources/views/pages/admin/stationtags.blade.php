@@ -4,11 +4,11 @@
 
     <div class="container">
 
-        <h2>Тэги радиостанций</h2>
+        <h2>Station tags</h2>
 
         <div class="row">
             <div class="col-md-12 text-right mt-3 mb-3">
-                <a href="/admin/station-tags/add" class="btn btn-primary" type="button">Добавить</a>
+                <a href="/admin/station-tags/add" class="btn btn-primary" type="button">Add</a>
             </div>
         </div>
 
@@ -17,9 +17,9 @@
                 <thead class="thead-light">
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Название</th>
-                    <th scope="col">Статус</th>
-                    <th scope="col">Действия</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Actions</th>
                 </tr>
                 </thead>
 
@@ -28,10 +28,10 @@
                         <tr>
                             <th scope="row">{{ $t['id'] }}</th>
                             <td>{{ $t->getTranslation('title') }}</td>
-                            <td>{{ ($t['status'] === 0 ? 'Включено' : 'Выключено' ) }}</td>
+                            <td>{{ ($t['status'] === 0 ? 'Active' : 'Inactive' ) }}</td>
                             <td>
-                                <a href="/admin/station-tags/edit/{{ $t['id'] }}" class="edit-tag">Править</a>
-                                <a href="#" class="remove-tag remove-{{ $t['id'] }}">Удалить</a>
+                                <a href="/admin/station-tags/edit/{{ $t['id'] }}" class="edit-tag">Edit</a>
+                                <a href="#" class="remove-tag remove-{{ $t['id'] }}">Delete</a>
                             </td>
                         </tr>
                     @endforeach

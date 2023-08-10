@@ -4,20 +4,20 @@
 
     <div class="container">
 
-        <h2>Подкасты</h2>
+        <h2>Podcasts</h2>
 
         <div class="row">
             <div class="col-md-12 text-right mt-3 mb-3">
-                <a href="/admin/podcasts/add" class="btn btn-primary" type="button">Создать</a>
+                <a href="/admin/podcasts/add" class="btn btn-primary" type="button">Create</a>
             </div>
         </div>
 
         <div class="row mb-3">
-            <div class="col-md-4"> <input id="name" type="text" class="form-control" name="name" value="{{ app('request')->input('name') }}" placeholder="Название"> </div>
-            <div class="col-md-5"> <input id="description" type="text" class="form-control" name="description" value="{{ app('request')->input('descr') }}" placeholder="Описание"> </div>
+            <div class="col-md-4"> <input id="name" type="text" class="form-control" name="name" value="{{ app('request')->input('name') }}" placeholder="Name"> </div>
+            <div class="col-md-5"> <input id="description" type="text" class="form-control" name="description" value="{{ app('request')->input('descr') }}" placeholder="Description"> </div>
             <div class="col-md-3 row">
-                <div class="col-md-5"><button id="apply-filters" class="btn btn-lg btn-primary" >Применить</button> </div>
-                <div class="col-md-5"> <a id="reset-filters" class="btn btn-lg" href="/admin/podcasts">Сбросить</a> </div>
+                <div class="col-md-5"><button id="apply-filters" class="btn btn-lg btn-primary" >Apply</button> </div>
+                <div class="col-md-5"> <a id="reset-filters" class="btn btn-lg" href="/admin/podcasts">Reset</a> </div>
             </div>
         </div>
 
@@ -26,11 +26,11 @@
                 <thead class="thead-light">
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Название</th>
-                    <th scope="col">Описание</th>
-                    <th scope="col">Создатель</th>
-                    <th scope="col">Статус</th>
-                    <th scope="col">Действия</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Author</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Actions</th>
                 </tr>
                 </thead>
 
@@ -49,8 +49,8 @@
                         <td> <a href="/admin/users/view/{{$p['owner_id']}}" target="_blank"> {{ $p['username'] }} </a> </td>
                         <td>{{ $p['status'] == 0 ? 'Active' : 'Inactive' }}</td>
                         <td>
-                            <a href="/admin/podcasts/edit/{{ $p['id'] }}">Править</a>
-                            <a href="#" class="remove-podcast remove-{{ $p['id'] }}">Удалить</a>
+                            <a href="/admin/podcasts/edit/{{ $p['id'] }}">Edit</a>
+                            <a href="#" class="remove-podcast remove-{{ $p['id'] }}">Delete</a>
                         </td>
                     </tr>
                 @endforeach
@@ -61,12 +61,12 @@
 
             <div class="row">
                 <div class="col-md-12 text-right mt-3 mb-3 align-items-end clearfix">
-                    <a href="javascript:void(0)" class="btn btn-success float-end" id="podcasts-download" type="button">Скачать</a>
+                    <a href="javascript:void(0)" class="btn btn-success float-end" id="podcasts-download" type="button">Download</a>
                 </div>
             </div>
 
         @else
-            Список пуст
+            {{ 'List is empty' }}
         @endif
 
 

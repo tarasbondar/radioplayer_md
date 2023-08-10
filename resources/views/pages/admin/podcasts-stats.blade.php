@@ -25,13 +25,13 @@
             <div class="row">
                 <table class="table table-bordered table-striped">
                     <tr>
-                        <th>Название</th>
-                        <th>Кол-во проигрываний</th>
-                        <th>Отмечено "Прослушать позже"</th>
-                        <th>Скачано</th>
-                        <th>Всего подписчиков</th>
-                        <th>Подписалось</th>
-                        <th>Отписалось</th>
+                        <th>Name</th>
+                        <th>Play count</th>
+                        <th>Marked "Listen later"</th>
+                        <th>Downloaded</th>
+                        <th>Subscribers</th>
+                        <th>Subscribed</th>
+                        <th>Unsubscribed</th>
                     </tr>
                     @foreach($stats as $stat)
                         <tr>

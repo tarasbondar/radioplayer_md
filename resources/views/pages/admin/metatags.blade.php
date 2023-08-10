@@ -8,15 +8,15 @@
 
         <div class="row">
             <div class="col-md-12 text-right mt-3 mb-3">
-                <a href="/admin/meta-tags/add" class="btn btn-primary" type="button">Добавить</a>
+                <a href="/admin/meta-tags/add" class="btn btn-primary" type="button">Add</a>
             </div>
         </div>
 
         <div class="row mb-3">
             <div class="col-md-4"> <input id="route" type="text" class="form-control" name="route" value="{{ app('request')->input('route') }}" placeholder="Route"> </div>
             <div class="col-md-3 row">
-                <div class="col-md-5"><button id="apply-filters" class="btn btn-lg btn-primary" >Применить</button> </div>
-                <div class="col-md-5"> <a id="reset-filters" class="btn btn-lg" href="/admin/meta-tags">Сбросить</a> </div>
+                <div class="col-md-5"><button id="apply-filters" class="btn btn-lg btn-primary">Apply</button> </div>
+                <div class="col-md-5"> <a id="reset-filters" class="btn btn-lg" href="/admin/meta-tags">Reset</a> </div>
             </div>
         </div>
 
@@ -25,12 +25,12 @@
                 <thead class="thead-light">
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Путь</th>
-                    <th scope="col">Название</th>
-                    <th scope="col">Ключевые слова</th>
-                    <th scope="col">Описание</th>
-                    <th scope="col">По умолчанию</th>
-                    <th scope="col">Действия</th>
+                    <th scope="col">Path</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Keywords</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Default value</th>
+                    <th scope="col">Action</th>
                 </tr>
                 </thead>
 
@@ -42,10 +42,10 @@
                         <td>{!! $model->getTranslation('meta_title') !!}</td>
                         <td>{!! $model->getTranslation('meta_keywords') !!}</td>
                         <td>{!! $model->getTranslation('meta_description') !!}</td>
-                        <td>{{ $model->is_default ? 'да' : 'нет' }}</td>
+                        <td>{{ $model->is_default ? 'Yes' : 'No' }}</td>
                         <td>
-                            <a href="/admin/meta-tags/edit/{{ $model->id }}">Править</a>
-                            <a href="#" class="remove-meta-tag remove-{{ $model->id }}">Удалить</a>
+                            <a href="/admin/meta-tags/edit/{{ $model->id }}">Edit</a>
+                            <a href="#" class="remove-meta-tag remove-{{ $model->id }}">Delete</a>
                         </td>
                     </tr>
                 @endforeach
@@ -55,7 +55,7 @@
             {!! $pagination !!}
 
         @else
-            Список пуст
+            {{ 'List is empty' }}
         @endif
 
 

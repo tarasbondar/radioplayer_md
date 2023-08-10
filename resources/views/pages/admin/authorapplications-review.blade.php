@@ -6,10 +6,10 @@
 
         <h2>
             @switch ($app['status'])
-                @case(-1) {{ 'Заблокированные' }} @break
-                @case(0) {{ 'Отменённые' }} @break
-                @case(1) {{ 'На рассмотрении' }} @break
-                @case(2) {{ 'Принятые' }} @break
+                @case(-1) {{ 'Blocked' }} @break
+                @case(0) {{ 'Declined' }} @break
+                @case(1) {{ 'Pending' }} @break
+                @case(2) {{ 'Accepted' }} @break
             @endswitch
             Application
         </h2>
@@ -18,46 +18,46 @@
             <div class="col-md-10">
 
                 <div class="mb-3 form-group row">
-                    <label class="col-md-4 col-form-label text-md-right">Имя пользователя</label>
+                    <label class="col-md-4 col-form-label text-md-right">Username</label>
                     <div class="col-md-6 py-2"> <span> <a href="/admin/users/view/{{$user['id']}}" target="_blank">{{ $user['name'] }}</a> </span> </div>
                 </div>
 
                 <div class="mb-3 form-group row">
-                    <label for="title" class="col-md-4 col-form-label text-md-right">Название</label>
+                    <label for="title" class="col-md-4 col-form-label text-md-right">Title</label>
                     <div class="col-md-6"> <input id="title" type="text" class="form-control" name="title" value="{{ @$app['title'] }}" readonly> </div>
                 </div>
 
                 <div class="mb-3 form-group row">
-                    <label for="description" class="col-md-4 col-form-label text-md-right">Описание</label>
+                    <label for="description" class="col-md-4 col-form-label text-md-right">Description</label>
                     <div class="col-md-6"> <textarea id="description" type="text" class="form-control" name="description" readonly>{{ @$app['description'] }}</textarea> </div>
                 </div>
 
                 <div class="mb-3 form-group row">
-                    <label class="col-md-4 col-form-label text-md-right" for="categories-input" >Категории</label>
+                    <label class="col-md-4 col-form-label text-md-right" for="categories-input">Categories</label>
                     <div class="col-md-6 py-2"> <input id="categories-input" class="form-control" value="{{ $categories }}" readonly></div>
                 </div>
 
                 <div class="mb-3 form-group row">
-                    <label class="col-md-4 col-form-label text-md-right" for="image" >Обложка</label>
+                    <label class="col-md-4 col-form-label text-md-right" for="image">Image</label>
                     <div class="col-md-6 py-2">
                         <img id="image" alt="" src="/uploads/applications_images/{{ $app['image'] }}" width="325" height="325"/>
                     </div>
                 </div>
 
                 <div class="mb-3 form-group row">
-                    <label class="col-md-4 col-form-label text-md-right" for="audio" >Аудио</label>
+                    <label class="col-md-4 col-form-label text-md-right" for="audio">Audio</label>
                     <div class="col-md-6 py-2">
                         <audio id="audio" controls class="form-control"><source src="/uploads/applications_audio/{{ $app['example'] }}"></audio>
                     </div>
                 </div>
 
                 <div class="mb-3 form-group row">
-                    <label class="col-md-4 col-form-label text-md-right">Статус</label>
-                    <div class="col-md-6 py-2"> <span> {{ (@$app['status'] == 2 ? 'Принято' : ($app['status'] == 1 ? 'На рассмотрении' : 'Отклонено') ) }} </span>  </div>
+                    <label class="col-md-4 col-form-label text-md-right">Status</label>
+                    <div class="col-md-6 py-2"> <span> {{ (@$app['status'] == 2 ? 'Accepted' : ($app['status'] == 1 ? 'Pending' : 'Declined') ) }} </span>  </div>
                 </div>
 
                 <div class="mb-3 form-group row">
-                    <label class="col-md-4 col-form-label text-md-right">Время ревью</label>
+                    <label class="col-md-4 col-form-label text-md-right">Review time</label>
                     <div class="col-md-6 py-2"> <span> {{ @$app['updated_at'] }} </span>  </div>
                 </div>
 
@@ -71,10 +71,10 @@
 
                 <div class="form-group row mb-0">
                     <div class="col-md-8 offset-md-4">
-                        <button class="btn submit-app btn-success" value="2"> Принять </button>
-                        <button class="btn submit-app btn-warning" value="0"> Отклонить </button>
-                        <button class="btn submit-app btn-danger" value="-1"> Заблокировать </button>
-                        <a href="{{ request()->headers->get('referer') }}" class="btn"> Назад </a>
+                        <button class="btn submit-app btn-success" value="2"> Accept </button>
+                        <button class="btn submit-app btn-warning" value="0"> Decline </button>
+                        <button class="btn submit-app btn-danger" value="-1"> Blocked </button>
+                        <a href="{{ request()->headers->get('referer') }}" class="btn"> Back </a>
                     </div>
                 </div>
 
