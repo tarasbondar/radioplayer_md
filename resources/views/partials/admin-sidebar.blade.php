@@ -4,46 +4,46 @@
             <a class="nav-link active" href="/admin/dashboard">Dashboard</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{ '/admin/users' }}">Пользователи</a>
+            <a class="nav-link" href="{{ '/admin/users' }}">Users</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{ '/admin/author-apps' }}">Заявки</a>
+            <a class="nav-link" href="{{ '/admin/author-apps' }}">Author applications</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{ '/admin/stations' }}">Радиостанции</a>
+            <a class="nav-link" href="{{ '/admin/stations' }}">Stations</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{ '/admin/stations-stats' }}">Статистика радиостанций</a>
+            <a class="nav-link" href="{{ '/admin/station-categories' }}">Stations categories</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{ '/admin/station-categories' }}">Категории радиостанций</a>
+            <a class="nav-link" href="{{ '/admin/station-tags' }}">Stations tags</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{ '/admin/station-tags' }}">Тэги радиостанций</a>
+            <a class="nav-link" href="{{ '/admin/station-groups' }}">Stations groups</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{ '/admin/station-groups' }}">Группы радиостанций</a>
+            <a class="nav-link" href="{{ '/admin/stations-stats' }}">Stations stats</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{ '/admin/podcasts' }}">Подкасты</a>
+            <a class="nav-link" href="{{ '/admin/podcasts' }}">Podcasts</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{ '/admin/podcasts-episodes' }}">Выпуски подкастов</a>
+            <a class="nav-link" href="{{ '/admin/podcasts-episodes' }}">Podcasts episodes</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{ '/admin/podcasts-stats' }}">Статистика подкастов</a>
+            <a class="nav-link" href="{{ '/admin/podcast-categories' }}">Podcasts categoties</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{ '/admin/podcast-categories' }}">Категории подкастов</a>
+            <a class="nav-link" href="{{ '/admin/podcasts-stats' }}">Podcasts stats</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{ '/admin/custom-values' }}">Особые переменные</a>
+            <a class="nav-link" href="{{ '/admin/custom-values' }}">Custom values</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{ '/admin/meta-tags' }}">Мета тэги</a>
+            <a class="nav-link" href="{{ '/admin/meta-tags' }}">Meta tags</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{ '/translations' }}" target="_blank">Переводы</a>
+            <a class="nav-link" href="{{ '/translations' }}" target="_blank">Translations</a>
         </li>
     </ul>
 </div>

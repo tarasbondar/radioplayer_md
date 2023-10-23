@@ -78,7 +78,7 @@ class ProfileController extends Controller
             abort(403);
         }
 
-        $validator = $request->validate([
+        $request->validate([
             'title' => ['required', 'max:255'],
             'description' => ['required'],
             'categories-ids' => ['required'],

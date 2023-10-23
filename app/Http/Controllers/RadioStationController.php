@@ -24,31 +24,26 @@ class RadioStationController extends Controller
 {
 
     public function index(Request $request) {
-        $page_size = ($request->has('page-size') ? $request->get('page-size') : 10);
-        $page = ($request->has('page') ? $request->get('page') : 1);
+        $page_size = $request->get('page-size',10);
+        $page = $request->get('page', 1);
+
         $name = $request->get('name', '');
         $descr = $request->get('descr', '');
-        $appends = [];
 
         $stations = RadioStation::select("*");
         if (!empty($name)) {
             $stations = $stations->where('name', 'LIKE', "%{$name}%");
-            $appends['name'] = $name;
         }
         if (!empty($descr)) {
             $stations = $stations->where('description', 'LIKE', "%{$descr}%");
-            $appends['descr'] = $descr;
-        }
-        if ($page > 1) {
-            $appends['page'] = $page;
         }
 
-        $pagination = $stations->paginate($page_size)->appends($appends)->links();
+        $pagination = $stations->paginate($page_size)->withQueryString()->links();
 
         $stations = $stations->offset(($page - 1) * $page_size)->limit($page_size)
             ->get()->toArray();
 
-        return view('pages.admin.radiostations', ['stations' => $stations, 'pagination' => $pagination, 'params' => $appends]);
+        return view('pages.admin.radiostations', ['stations' => $stations, 'pagination' => $pagination]);
     }
 
     public function stats(Request $request) {

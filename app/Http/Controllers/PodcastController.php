@@ -26,27 +26,21 @@ class PodcastController extends Controller
 {
 
     public function index(Request $request) {
-        $page_size = ($request->has('page-size') ? $request->get('page-size') : 10);
-        $page = ($request->has('page') ? $request->get('page') : 1);
+        $page_size = $request->get('page-size', 10);
+        $page = $request->get('page', 1);
+
         $name = $request->get('name', '');
         $descr = $request->get('descr', '');
-        $appends = [];
 
         $podcasts = Podcast::select("podcasts.*", "users.name AS username")->join('users', 'users.id', '=', 'podcasts.owner_id');
         if (!empty($name)) {
             $podcasts = $podcasts->where('podcasts.name', 'LIKE', "%{$name}%");
-            $appends['name'] = $name;
         }
         if (!empty($descr)) {
             $podcasts = $podcasts->where('podcasts.description', 'LIKE', "%{$descr}%");
-            $appends['descr'] = $descr;
-        }
-        if ($page > 1) {
-            $appends['page'] = $page;
         }
 
-
-        $pagination = $podcasts->paginate($page_size)->appends($appends)->links();
+        $pagination = $podcasts->paginate($page_size)->withQueryString()->links();
 
         $podcasts = $podcasts->offset(($page - 1) * $page_size)->limit($page_size)
             ->get()->toArray();

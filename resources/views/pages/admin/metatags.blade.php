@@ -4,7 +4,7 @@
 
     <div class="container">
 
-        <h2>Мета тэги</h2>
+        <h2>Meta tags</h2>
 
         <div class="row">
             <div class="col-md-12 text-right mt-3 mb-3">
@@ -65,10 +65,10 @@
                     let button = $(this);
 
                     let classes = button.attr('class').split(" ");
-                    let podcast_id = 0;
+                    let tag_id = 0;
                     $.each(classes, function (k, v) {
                         if (v.search('remove-') >= 0) {
-                            podcast_id = v.split("-")[1];
+                            tag_id = v.split("-")[1];
                         }
                     });
 
@@ -77,7 +77,7 @@
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             },
-                            url: '/admin/meta-tags/' + podcast_id,
+                            url: '/admin/meta-tags/' + tag_id,
                             method: 'DELETE',
                             success: function (response) {
                                 window.location.href = '/admin/meta-tags';

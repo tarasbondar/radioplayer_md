@@ -18,11 +18,11 @@ use Pion\Laravel\ChunkUpload\Receiver\FileReceiver;
 class PodcastEpisodeController extends Controller
 {
     public function index(Request $request) {
-        $page_size = ($request->has('page-size') ? $request->get('page-size') : 10);
-        $page = ($request->has('page') ? $request->get('page') : 1);
-        $episodes = PodcastEpisode::select("podcasts_episodes.*", "podcasts.name AS podcast_name")->join('podcasts', 'podcasts.id', '=', 'podcasts_episodes.podcast_id');
+        $page_size = $request->get('page-size', 10);
+        $page = $request->get('page', 1);
 
-        $pagination = $episodes->paginate($page_size)->links();
+        $episodes = PodcastEpisode::select("podcasts_episodes.*", "podcasts.name AS podcast_name")->join('podcasts', 'podcasts.id', '=', 'podcasts_episodes.podcast_id');
+        $pagination = $episodes->paginate($page_size)->withQueryString()->links();
 
         $episodes = $episodes->offset(($page - 1) * $page_size)->limit($page_size)
             ->get()->toArray();

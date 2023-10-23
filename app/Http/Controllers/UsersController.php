@@ -25,8 +25,9 @@ class UsersController extends Controller
 {
 
     public function index(Request $request) {
-        $page_size = ($request->has('page-size') ? $request->get('page-size') : 10);
-        $page = ($request->has('page') ? $request->get('page') : 1);
+        $page_size = $request->get('page-size',10);
+        $page = $request->get('page', 1);
+
         $username = $request->get('username', '');
         $email = $request->get('email', '');
         //$role = $request->get('status', 1); //->where('role', '=', $status)
@@ -34,44 +35,33 @@ class UsersController extends Controller
         $registered_to = $request->get('registered-to', '');
         $logged_from = $request->get('logged-from', '');
         $logged_to = $request->get('logged-to', '');
-        $appends = [];
 
         $users = User::select("*");
         if (!empty($username)) {
             $users = $users->where('name', 'LIKE', "%{$username}%");
-            $appends['username'] = $username;
         }
 
         if (!empty($email)) {
             $users = $users->where('email', 'LIKE', "%{$email}%");
-            $appends['email'] = $email;
         }
 
         if (!empty($registered_from)) {
             $users = $users->where('created_at', '>=', $registered_from . ' 00:00:00');
-            $appends['registered-from'] = $registered_from;
         }
 
         if (!empty($registered_to)) {
             $users = $users->where('created_at', '<=', $registered_to . ' 23:59:59');
-            $appends['registered-to'] = $registered_to;
         }
 
         if (!empty($logged_from)) {
             $users = $users->where('last_login_at', '>=', $logged_from . ' 00:00:00');
-            $appends['logged-from'] = $logged_from;
         }
 
         if (!empty($logged_to)) {
             $users = $users->where('last_login_at', '<=', $logged_to . ' 23:59:59');
-            $appends['logged-to'] = $registered_to;
         }
 
-        if ($page > 1) {
-            $appends['page'] = $page;
-        }
-
-        $pagination = $users->paginate($page_size)->appends($appends)->links();
+        $pagination = $users->paginate($page_size)->withQueryString()->links();
 
         $users = $users
             ->orderBy('created_at', 'desc')->offset(($page - 1) * $page_size)->limit($page_size)
@@ -149,7 +139,6 @@ class UsersController extends Controller
                 ->withInput();
         }
 
-
         $model->name = $request['name'];
         $model->email = $request['email'];
         $model->role = $request['role'];
@@ -207,12 +196,12 @@ class UsersController extends Controller
     }
 
     public function authorApps(Request $request) {
-        $page_size = ($request->has('page-size') ? $request->get('page-size') : 10);
-        $page = ($request->has('page') ? $request->get('page') : 1);
+        $page_size = $request->get('page-size',10);
+        $page = $request->get('page', 1);
+
         $status = $request->get('status', 'all');
         $username = $request->get('username', '');
         $email = $request->get('email', '');
-        $appends['status'] = $status;
         //registered and login
 
         $apps = AuthorApplication::select('author_applications.*', "users.name AS username", "users.email AS email")
@@ -224,26 +213,20 @@ class UsersController extends Controller
 
         if (!empty($username)) {
             $apps = $apps->where('users.name', 'LIKE', "%{$username}%");
-            $appends['username'] = $username;
         }
 
         if (!empty($email)) {
             $apps = $apps->where('users.email', 'LIKE', "%{$email}%");
-            $appends['email'] = $email;
         }
 
-        if ($page > 1) {
-            $appends['page'] = $page;
-        }
-
-        $pagination = $apps->paginate($page_size)->appends($appends)->links(); //appends($request->all())
+        $pagination = $apps->paginate($page_size)->withQueryString()->links(); //->appends($request->all())
 
         $apps = $apps->orderBy('created_at', 'desc')->offset(($page - 1) * $page_size)->limit($page_size)
             ->get()->toArray();
 
         $enable = strip_tags(CustomValue::where('key', '=', 'apps_enable')->pluck('value')->first());
 
-        return view('pages.admin.authorapplications', ['status' => $status, 'apps' => $apps, 'pagination' => $pagination, 'appends' => $appends, 'apps_enable' => $enable]);
+        return view('pages.admin.authorapplications', ['status' => $status, 'apps' => $apps, 'pagination' => $pagination, 'apps_enable' => $enable]);
     }
 
     public function authorAppsEdit($id) {

@@ -26,23 +26,17 @@ class MetaTagController extends Controller
 {
 
     public function index(Request $request) {
-        $page_size = ($request->has('page-size') ? $request->get('page-size') : 10);
-        $page = ($request->has('page') ? $request->get('page') : 1);
+        $page_size = $request->get('page-size', 10);
+        $page = $request->get('page', 1);
+
         $route = $request->get('route', '');
-        $appends = [];
 
         $models = MetaTag::query();
         if (!empty($route)) {
             $models = $models->where('meta_tags.route', 'LIKE', "%{$route}%");
-            $appends['route'] = $route;
         }
 
-        if ($page > 1) {
-            $appends['page'] = $page;
-        }
-
-
-        $pagination = $models->paginate($page_size)->appends($appends)->links();
+        $pagination = $models->paginate($page_size)->withQueryString()->links();
 
         $models = $models->offset(($page - 1) * $page_size)->limit($page_size)
             ->get();

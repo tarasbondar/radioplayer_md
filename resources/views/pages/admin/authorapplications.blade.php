@@ -26,11 +26,11 @@
 
             <div class="col-md-2">
                 <select id="status" class="form-select form-control" aria-label="Status select">
-                    <option class="select-option" value="all" {{ empty($appends['status']) || $appends['status'] == 'all' ? 'selected' : '' }}>All</option>
-                    <option class="select-option" value="1" {{ @$appends['status'] == 1 ? 'selected' : '' }}>Pending</option>
-                    <option class="select-option" value="2" {{ @$appends['status'] == 2 ? 'selected' : '' }}>Accepted</option>
-                    <option class="select-option" value="0" {{ @$appends['status'] == 0 ? 'selected' : '' }}>Declined</option>
-                    <option class="select-option" value="-1"{{ @$appends['status'] == -1 ? 'selected' : '' }}>Blocked</option>
+                    <option class="select-option" value="all" {{ empty(app('request')->input('status')) || app('request')->input('status') == 'all' ? 'selected' : '' }}>All</option>
+                    <option class="select-option" value="1" {{ app('request')->input('status') == 1 ? 'selected' : '' }}>Pending</option>
+                    <option class="select-option" value="2" {{ app('request')->input('status') == 2 ? 'selected' : '' }}>Accepted</option>
+                    <option class="select-option" value="0" {{ app('request')->input('status') == 0 ? 'selected' : '' }}>Declined</option>
+                    <option class="select-option" value="-1"{{ app('request')->input('status') == -1 ? 'selected' : '' }}>Blocked</option>
                 </select>
             </div>
 

@@ -27,7 +27,7 @@
                 @foreach ($categories as $c)
                     <tr>
                         <th scope="row">{{ $c['id'] }}</th>
-                        <td>{{ $c->getTranslation('title') }}</td>
+                        <td>{{ $c['key'] }}</td>
                         <td>{{ ($c['status'] === 0 ? 'Active' : 'Inactive' ) }}</td>
                         <td>
                             <a href="#" class="edit-category edit-{{ $c['id'] }}">Edit</a>
